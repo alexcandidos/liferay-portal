@@ -33,6 +33,15 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
+		errorMessage: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
 		fieldName: Config.string(),
 
 		/**
@@ -182,19 +191,30 @@ class Text extends Component {
 	}
 
 	_handleFieldChanged(event) {
-		this.setState(
-			{
-				value: event.target.value
-			},
-			() => this.emit(
-				'fieldEdited',
+		if (this.required && !event.target.value) {
+			this.setState(
 				{
-					fieldInstance: this,
-					originalEvent: event,
-					value: event.target.value
+					errorMessage: Liferay.Language.get('required-field')
 				}
-			)
-		);
+			);
+		}
+		else {
+			this.setState(
+				{
+					value: event.target.value
+				},
+				() => {
+					this.emit(
+						'fieldEdited',
+						{
+							fieldInstance: this,
+							originalEvent: event,
+							value: event.target.value
+						}
+					)
+				}
+			);
+		}
 	}
 
 	_internalValueFn() {

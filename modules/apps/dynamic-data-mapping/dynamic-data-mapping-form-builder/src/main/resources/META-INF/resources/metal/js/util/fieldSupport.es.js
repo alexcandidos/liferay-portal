@@ -1,7 +1,27 @@
+import {findFieldByName} from '../components/Form/FormSupport.es';
 import {PagesVisitor} from './visitors.es';
 
 export const formatFieldName = (instanceId, locale, value) => {
 	return `ddm$$${value}$${instanceId}$0$$${locale}`;
+};
+
+export const generateFieldName = (pages, desiredName) => {
+	let counter = 0;
+	let name = normalizeFieldName(desiredName);
+
+	let existingField = findFieldByName(pages, name);
+
+	while (existingField) {
+		if (counter > 0) {
+			name = normalizeFieldName(desiredName) + counter;
+		}
+
+		existingField = findFieldByName(pages, name);
+
+		counter++;
+	}
+
+	return normalizeFieldName(name);
 };
 
 export const generateInstanceId = length => {
@@ -15,6 +35,54 @@ export const generateInstanceId = length => {
 
 	return text;
 };
+
+/**
+ * Checks if a given character is valid for use in a field name.
+ * @param {string} character
+ * @return {Boolean} Returns true if the character is invalid.
+ */
+function isInvalidFieldNameCharacter(character) {
+	return /[~`!@#$%^&*(){}[\];:"'<,.>?/\-+=]/g.test(character);
+}
+
+/**
+ * Find a field label based on fieldName
+ * @param {string} fieldName
+ * @return {string} The field name normalized.
+ */
+export function normalizeFieldName(fieldName) {
+	let nextUpperCase = false;
+	let normalizedFieldName = '';
+
+	fieldName = fieldName.trim();
+
+	for (let i = 0; i < fieldName.length; i++) {
+		let item = fieldName[i];
+
+		if (item === ' ') {
+			nextUpperCase = true;
+
+			continue;
+		}
+		else if (isInvalidFieldNameCharacter(item)) {
+			continue;
+		}
+
+		if (nextUpperCase) {
+			item = item.toUpperCase();
+
+			nextUpperCase = false;
+		}
+
+		normalizedFieldName += item;
+	}
+
+	if (/^\d/.test(normalizedFieldName)) {
+		normalizedFieldName = `_${normalizedFieldName}`;
+	}
+
+	return normalizedFieldName;
+}
 
 /**
  * Makes sure fields have its settings form filled up with some default values.

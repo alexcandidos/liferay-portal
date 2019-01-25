@@ -1,8 +1,8 @@
 import {Config} from 'metal-state';
 import {debounce} from 'metal-debounce';
 import {EventHandler} from 'metal-events';
-import {focusedFieldStructure, pageStructure} from '../../util/config.es';
-import {formatFieldName, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
+import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {generateFieldName, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import autobind from 'autobind-decorator';
 import ClayModal from 'clay-modal';
@@ -23,7 +23,7 @@ class Builder extends Component {
 		/**
 		 * @default []
 		 * @instance
-		 * @memberof FormRenderer
+		 * @memberof FormBuilder
 		 * @type {?array<object>}
 		 */
 
@@ -35,7 +35,7 @@ class Builder extends Component {
 		/**
 		 * @default
 		 * @instance
-		 * @memberof FormRenderer
+		 * @memberof FormBuilder
 		 * @type {?number}
 		 */
 
@@ -44,16 +44,25 @@ class Builder extends Component {
 		/**
 		 * @default {}
 		 * @instance
-		 * @memberof Sidebar
+		 * @memberof FormBuilder
 		 * @type {?object}
 		 */
 
 		focusedField: focusedFieldStructure.value({}),
 
 		/**
+		 * @default {}
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		locale: Config.string().value('en_US'),
+
+		/**
 		 * @default []
 		 * @instance
-		 * @memberof FormRenderer
+		 * @memberof FormBuilder
 		 * @type {?array<object>}
 		 */
 
@@ -61,7 +70,7 @@ class Builder extends Component {
 
 		/**
 		 * @instance
-		 * @memberof LayoutProvider
+		 * @memberof FormBuilder
 		 * @type {string}
 		 */
 
@@ -69,7 +78,15 @@ class Builder extends Component {
 
 		/**
 		 * @instance
-		 * @memberof Builder
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		rules: Config.arrayOf(ruleStructure).required(),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
 		 * @type {object}
 		 */
 
@@ -84,13 +101,11 @@ class Builder extends Component {
 
 	created() {
 		this._eventHandler = new EventHandler();
-
 		this._processFieldUpdates = debounce(this._processFieldUpdates.bind(this), 100);
 	}
 
 	attached() {
 		const {activePage, pages} = this.props;
-
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
 		const translationManager = document.querySelector('.ddm-translation-manager');
 
@@ -256,7 +271,9 @@ class Builder extends Component {
 	}
 
 	/**
-	 * Continues the propagation of event.
+	 * Event handler for when the user adds a new field to the Form Builder.
+	 * This method creates a new field name based on the label of the FieldType
+	 * added and emits an event with the new field configurations.
 	 * @param {!Event} event
 	 * @private
 	 */
@@ -266,7 +283,7 @@ class Builder extends Component {
 		const {namespace} = this.props;
 		const {settingsContext} = fieldType;
 		const {pages} = settingsContext;
-		const newFieldName = FormSupport.generateFieldName(fieldType.name);
+		const newFieldName = generateFieldName(this.props.pages, fieldType.label);
 
 		const focusedField = {
 			...fieldType,
@@ -465,58 +482,17 @@ class Builder extends Component {
 	}
 
 	_processFieldUpdates(fieldInstance, value) {
-		const {focusedField, namespace} = this.props;
-		const {columnIndex, instanceId, pageIndex, rowIndex, settingsContext} = focusedField;
-		const properties = {columnIndex,
-			pageIndex,
-			rowIndex};
-		const {fieldName, initialConfig_: {locale}} = fieldInstance;
+		const {locale} = this.props;
+		const {fieldName} = fieldInstance;
 
-		if (fieldName === 'name') {
-			properties[fieldName] = formatFieldName(instanceId, locale, value);
-			properties.fieldName = value;
-		}
-		else {
-			properties[fieldName] = value;
-		}
-
-		const visitor = new PagesVisitor(settingsContext.pages);
-
-		const translationManager = Liferay.component(`${namespace}translationManager`);
-
-		properties.settingsContext = {
-			...settingsContext,
-			columnIndex,
-			pageIndex,
-			pages: visitor.mapFields(
-				field => {
-					if (fieldName === 'dataType' && field.fieldName === 'validation') {
-						field.validation = {
-							...field.validation,
-							dataType: value
-						};
-					}
-
-					if (field.fieldName === fieldName) {
-						field = {
-							...field,
-							value
-						};
-						if (field.localizable) {
-							field.localizedValue = {
-								...field.localizedValue,
-								[translationManager.get('editingLocale')]: value
-							};
-						}
-					}
-
-					return field;
-				}
-			),
-			rowIndex
-		};
-
-		this.emit('fieldEdited', properties);
+		this.emit(
+			'fieldEdited',
+			{
+				locale,
+				propertyName: fieldName,
+				propertyValue: value
+			}
+		);
 	}
 
 	/**
@@ -536,6 +512,7 @@ class Builder extends Component {
 			namespace,
 			pages,
 			paginationMode,
+			rules,
 			spritemap,
 			successPageSettings,
 			visible
@@ -635,6 +612,7 @@ class Builder extends Component {
 					focusedField={focusedField}
 					namespace={namespace}
 					ref="sidebar"
+					rules={rules}
 					spritemap={spritemap}
 					visible={visible}
 				/>

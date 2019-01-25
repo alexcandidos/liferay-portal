@@ -103,7 +103,7 @@ class RuleEditor extends Component {
 
 		activeConditionIndex: Config.number().value(-1),
 
-		calculatorOptions: Config.arrayOf(
+		calculatorFunctions: Config.arrayOf(
 			Config.shapeOf(
 				{
 					label: Config.string(),
@@ -780,7 +780,7 @@ class RuleEditor extends Component {
 				if (!this.isDisposed()) {
 					this.setState(
 						{
-							calculatorOptions: responseData
+							calculatorFunctions: responseData
 						}
 					);
 				}

@@ -124,6 +124,7 @@ describe(
 						fieldTypes,
 						pages,
 						paginationMode: 'wizard',
+						rules: [],
 						spritemap,
 						successPageSettings
 					}
@@ -324,7 +325,8 @@ describe(
 						fieldInstance: {
 							...mockFieldType,
 							fieldName: 'label'
-						}
+						},
+						value: 'new label'
 					}
 				);
 
@@ -526,6 +528,7 @@ describe(
 						fieldTypes,
 						pages: componentPages,
 						paginationMode: 'wizard',
+						rules: [],
 						spritemap,
 						successPageSettings
 					}

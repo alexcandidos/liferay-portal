@@ -5,7 +5,7 @@ import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
 import {getFieldPropertiesFromSettingsContext, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
 import {selectText} from '../../util/dom.es';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
@@ -341,7 +341,7 @@ class Sidebar extends Component {
 		};
 
 		return getImplementedFieldTypes(fieldTypes).reduce(
-			(prev, next, index, original) => {
+			(prev, next) => {
 				if (next.group && !next.system) {
 					prev[next.group].fields.push(next);
 				}
@@ -350,6 +350,36 @@ class Sidebar extends Component {
 			},
 			group
 		);
+	}
+
+	_hasRuleExpression(fieldName) {
+		const {rules} = this.props;
+		const visitor = new RulesVisitor(rules);
+
+		return visitor.containsFieldExpression(fieldName);
+	}
+
+	getFormContext(settingsContext) {
+		const {pages} = settingsContext;
+		const visitor = new PagesVisitor(pages);
+
+		return {
+			...settingsContext,
+			pages: visitor.mapFields(
+				field => {
+
+					// if (field.fieldName === 'name' && this._hasRuleExpression(field.value)) {
+					// 	field = {
+					// 		...field,
+					// 		readOnly: true,
+					// 		tip: Liferay.Language.get('this-field-name-cant-be-changed-because-its-been-used-inside-a-calculate-expression')
+					// 	};
+					// }
+
+					return field;
+				}
+			)
+		};
 	}
 
 	/**
@@ -945,9 +975,8 @@ class Sidebar extends Component {
 										editable={true}
 										events={layoutRenderEvents}
 										fieldType={focusedField.type}
-										formContext={settingsContext}
+										formContext={this.getFormContext(settingsContext)}
 										modeRenderer="list"
-										pages={settingsContext.pages}
 										ref="FormRenderer"
 										spritemap={spritemap}
 										url={EVALUATOR_URL}

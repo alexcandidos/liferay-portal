@@ -172,11 +172,14 @@ class RuleList extends Component {
 						return {
 							...rule,
 							actions: rule.actions.map(
-								actionItem => {
+								action => {
+									if (action.action === 'calculate') {
+										console.log(action.expression);
+									}
 									return {
-										...actionItem,
-										label: this._getFieldLabel(actionItem.target),
-										target: this._getFieldLabel(actionItem.target)
+										...action,
+										label: this._getFieldLabel(action.target),
+										target: this._getFieldLabel(action.target)
 									};
 								}
 							),
@@ -211,22 +214,6 @@ class RuleList extends Component {
 			),
 			rulesCardOptions: this._getRulesCardOptions()
 		};
-	}
-
-	_formatActions(actions) {
-		actions.forEach(
-			action => {
-				action.label = this._getFieldLabel(action.target);
-
-				const expression = action.expression;
-
-				if (expression) {
-					action.expression = expression.replace(/\[|\]/g, '');
-				}
-			}
-		);
-
-		return actions;
 	}
 
 	_formatRules(rules) {
@@ -308,7 +295,7 @@ class RuleList extends Component {
 		if (pages && fieldName) {
 			const visitor = new PagesVisitor(pages);
 
-			const field = visitor.findField(field => field.fieldName == fieldName);
+			const field = visitor.findField(field => field.fieldName === fieldName);
 
 			if (field) {
 				fieldLabel = field.label;
