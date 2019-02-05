@@ -112,6 +112,14 @@ class LayoutProvider extends Component {
 		).value({}),
 
 		/**
+		 * @default en_US
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?string}
+		 */
+		locale: Config.string().value(themeDisplay.getLanguageId()),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof LayoutProvider

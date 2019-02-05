@@ -117,7 +117,7 @@ const updateFieldValidationProperty = (pages, fieldName, propertyName, propertyV
 const shouldAutoGenerateName = focusedField => {
 	const {fieldName, label} = focusedField;
 
-	return fieldName === normalizeFieldName(label);
+	return fieldName.indexOf(normalizeFieldName(label)) === 0;
 };
 
 export const updateSettingsContextProperty = (state, settingsContext, propertyName, propertyValue) => {
@@ -149,15 +149,18 @@ export const updateSettingsContextProperty = (state, settingsContext, propertyNa
 };
 
 export const updateFocusedFieldName = (state, focusedField, value) => {
-	const {fieldName} = focusedField;
+	const {fieldName, type} = focusedField;
 	const normalizedFieldName = normalizeFieldName(value);
 
 	if (normalizedFieldName !== fieldName) {
 		const {pages} = state;
-		let newFieldName = generateFieldName(pages, value);
+		let newFieldName;
 
 		if (normalizedFieldName === '') {
-			newFieldName = fieldName;
+			newFieldName = generateFieldName(pages, type);
+		}
+		else {
+			newFieldName = generateFieldName(pages, value);
 		}
 
 		let {settingsContext} = focusedField;

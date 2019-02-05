@@ -13,6 +13,7 @@
 	{@param? _handleButtonClicked: any}
 	{@param? _handleFieldsDropdownItemClicked: any}
 	{@param? _handleFunctionsDropdownItemClicked: any}
+	{@param? disableDot: bool}
 	{@param? disableFunctions: bool}
 	{@param? disableNumbers: bool}
 	{@param? disableOperators: bool}
@@ -64,7 +65,10 @@
 								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="8">8</li>
 								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="9">9</li>
 								<li class="border-bottom-left btn btn-secondary button-two-columns calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="0">0</li>
-								<li class="border-bottom-right btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value=".">.</li>
+
+								{let $disableDotAttribute : $disableNumbers or $disableDot ? 'disabled' : '' /}
+
+								<li class="border-bottom-right btn btn-secondary calculator-button {$disableDotAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value=".">.</li>
 							</ul>
 
 							{let $disableOperatorsAttribute : $disableOperators ? 'disabled' : '' /}

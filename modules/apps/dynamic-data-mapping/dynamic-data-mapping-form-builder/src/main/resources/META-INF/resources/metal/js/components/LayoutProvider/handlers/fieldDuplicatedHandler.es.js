@@ -5,13 +5,13 @@ import {sub} from '../../../util/strings.es';
 
 const handleFieldDuplicated = (state, event) => {
 	const {columnIndex, pageIndex, rowIndex} = event;
-	const {pages} = state;
+	const {locale, pages} = state;
 	const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
 	const label = sub(
 		Liferay.Language.get('copy-of-x'),
 		[field.label]
 	);
-	const newFieldName = generateFieldName(pages, field.label);
+	const newFieldName = generateFieldName(pages, label);
 	const visitor = new PagesVisitor(field.settingsContext.pages);
 
 	const duplicatedField = {
@@ -32,6 +32,10 @@ const handleFieldDuplicated = (state, event) => {
 					else if (field.fieldName === 'label') {
 						field = {
 							...field,
+							localizedValue: {
+								...field.localizedValue,
+								[locale]: label
+							},
 							value: label
 						};
 					}

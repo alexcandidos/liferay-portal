@@ -79,6 +79,7 @@ class Calculator extends Component {
 	}
 
 	getStateBasedOnExpression(expression) {
+		let disableDot = false;
 		let disableFunctions = false;
 		let disableNumbers = false;
 		let disableOperators = false;
@@ -97,7 +98,25 @@ class Calculator extends Component {
 			showOnlyRepeatableFields = true;
 		}
 
+		if (
+			tokens.length === 0 ||
+			(
+				tokens.length > 0 &&
+				tokens[tokens.length - 1].type !== Token.LITERAL
+			)
+		) {
+			disableDot = true;
+		}
+
+		if (
+			tokens.length > 0 &&
+			tokens[tokens.length - 1].type === Token.OPERATOR
+		) {
+			disableOperators = true;
+		}
+
 		return {
+			disableDot,
 			disableFunctions,
 			disableNumbers,
 			disableOperators,
