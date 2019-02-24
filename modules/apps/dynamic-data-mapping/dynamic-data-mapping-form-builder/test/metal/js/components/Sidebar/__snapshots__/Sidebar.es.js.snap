@@ -139,9 +139,15 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
     <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Text Field" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-text" focusable="false" role="presentation">
             <use xlink:href="icons.svg#text"></use>
           </svg></span>Text Field</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Single Selection" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-radio-button" focusable="false" role="presentation">
+            <use xlink:href="icons.svg#radio-button"></use>
+          </svg></span>Single Selection</button></li>
     <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Select from list" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-list" focusable="false" role="presentation">
             <use xlink:href="icons.svg#list"></use>
           </svg></span>Select from list</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Grid" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-grid" focusable="false" role="presentation">
+            <use xlink:href="icons.svg#grid"></use>
+          </svg></span>Grid</button></li>
     <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Multiple Selection" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-select-from-list" focusable="false" role="presentation">
             <use xlink:href="icons.svg#select-from-list"></use>
           </svg></span>Multiple Selection</button></li>
@@ -234,9 +240,15 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
     <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Text Field" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-text" focusable="false" role="presentation">
             <use xlink:href="icons.svg#text"></use>
           </svg></span>Text Field</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Single Selection" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-radio-button" focusable="false" role="presentation">
+            <use xlink:href="icons.svg#radio-button"></use>
+          </svg></span>Single Selection</button></li>
     <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Select from list" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-list" focusable="false" role="presentation">
             <use xlink:href="icons.svg#list"></use>
           </svg></span>Select from list</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Grid" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-grid" focusable="false" role="presentation">
+            <use xlink:href="icons.svg#grid"></use>
+          </svg></span>Grid</button></li>
     <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="Multiple Selection" type="button"><span class="dropdown-item-indicator"><svg class="lexicon-icon lexicon-icon-select-from-list" focusable="false" role="presentation">
             <use xlink:href="icons.svg#select-from-list"></use>
           </svg></span>Multiple Selection</button></li>
@@ -293,6 +305,17 @@ exports[`Sidebar should close the sidebar when the mouse down event is not on it
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="radio" ref="fieldType_radio">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                      <use xlink:href="icons.svg#radio-button"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Single Selection</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+                </div>
+              </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="select" ref="fieldType_select">
                 <div class="autofit-col">
                   <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
@@ -302,6 +325,17 @@ exports[`Sidebar should close the sidebar when the mouse down event is not on it
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Select from list</span></h4>
                   <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
+                </div>
+              </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="grid" ref="fieldType_grid">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                      <use xlink:href="icons.svg#grid"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Grid</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
@@ -373,6 +407,17 @@ exports[`Sidebar should emit fieldMoved when the dragEnd method is called 1`] = 
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="radio" ref="fieldType_radio">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                      <use xlink:href="icons.svg#radio-button"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Single Selection</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+                </div>
+              </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="select" ref="fieldType_select">
                 <div class="autofit-col">
                   <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
@@ -382,6 +427,17 @@ exports[`Sidebar should emit fieldMoved when the dragEnd method is called 1`] = 
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Select from list</span></h4>
                   <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
+                </div>
+              </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="grid" ref="fieldType_grid">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                      <use xlink:href="icons.svg#grid"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Grid</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
@@ -453,6 +509,17 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="radio" ref="fieldType_radio">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                      <use xlink:href="icons.svg#radio-button"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Single Selection</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+                </div>
+              </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="select" ref="fieldType_select">
                 <div class="autofit-col">
                   <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
@@ -462,6 +529,17 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Select from list</span></h4>
                   <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
+                </div>
+              </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="grid" ref="fieldType_grid">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                      <use xlink:href="icons.svg#grid"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Grid</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
@@ -533,6 +611,17 @@ exports[`Sidebar should render a Sidebar open 1`] = `
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="radio" ref="fieldType_radio">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                      <use xlink:href="icons.svg#radio-button"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Single Selection</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+                </div>
+              </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="select" ref="fieldType_select">
                 <div class="autofit-col">
                   <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
@@ -542,6 +631,17 @@ exports[`Sidebar should render a Sidebar open 1`] = `
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Select from list</span></h4>
                   <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
+                </div>
+              </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="grid" ref="fieldType_grid">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                      <use xlink:href="icons.svg#grid"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Grid</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
@@ -613,6 +713,17 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="radio" ref="fieldType_radio">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                      <use xlink:href="icons.svg#radio-button"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Single Selection</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+                </div>
+              </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="select" ref="fieldType_select">
                 <div class="autofit-col">
                   <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
@@ -622,6 +733,17 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Select from list</span></h4>
                   <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
+                </div>
+              </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="grid" ref="fieldType_grid">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                      <use xlink:href="icons.svg#grid"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Grid</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
@@ -693,6 +815,17 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="radio" ref="fieldType_radio">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                      <use xlink:href="icons.svg#radio-button"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Single Selection</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+                </div>
+              </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="select" ref="fieldType_select">
                 <div class="autofit-col">
                   <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
@@ -702,6 +835,17 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Select from list</span></h4>
                   <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
+                </div>
+              </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="grid" ref="fieldType_grid">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                      <use xlink:href="icons.svg#grid"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Grid</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
@@ -773,6 +917,17 @@ exports[`Sidebar should render the default markup 1`] = `
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="radio" ref="fieldType_radio">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-radio-button" aria-hidden="true">
+                      <use xlink:href="icons.svg#radio-button"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Single Selection</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select only one item with a radio button.</p>
+                </div>
+              </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="select" ref="fieldType_select">
                 <div class="autofit-col">
                   <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-list" aria-hidden="true">
@@ -782,6 +937,17 @@ exports[`Sidebar should render the default markup 1`] = `
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Select from list</span></h4>
                   <p class="list-group-subtitle text-truncate">Choose one or more options from a list.</p>
+                </div>
+              </div>
+              <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="grid" ref="fieldType_grid">
+                <div class="autofit-col">
+                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-grid" aria-hidden="true">
+                      <use xlink:href="icons.svg#grid"></use>
+                    </svg></div>
+                </div>
+                <div class="autofit-col autofit-col-expand">
+                  <h4 class="list-group-title text-truncate"><span>Grid</span></h4>
+                  <p class="list-group-subtitle text-truncate">Select options from a matrix.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
