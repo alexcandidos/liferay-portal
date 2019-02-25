@@ -72,7 +72,7 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
               </svg></button></li>
           <li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
             <div>
-              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn nav-link btn-sm btn-secondary" ref="triggerButton" type="button"><svg class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false" role="presentation">
+              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn nav-link btn-sm btn-secondary" ref="triggerButton" type="button"><svg class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#text"></use>
                   </svg>Text Field<svg class="lexicon-icon lexicon-icon-caret-bottom inline-item inline-item-after" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#caret-bottom"></use>
@@ -80,7 +80,7 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
             </div>
           </li>
           <li class="tbar-item">
-            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                   <use xlink:href="icons.svg#ellipsis-v"></use>
                 </svg></button></div>
           </li>
@@ -173,7 +173,7 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
               </svg></button></li>
           <li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
             <div>
-              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn nav-link btn-sm btn-secondary" ref="triggerButton" type="button"><svg class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false" role="presentation">
+              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn nav-link btn-sm btn-secondary" ref="triggerButton" type="button"><svg class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#text"></use>
                   </svg>Text Field<svg class="lexicon-icon lexicon-icon-caret-bottom inline-item inline-item-after" focusable="false" role="presentation">
                     <use xlink:href="icons.svg#caret-bottom"></use>
@@ -181,7 +181,7 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
             </div>
           </li>
           <li class="tbar-item">
-            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                   <use xlink:href="icons.svg#ellipsis-v"></use>
                 </svg></button></div>
           </li>
