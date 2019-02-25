@@ -357,29 +357,6 @@ class Sidebar extends Component {
 		return visitor.containsFieldExpression(fieldName);
 	}
 
-	getFormContext(settingsContext) {
-		const {pages} = settingsContext;
-		const visitor = new PagesVisitor(pages);
-
-		return {
-			...settingsContext,
-			pages: visitor.mapFields(
-				field => {
-
-					// if (field.fieldName === 'name' && this._hasRuleExpression(field.value)) {
-					// 	field = {
-					// 		...field,
-					// 		readOnly: true,
-					// 		tip: Liferay.Language.get('this-field-name-cant-be-changed-because-its-been-used-inside-a-calculate-expression')
-					// 	};
-					// }
-
-					return field;
-				}
-			)
-		};
-	}
-
 	/**
 	 * Checks to see if browser supports CSS3 Transitions and returns the name
 	 * of the transitionend event; returns false if it's not supported
@@ -981,7 +958,7 @@ class Sidebar extends Component {
 										editingLanguageId={editingLanguageId}
 										events={layoutRenderEvents}
 										fieldType={focusedField.type}
-										formContext={this.getFormContext(settingsContext)}
+										formContext={settingsContext}
 										modeRenderer="list"
 										ref="FormRenderer"
 										spritemap={spritemap}
