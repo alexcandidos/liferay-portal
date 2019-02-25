@@ -1,3 +1,11 @@
+import autobind from 'autobind-decorator';
+import classnames from 'classnames';
+import ClayButton from 'clay-button';
+import Component, {Fragment} from 'metal-jsx';
+import dom from 'metal-dom';
+import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
+import FormRenderer, {FormSupport} from '../Form/index.es.js';
+import WithEvaluator from '../Form/Evaluator.es';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import {Config} from 'metal-state';
@@ -7,14 +15,6 @@ import {focusedFieldStructure} from '../../util/config.es';
 import {getFieldPropertiesFromSettingsContext, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
 import {selectText} from '../../util/dom.es';
-import autobind from 'autobind-decorator';
-import classnames from 'classnames';
-import ClayButton from 'clay-button';
-import Component, {Fragment} from 'metal-jsx';
-import dom from 'metal-dom';
-import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
-import FormRenderer, {FormSupport} from '../Form/index.es.js';
-import WithEvaluator from '../Form/Evaluator.es';
 
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
 const FormWithEvaluator = WithEvaluator(FormRenderer);
