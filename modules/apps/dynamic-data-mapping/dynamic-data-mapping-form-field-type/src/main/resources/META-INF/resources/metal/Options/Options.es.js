@@ -271,9 +271,9 @@ class Options extends Component {
 		);
 	}
 
-	normalizeOption(options, option) {
-		const {value} = option;
-		const desiredValue = value;
+	normalizeOption(options, option, force) {
+		const {label, value} = option;
+		const desiredValue = value || label || (force ? Liferay.Language.get('option') : '');
 		let normalizedValue = desiredValue;
 
 		if (this.shouldGenerateOptionValue(option)) {
@@ -297,17 +297,17 @@ class Options extends Component {
 		};
 	}
 
-	normalizeOptions(options) {
-		return options.map(option => this.normalizeOption(options, option));
+	normalizeOptions(options, force) {
+		return options.map(option => this.normalizeOption(options, option, force));
 	}
 
-	normalizeValue(value) {
+	normalizeValue(value, force = false) {
 		const newValue = {};
 
 		for (const locale in value) {
 			const options = value[locale];
 
-			newValue[locale] = this.normalizeOptions(options);
+			newValue[locale] = this.normalizeOptions(options, force);
 		}
 
 		return newValue;
@@ -354,7 +354,7 @@ class Options extends Component {
 
 	_handleOptionBlurred(event) {
 		const {value} = this;
-		const normalizedValue = this.normalizeValue(value);
+		const normalizedValue = this.normalizeValue(value, true);
 
 		this._handleFieldEdited(event, normalizedValue[this.getCurrentLanguageId()]);
 	}

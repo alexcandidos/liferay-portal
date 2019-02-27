@@ -34,8 +34,6 @@ export const handleFieldEdited = (state, event) => {
 	const {propertyName, propertyValue} = event;
 	let newState = {};
 
-	console.log(propertyName, propertyValue);
-
 	if (propertyName !== 'name' || propertyValue !== '') {
 		newState = updateField(state, propertyName, propertyValue);
 	}

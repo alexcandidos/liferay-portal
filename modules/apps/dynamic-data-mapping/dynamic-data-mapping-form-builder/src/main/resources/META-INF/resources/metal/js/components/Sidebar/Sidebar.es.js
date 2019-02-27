@@ -618,14 +618,20 @@ class Sidebar extends Component {
 
 		const excludedFields = ['type', 'validation'];
 
-		const getByFieldNameAndType = (fieldName, type) => {
+		const getByFieldNameAndType = ({fieldName, type, value}) => {
 			let field;
 
-			oldVisitor.mapFields(
+			oldVisitor.findField(
 				oldField => {
-					if (excludedFields.indexOf(fieldName) === -1 && oldField.fieldName === fieldName && oldField.type === type) {
+					if (
+						excludedFields.indexOf(fieldName) === -1 &&
+						oldField.fieldName === fieldName &&
+						oldField.type === type
+					) {
 						field = oldField;
 					}
+
+					return field;
 				}
 			);
 
@@ -636,7 +642,7 @@ class Sidebar extends Component {
 			...newSettingsContext,
 			pages: newVisitor.mapFields(
 				newField => {
-					const mergedField = getByFieldNameAndType(newField.fieldName, newField.type);
+					const mergedField = getByFieldNameAndType(newField);
 
 					if (mergedField) {
 						newField = {

@@ -187,10 +187,10 @@ class Radio extends Component {
 	}
 
 	_getArrayValue(value) {
-		let newValue = value;
+		let newValue = value || '';
 
-		if (!Array.isArray(value)) {
-			newValue = [value];
+		if (!Array.isArray(newValue)) {
+			newValue = [newValue];
 		}
 
 		return newValue;
@@ -202,7 +202,6 @@ class Radio extends Component {
 
 		return {
 			...state,
-			options: state.options.filter(({value}) => value !== ''),
 			predefinedValue: predefinedValueArray[0] || ''
 		};
 	}

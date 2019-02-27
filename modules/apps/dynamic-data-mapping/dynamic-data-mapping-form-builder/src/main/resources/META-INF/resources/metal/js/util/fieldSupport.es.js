@@ -77,8 +77,8 @@ export const getFieldPropertiesFromSettingsContext = (locale, settingsContext) =
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	visitor.mapFields(
-		({fieldName, value}) => {
-			if (fieldName === 'options') {
+		({fieldName, type, value}) => {
+			if (type === 'options') {
 				properties[fieldName] = value[locale];
 			}
 			else {
