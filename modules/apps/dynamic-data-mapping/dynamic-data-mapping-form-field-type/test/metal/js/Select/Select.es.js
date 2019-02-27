@@ -296,7 +296,8 @@ describe(
 							item: {
 								value: 'Liferay'
 							}
-						}
+						},
+						preventDefault: () => 0
 					}
 				);
 
@@ -331,48 +332,7 @@ describe(
 					'click',
 					{}
 				);
-				expect(component.getState().open).toBe(true);
-			}
-		);
-
-		it(
-			'should propagate the field edit event',
-			() => {
-				component = new Select(
-					{
-						dataSourceType: 'manual',
-						options: [
-							{
-								checked: false,
-								disabled: false,
-								id: 'id',
-								inline: false,
-								label: 'label',
-								name: 'name',
-								showLabel: true,
-								value: 'item'
-							}
-						],
-						spritemap
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				jest.runAllTimers();
-
-				component._handleItemClicked(
-					{
-						data: {
-							item: {
-								value: 'Liferay'
-							}
-						}
-					}
-				);
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
+				expect(component.getState().expanded).toBe(true);
 			}
 		);
 

@@ -69,9 +69,9 @@
 			] /}
 			{param label: $label /}
 			{param ref: 'enableValidation' /}
-			{param value: $enableValidation /}
 			{param showAsSwitcher: true /}
 			{param spritemap: $spritemap /}
+			{param value: $enableValidation /}
 		{/call}
 
 		{call Select.render}
@@ -85,7 +85,7 @@
 			{param ref: 'selectedValidation' /}
 			{param spritemap: $spritemap /}
 			{param strings: ['chooseAnOption': $strings?.chooseAnOption] /}
-			{param value: $selectedValidation?.value /}
+			{param value: [$selectedValidation?.value] /}
 			{param visible: $enableValidation /}
 		{/call}
 

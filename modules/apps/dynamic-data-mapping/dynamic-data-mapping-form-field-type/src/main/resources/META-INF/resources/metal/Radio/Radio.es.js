@@ -202,6 +202,7 @@ class Radio extends Component {
 
 		return {
 			...state,
+			options: state.options.filter(({value}) => value !== ''),
 			predefinedValue: predefinedValueArray[0] || ''
 		};
 	}

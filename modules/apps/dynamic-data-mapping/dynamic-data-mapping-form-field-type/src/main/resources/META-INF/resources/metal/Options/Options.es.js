@@ -201,13 +201,7 @@ class Options extends Component {
 		const currentLanguage = this.getCurrentLanguageId();
 		const options = [...this.value[currentLanguage]].filter((option, currentIndex) => currentIndex !== deletedIndex);
 
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				value: options
-			}
-		);
+		this._handleFieldEdited({}, options);
 
 		this.setState(
 			{
@@ -267,13 +261,7 @@ class Options extends Component {
 				}
 			);
 
-			this.emit(
-				'fieldEdited',
-				{
-					fieldInstance: this,
-					value: options
-				}
-			);
+			this._handleFieldEdited({}, options);
 		}
 
 		this.setState(
@@ -285,7 +273,7 @@ class Options extends Component {
 
 	normalizeOption(options, option) {
 		const {value} = option;
-		const desiredValue = value || Liferay.Language.get('option');
+		const desiredValue = value;
 		let normalizedValue = desiredValue;
 
 		if (this.shouldGenerateOptionValue(option)) {
@@ -326,7 +314,7 @@ class Options extends Component {
 	}
 
 	shouldGenerateOptionValue(option) {
-		return option.value === '' || (new RegExp(`^${normalizeFieldName(option.label)}\d*$`)).test(option.value);
+		return option.value === '' || (new RegExp(`^${normalizeFieldName(option.label)}\\d*$`)).test(option.value);
 	}
 
 	_createDragDrop() {
@@ -364,18 +352,11 @@ class Options extends Component {
 		}
 	}
 
-	_handleOptionBlurred({originalEvent}) {
+	_handleOptionBlurred(event) {
 		const {value} = this;
 		const normalizedValue = this.normalizeValue(value);
 
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent,
-				value: normalizedValue[this.getCurrentLanguageId()]
-			}
-		);
+		this._handleFieldEdited(event, normalizedValue[this.getCurrentLanguageId()]);
 	}
 
 	_handleOptionDeleted(event) {

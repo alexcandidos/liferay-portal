@@ -179,7 +179,7 @@ class Sidebar extends Component {
 	}
 
 	changeFieldType(type) {
-		const {fieldTypes, focusedField, namespace} = this.props;
+		const {editingLanguageId, fieldTypes, focusedField, namespace} = this.props;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
 			...newFieldType.settingsContext,
@@ -192,7 +192,7 @@ class Sidebar extends Component {
 			{
 				...focusedField,
 				...newFieldType,
-				...getFieldPropertiesFromSettingsContext(settingsContext),
+				...getFieldPropertiesFromSettingsContext(editingLanguageId, settingsContext),
 				settingsContext,
 				type: newFieldType.name
 			}

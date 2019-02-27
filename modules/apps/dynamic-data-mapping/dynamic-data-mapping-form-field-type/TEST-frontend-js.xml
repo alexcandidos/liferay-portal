@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite hostname="" id="0" errors="0" failures="0" name="Jest" package="dynamic-data-mapping.dynamic-data-mapping-form-field-type" skipped="0" tests="149" time="0" timestamp="1551283984015">
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should not be readOnly" time="0.046">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should have a helptext" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should have an id" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should have a label" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should have a placeholder" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should not be required" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should render Label if showLabel is true" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should have a spritemap" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.DocumentLibrary" name="Field DocumentLibrary should have a value" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should be not edidable" time="0.134">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have a helptext" time="0.04">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have an id" time="0.014">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should render options" time="0.02">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should render no options when options come empty" time="0.01">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have a label" time="0.017">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should be closed by default" time="0.012">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have class dropdown-opened when it&apos;s opened" time="0.014">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have a placeholder" time="0.01">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have a predefinedValue" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should not be required" time="0.009">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should put an asterisk when field is required" time="0.011">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should render Label if showLabel is true" time="0.013">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have a spritemap" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have a value" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should have a key" time="0.011">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should emit a field edit event when an item is selected" time="0.028">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should open dropdown when select is clicked" time="0.017">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Select" name="Select should render the dropdown with search when there are more than six options" time="0.036">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Options" name="Options should show the options" time="0.073">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Options" name="Options should delete an option when delete button is clicked" time="0.032">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Options" name="Options should allow the user to order the fieldName options by dragging and dropping the options" time="0.054">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Validation" name="Validation should render checkbox to enable Validation" time="0.137">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Validation" name="Validation should enable validation after click on toogle" time="0.048">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Validation" name="Validation should render parameter field with TextField element" time="0.043">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Validation" name="Validation should render parameter field with Numeric element" time="0.042">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Validation" name="Validation should render parameter field with Text element and then with Numeric after update dataType" time="0.053">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Validation" name="Validation Regression Tests LPS-88007 should not render &quot;Show Error Message&quot; and &quot;The Value&quot; as required fields" time="0.035">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should be not edidable" time="0.022">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should have a helptext" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should have an id" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should have a label" time="0.011">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should have a predefined Value" time="0.012">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should not be required" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should render Label if showLabel is true" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should have a spritemap" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should have a value" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.KeyValue" name="KeyValue should render component with a key" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should be not edidable" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should have a tip" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should have an id" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should have a label" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should have a placeholder" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should not be required" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should render Label if showLabel is true" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should have a spritemap" time="0.021">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Date" name="Field Date should have a value" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should render the default markup" time="0.012">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should not be readOnly" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should have a helptext" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should have an id" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should have a label" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should have a placeholder" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should not be required" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should render Label if showLabel is true" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should have a spritemap" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should have a value" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should have a key" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should emit a field edit event on field value change" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should propagate the field edit event" time="0.014">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Numeric" name="Field Numeric should change the mask type" time="0.009">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should be readOnly" time="0.043">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should have a helptext" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should have an id" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should have a label" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should have a placeholder" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should not be required" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should render Label if showLabel is true" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should have a spritemap" time="0.009">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should have a value" time="0.012">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Paragraph" name="Field Paragraph should have a key" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should be not edidable" time="0.009">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should have a helptext" time="0.027">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should have an id" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should have a label" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should have a predefined Value" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should not be required" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should be shown as a switcher" time="0.018">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should be shown as checkbox" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should render Label if showLabel is true" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should have a spritemap" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should have a value" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should have a key" time="0.013">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should emit field edit event on field change" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Checkbox" name="Field Checkbox should propagate the field edit event on field change" time="0.01">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should be readOnly" time="0.016">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should have a helptext" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should have an id" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should have a label" time="0.016">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should have a placeholder" time="0.014">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should not be required" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should render Label if showLabel is true" time="0.02">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should have a spritemap" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should have a value" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should have a key" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should emit a change value when onChangeEditor method is triggered" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Editor" name="Field Editor should trigger AlloyEditor actionPerformed method" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.components.Tooltip" name="Field Tooltip should render the default markup" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.components.Tooltip" name="Field Tooltip should update the tooltip visible state when the mouse is over the tooltip target" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.components.Tooltip" name="Field Tooltip should update the tooltip visible state when the mouse leaved the tooltip target" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.components.Tooltip" name="Field Tooltip should update the tooltip visible state when the mouse is over the tooltip target" time="0.065">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should be not edidable" time="0.029">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should have a helptext" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should render options" time="0.013">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should render no options when options is empty" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should have an id" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should have a label" time="0.012">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should have a predefined Value" time="0.013">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should not be required" time="0.016">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should render Label if showLabel is true" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should have a spritemap" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Radio" name="Field Radio should have a value" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should not be readOnly" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should have a helptext" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should have an id" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should have a label" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should have a placeholder" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should not be required" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should render Label if showLabel is true" time="0.014">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should have a spritemap" time="0.009">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should have a value" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Text" name="Field Text should emit a field edit with correct parameters" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.FieldBase" name="FieldBase should render the default markup" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.FieldBase" name="FieldBase should render the FieldBase with required" time="0.016">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.FieldBase" name="FieldBase should render the FieldBase with id" time="0.021">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.FieldBase" name="FieldBase should render the FieldBase with help text" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.FieldBase" name="FieldBase should render the FieldBase with label" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.FieldBase" name="FieldBase should not render the label if showLabel is false" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.FieldBase" name="FieldBase should render the FieldBase with contentRenderer" time="0.001">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should render columns" time="0.035">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should render no columns when columns comes empty" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should be not edidable" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should have a tip" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should have an id" time="0.01">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should have a label" time="0.033">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should not be required" time="0.022">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should render rows" time="0.015">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should render no rows when row comes empty" time="0.009">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should render Label if showLabel is true" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.metal.js.Grid" name="Grid should have a spritemap" time="0.005">
+  </testcase>
+</testsuite>
