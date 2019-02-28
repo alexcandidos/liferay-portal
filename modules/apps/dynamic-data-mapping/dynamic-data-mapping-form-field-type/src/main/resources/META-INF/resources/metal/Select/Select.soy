@@ -1,7 +1,7 @@
 {namespace Select}
 
 {template .render}
-	{@param strings: [chooseAnOption: string]}
+	{@param strings: [chooseAnOption: string, chooseOptions: string]}
 	{@param value: list<string>}
 	{@param? _handleClick: any}
 	{@param? _handleItemClicked: any}
@@ -48,7 +48,7 @@
 
 {template .content}
 	{@param spritemap: string}
-	{@param strings: [chooseAnOption: string]}
+	{@param strings: [chooseAnOption: string, chooseOptions: string]}
 	{@param value: list<string>}
 	{@param? _handleClick: any}
 	{@param? _handleItemClicked: any}
@@ -88,6 +88,7 @@
 									<li>
 										{call ClayLabel.render}
 											{param closeable: true /}
+											{param elementClasses: 'ddm-select-option-label' /}
 											{param data: [
 												'value': $option.value
 											] /}
@@ -105,7 +106,11 @@
 						{/for}
 
 						{ifempty}
-							<div class="option-selected option-selected-placeholder">{$strings.chooseAnOption}</div>
+							{if $multiple}
+								<div class="option-selected option-selected-placeholder">{$strings.chooseOptions}</div>
+							{else}
+								<div class="option-selected option-selected-placeholder">{$strings.chooseAnOption}</div>
+							{/if}
 					{/for}
 
 					{if $multiple}
@@ -129,7 +134,7 @@
 			{param events: [
 				'itemClicked': $_handleItemClicked
 			]/}
-			{param elementClasses: 'ddm-btn-full' /}
+			{param elementClasses: 'ddm-btn-full ddm-select-dropdown' /}
 			{param expanded: $expanded /}
 			{param items: $options /}
 			{param ref: 'dropdown' /}

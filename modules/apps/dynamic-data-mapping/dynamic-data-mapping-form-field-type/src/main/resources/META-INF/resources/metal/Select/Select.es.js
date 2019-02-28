@@ -206,7 +206,8 @@ class Select extends Component {
 
 		strings: Config.object().value(
 			{
-				chooseAnOption: Liferay.Language.get('choose-an-option')
+				chooseAnOption: Liferay.Language.get('choose-an-option'),
+				chooseOptions: Liferay.Language.get('choose-options')
 			}
 		),
 
@@ -230,16 +231,6 @@ class Select extends Component {
 
 		visible: Config.bool().value(true)
 	};
-
-	willReceiveState({options}) {
-		if (options && options.newVal) {
-			this.setState(
-				{
-					options: options.newVal
-				}
-			);
-		}
-	}
 
 	attached() {
 		this._eventHandler = new EventHandler();
@@ -280,15 +271,15 @@ class Select extends Component {
 			value: ''
 		};
 
-		const newOptions = [
+		let newOptions = [
 			...options
 		].map(
-			option => this._markSelectedOption(option, valueArray)
+			option => this._prepareOption(option, valueArray)
 		).concat(
 			fixedOptions.map(
 				(option, index) => {
 					return {
-						...this._markSelectedOption(option, valueArray),
+						...this._prepareOption(option, valueArray),
 						separator: index === 0
 					};
 				}
@@ -297,20 +288,25 @@ class Select extends Component {
 			({value}) => value !== ''
 		);
 
+		if (!multiple) {
+			newOptions = [emptyOption, ...newOptions];
+		}
+
 		return {
 			...state,
-			options: [emptyOption, ...newOptions],
+			options: newOptions,
 			value: valueArray
 		};
 	}
 
-	_markSelectedOption(option, valueArray) {
+	_prepareOption(option, valueArray) {
 		const {multiple} = this;
+		const included = valueArray.includes(option.value);
 
 		return {
 			...option,
-			active: valueArray.includes(option.value),
-			checked: multiple && valueArray.includes(option.value),
+			active: !multiple && included,
+			checked: multiple && included,
 			type: multiple ? 'checkbox' : 'item'
 		};
 	}
@@ -342,47 +338,59 @@ class Select extends Component {
 
 	addValue(value) {
 		const currentValue = this._getArrayValue(this.value);
-		const newValue = [...currentValue, value];
+		const newValue = [...currentValue];
 
-		this.setState(
-			{
-				value: newValue
-			}
-		);
+		if (value) {
+			newValue.push(value);
+		}
 
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				value: newValue
-			}
-		);
+		return newValue;
 	}
 
 	deleteValue(value) {
 		const currentValue = this._getArrayValue(this.value);
-		const newValue = currentValue.filter(v => v !== value);
 
-		this.setState(
-			{
-				expanded: false,
-				value: newValue
-			},
-			() => this.emit(
-				'fieldEdited',
-				{
-					fieldInstance: this,
-					value: newValue
-				}
-			)
-		);
+		return currentValue.filter(v => v !== value);
 	}
 
 	setValue(value) {
-		const newValue = [value];
+		const newValue = [];
+
+		if (value) {
+			newValue.push(value);
+		}
+
+		return newValue;
+	}
+
+	_handleItemClicked({data, preventDefault, target}) {
+		const {multiple} = this;
+		const currentValue = this._getArrayValue(this.value);
+		const itemValue = data.item.value;
+
+		let newValue;
+
+		if (multiple) {
+			if (currentValue.includes(itemValue)) {
+				newValue = this.deleteValue(itemValue);
+
+				if (document.activeElement) {
+					document.activeElement.blur();
+				}
+			}
+			else {
+				newValue = this.addValue(itemValue);
+			}
+		}
+		else {
+			newValue = this.setValue(itemValue);
+		}
+
+		preventDefault();
 
 		this.setState(
 			{
+				expanded: multiple,
 				value: newValue
 			},
 			() => this.emit(
@@ -392,31 +400,6 @@ class Select extends Component {
 					value: newValue
 				}
 			)
-		);
-	}
-
-	_handleItemClicked(event) {
-		const {multiple} = this;
-		const currentValue = this._getArrayValue(this.value);
-
-		if (multiple) {
-			if (currentValue.includes(event.data.item.value)) {
-				this.deleteValue(event.data.item.value);
-			}
-			else {
-				this.addValue(event.data.item.value);
-			}
-		}
-		else {
-			this.setValue(event.data.item.value);
-		}
-
-		event.preventDefault();
-
-		this.setState(
-			{
-				expanded: multiple
-			}
 		);
 	}
 
@@ -426,17 +409,20 @@ class Select extends Component {
 		preventDefault();
 		stopPropagation();
 
-		this.deleteValue(value);
-	}
+		const newValue = this.deleteValue(value);
 
-	_handleClick() {
-		if (!this.readOnly) {
-			this.setState(
+		this.setState(
+			{
+				value: newValue
+			},
+			() => this.emit(
+				'fieldEdited',
 				{
-					expanded: !this.expanded
+					fieldInstance: this,
+					value: newValue
 				}
-			);
-		}
+			)
+		);
 	}
 }
 
