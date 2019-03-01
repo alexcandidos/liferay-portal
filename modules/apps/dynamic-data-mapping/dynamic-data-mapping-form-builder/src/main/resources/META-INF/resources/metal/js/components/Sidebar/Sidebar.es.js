@@ -616,9 +616,13 @@ class Sidebar extends Component {
 		const newVisitor = new PagesVisitor(newSettingsContext.pages);
 		const oldVisitor = new PagesVisitor(oldSettingsContext.pages);
 
-		const excludedFields = ['type', 'validation'];
+		const excludedFields = [
+			'predefinedValue',
+			'type',
+			'validation'
+		];
 
-		const getByFieldNameAndType = ({fieldName, type, value}) => {
+		const getPreviousField = ({fieldName, type, value}) => {
 			let field;
 
 			oldVisitor.findField(
@@ -642,13 +646,10 @@ class Sidebar extends Component {
 			...newSettingsContext,
 			pages: newVisitor.mapFields(
 				newField => {
-					const mergedField = getByFieldNameAndType(newField);
+					const previousField = getPreviousField(newField);
 
-					if (mergedField) {
-						newField = {
-							...mergedField,
-							visible: newField.visible
-						};
+					if (previousField) {
+						newField.value = previousField.value;
 					}
 
 					return newField;
