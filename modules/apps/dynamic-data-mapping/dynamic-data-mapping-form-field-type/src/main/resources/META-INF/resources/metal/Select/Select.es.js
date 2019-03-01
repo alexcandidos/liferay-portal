@@ -274,15 +274,15 @@ class Select extends Component {
 		let newOptions = [
 			...options
 		].map(
-			option => this._prepareOption(option, valueArray)
+			(option, index) => {
+				return {
+					...this._prepareOption(option, valueArray),
+					separator: (fixedOptions.length > 0) && (index === options.length - 1)
+				};
+			}
 		).concat(
 			fixedOptions.map(
-				(option, index) => {
-					return {
-						...this._prepareOption(option, valueArray),
-						separator: index === 0
-					};
-				}
+				(option) => this._prepareOption(option, valueArray)
 			)
 		).filter(
 			({value}) => value !== ''
