@@ -185,7 +185,11 @@ class Sidebar extends Component {
 			...newFieldType.settingsContext,
 			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, namespace, newFieldType, focusedField.fieldName)
 		};
-		const settingsContext = this._mergeFieldTypeSettings(focusedField.settingsContext, newSettingsContext);
+		let {settingsContext} = focusedField;
+
+		if (type !== focusedField.type) {
+			settingsContext = this._mergeFieldTypeSettings(settingsContext, newSettingsContext);
+		}
 
 		this.emit(
 			'focusedFieldUpdated',
