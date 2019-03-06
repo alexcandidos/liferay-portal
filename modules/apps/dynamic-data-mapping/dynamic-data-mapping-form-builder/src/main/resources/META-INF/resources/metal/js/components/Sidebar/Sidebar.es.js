@@ -621,7 +621,6 @@ class Sidebar extends Component {
 		const oldVisitor = new PagesVisitor(oldSettingsContext.pages);
 
 		const excludedFields = [
-			'predefinedValue',
 			'type',
 			'validation'
 		];
@@ -653,7 +652,21 @@ class Sidebar extends Component {
 					const previousField = getPreviousField(newField);
 
 					if (previousField) {
-						newField.value = previousField.value;
+						if (newField.fieldName === 'repeatable') {
+							newField.value = previousField.value;
+						}
+						else {
+							newField = {
+								...newField,
+								...previousField,
+								visible: newField.visible
+							};
+
+							if (newField.fieldName === 'predefinedValue') {
+								delete newField.multiple;
+								delete newField.value;
+							}
+						}
 					}
 
 					return newField;
