@@ -6,6 +6,28 @@
 			}
 		}
 	},
+	"exclude": {
+		"*": [
+			"src/__tests__/**/*",
+			"src/*.soy",
+			"src/**/*.soy"
+		],
+		"clay-button": true,
+		"clay-checkbox": true,
+		"clay-component": true,
+		"clay-dropdown": true,
+		"clay-icon": true,
+		"clay-label": true,
+		"clay-link": true,
+		"clay-radio": true,
+		"metal-component": true,
+		"metal-dom": true,
+		"metal-events": true,
+		"metal-jsx": true,
+		"metal-soy": true,
+		"metal-state": true,
+		"metal": true
+	},
 	"ignore": [
 		"**/*.js",
 		"**/__tests__/*.js",

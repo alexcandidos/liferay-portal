@@ -1,5 +1,58 @@
 {
-    "ignore": [
-		"**/js/*.js"
+    "config": {
+		"imports": {
+			"dynamic-data-mapping-form-builder": {
+				"/": ">=2.0.0"
+			},
+			"frontend-taglib-clay": {
+				"clay-alert": ">=2.1.12",
+				"clay-management-toolbar": ">=2.1.12",
+				"clay-button": ">=2.1.12",
+				"clay-dropdown": ">=2.1.12",
+				"clay-modal": ">=2.1.12",
+				"clay-navigation-bar": ">=2.1.12"
+			},
+			"dynamic-data-mapping-form-field-type": {
+				"/": ">=4.0.0"
+			},
+			"frontend-js-metal-web": {
+				"metal": ">=2.16.5",
+				"metal-component": ">=2.16.5",
+				"metal-soy": ">=2.16.5",
+				"metal-jsx": ">=2.16.5",
+				"metal-state": ">=2.16.5",
+				"metal-dom": ">=2.16.5",
+				"metal-events": ">=2.16.5"
+			},
+			"frontend-js-web": {
+				"/": ">=3.0.0"
+			}
+		}
+	},
+	"exclude": {
+		"*": [
+			"src/__tests__/**/*",
+			"src/*.soy",
+			"src/**/*.soy"
+		],
+		"clay-alert": true,
+		"clay-button": true,
+		"clay-dropdown": true,
+		"clay-management-toolbar": true,
+		"clay-modal": true,
+		"clay-navigation-bar": true,
+		"metal-component": true,
+		"metal-dom": true,
+		"metal-events": true,
+		"metal-jsx": true,
+		"metal-soy": true,
+		"metal-state": true,
+		"metal": true
+	},
+	"ignore": [
+		"**/*.js",
+		"**/__tests__/*.js",
+		"!**/*.es.js",
+		"!**/*.soy.js"
 	]
 }

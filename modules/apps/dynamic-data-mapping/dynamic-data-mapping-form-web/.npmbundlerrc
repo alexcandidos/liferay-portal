@@ -9,6 +9,26 @@
 			}
 		}
 	},
+	"exclude": {
+		"*": [
+			"src/__tests__/**/*",
+			"src/*.soy",
+			"src/**/*.soy"
+		],
+		"clay-alert": true,
+		"clay-button": true,
+		"clay-dropdown": true,
+		"clay-management-toolbar": true,
+		"clay-modal": true,
+		"clay-navigation-bar": true,
+		"metal-component": true,
+		"metal-dom": true,
+		"metal-events": true,
+		"metal-jsx": true,
+		"metal-soy": true,
+		"metal-state": true,
+		"metal": true
+	},
 	"ignore": [
 		"**/*.js",
 		"**/__tests__/*.js",
