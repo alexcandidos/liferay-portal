@@ -33,6 +33,7 @@ import java.io.Writer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -134,14 +135,19 @@ public class SoyComponentRendererHelper {
 			(Map)_context, _wrapperId, _moduleName,
 			_componentDescriptor.isWrapper());
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(_componentDescriptor.getModule());
 		sb.append(" as ");
 		sb.append(_moduleName);
-		sb.append(
-			String.join(
-				StringPool.COMMA, _componentDescriptor.getDependencies()));
+
+		Set<String> dependencies = _componentDescriptor.getDependencies();
+
+		if (!dependencies.isEmpty()) {
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.append(String.join(StringPool.COMMA, dependencies));
 
 		if (_componentDescriptor.isPositionInLine()) {
 			ScriptData scriptData = new ScriptData();
