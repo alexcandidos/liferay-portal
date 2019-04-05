@@ -15,6 +15,7 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {isKeyInSet, isModifyingKey} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-builder/metal/js/util/visitors.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 
 /**
@@ -674,7 +675,21 @@ class Form extends Component {
 
 		const settingsDDMForm = Liferay.component('settingsDDMForm');
 
-		if (settingsDDMForm && settingsDDMForm.getField('requireAuthentication').getValue()) {
+		let requireAuthentication = false;
+
+		if (settingsDDMForm) {
+			const settingsPageVisitor = new PagesVisitor(settingsDDMForm.pages);
+
+			settingsPageVisitor.mapFields(
+				field => {
+					if (field.fieldName === 'requireAuthentication') {
+						requireAuthentication = field.value;
+					}
+				}
+			);
+		}
+
+		if (requireAuthentication) {
 			formURL = Liferay.DDM.FormSettings.restrictedFormURL;
 		}
 		else {
