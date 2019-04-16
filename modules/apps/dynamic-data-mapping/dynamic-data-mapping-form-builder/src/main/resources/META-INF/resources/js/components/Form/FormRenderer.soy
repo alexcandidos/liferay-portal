@@ -147,13 +147,13 @@
 
 	<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 		{foreach $page in $pages}
-			{let $pageIndex: index($page) /}
+			{let $itemRenderer: $page.paginationItemRenderer ?: '' /}
 
-			{delcall FormRenderer.WizardItem variant="$page.paginationItemRenderer"}
+			{delcall FormRenderer.WizardItem variant="$itemRenderer"}
 				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 				{param activePage: $activePage /}
 				{param page: $page /}
-				{param pageIndex: $pageIndex /}
+				{param pageIndex: index($page) /}
 				{param total: length($pages) /}
 			{/delcall}
 		{/foreach}
@@ -220,13 +220,13 @@
 		</li>
 
 		{foreach $page in $pages}
-			{let $pageIndex: index($page) /}
+			{let $itemRenderer: $page.paginationItemRenderer ?: '' /}
 
-			{delcall FormRenderer.PaginationItem variant="$page.paginationItemRenderer"}
+			{delcall FormRenderer.PaginationItem variant="$itemRenderer"}
 				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 				{param activePage: $activePage /}
 				{param page: $page /}
-				{param pageIndex: $pageIndex /}
+				{param pageIndex: index($page) /}
 			{/delcall}
 		{/foreach}
 
