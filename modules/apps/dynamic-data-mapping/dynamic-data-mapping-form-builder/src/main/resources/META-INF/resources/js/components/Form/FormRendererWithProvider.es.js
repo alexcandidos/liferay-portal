@@ -1,6 +1,5 @@
 import FormRenderer from './FormRenderer.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-builder/metal/js/util/visitors.es';
-
+import {PagesVisitor} from '../../util/visitors.es';
 
 class FormRendererWithProvider extends FormRenderer {
 	_handleFieldEdited(properties) {
@@ -22,6 +21,7 @@ class FormRendererWithProvider extends FormRenderer {
 
 	created() {
 		this.on('fieldEdited', this._handleFieldEdited)
+		this.on('fieldRepeated', this._handleFieldEdited)
 	}
 }
 
