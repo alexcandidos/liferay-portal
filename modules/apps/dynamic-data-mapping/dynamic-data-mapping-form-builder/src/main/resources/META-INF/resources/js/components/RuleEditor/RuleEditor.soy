@@ -55,8 +55,8 @@
 		]>
 	}
 	{@param actionTypes: list<[
-			value: string,
-			name: string
+			label: string,
+			value: string
 		]>
 	}
 	{@param calculatorFunctions: list<[
@@ -89,12 +89,7 @@
 				value: string
 			]>,
 			operator: string,
-			operators: list<[
-				name: string,
-				parameterTypes: list<string>,
-				returnType: string,
-				value: string
-			]>
+			operators: ?
 		]>
 	}
 	{@param? dataProvider: list<[
@@ -352,8 +347,8 @@
 
 {template .renderAction}
 	{@param actionTypes: list<[
-			value: string,
-			name: string
+			label: string,
+			value: string
 		]>
 	}
 	{@param calculatorFields: list<[
@@ -568,7 +563,7 @@
 
 {template .renderActionTarget}
 	{@param index: int}
-	{@param options: any}
+	{@param options: ?}
 	{@param ref: string}
 	{@param spritemap: string}
 	{@param? _handleTargetSelection: any}
@@ -618,12 +613,7 @@
 	]>}
 	{@param? fixedOptions: any}
 	{@param? logicalOperator: string}
-	{@param? operators:  list<[
-		name: string,
-		parameterTypes: list<string>,
-		returnType: string,
-		value: string
-	]>}
+	{@param? operators: ?}
 	{@param? roles: list<[
 		label: string,
 		value: string
@@ -785,13 +775,7 @@
 	{@param spritemap: string}
 	{@param? _handleOperatorEdited: any}
 	{@param? firstOperandType: string}
-	{@param? operators:  list<[
-			value: string,
-			name: string,
-			parameterTypes: list<string>,
-			returnType: string
-		]>
-	}
+	{@param? operators: ?}
 	{@param? selectedOperator: string}
 
 	{let $readOnly: $firstOperandType ? false : true /}
