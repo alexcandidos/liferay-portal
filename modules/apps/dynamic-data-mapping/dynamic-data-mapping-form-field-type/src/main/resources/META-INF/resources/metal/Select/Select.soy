@@ -1,8 +1,9 @@
 {namespace Select}
 
 {template .render}
+	{@param name: string}
 	{@param spritemap: string}
-	{@param value: list<string>}
+	{@param value: ?}
 	{@param? _handleClick: any}
 	{@param? _handleItemClicked: any}
 	{@param? _handleLabelClosed: any}
@@ -12,11 +13,14 @@
 	{@param? label: string}
 	{@param? multiple: bool}
 	{@param? options: list<?>}
+	{@param? predefinedValue: ?}
 	{@param? readOnly: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? tip: string}
+
+	{let $displayValues: length($value) > 0 ? $value : $predefinedValue and length($predefinedValue) > 0 ? $predefinedValue : [] /}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -25,9 +29,11 @@
 				{param _handleItemClicked: $_handleItemClicked /}
 				{param _handleLabelClosed: $_handleLabelClosed /}
 				{param dataSourceType: $dataSourceType /}
+				{param displayValues: $displayValues /}
 				{param expanded: $expanded /}
 				{param id: $id /}
 				{param multiple: $multiple /}
+				{param name: $name /}
 				{param options: $options /}
 				{param readOnly: $readOnly /}
 				{param spritemap: $spritemap /}
@@ -45,6 +51,8 @@
 {/template}
 
 {template .content}
+	{@param displayValues: ?}
+	{@param name: string}
 	{@param spritemap: string}
 	{@param value: list<string>}
 	{@param? _handleClick: any}
@@ -72,6 +80,15 @@
 		{/let}
 
 		{let $trigger kind="html"}
+			{if not $readOnly}
+				{call .hidden_select}
+					{param displayValues: $displayValues /}
+					{param multiple: $multiple /}
+					{param name: $name /}
+					{param options: $options /}
+				{/call}
+			{/if}
+
 			<div class="form-builder-select-field input-group-container">
 				<div {$attributes}>
 					{if $multiple}
@@ -142,4 +159,43 @@
 			{param label: $trigger /}
 		{/call}
 	{/if}
+{/template}
+
+/**
+ * Prints hidden select tag.
+ */
+{template .hidden_select}
+	{@param displayValues: ?}
+	{@param name: string}
+	{@param options: list<?>}
+	{@param? multiple: bool}
+
+	<select class="form-control hide" id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
+		<option disabled {if length($displayValues) == 0}selected{/if} value=""></option>
+
+		{foreach $option in $options}
+			{call .select_hidden_options}
+				{param option: $option /}
+				{param values: $displayValues /}
+			{/call}
+		{/foreach}
+	</select>
+{/template}
+
+/**
+ * Prints the DDM form hidden select options.
+ */
+{template .select_hidden_options}
+	{@param option: [label: string, value: string]}
+	{@param values: ?}
+
+	{let $selected kind="attributes"}
+		{foreach $currentValue in $values}
+			{if $currentValue == $option.value}
+				selected
+			{/if}
+		{/foreach}
+	{/let}
+
+	<option {$selected} value="{$option.value}">{$option.label}</option>
 {/template}
