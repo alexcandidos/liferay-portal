@@ -68,6 +68,7 @@
 				'fieldEdited': $_updateValue
 			] /}
 			{param label: $label /}
+			{param name: 'enableValidation' /}
 			{param readOnly: $readOnly /}
 			{param ref: 'enableValidation' /}
 			{param showAsSwitcher: true /}
@@ -83,6 +84,7 @@
 			{param label kind="text"}
 				{msg desc=""}if-input{/msg}
 			{/param}
+			{param name: 'selectedValidation' /}
 			{param options: $validations /}
 			{param placeholder kind="text"}
 				{msg desc=""}choose-an-option{/msg}
