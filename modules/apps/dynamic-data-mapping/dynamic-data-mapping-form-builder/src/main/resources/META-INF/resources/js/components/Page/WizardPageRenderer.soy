@@ -15,8 +15,10 @@
 
 	<div class="ddm-layout-builder ddm-page-container-layout">
 		{if $activePage == $pageIndex}
-			<div class="ddm-form-page pl-4 pr-4">
-				{delcall PageRenderer.PageHeader data="$page" variant="$page.headerRenderer"}
+			<div class="ddm-form-page">
+				{let $headerRenderer: $page.headerRenderer ?: '' /}
+
+				{delcall PageRenderer.PageHeader data="$page" variant="$headerRenderer"}
 					{param description: $page.description ?: '' /}
 					{param pageIndex: $pageIndex /}
 					{param title: $page.title ?: '' /}
@@ -168,7 +170,6 @@
 					{let $fieldType: $field.type /}
 
 					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
-						{param readOnly: true  /}
 						{param events: [
 							'fieldBlurred': $_handleFieldBlurred,
 							'fieldEdited': $_handleFieldEdited
