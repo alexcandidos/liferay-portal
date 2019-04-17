@@ -34,6 +34,12 @@ import org.osgi.service.component.annotations.Component;
 public class FieldSetDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
+	public String getModuleName() {
+		return "dynamic-data-mapping-form-field-type/metal/Fieldset" +
+			"/Fieldset.es";
+	}
+
+	@Override
 	public String getName() {
 		return "fieldset";
 	}
