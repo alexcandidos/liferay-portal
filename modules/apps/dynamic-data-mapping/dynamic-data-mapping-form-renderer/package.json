@@ -1,10 +1,79 @@
 {
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"env": {
+						"browser": true
+					},
+					"extends": "liferay",
+					"parser": "babel-eslint",
+					"parserOptions": {
+						"ecmaVersion": 7
+					},
+					"plugins": [
+						"sort-class-members"
+					],
+					"rules": {
+						"no-unknown-property": [
+							2,
+							{
+								"ignore": [
+									"class",
+									"xlink:href"
+								]
+							}
+						],
+						"sort-class-members/sort-class-members": [
+							2,
+							{
+								"groups": {
+									"conventional-private-methods": [
+										{
+											"name": "/^_.+$/",
+											"sort": "alphabetical",
+											"type": "method"
+										}
+									],
+									"methods": [
+										{
+											"sort": "alphabetical",
+											"type": "method"
+										}
+									]
+								},
+								"order": [
+									"[static-properties]",
+									"[static-methods]",
+									"[properties]",
+									"[conventional-private-properties]",
+									"constructor",
+									"[methods]",
+									"[conventional-private-methods]"
+								]
+							}
+						],
+						"sort-keys": [
+							"error",
+							"asc",
+							{
+								"caseSensitive": false,
+								"natural": false
+							}
+						]
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"incremental-dom-string": "0.0.2",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8"
 	},
+	"main": "./",
 	"name": "dynamic-data-mapping-form-renderer",
+	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
