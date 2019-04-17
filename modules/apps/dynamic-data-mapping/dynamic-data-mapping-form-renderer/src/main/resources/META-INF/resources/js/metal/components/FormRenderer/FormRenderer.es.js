@@ -1,11 +1,9 @@
-import '../Page/PageRenderer.es';
-import '../SuccessPage/SuccessPage.es';
+import '../PageRenderer/PageRenderer.es';
 import 'clay-button';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './FormRenderer.soy.js';
 import {Config} from 'metal-state';
-import {pageStructure} from '../../util/config.es';
 
 /**
  * FormRenderer.
