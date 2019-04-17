@@ -25,12 +25,14 @@
 
 		<div class="{$fieldCssClassAttribute}">
 			{if $repeatable}
-				{call ClayButton.render}
-					{param elementClasses: 'btn-xs ddm-form-field-repeatable-add-button p-0' /}
-					{param icon: 'plus' /}
-					{param spritemap: $spritemap /}
-					{param type: 'button' /}
-				{/call}
+				<div class="lfr-ddm-form-field-repeatable-toolbar">
+					{call ClayButton.render}
+						{param elementClasses: 'btn-xs ddm-form-field-repeatable-add-button p-0' /}
+						{param icon: 'plus' /}
+						{param spritemap: $spritemap /}
+						{param type: 'button' /}
+					{/call}
+				</div>
 			{/if}
 
 			{let $attributesLabel kind="attributes"}

@@ -426,13 +426,13 @@ body .ddm-user-view-content {
 .liferay-ddm-form-field-fieldset {
 	margin-bottom: 0 !important;
 
-	& + .lfr-ddm-form-field-repeatable-toolbar {
-		.icon-minus-sign {
+	.lfr-ddm-form-field-repeatable-toolbar {
+		.ddm-form-field-repeatable-remove-button {
 			right: 26px;
 			top: 16px;
 		}
 
-		.icon-plus-sign {
+		.ddm-form-field-repeatable-add-button {
 			right: 8px;
 			top: 16px;
 		}
@@ -446,7 +446,7 @@ body .ddm-user-view-content {
 		margin-bottom: 50px !important;
 	}
 
-	& > fieldset {
+	fieldset {
 		border: 1px solid rgba(134, 156, 173, 0.4);
 		border-bottom-width: 0;
 		border-top-width: 0;
