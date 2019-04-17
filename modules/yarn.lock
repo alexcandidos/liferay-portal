@@ -8339,11 +8339,6 @@ in-publish@^2.0.0:
   resolved "https://registry.yarnpkg.com/in-publish/-/in-publish-2.0.0.tgz#e20ff5e3a2afc2690320b6dc552682a9c7fadf51"
   integrity sha1-4g/146KvwmkDILbcVSaCqcf631E=
 
-incremental-dom-string@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/incremental-dom-string/-/incremental-dom-string-0.0.2.tgz#d4a6abd5916df6346aae022c9ffac5fb90458ae6"
-  integrity sha512-vh6cTsw+fQNljhNg3/iDuawNjk79CS1sEqucal1DJY+aco/Mgpi+xjkUFMED41f6nzu1V0ialfC84wcW9nqZ2w==
-
 incremental-dom-string@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/incremental-dom-string/-/incremental-dom-string-0.0.3.tgz#19f039e17a02bb1c4446d2baddba2809168c02c4"
