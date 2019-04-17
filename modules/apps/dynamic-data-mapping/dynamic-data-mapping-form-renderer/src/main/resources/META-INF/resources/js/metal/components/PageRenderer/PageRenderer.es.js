@@ -5,13 +5,12 @@ import './WizardPageRenderer.soy.js';
 import 'clay-button';
 import 'clay-dropdown';
 import 'clay-modal';
-import * as FormSupport from '../Form/FormSupport.es';
+import * as FormSupport from '../FormRenderer/FormSupport.es';
 import Component from 'metal-component';
 import core from 'metal';
 import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
 import {Config} from 'metal-state';
-import {pageStructure} from '../../util/config.es';
 
 class PageRenderer extends Component {
 	static STATE = {
@@ -38,7 +37,7 @@ class PageRenderer extends Component {
 		 * @type {?array<object>}
 		 */
 
-		page: pageStructure,
+		page: Config.object(),
 
 		/**
 		 * @default 1
