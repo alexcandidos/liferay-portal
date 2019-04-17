@@ -464,6 +464,8 @@
 							{param events: [
 								'fieldEdited': $_handleActionSelection
 							] /}
+							{param ref: 'action' + $index /}
+							{param name: 'action' + $index /}
 							{param options: $actionTypes /}
 							{param placeholder kind="text"}
 								{msg desc=""}choose-an-option{/msg}
@@ -575,6 +577,7 @@
 			{param events: [
 				'fieldEdited': $_handleTargetSelection
 			] /}
+			{param name: $ref /}
 			{param options: $options /}
 			{param placeholder: $placeholder /}
 			{param ref: $ref /}
@@ -642,6 +645,7 @@
 								'fieldEdited': $_handleFirstOperandFieldEdited
 							] /}
 							{param fixedOptions: $fixedOptions /}
+							{param name: 'firstOperand' + $index /}
 							{param options: $fieldOptions /}
 							{param placeholder kind="text"}
 								{msg desc=""}choose-an-option{/msg}
@@ -699,6 +703,8 @@
 											{param events: [
 												'fieldEdited': $_handleSecondOperandValueEdited
 											] /}
+											{param ref: 'secondOperand' + $index /}
+											{param name: 'secondOperand' + $index /}
 											{param options: $fieldOptions /}
 											{param placeholder kind="text"}
 												{msg desc=""}choose-an-option{/msg}
@@ -785,6 +791,7 @@
 			{param events: [
 				'fieldEdited': $_handleOperatorEdited
 			] /}
+			{param name: 'conditionOperator' + $index /}
 			{param options: $operators /}
 			{param placeholder kind="text"}
 				{msg desc=""}choose-an-option{/msg}
@@ -832,6 +839,8 @@
 				{param events: [
 					'fieldEdited': $_handleSecondOperandTypeEdited
 				] /}
+				{param ref: 'secondOperandTypeSelector' + $index /}
+				{param name: 'secondOperandTypeSelector' + $index /}
 				{param options: $options /}
 				{param placeholder kind="text"}
 					{msg desc=""}choose-an-option{/msg}
@@ -864,6 +873,7 @@
 			{param events: [
 				'fieldEdited': $_handleSecondOperandFieldEdited
 			] /}
+			{param name: 'roleSelector' + $index /}
 			{param options: $roles /}
 			{param placeholder kind="text"}
 				{msg desc=""}choose-an-option{/msg}
@@ -1061,6 +1071,7 @@
 								{param events: [
 									'fieldEdited': $_handleDataProviderInputEdited
 								] /}
+								{param name: 'action' + $actionIndex + 'dataProviderInput' + $index /}
 								{param options: $input.fieldOptions /}
 								{param placeholder kind="text"}
 									{msg desc=""}choose-an-option{/msg}
@@ -1093,6 +1104,7 @@
 								{param events: [
 									'fieldEdited': $_handleDataProviderOutputEdited
 								] /}
+								{param name: 'action' + $actionIndex + 'dataProviderOutput' + $index /}
 								{param options: $output.fieldOptions /}
 								{param placeholder kind="text"}
 									{msg desc=""}choose-an-option{/msg}
