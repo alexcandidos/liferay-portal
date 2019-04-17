@@ -1,0 +1,86 @@
+{namespace Fieldset}
+
+/**
+ * Renders the field.
+ */
+{template .render}
+	{@param columnSize: int}
+	{@param nestedFields: list<?>}
+	{@param? label: string}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showBorderTop: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? tip: string}
+	{@param? tooltip: string}
+
+	<div class="liferay-ddm-form-field-fieldset">
+		{call FieldBase.render}
+			{param contentRenderer kind="html"}
+				{call .content}
+					{param columnSize: $columnSize /}
+					{param nestedFields: $nestedFields /}
+					{param label: $label /}
+					{param showBorderTop: $showBorderTop /}
+					{param showLabel: $showLabel /}
+					{param spritemap: $spritemap /}
+				{/call}
+			{/param}
+			{param label: $label /}
+			{param repeatable: $repeatable /}
+			{param required: $required /}
+			{param showLabel: false /}
+			{param spritemap: $spritemap /}
+			{param tip: $tip /}
+			{param tooltip: $tooltip /}
+		{/call}
+	</div>
+{/template}
+
+/**
+ * Prints all columns.
+ */
+{template .columns}
+	{@param columnSize: int}
+	{@param fields: list<?>}
+	{@param? spritemap: string}
+
+	{foreach $field in $fields}
+		<div class="col-md-{$columnSize} form-group-item">
+			<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container">
+				{let $variant: $field.type /}
+
+				{delcall PageRenderer.RegisterFieldType data="$field" variant="$variant"}
+					{param ref: 'fieldset_field' + index($field) /}
+					{param spritemap: $spritemap /}
+				{/delcall}
+			</div>
+		</div>
+	{/foreach}
+{/template}
+
+/**
+ * Prints the field content.
+ */
+{template .content}
+	{@param columnSize: int}
+	{@param nestedFields: list<?>}
+	{@param? label: string}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+
+	<fieldset class="border-bottom border-top">
+		{if $showLabel and $label}
+			<legend>{$label}</legend>
+		{/if}
+
+		<div class="form-group-autofit">
+			{call .columns}
+				{param columnSize: $columnSize /}
+				{param fields: $nestedFields /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</div>
+	</fieldset>
+{/template}
