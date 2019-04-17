@@ -1,9 +1,9 @@
-import * as FormSupport from '../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {getFieldProperties} from '../../util/fieldSupport.es';
 import {pageStructure, ruleStructure} from '../../util/config.es';
-import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
+import {PagesVisitor, RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 
 import handleColumnResized from './handlers/columnResizedHandler.es';

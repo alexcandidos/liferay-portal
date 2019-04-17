@@ -1,8 +1,9 @@
+import '../SuccessPage/SuccessPage.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
 import compose from '../../util/compose.es';
 import dom from 'metal-dom';
-import FormRenderer from '../../components/Form/FormRenderer.es';
+import FormRenderer from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormRenderer.es';
 import Sidebar from '../../components/Sidebar/Sidebar.es';
 import withActionableFields from './withActionableFields.es';
 import withEditablePageHeader from './withEditablePageHeader.es';
@@ -13,9 +14,9 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
 import {generateFieldName} from '../LayoutProvider/util/fields.es';
-import {makeFetch} from '../../util/fetch.es';
+import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/metal/util/fetch.es';
 import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 /**
  * Builder.
