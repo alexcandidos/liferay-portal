@@ -8,7 +8,7 @@ import templates from './KeyValue.soy.js';
 import {Config} from 'metal-state';
 import {
 	normalizeFieldName
-} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/fields.es';
+} from 'dynamic-data-mapping-form-renderer/js/metal/util/fields.es';
 
 /**
  * KeyValue.
