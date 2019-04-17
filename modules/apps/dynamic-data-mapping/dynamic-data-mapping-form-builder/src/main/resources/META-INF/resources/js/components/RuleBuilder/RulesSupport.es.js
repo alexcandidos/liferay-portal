@@ -1,4 +1,4 @@
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 const clearTargetValue = (actions, index) => {
 	if (actions[index]) {

@@ -1,6 +1,6 @@
-import * as FormSupport from '../../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import {generateFieldName} from '../util/fields.es';
-import {PagesVisitor} from '../../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 import {sub} from '../../../util/strings.es';
 
 const handleFieldDuplicated = (state, editingLanguageId, event) => {

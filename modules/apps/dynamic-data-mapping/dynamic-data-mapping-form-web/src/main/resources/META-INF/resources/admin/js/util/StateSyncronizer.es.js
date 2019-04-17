@@ -1,8 +1,8 @@
-import * as FormSupport from 'dynamic-data-mapping-form-builder/js/components/Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {PagesVisitor} from 'dynamic-data-mapping-form-builder/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 class StateSyncronizer extends Component {
 	static PROPS = {

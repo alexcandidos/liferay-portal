@@ -1,4 +1,4 @@
-import * as FormSupport from '../../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import {generateInstanceId, getFieldProperties} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
