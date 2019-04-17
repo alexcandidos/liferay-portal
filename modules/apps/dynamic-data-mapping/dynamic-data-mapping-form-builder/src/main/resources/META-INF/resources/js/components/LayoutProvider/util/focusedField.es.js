@@ -1,9 +1,9 @@
 import {
 	generateFieldName,
-	normalizeFieldName,
 	updateFieldValidationProperty
 } from './fields.es';
 import {getField} from '../util/fields.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/metal/util/fields.es';
 import {updateSettingsContextProperty} from './settings.es';
 
 const shouldAutoGenerateName = (defaultLanguageId, editingLanguageId, focusedField) => {

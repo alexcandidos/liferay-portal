@@ -1,4 +1,4 @@
-import {PagesVisitor} from '../../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 export const updateSettingsContextProperty = (editingLanguageId, settingsContext, propertyName, propertyValue) => {
 	const visitor = new PagesVisitor(settingsContext.pages);

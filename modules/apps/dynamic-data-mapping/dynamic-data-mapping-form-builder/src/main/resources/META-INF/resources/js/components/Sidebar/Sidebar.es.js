@@ -1,12 +1,12 @@
-import * as FormSupport from '../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import classnames from 'classnames';
 import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
-import FormRenderer from '../Form/FormRenderer.es';
+import FormRenderer from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormRenderer.es';
 import UA from 'metal-useragent';
-import WithEvaluator from '../Form/Evaluator.es';
+import WithEvaluator from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/Evaluator.es';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import {Config} from 'metal-state';
@@ -14,7 +14,7 @@ import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
 import {getFieldProperties, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
-import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
+import {PagesVisitor, RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 import {selectText} from '../../util/dom.es';
 
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
