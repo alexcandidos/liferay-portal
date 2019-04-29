@@ -1,11 +1,16 @@
 {
+    "ignore": [
+        "**/alloy/config.js",
+        "**/alloy/**/*.js",
+        "**/__tests__/*.js"
+    ],
     "plugins": [
         "@babel/plugin-proposal-class-properties",
         ["incremental-dom", {
-            components: true,
-            namespaceAttributes: true,
-            prefix: "IncrementalDOM",
-            runtime: "iDOMHelpers"
+            "components": true,
+            "namespaceAttributes": true,
+            "prefix": "IncrementalDOM",
+            "runtime": "iDOMHelpers"
         }],
         "@babel/plugin-proposal-object-rest-spread"
     ],
