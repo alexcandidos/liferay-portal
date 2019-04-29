@@ -1,12 +1,34 @@
 {
 	"csfConfig": {
-		"path:**/*.js": {
+		"path:**/alloy/**/*.js": {
 			"js": {
 				"lint": {
 					"env": {
 						"browser": true
 					},
 					"extends": "liferay",
+					"globals": {
+						"MetalComponent": true,
+						"MODULE_PATH": true
+					},
+					"parser": "babel-eslint",
+					"parserOptions": {
+						"ecmaVersion": 5
+					}
+				}
+			}
+		},
+		"path:**/metal/**/*.js": {
+			"js": {
+				"lint": {
+					"env": {
+						"browser": true,
+						"jest": true
+					},
+					"extends": "liferay",
+					"globals": {
+						"AlloyEditor": true
+					},
 					"parser": "babel-eslint",
 					"parserOptions": {
 						"ecmaVersion": 7
@@ -70,6 +92,9 @@
 		"incremental-dom-string": "0.0.2",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8"
+	},
+	"devDependencies": {
+		"eslint-plugin-sort-class-members": "^1.4.0"
 	},
 	"main": "./",
 	"name": "dynamic-data-mapping-form-renderer",
