@@ -1,5 +1,4 @@
 {
-	"dump-report": true,
 	"config": {
 		"imports": {
 			"dynamic-data-mapping-form-renderer": {
@@ -30,10 +29,9 @@
 		"metal": true
 	},
 	"ignore": [
-		"**/*.js",
-		"**/__tests__/*.js",
-		"!**/*.es.js",
-		"!**/*.soy.js"
+		"**/alloy/**/*.js",
+		"**/alloy/config.js",
+		"**/__tests__/*.js"
 	],
 	"preset": "liferay-npm-bundler-preset-liferay-dev"
 }
