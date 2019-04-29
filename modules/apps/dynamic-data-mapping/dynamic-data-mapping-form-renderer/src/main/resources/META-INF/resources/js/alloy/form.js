@@ -108,13 +108,14 @@ AUI.add(
 					getFormId: function() {
 						var instance = this;
 
+						var formId = 0;
 						var formNode = instance.getFormNode();
 
-						if (!formNode) {
-							return 0;
+						if (formNode) {
+							formId = formNode.getData('DDMFormInstanceId');
 						}
 
-						return formNode.getData('DDMFormInstanceId');
+						return formId;
 					},
 
 					getFormNode: function() {
@@ -213,24 +214,6 @@ AUI.add(
 						);
 					},
 
-					_valueEditingLanguageId: function() {
-						var instance = this;
-
-						var portletNamespace = instance.get('portletNamespace');
-
-						var languageId = instance._getURLParameter(portletNamespace, 'languageId');
-
-						if (!languageId) {
-							languageId = themeDisplay.getLanguageId();
-
-							if (!languageId) {
-								languageId = instance.get('defaultLanguageId');
-							}
-						}
-
-						return languageId;
-					},
-
 					_getURLParameter: function(portletNamespace, parameterName) {
 						var currentUrl = window.location.href;
 
@@ -267,7 +250,25 @@ AUI.add(
 						var instance = this;
 
 						return A.Node.create(TPL_CONTAINER);
-					}
+					},
+
+					_valueEditingLanguageId: function() {
+						var instance = this;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						var languageId = instance._getURLParameter(portletNamespace, 'languageId');
+
+						if (!languageId) {
+							languageId = themeDisplay.getLanguageId();
+
+							if (!languageId) {
+								languageId = instance.get('defaultLanguageId');
+							}
+						}
+
+						return languageId;
+					},
 				}
 			}
 		);

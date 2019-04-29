@@ -39,6 +39,7 @@ export default (pages, name) => {
 					fields: newFields.map(
 						(currentField, index) => {
 							const repeatedIndex = findRepeatedIndex(newFields, currentField.name);
+
 							const name = generateName(currentField.name, repeatedIndex);
 
 							if (currentField.nestedFields) {

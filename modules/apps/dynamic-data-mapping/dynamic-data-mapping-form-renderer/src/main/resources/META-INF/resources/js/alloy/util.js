@@ -105,31 +105,35 @@ AUI.add(
 			},
 
 			getFieldNameFromQualifiedName: function(qualifiedName) {
-				var instance = this;
-
+				var fieldName;
 				var nestedFieldName = qualifiedName.split('#');
 
 				if (nestedFieldName.length > 1) {
-					return nestedFieldName[1].split('$')[0];
+					fieldName = nestedFieldName[1].split('$')[0];
+				}
+				else {
+					var name = qualifiedName.split('$$')[1];
+
+					fieldName = name.split('$')[0];
 				}
 
-				var name = qualifiedName.split('$$')[1];
-
-				return name.split('$')[0];
+				return fieldName;
 			},
 
 			getInstanceIdFromQualifiedName: function(qualifiedName) {
-				var instance = this;
-
+				var instanceId;
 				var nestedFieldName = qualifiedName.split('#');
 
 				if (nestedFieldName.length > 1) {
-					return nestedFieldName[1].split('$')[1];
+					instanceId = nestedFieldName[1].split('$')[1];
+				}
+				else {
+					var name = qualifiedName.split('$$')[1];
+
+					instanceId = name.split('$')[1];
 				}
 
-				var name = qualifiedName.split('$$')[1];
-
-				return name.split('$')[1];
+				return instanceId;
 			},
 
 			getValidations: function(selectedType) {
