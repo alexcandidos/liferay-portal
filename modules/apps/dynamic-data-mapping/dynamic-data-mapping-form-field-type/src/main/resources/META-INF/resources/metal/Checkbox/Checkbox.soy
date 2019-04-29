@@ -1,6 +1,7 @@
 {namespace Checkbox}
 
 {template .render}
+	{@param name: string}
 	{@param? handleInputChangeEvent: any}
 	{@param? id: string}
 	{@param? label: string}
@@ -27,6 +28,7 @@
 
 		{param id: $id /}
 		{param label: $label /}
+		{param name: $name /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: not $showAsSwitcher and $showLabel /}

@@ -5,7 +5,9 @@
  */
 {template .render}
 	{@param columnSize: int}
+	{@param name: string}
 	{@param nestedFields: list<?>}
+	{@param? _handleFieldEdited: ?}
 	{@param? label: string}
 	{@param? repeatable: bool}
 	{@param? required: bool}
@@ -20,6 +22,7 @@
 			{param contentRenderer kind="html"}
 				{call .content}
 					{param columnSize: $columnSize /}
+					{param _handleFieldEdited: $_handleFieldEdited /}
 					{param nestedFields: $nestedFields /}
 					{param label: $label /}
 					{param showBorderTop: $showBorderTop /}
@@ -28,6 +31,7 @@
 				{/call}
 			{/param}
 			{param label: $label /}
+			{param name: $name /}
 			{param repeatable: $repeatable /}
 			{param required: $required /}
 			{param showLabel: false /}
@@ -44,6 +48,7 @@
 {template .columns}
 	{@param columnSize: int}
 	{@param fields: list<?>}
+	{@param? _handleFieldEdited: ?}
 	{@param? spritemap: string}
 
 	{foreach $field in $fields}
@@ -52,6 +57,9 @@
 				{let $variant: $field.type /}
 
 				{delcall PageRenderer.RegisterFieldType data="$field" variant="$variant"}
+					{param events: [
+						'fieldEdited': $_handleFieldEdited
+					] /}
 					{param ref: 'fieldset_field' + index($field) /}
 					{param spritemap: $spritemap /}
 				{/delcall}
@@ -66,6 +74,7 @@
 {template .content}
 	{@param columnSize: int}
 	{@param nestedFields: list<?>}
+	{@param? _handleFieldEdited: ?}
 	{@param? label: string}
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
@@ -78,6 +87,7 @@
 		<div class="form-group-autofit">
 			{call .columns}
 				{param columnSize: $columnSize /}
+				{param _handleFieldEdited: $_handleFieldEdited /}
 				{param fields: $nestedFields /}
 				{param spritemap: $spritemap /}
 			{/call}
