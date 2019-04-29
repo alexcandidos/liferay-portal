@@ -1,11 +1,25 @@
 import '../components/Tooltip/Tooltip.es';
 import 'clay-icon';
 import Component from 'metal-component';
+import compose from 'dynamic-data-mapping-form-renderer/js/metal/util/compose.es';
+import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer/js/metal/util/repeatable.es';
 import Soy from 'metal-soy';
 import templates from './FieldBase.soy.js';
+import withDispatch from '../util/withDispatch.es';
+import withRepetitionControls from './withRepetitionControls.es';
 import {Config} from 'metal-state';
 
-class FieldBase extends Component {}
+class FieldBase extends Component {
+	prepareStateForRender(state) {
+		const repeatedIndex = getRepeatedIndex(this.name);
+
+		return {
+			...state,
+			showRepeatableAddButton: this.repeatable,
+			showRepeatableRemoveButton: this.repeatable && repeatedIndex > 0
+		};
+	}
+}
 
 FieldBase.STATE = {
 
@@ -35,6 +49,15 @@ FieldBase.STATE = {
 	 */
 
 	label: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof FieldBase
+	 * @type {?(string|undefined)}
+	 */
+
+	name: Config.string(),
 
 	/**
 	 * @default undefined
@@ -91,6 +114,11 @@ FieldBase.STATE = {
 	tooltip: Config.string()
 };
 
-Soy.register(FieldBase, templates);
+const composed = compose(
+	withDispatch,
+	withRepetitionControls
+)(FieldBase);
 
-export default FieldBase;
+Soy.register(composed, templates);
+
+export default composed;
