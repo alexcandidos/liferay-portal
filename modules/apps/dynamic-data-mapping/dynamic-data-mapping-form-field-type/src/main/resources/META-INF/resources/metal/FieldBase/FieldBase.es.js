@@ -2,12 +2,12 @@ import '../components/Tooltip/Tooltip.es';
 import 'clay-icon';
 import Component from 'metal-component';
 import compose from 'dynamic-data-mapping-form-renderer/js/metal/util/compose.es';
-import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer/js/metal/util/repeatable.es';
 import Soy from 'metal-soy';
 import templates from './FieldBase.soy.js';
 import withDispatch from '../util/withDispatch.es';
 import withRepetitionControls from './withRepetitionControls.es';
 import {Config} from 'metal-state';
+import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer/js/metal/util/repeatable.es';
 
 class FieldBase extends Component {
 	prepareStateForRender(state) {

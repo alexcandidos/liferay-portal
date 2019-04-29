@@ -8,8 +8,8 @@
 					},
 					"extends": "liferay",
 					"globals": {
-						"MetalComponent": true,
-						"MODULE_PATH": true
+						"MODULE_PATH": true,
+						"MetalComponent": true
 					},
 					"parser": "babel-eslint",
 					"parserOptions": {

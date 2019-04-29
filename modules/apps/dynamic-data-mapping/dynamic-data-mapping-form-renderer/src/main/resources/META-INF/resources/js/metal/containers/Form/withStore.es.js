@@ -1,6 +1,6 @@
 import handleFieldEdited from './handleFieldEdited.es';
-import handleFieldRepeated from './handleFieldRepeated.es';
 import handleFieldRemoved from './handleFieldRemoved.es';
+import handleFieldRepeated from './handleFieldRepeated.es';
 
 export default Component => {
 	return class withStore extends Component {
