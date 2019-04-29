@@ -1,6 +1,7 @@
 {namespace CheckboxMultiple}
 
 {template .render}
+	{@param name: string}
 	{@param? id: string}
 	{@param? inline: bool}
 	{@param? label: string}
@@ -31,6 +32,7 @@
 
 		{param id: $id /}
 		{param label: $label /}
+		{param name: $name /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: $showLabel /}
