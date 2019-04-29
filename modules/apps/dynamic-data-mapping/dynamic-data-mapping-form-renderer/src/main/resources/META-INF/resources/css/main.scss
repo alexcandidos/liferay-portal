@@ -423,20 +423,24 @@ body .ddm-user-view-content {
 	padding-bottom: 30px;
 }
 
+.lfr-ddm-form-field-repeatable-toolbar {
+	.ddm-form-field-repeatable-add-button,
+	.ddm-form-field-repeatable-delete-button {
+		position: absolute;
+		top: 4px;
+	}
+
+	.ddm-form-field-repeatable-delete-button {
+		right: 26px;
+	}
+
+	.ddm-form-field-repeatable-add-button {
+		right: 8px;
+	}
+}
+
 .liferay-ddm-form-field-fieldset {
 	margin-bottom: 0 !important;
-
-	.lfr-ddm-form-field-repeatable-toolbar {
-		.ddm-form-field-repeatable-remove-button {
-			right: 26px;
-			top: 16px;
-		}
-
-		.ddm-form-field-repeatable-add-button {
-			right: 8px;
-			top: 16px;
-		}
-	}
 
 	.lfr-ddm-form-field-container .liferay-ddm-form-field-checkbox {
 		margin-top: 21px;
