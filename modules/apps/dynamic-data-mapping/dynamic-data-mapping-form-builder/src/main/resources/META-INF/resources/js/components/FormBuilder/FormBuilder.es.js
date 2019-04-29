@@ -1,7 +1,7 @@
 import '../SuccessPage/SuccessPage.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
-import compose from '../../util/compose.es';
+import compose from 'dynamic-data-mapping-form-renderer/js/metal/util/compose.es';
 import dom from 'metal-dom';
 import FormRenderer from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormRenderer.es';
 import Sidebar from '../../components/Sidebar/Sidebar.es';

@@ -161,8 +161,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	private static final String _MODULE_NAME =
-		"dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer" +
-			"/FormRendererWithProvider.es";
+		"dynamic-data-mapping-form-renderer/js/metal/containers/Form/Form.es";
 
 	private static final String _TEMPLATE_NAMESPACE = "FormRenderer.render";
 

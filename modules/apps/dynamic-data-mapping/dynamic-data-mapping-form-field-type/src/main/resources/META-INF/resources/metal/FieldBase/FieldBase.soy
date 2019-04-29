@@ -1,6 +1,9 @@
 {namespace FieldBase}
 
 {template .render}
+	{@param name: string}
+	{@param? _handleAddRepeatedFieldButtonClicked: any}
+	{@param? _handleRemoveRepeatedFieldButtonClicked: any}
 	{@param? contentRenderer: any}
 	{@param? errorMessage: string}
 	{@param? id: string}
@@ -9,6 +12,7 @@
 	{@param? required: bool}
 	{@param? repeatable: bool}
 	{@param? showLabel: bool}
+	{@param? showRepeatableRemoveButton: bool}
 	{@param? spritemap: string}
 	{@param? tooltip: string}
 	{@param? valid: bool}
@@ -23,11 +27,22 @@
 			{/if}
 		{/let}
 
-		<div class="{$fieldCssClassAttribute}">
+		<div class="{$fieldCssClassAttribute}" data-field-name="{$name}">
 			{if $repeatable}
 				<div class="lfr-ddm-form-field-repeatable-toolbar">
+					{if $showRepeatableRemoveButton}
+						{call ClayButton.render}
+							{param elementClasses: 'btn-xs ddm-form-field-repeatable-delete-button p-0' /}
+							{param events: ['click': $_handleRemoveRepeatedFieldButtonClicked] /}
+							{param icon: 'trash' /}
+							{param spritemap: $spritemap /}
+							{param type: 'button' /}
+						{/call}
+					{/if}
+
 					{call ClayButton.render}
 						{param elementClasses: 'btn-xs ddm-form-field-repeatable-add-button p-0' /}
+						{param events: ['click': $_handleAddRepeatedFieldButtonClicked] /}
 						{param icon: 'plus' /}
 						{param spritemap: $spritemap /}
 						{param type: 'button' /}
