@@ -109,8 +109,6 @@ AUI.add(
 
 						var payload = form.getEvaluationPayload();
 
-						var type = payload.type;
-
 						instance._request = A.io.request(
 							instance.get('evaluatorURL'),
 							{
