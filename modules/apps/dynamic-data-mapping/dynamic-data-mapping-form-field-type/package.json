@@ -1,6 +1,6 @@
 {
 	"csfConfig": {
-		"path:**/src/main/resources/META-INF/resources/*/*.js": {
+		"path:**/alloy/**/*.js": {
 			"js": {
 				"lint": {
 					"env": {
@@ -21,30 +21,11 @@
 				}
 			}
 		},
-		"path:**/src/main/resources/META-INF/resources/config.js": {
+		"path:**/metal/**/*.js": {
 			"js": {
 				"lint": {
 					"env": {
 						"browser": true
-					},
-					"extends": "liferay",
-					"globals": {
-						"AlloyEditor": true,
-						"MODULE_PATH": true
-					},
-					"parser": "babel-eslint",
-					"parserOptions": {
-						"ecmaVersion": 5
-					}
-				}
-			}
-		},
-		"path:**/src/main/resources/META-INF/resources/metal/**/*.js": {
-			"js": {
-				"lint": {
-					"env": {
-						"browser": true,
-						"jest": true
 					},
 					"extends": "liferay",
 					"globals": {
@@ -72,6 +53,9 @@
 		"moment": "^2.22.2",
 		"text-mask-addons": "^3.7.1",
 		"vanilla-text-mask": "^5.0.1"
+	},
+	"devDependencies": {
+		"eslint-plugin-sort-class-members": "^1.4.0"
 	},
 	"jest": {
 		"moduleNameMapper": {

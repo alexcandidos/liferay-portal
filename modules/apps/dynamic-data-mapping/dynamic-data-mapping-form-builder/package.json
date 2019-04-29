@@ -57,6 +57,7 @@
 		"check-source-formatting": "^2.0.14",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
+		"eslint-plugin-sort-class-members": "^1.4.0",
 		"jest": "^24.5.0",
 		"jest-fetch-mock": "^1.6.6",
 		"metal-jest-serializer": "^2.0.0",
