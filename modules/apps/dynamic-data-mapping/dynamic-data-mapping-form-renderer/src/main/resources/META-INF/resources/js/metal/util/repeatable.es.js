@@ -45,23 +45,6 @@ export const generateNestedFieldName = (name, parentFieldName) => {
 	].join('');
 };
 
-export const findRepeatedIndex = (fields, name) => {
-	const parsedName = parseName(name);
-
-	return fields
-		.filter(({fieldName}) => fieldName === parsedName.fieldName)
-		.reduce(
-			(repeatedIndex = 0, field, index) => {
-				if (field.name === name) {
-					repeatedIndex = index;
-				}
-
-				return repeatedIndex;
-			},
-			0
-		);
-};
-
 export const getRepeatedIndex = name => {
 	let parsedName;
 
