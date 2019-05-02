@@ -1,6 +1,6 @@
+import '../../containers/Pagination/Pagination.es';
 import '../../containers/Wizard/Wizard.es';
 import '../PageRenderer/PageRenderer.es';
-import '../Pagination/Pagination.es';
 import 'clay-button';
 import Component from 'metal-component';
 import Soy from 'metal-soy';

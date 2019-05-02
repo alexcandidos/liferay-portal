@@ -17,6 +17,7 @@
 		{if (length($pages) > 1) and ($currentPaginationMode == 'wizard')}
 			{call DDM.Form.Wizard.render}
 				{param activePage: $activePage ?: 0 /}
+				{param editable: $editable /}
 				{param pages: $pages /}
 				{param spritemap: $spritemap /}
 				{param total: $total /}
@@ -45,6 +46,7 @@
 		{if (length($pages) > 0) and ($currentPaginationMode == 'paginated')}
 			{call DDM.Form.Pagination.render}
 				{param activePage: $activePage ?: 0 /}
+				{param editable: $editable /}
 				{param pages: $pages /}
 				{param spritemap: $spritemap /}
 				{param total: $total /}
