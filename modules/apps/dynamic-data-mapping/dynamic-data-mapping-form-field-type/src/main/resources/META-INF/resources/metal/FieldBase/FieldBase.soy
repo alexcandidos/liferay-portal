@@ -9,6 +9,7 @@
 	{@param? id: string}
 	{@param? tip: string}
 	{@param? label: string}
+	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? repeatable: bool}
 	{@param? showLabel: bool}
@@ -28,7 +29,7 @@
 		{/let}
 
 		<div class="{$fieldCssClassAttribute}" data-field-name="{$name}">
-			{if $repeatable}
+			{if $repeatable and not $readOnly}
 				<div class="lfr-ddm-form-field-repeatable-toolbar">
 					{if $showRepeatableRemoveButton}
 						{call ClayButton.render}
