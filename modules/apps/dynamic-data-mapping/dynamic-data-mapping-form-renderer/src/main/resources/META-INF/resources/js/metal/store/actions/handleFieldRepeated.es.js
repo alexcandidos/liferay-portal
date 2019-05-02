@@ -1,4 +1,4 @@
-import {findRepeatedIndex, generateName, generateNestedFieldName} from '../../util/repeatable.es';
+import {generateName, generateNestedFieldName} from '../../util/repeatable.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
 export default (pages, name) => {
@@ -34,38 +34,43 @@ export default (pages, name) => {
 					...fields.slice(indexToAddField)
 				];
 
+				let currentRepeatedIndex = 0;
+
 				column = {
 					...column,
-					fields: newFields.map(
+					fields: newFields
+						.map(
 						(currentField, index) => {
-							const repeatedIndex = findRepeatedIndex(newFields, currentField.name);
+							if (currentField.fieldName === newField.fieldName) {
+								const name = generateName(currentField.name, currentRepeatedIndex++);
 
-							const name = generateName(currentField.name, repeatedIndex);
-
-							if (currentField.nestedFields) {
 								currentField = {
 									...currentField,
-									nestedFields: currentField.nestedFields.map(
-										nestedField => {
-											const newNestedField = {
-												...nestedField,
-												name: generateNestedFieldName(nestedField.name, name)
-											};
-
-											if (index === indexToAddField) {
-												delete newNestedField.value;
-											}
-
-											return newNestedField;
-										}
-									)
+									name
 								};
+
+								if (currentField.nestedFields) {
+									currentField = {
+										...currentField,
+										nestedFields: currentField.nestedFields.map(
+											nestedField => {
+												const newNestedField = {
+													...nestedField,
+													name: generateNestedFieldName(nestedField.name, name)
+												};
+
+												if (index === indexToAddField) {
+													delete newNestedField.value;
+												}
+
+												return newNestedField;
+											}
+										)
+									};
+								}
 							}
 
-							return {
-								...currentField,
-								name
-							};
+							return currentField;
 						}
 					)
 				};
