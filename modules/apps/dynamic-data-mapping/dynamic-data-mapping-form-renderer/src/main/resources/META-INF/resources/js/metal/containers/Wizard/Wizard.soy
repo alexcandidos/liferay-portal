@@ -1,0 +1,59 @@
+{namespace DDM.Form.Wizard}
+
+{template .render}
+	{@param? _handleItemClicked: any}
+	{@param? activePage: number}
+	{@param? pages: ?}
+
+	<div class="ddm-form-pagination position-relative wizard-mode">
+		<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
+			{foreach $page in $pages}
+				{let $itemRenderer: $page.paginationItemRenderer ?: '' /}
+
+				{call .item}
+					{param _handleItemClicked: $_handleItemClicked /}
+					{param activePage: $activePage /}
+					{param page: $page /}
+					{param pageIndex: index($page) /}
+					{param total: length($pages) /}
+				{/call}
+			{/foreach}
+		</ol>
+	</div>
+{/template}
+
+{template .item}
+	{@param? _handleItemClicked: any}
+	{@param? activePage: number}
+	{@param page: ?}
+	{@param pageIndex: number}
+	{@param total: number}
+
+	{let $step: $pageIndex + 1 /}
+
+	{let $classes kind="text"}
+		multi-step-item
+
+		{if $step != $total}
+			{sp}multi-step-item-expand
+		{/if}
+
+		{if $pageIndex == $activePage}
+			{sp}active
+		{/if}
+	{/let}
+
+	<li class="{$classes}" data-onclick="{$_handleItemClicked}" data-page-index="{$pageIndex}">
+		<div class="multi-step-divider"></div>
+		<div class="multi-step-indicator">
+			{let $defaultPageTitle kind="text"}
+				{msg desc=""}untitled-page{/msg}
+			{/let}
+			{let $title: $page.title ? $page.title : $defaultPageTitle /}
+
+			<div class="multi-step-indicator-label">{$title}</div>
+
+			<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
+		</div>
+	</li>
+{/template}

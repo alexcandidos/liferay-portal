@@ -1,3 +1,4 @@
+import '../../containers/WizardPage/WizardPage.es';
 import './PaginatedPageRenderer.soy.js';
 import './SimplePageRenderer.soy.js';
 import './TabbedPageRenderer.soy.js';
