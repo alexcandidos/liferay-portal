@@ -118,7 +118,7 @@ const withMultiplePages = ChildComponent => {
 		}
 
 		getPages() {
-			let {pages} = this.props;
+			let {pages, paginationMode} = this.props;
 			const {successPageSettings} = this.props;
 
 			if (successPageSettings.enabled) {
@@ -126,7 +126,7 @@ const withMultiplePages = ChildComponent => {
 					...pages,
 					{
 						contentRenderer: 'success',
-						paginationItemRenderer: 'success',
+						paginationItemRenderer: `${paginationMode}_success`,
 						rows: [],
 						successPageSettings
 					}

@@ -1,33 +1,36 @@
 {namespace DDM.Form.Wizard}
 
 {template .render}
+	{@param activePage: number}
+	{@param pages: ?}
 	{@param? _handleItemClicked: any}
-	{@param? activePage: number}
-	{@param? pages: ?}
+	{@param? editable: bool}
 
 	<div class="ddm-form-pagination position-relative wizard-mode">
 		<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 			{foreach $page in $pages}
-				{let $itemRenderer: $page.paginationItemRenderer ?: '' /}
+				{let $itemRenderer: $page.paginationItemRenderer ?: 'wizard' /}
 
-				{call .item}
+				{delcall DDM.Form.Pagination.item variant="$itemRenderer"}
 					{param _handleItemClicked: $_handleItemClicked /}
 					{param activePage: $activePage /}
+					{param editable: $editable /}
 					{param page: $page /}
 					{param pageIndex: index($page) /}
 					{param total: length($pages) /}
-				{/call}
+				{/delcall}
 			{/foreach}
 		</ol>
 	</div>
 {/template}
 
-{template .item}
-	{@param? _handleItemClicked: any}
-	{@param? activePage: number}
+{deltemplate DDM.Form.Pagination.item variant="'wizard'"}
+	{@param activePage: number}
 	{@param page: ?}
 	{@param pageIndex: number}
 	{@param total: number}
+	{@param? _handleItemClicked: any}
+	{@param? editable: bool}
 
 	{let $step: $pageIndex + 1 /}
 
@@ -43,12 +46,24 @@
 		{/if}
 	{/let}
 
-	<li class="{$classes}" data-onclick="{$_handleItemClicked}" data-page-index="{$pageIndex}">
+	{let $itemAttributes kind="attributes"}
+		class="{$classes}"
+
+		{if $editable}
+			data-onclick="{$_handleItemClicked}"
+		{/if}
+
+		data-page-index="{$pageIndex}"
+	{/let}
+
+	<li {$itemAttributes}>
 		<div class="multi-step-divider"></div>
+
 		<div class="multi-step-indicator">
 			{let $defaultPageTitle kind="text"}
 				{msg desc=""}untitled-page{/msg}
 			{/let}
+
 			{let $title: $page.title ? $page.title : $defaultPageTitle /}
 
 			<div class="multi-step-indicator-label">{$title}</div>
@@ -56,4 +71,4 @@
 			<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
 		</div>
 	</li>
-{/template}
+{/deltemplate}
