@@ -3,7 +3,6 @@
 {deltemplate PageRenderer.container variant="'tabbed'"}
 	{@param activePage: number}
 	{@param pageIndex: number}
-	{@param paginationMode: string}
 	{@param spritemap: string}
 	{@param total: number}
 	{@param? _handleFieldBlurred: any}
@@ -21,20 +20,18 @@
 	{/let}
 
 	<div class="{$classes}" role="tabpanel">
-		{delcall PageRenderer.page variant="$paginationMode"}
+		{call .page}
 			{param _handleFieldBlurred: $_handleFieldBlurred /}
 			{param _handleFieldEdited: $_handleFieldEdited /}
 			{param editable: $editable /}
 			{param page: $page /}
 			{param pageIndex: $activePage /}
-			{param paginationMode: $paginationMode /}
 			{param spritemap: $spritemap /}
-		{/delcall}
+		{/call}
 	</div>
 {/deltemplate}
 
-{deltemplate PageRenderer.page variant="'tabbed'"}
-	{@param paginationMode: string}
+{template .page}
 	{@param spritemap: string}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
@@ -44,22 +41,20 @@
 	{@param? pageIndex: number}
 
 	{foreach $row in $page.rows}
-		{delcall PageRenderer.row variant="'tabbed'"}
+		{call .row}
 			{param _handleFieldBlurred: $_handleFieldBlurred /}
 			{param _handleFieldClicked: $_handleFieldClicked /}
 			{param _handleFieldEdited: $_handleFieldEdited /}
 			{param editable: $editable /}
 			{param pageIndex: $pageIndex /}
-			{param paginationMode: $paginationMode /}
 			{param row: $row /}
 			{param rowIndex: index($row) /}
 			{param spritemap: $spritemap /}
-		{/delcall}
+		{/call}
 	{/foreach}
-{/deltemplate}
+{/template}
 
-{deltemplate PageRenderer.row variant="'tabbed'"}
-	{@param paginationMode: string}
+{template .row}
 	{@param spritemap: string}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
@@ -71,7 +66,7 @@
 
 	<div class="position-relative row">
 		{foreach $column in $row.columns}
-			{delcall PageRenderer.column variant="'tabbed'"}
+			{call .column}
 				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldClicked: $_handleFieldClicked /}
 				{param _handleFieldEdited: $_handleFieldEdited /}
@@ -82,12 +77,12 @@
 				{param pageIndex: $pageIndex /}
 				{param rowIndex: $rowIndex /}
 				{param spritemap: $spritemap /}
-			{/delcall}
+			{/call}
 		{/foreach}
 	</div>
-{/deltemplate}
+{/template}
 
-{deltemplate PageRenderer.column variant="'tabbed'"}
+{template .column}
 	{@param spritemap: string}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
@@ -120,4 +115,4 @@
 			{/foreach}
 		</div>
 	{/if}
-{/deltemplate}
+{/template}

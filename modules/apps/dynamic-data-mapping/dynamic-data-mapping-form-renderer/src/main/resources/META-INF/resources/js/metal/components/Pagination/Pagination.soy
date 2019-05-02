@@ -1,0 +1,71 @@
+{namespace DDM.Form.Pagination}
+
+{template .render}
+	{@param activePage: number}
+	{@param pages: ?}
+	{@param? _handlePaginatedItemClicked: any}
+	{@param? _handlePaginatedLeftClicked: any}
+	{@param? _handlePaginatedRightClicked: any}
+
+	<ul class="ddm-pagination justify-content-center pagination">
+		{let $classes kind="text"}
+			page-item
+
+			{if $activePage == 0}
+				{sp}visibility-hidden
+			{/if}
+		{/let}
+
+		<li class="{$classes}" data-onclick="{$_handlePaginatedLeftClicked}">
+			<a class="page-link" href="javascript:;" role="button">
+				«
+				<span class="sr-only">{msg desc=""}previous{/msg}</span>
+			</a>
+		</li>
+
+		{foreach $page in $pages}
+			{let $itemRenderer: $page.paginationItemRenderer ?: '' /}
+
+			{call .item}
+				{param _handlePaginatedItemClicked: $_handlePaginatedItemClicked /}
+				{param activePage: $activePage /}
+				{param page: $page /}
+				{param pageIndex: index($page) /}
+			{/call}
+		{/foreach}
+
+		{let $paginationClasses kind="text"}
+			page-item
+
+			{if ($activePage == (length($pages) - 1)) or ($activePage == -1)}
+				{sp}visibility-hidden
+			{/if}
+		{/let}
+
+		<li class="{$paginationClasses}" data-onclick="{$_handlePaginatedRightClicked}">
+			<a class="page-link" href="javascript:;" role="button">
+				»
+				<span class="sr-only">{msg desc=""}next{/msg}</span>
+			</a>
+		</li>
+	</ul>
+{/template}
+
+{template .item}
+	{@param activePage: number}
+	{@param pageIndex: number}
+	{@param? _handlePaginatedItemClicked: any}
+
+	{let $step: $pageIndex + 1 /}
+	{let $classes kind="text"}
+		page-item
+
+		{if $pageIndex == $activePage}
+			{sp}active
+		{/if}
+	{/let}
+
+	<li class="{$classes}" data-onclick="{$_handlePaginatedItemClicked}" data-page-index="{$pageIndex}">
+		<a class="page-link" href="javascript:;">{$step}</a>
+	</li>
+{/template}
