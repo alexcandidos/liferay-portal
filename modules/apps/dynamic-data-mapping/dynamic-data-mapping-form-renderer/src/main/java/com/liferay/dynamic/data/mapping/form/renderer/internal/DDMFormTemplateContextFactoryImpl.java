@@ -132,6 +132,7 @@ public class DDMFormTemplateContextFactoryImpl
 
 		templateContext.put("pages", pages);
 
+		templateContext.put("paginationMode", ddmFormLayout.getPaginationMode());
 		templateContext.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 		templateContext.put("readOnly", ddmFormRenderingContext.isReadOnly());
