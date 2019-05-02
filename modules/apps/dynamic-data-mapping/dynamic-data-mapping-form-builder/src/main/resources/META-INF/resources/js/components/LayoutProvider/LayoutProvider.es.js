@@ -15,6 +15,9 @@ import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
+import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/metal/store/actions/handlePaginationItemClicked.es';
+import handlePaginationNextClicked from 'dynamic-data-mapping-form-renderer/js/metal/store/actions/handlePaginationNextClicked.es';
+import handlePaginationPreviousClicked from 'dynamic-data-mapping-form-renderer/js/metal/store/actions/handlePaginationPreviousClicked.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -187,9 +190,13 @@ class LayoutProvider extends Component {
 		return page;
 	}
 
+	dispatch(event, payload) {
+		this.emit(event, payload);
+	}
+
 	getChildContext() {
 		return {
-			dispatch: this.emit.bind(this),
+			dispatch: this.dispatch.bind(this),
 			store: this
 		};
 	}
@@ -213,7 +220,10 @@ class LayoutProvider extends Component {
 			pageDeleted: this._handlePageDeleted.bind(this),
 			pageReset: this._handlePageReset.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this),
+			paginationItemClicked: this._handlePaginationItemClicked.bind(this),
 			paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
+			paginationNextClicked: this._handlePaginationNextClicked.bind(this),
+			paginationPreviousClicked: this._handlePaginationPreviousClicked.bind(this),
 			ruleAdded: this._handleRuleAdded.bind(this),
 			ruleDeleted: this._handleRuleDeleted.bind(this),
 			ruleSaved: this._handleRuleSaved.bind(this),
@@ -569,6 +579,10 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	_handlePaginationItemClicked({pageIndex}) {
+		handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
+	}
+
 	_handlePaginationModeUpdated() {
 		const {paginationMode} = this.state;
 		let newMode = 'paginated';
@@ -582,6 +596,24 @@ class LayoutProvider extends Component {
 				paginationMode: newMode
 			}
 		);
+	}
+
+	_handlePaginationNextClicked() {
+		const {activePage, pages} = this;
+
+		handlePaginationNextClicked(
+			{
+				activePage,
+				pages
+			},
+			this.dispatch.bind(this)
+		);
+	}
+
+	_handlePaginationPreviousClicked() {
+		const {activePage} = this;
+
+		handlePaginationPreviousClicked({activePage}, this.dispatch.bind(this));
 	}
 
 	_handleRuleAdded(rule) {
