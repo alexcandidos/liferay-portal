@@ -3,9 +3,9 @@
 {template .render}
 	{@param activePage: number}
 	{@param pages: ?}
-	{@param? _handlePaginatedItemClicked: any}
-	{@param? _handlePaginatedLeftClicked: any}
-	{@param? _handlePaginatedRightClicked: any}
+	{@param? _handleItemClicked: any}
+	{@param? _handleNextClicked: any}
+	{@param? _handlePreviousClicked: any}
 
 	<ul class="ddm-pagination justify-content-center pagination">
 		{let $classes kind="text"}
@@ -16,7 +16,7 @@
 			{/if}
 		{/let}
 
-		<li class="{$classes}" data-onclick="{$_handlePaginatedLeftClicked}">
+		<li class="{$classes}" data-onclick="{$_handlePreviousClicked}">
 			<a class="page-link" href="javascript:;" role="button">
 				«
 				<span class="sr-only">{msg desc=""}previous{/msg}</span>
@@ -24,14 +24,15 @@
 		</li>
 
 		{foreach $page in $pages}
-			{let $itemRenderer: $page.paginationItemRenderer ?: '' /}
+			{let $itemRenderer: $page.paginationItemRenderer ?: 'pagination' /}
 
-			{call .item}
-				{param _handlePaginatedItemClicked: $_handlePaginatedItemClicked /}
+			{delcall DDM.Form.Pagination.item variant="$itemRenderer"}
+				{param _handleItemClicked: $_handleItemClicked /}
 				{param activePage: $activePage /}
 				{param page: $page /}
 				{param pageIndex: index($page) /}
-			{/call}
+				{param total: length($pages) /}
+			{/delcall}
 		{/foreach}
 
 		{let $paginationClasses kind="text"}
@@ -42,7 +43,7 @@
 			{/if}
 		{/let}
 
-		<li class="{$paginationClasses}" data-onclick="{$_handlePaginatedRightClicked}">
+		<li class="{$paginationClasses}" data-onclick="{$_handleNextClicked}">
 			<a class="page-link" href="javascript:;" role="button">
 				»
 				<span class="sr-only">{msg desc=""}next{/msg}</span>
@@ -51,10 +52,12 @@
 	</ul>
 {/template}
 
-{template .item}
+{deltemplate DDM.Form.Pagination.item variant="'pagination'"}
 	{@param activePage: number}
+	{@param page: ?}
 	{@param pageIndex: number}
-	{@param? _handlePaginatedItemClicked: any}
+	{@param total: number}
+	{@param? _handleItemClicked: any}
 
 	{let $step: $pageIndex + 1 /}
 	{let $classes kind="text"}
@@ -65,7 +68,7 @@
 		{/if}
 	{/let}
 
-	<li class="{$classes}" data-onclick="{$_handlePaginatedItemClicked}" data-page-index="{$pageIndex}">
+	<li class="{$classes}" data-onclick="{$_handleItemClicked}" data-page-index="{$pageIndex}">
 		<a class="page-link" href="javascript:;">{$step}</a>
 	</li>
-{/template}
+{/deltemplate}
