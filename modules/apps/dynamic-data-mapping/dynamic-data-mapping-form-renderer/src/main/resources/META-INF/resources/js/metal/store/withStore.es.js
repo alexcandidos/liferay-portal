@@ -59,14 +59,14 @@ export default Component => {
 			);
 		}
 
+		_handlePaginationItemClicked({pageIndex}) {
+			handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
+		}
+
 		_handlePaginationNextClicked() {
 			const {activePage, pages} = this;
 
 			handlePaginationNextClicked({activePage, pages}, this.dispatch.bind(this));
-		}
-
-		_handlePaginationItemClicked({pageIndex}) {
-			handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
 		}
 
 		_handlePaginationPreviousClicked() {
