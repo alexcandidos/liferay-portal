@@ -917,7 +917,11 @@ class RuleEditor extends Component {
 			}
 		}
 
-		return {dataType, repeatable, type};
+		return {
+			dataType,
+			repeatable,
+			type
+		};
 	}
 
 	_getIndex(fieldInstance, fieldClass) {
@@ -947,7 +951,15 @@ class RuleEditor extends Component {
 
 	_handleActionAdded() {
 		const {actions} = this;
-		const newAction = {action: '', calculatorFields: [], expression: '', inputs: {}, label: '', outputs: {}, target: ''};
+		const newAction = {
+			action: '',
+			calculatorFields: [],
+			expression: '',
+			inputs: {},
+			label: '',
+			outputs: {},
+			target: ''
+		};
 
 		if (actions.length == 0) {
 			actions.push(newAction);

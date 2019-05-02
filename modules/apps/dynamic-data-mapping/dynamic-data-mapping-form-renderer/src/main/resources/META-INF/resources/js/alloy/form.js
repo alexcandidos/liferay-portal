@@ -268,7 +268,7 @@ AUI.add(
 						}
 
 						return languageId;
-					},
+					}
 				}
 			}
 		);
