@@ -1,3 +1,3 @@
-export default pageIndex => {
-	return pageIndex;
+export default ({pageIndex}, dispatch) => {
+	dispatch('activePageUpdated', pageIndex);
 };

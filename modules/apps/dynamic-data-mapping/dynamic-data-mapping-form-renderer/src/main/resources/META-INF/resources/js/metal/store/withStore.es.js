@@ -1,3 +1,4 @@
+import handleActivePageUpdated from './actions/handleActivePageUpdated.es';
 import handleFieldEdited from './actions/handleFieldEdited.es';
 import handleFieldRemoved from './actions/handleFieldRemoved.es';
 import handleFieldRepeated from './actions/handleFieldRepeated.es';
@@ -10,19 +11,28 @@ export default Component => {
 		created() {
 			super.created();
 
+			this.on('activePageUpdated', this._handleActivePageUpdated.bind(this));
 			this.on('fieldEdited', this._handleFieldEdited.bind(this));
-			this.on('fieldRepeated', this._handleFieldRepeated.bind(this));
 			this.on('fieldRemoved', this._handleFieldRemoved.bind(this));
-			this.on('paginationNextClicked', this._handlePaginationNextClicked.bind(this));
+			this.on('fieldRepeated', this._handleFieldRepeated.bind(this));
 			this.on('paginationItemClicked', this._handlePaginationItemClicked.bind(this));
+			this.on('paginationNextClicked', this._handlePaginationNextClicked.bind(this));
 			this.on('paginationPreviousClicked', this._handlePaginationPreviousClicked.bind(this));
+		}
+
+		dispatch(event, payload) {
+			this.emit(event, payload);
 		}
 
 		getChildContext() {
 			return {
-				dispatch: this.emit.bind(this),
+				dispatch: this.dispatch.bind(this),
 				store: this
 			};
+		}
+
+		_handleActivePageUpdated(event) {
+			this.setState(handleActivePageUpdated(event));
 		}
 
 		_handleFieldEdited(properties) {
@@ -52,29 +62,17 @@ export default Component => {
 		_handlePaginationNextClicked() {
 			const {activePage, pages} = this;
 
-			this.setState(
-				{
-					activePage: handlePaginationNextClicked(activePage, pages)
-				}
-			);
+			handlePaginationNextClicked({activePage, pages}, this.dispatch.bind(this));
 		}
 
 		_handlePaginationItemClicked({pageIndex}) {
-			this.setState(
-				{
-					activePage: handlePaginationItemClicked(pageIndex)
-				}
-			);
+			handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
 		}
 
 		_handlePaginationPreviousClicked() {
 			const {activePage} = this;
 
-			this.setState(
-				{
-					activePage: handlePaginationPreviousClicked(activePage)
-				}
-			);
+			handlePaginationPreviousClicked({activePage}, this.dispatch.bind(this));
 		}
 	};
 };
