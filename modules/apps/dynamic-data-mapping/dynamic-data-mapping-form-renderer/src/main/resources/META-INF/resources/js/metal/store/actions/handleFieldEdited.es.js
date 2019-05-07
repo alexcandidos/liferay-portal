@@ -1,10 +1,13 @@
+import {evaluate} from '../../util/evaluation.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
-export default (pages, properties) => {
+export default (evaluatorContext, properties) => {
 	const {fieldInstance, value} = properties;
+	const {fieldName} = fieldInstance;
+	const {pages} = evaluatorContext;
 	const pageVisitor = new PagesVisitor(pages);
 
-	return pageVisitor.mapFields(
+	const editedPages = pageVisitor.mapFields(
 		field => {
 			if (field.name === fieldInstance.name) {
 				field = {
@@ -31,6 +34,14 @@ export default (pages, properties) => {
 			}
 
 			return field;
+		}
+	);
+
+	return evaluate(
+		fieldName,
+		{
+			...evaluatorContext,
+			pages: editedPages
 		}
 	);
 };

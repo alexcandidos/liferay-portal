@@ -40,39 +40,39 @@ export default (pages, name) => {
 					...column,
 					fields: newFields
 						.map(
-						(currentField, index) => {
-							if (currentField.fieldName === newField.fieldName) {
-								const name = generateName(currentField.name, currentRepeatedIndex++);
+							(currentField, index) => {
+								if (currentField.fieldName === newField.fieldName) {
+									const name = generateName(currentField.name, currentRepeatedIndex++);
 
-								currentField = {
-									...currentField,
-									name
-								};
-
-								if (currentField.nestedFields) {
 									currentField = {
 										...currentField,
-										nestedFields: currentField.nestedFields.map(
-											nestedField => {
-												const newNestedField = {
-													...nestedField,
-													name: generateNestedFieldName(nestedField.name, name)
-												};
-
-												if (index === indexToAddField) {
-													delete newNestedField.value;
-												}
-
-												return newNestedField;
-											}
-										)
+										name
 									};
-								}
-							}
 
-							return currentField;
-						}
-					)
+									if (currentField.nestedFields) {
+										currentField = {
+											...currentField,
+											nestedFields: currentField.nestedFields.map(
+												nestedField => {
+													const newNestedField = {
+														...nestedField,
+														name: generateNestedFieldName(nestedField.name, name)
+													};
+
+													if (index === indexToAddField) {
+														delete newNestedField.value;
+													}
+
+													return newNestedField;
+												}
+											)
+										};
+									}
+								}
+
+								return currentField;
+							}
+						)
 				};
 			}
 
