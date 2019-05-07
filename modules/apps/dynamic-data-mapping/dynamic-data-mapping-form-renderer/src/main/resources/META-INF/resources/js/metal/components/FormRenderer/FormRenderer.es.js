@@ -38,6 +38,15 @@ FormRenderer.STATE = {
 	activePage: Config.number().value(0),
 
 	/**
+	 * @default undefined
+	 * @memberof FormRenderer
+	 * @type {string}
+	 * @required
+	 */
+
+	defaultLanguageId: Config.string(),
+
+	/**
 	 * @default false
 	 * @instance
 	 * @memberof FormRenderer
@@ -47,6 +56,15 @@ FormRenderer.STATE = {
 	editable: Config.bool().value(false),
 
 	/**
+	 * @default undefined
+	 * @memberof FormRenderer
+	 * @type {string}
+	 * @required
+	 */
+
+	editingLanguageId: Config.string(),
+
+	/**
 	 * @default []
 	 * @instance
 	 * @memberof FormRenderer
@@ -54,6 +72,15 @@ FormRenderer.STATE = {
 	 */
 
 	pages: Config.array().value([]),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof FormRenderer
+	 * @type {?array<object>}
+	 */
+
+	rules: Config.array().value([]),
 
 	/**
 	 * @default undefined
