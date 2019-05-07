@@ -5,14 +5,33 @@ import handleFieldRepeated from './actions/handleFieldRepeated.es';
 import handlePaginationItemClicked from './actions/handlePaginationItemClicked.es';
 import handlePaginationNextClicked from './actions/handlePaginationNextClicked.es';
 import handlePaginationPreviousClicked from './actions/handlePaginationPreviousClicked.es';
+import {evaluate} from '../util/evaluation.es';
+
+const _handleFieldEdited = function(properties) {
+	const evaluatorContext = this.getEvaluatorContext();
+
+	handleFieldEdited(
+		evaluatorContext,
+		properties
+	).then(
+		evaluatedPages => {
+			this.setState(
+				{
+					pages: evaluatedPages
+				},
+				() => this.emit('evaluated', evaluatedPages)
+			);
+		}
+	);
+};
 
 export default Component => {
 	return class withStore extends Component {
-		created() {
-			super.created();
+		attached() {
+			super.attached();
 
 			this.on('activePageUpdated', this._handleActivePageUpdated.bind(this));
-			this.on('fieldEdited', this._handleFieldEdited.bind(this));
+			this.on('fieldEdited', _handleFieldEdited.bind(this));
 			this.on('fieldRemoved', this._handleFieldRemoved.bind(this));
 			this.on('fieldRepeated', this._handleFieldRepeated.bind(this));
 			this.on('paginationItemClicked', this._handlePaginationItemClicked.bind(this));
@@ -24,6 +43,10 @@ export default Component => {
 			this.emit(event, payload);
 		}
 
+		evaluate() {
+			return evaluate(null, this.getEvaluatorContext());
+		}
+
 		getChildContext() {
 			return {
 				dispatch: this.dispatch.bind(this),
@@ -31,16 +54,17 @@ export default Component => {
 			};
 		}
 
-		_handleActivePageUpdated(event) {
-			this.setState(handleActivePageUpdated(event));
+		getEvaluatorContext() {
+			const {pages, rules} = this;
+
+			return {
+				pages,
+				rules
+			};
 		}
 
-		_handleFieldEdited(properties) {
-			this.setState(
-				{
-					pages: handleFieldEdited(this.pages, properties)
-				}
-			);
+		_handleActivePageUpdated(event) {
+			this.setState(handleActivePageUpdated(event));
 		}
 
 		_handleFieldRemoved(name) {
@@ -64,15 +88,27 @@ export default Component => {
 		}
 
 		_handlePaginationNextClicked() {
-			const {activePage, pages} = this;
+			const {activePage} = this;
 
-			handlePaginationNextClicked({activePage, pages}, this.dispatch.bind(this));
+			handlePaginationNextClicked(
+				{
+					activePage,
+					...this.getEvaluatorContext()
+				},
+				this.dispatch.bind(this)
+			);
 		}
 
 		_handlePaginationPreviousClicked() {
 			const {activePage} = this;
 
-			handlePaginationPreviousClicked({activePage}, this.dispatch.bind(this));
+			handlePaginationPreviousClicked(
+				{
+					activePage,
+					...this.getEvaluatorContext()
+				},
+				this.dispatch.bind(this)
+			);
 		}
 	};
 };
