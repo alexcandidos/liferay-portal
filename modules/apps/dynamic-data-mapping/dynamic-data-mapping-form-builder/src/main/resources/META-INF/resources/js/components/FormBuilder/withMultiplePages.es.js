@@ -10,8 +10,8 @@ import {setValue} from '../../util/i18n.es';
 const withMultiplePages = ChildComponent => {
 	class MultiplePages extends Component {
 		getPages() {
-			let {pages, paginationMode} = this.props;
-			const {successPageSettings} = this.props;
+			let {pages} = this.props;
+			const {paginationMode, successPageSettings} = this.props;
 
 			if (successPageSettings.enabled) {
 				pages = [
