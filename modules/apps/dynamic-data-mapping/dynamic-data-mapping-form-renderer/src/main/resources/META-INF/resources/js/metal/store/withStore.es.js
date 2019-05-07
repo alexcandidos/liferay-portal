@@ -55,10 +55,11 @@ export default Component => {
 		}
 
 		getEvaluatorContext() {
-			const {pages, rules} = this;
+			const {pages, portletNamespace, rules} = this;
 
 			return {
 				pages,
+				portletNamespace,
 				rules
 			};
 		}

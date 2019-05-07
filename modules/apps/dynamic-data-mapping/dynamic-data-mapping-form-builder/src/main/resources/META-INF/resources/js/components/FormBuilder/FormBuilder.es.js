@@ -114,9 +114,9 @@ class FormBuilderBase extends Component {
 			fieldSets,
 			fieldTypes,
 			focusedField,
-			namespace,
 			pages,
 			paginationMode,
+			portletNamespace,
 			rules,
 			spritemap,
 			visible
@@ -133,6 +133,7 @@ class FormBuilderBase extends Component {
 							events={this.getFormRendererEvents()}
 							pages={this.preparePagesForRender(pages)}
 							paginationMode={paginationMode}
+							portletNamespace={portletNamespace}
 							ref="FormRenderer"
 							spritemap={spritemap}
 						/>
@@ -171,7 +172,7 @@ class FormBuilderBase extends Component {
 					fieldSets={fieldSets}
 					fieldTypes={fieldTypes}
 					focusedField={focusedField}
-					namespace={namespace}
+					portletNamespace={portletNamespace}
 					ref="sidebar"
 					rules={rules}
 					spritemap={spritemap}
@@ -252,13 +253,13 @@ class FormBuilderBase extends Component {
 			editingLanguageId,
 			fieldSetDefinitionURL,
 			groupId,
-			namespace
+			portletNamespace
 		} = this.props;
 
 		return makeFetch(
 			{
 				method: 'GET',
-				url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${namespace}&scopeGroupId=${groupId}`
+				url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${portletNamespace}&scopeGroupId=${groupId}`
 			}
 		).then(
 			({pages}) => pages
