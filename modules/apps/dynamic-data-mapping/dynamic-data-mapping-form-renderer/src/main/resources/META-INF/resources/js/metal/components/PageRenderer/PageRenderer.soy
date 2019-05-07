@@ -14,7 +14,9 @@
 	{@param? pageIndex: number}
 	{@param? readOnly: bool}
 
-	{let $contentRenderer: $page.contentRenderer ?: $paginationMode /}
+	{let $paginationModeVariant: $paginationMode == 'single-page' ? 'single_page' : $paginationMode /}
+
+	{let $contentRenderer: $page.contentRenderer ?: $paginationModeVariant /}
 
 	{delcall PageRenderer.container variant="$contentRenderer"}
 		{param _handleFieldBlurred: $_handleFieldBlurred /}
