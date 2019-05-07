@@ -6,7 +6,12 @@ const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
 
 const doEvaluate = debounce(
 	(fieldName, evaluatorContext, callback) => {
-		const {defaultLanguageId, editingLanguageId, pages} = evaluatorContext;
+		const {
+			defaultLanguageId,
+			editingLanguageId,
+			pages,
+			portletNamespace
+		} = evaluatorContext;
 
 		makeFetch(
 			{
@@ -14,7 +19,14 @@ const doEvaluate = debounce(
 					{
 						languageId: themeDisplay.getLanguageId(),
 						p_auth: Liferay.authToken,
-						serializedFormContext: JSON.stringify(evaluatorContext),
+						portletNamespace,
+						serializedFormContext: JSON.stringify(
+							{
+								...evaluatorContext,
+								groupId: themeDisplay.getScopeGroupId(),
+								portletNamespace
+							}
+						),
 						trigger: fieldName
 					}
 				),
