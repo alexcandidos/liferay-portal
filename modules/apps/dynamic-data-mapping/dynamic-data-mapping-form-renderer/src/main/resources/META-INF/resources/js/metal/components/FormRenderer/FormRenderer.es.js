@@ -74,6 +74,14 @@ FormRenderer.STATE = {
 	pages: Config.array().value([]),
 
 	/**
+	 * @instance
+	 * @memberof FormRenderer
+	 * @type {string}
+	 */
+
+	portletNamespace: Config.string().required(),
+
+	/**
 	 * @default []
 	 * @instance
 	 * @memberof FormRenderer
