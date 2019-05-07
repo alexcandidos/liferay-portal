@@ -11,18 +11,20 @@
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
+	{@param? readOnly: bool}
 
 	{delcall PageRenderer.container variant="'wizard'"}
-		{param activePage: $activePage /}
-		{param pageIndex: $pageIndex /}
-		{param paginationMode: 'wizard' /}
-		{param spritemap: $spritemap /}
-		{param total: $total /}
 		{param _handleFieldBlurred: $_handleFieldBlurred /}
 		{param _handleFieldClicked: $_handleFieldClicked /}
 		{param _handleFieldEdited: $_handleFieldEdited /}
+		{param activePage: $activePage /}
 		{param editable: $editable /}
 		{param empty: $empty /}
 		{param page: $page /}
+		{param pageIndex: $pageIndex /}
+		{param paginationMode: 'wizard' /}
+		{param readOnly: $readOnly /}
+		{param spritemap: $spritemap /}
+		{param total: $total /}
 	{/delcall}
 {/deltemplate}
