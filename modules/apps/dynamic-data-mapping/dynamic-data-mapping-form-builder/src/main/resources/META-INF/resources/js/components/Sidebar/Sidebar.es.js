@@ -921,6 +921,7 @@ class Sidebar extends Component {
 		const {activeTab} = this.state;
 		const {
 			editingLanguageId,
+			portletNamespace,
 			spritemap
 		} = this.props;
 		const {pages, rules} = this.getSettingsFormContext();
@@ -939,6 +940,7 @@ class Sidebar extends Component {
 				events={formEvents}
 				pages={pages}
 				paginationMode="tabbed"
+				portletNamespace={portletNamespace}
 				ref="evaluableForm"
 				rules={rules}
 				spritemap={spritemap}

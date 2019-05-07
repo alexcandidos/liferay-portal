@@ -493,7 +493,10 @@ class Form extends Component {
 							fieldTypes={fieldTypes}
 							functionsMetadata={this.props.functionsMetadata}
 							functionsURL={this.props.functionsURL}
+							groupId={groupId}
 							pages={context.pages}
+							portletNamespace={this.props.namespace}
+							ref="builder"
 							rolesURL={this.props.rolesURL}
 							rules={this.props.rules}
 							spritemap={spritemap}
