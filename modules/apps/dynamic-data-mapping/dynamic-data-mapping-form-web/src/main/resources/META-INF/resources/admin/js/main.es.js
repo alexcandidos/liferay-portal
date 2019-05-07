@@ -496,7 +496,7 @@ class Form extends Component {
 							fieldSets={fieldSets}
 							fieldTypes={fieldTypes}
 							groupId={groupId}
-							namespace={this.props.namespace}
+							portletNamespace={this.props.namespace}
 							ref="builder"
 							rules={this.props.rules}
 							spritemap={spritemap}
