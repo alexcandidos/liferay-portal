@@ -4,9 +4,8 @@ import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
-import FormRenderer from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormRenderer.es';
+import Form from 'dynamic-data-mapping-form-renderer/js/metal/containers/Form/Form.es';
 import UA from 'metal-useragent';
-import WithEvaluator from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/Evaluator.es';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import {Config} from 'metal-state';
@@ -16,9 +15,6 @@ import {focusedFieldStructure} from '../../util/config.es';
 import {getFieldProperties, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor, RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 import {selectText} from '../../util/dom.es';
-
-const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
-const FormWithEvaluator = WithEvaluator(FormRenderer);
 
 /**
  * Sidebar is a tooling to mount forms.
@@ -222,7 +218,7 @@ class Sidebar extends Component {
 		this.emit('fieldBlurred');
 	}
 
-	getFormContext() {
+	getSettingsFormContext() {
 		const {defaultLanguageId, editingLanguageId, focusedField} = this.props;
 		const {settingsContext} = focusedField;
 		const visitor = new PagesVisitor(settingsContext.pages);
@@ -301,20 +297,8 @@ class Sidebar extends Component {
 
 	render() {
 		const {activeTab, open} = this.state;
-		const {
-			editingLanguageId,
-			focusedField,
-			spritemap
-		} = this.props;
-
-		const layoutRenderEvents = {
-			evaluated: this._handleEvaluatorChanged,
-			fieldBlurred: this._handleSettingsFieldBlurred,
-			fieldEdited: this._handleSettingsFieldEdited
-		};
-
+		const {spritemap} = this.props;
 		const editMode = this._isEditMode();
-
 		const styles = classnames('sidebar-container', {open});
 
 		return (
@@ -364,18 +348,7 @@ class Sidebar extends Component {
 						{editMode && (
 							<div class="sidebar-body ddm-field-settings">
 								<div class="tab-content">
-									<FormWithEvaluator
-										activePage={activeTab}
-										editable={true}
-										editingLanguageId={editingLanguageId}
-										events={layoutRenderEvents}
-										fieldType={focusedField.type}
-										formContext={this.getFormContext()}
-										paginationMode="tabbed"
-										ref="evaluableForm"
-										spritemap={spritemap}
-										url={EVALUATOR_URL}
-									/>
+									{this._renderSettingsForm()}
 								</div>
 							</div>
 						)}
@@ -956,6 +929,35 @@ class Sidebar extends Component {
 					</li>
 				);
 			}
+		);
+	}
+
+	_renderSettingsForm() {
+		const {activeTab} = this.state;
+		const {
+			editingLanguageId,
+			spritemap
+		} = this.props;
+		const {pages, rules} = this.getSettingsFormContext();
+
+		const formEvents = {
+			evaluated: this._handleEvaluatorChanged,
+			fieldBlurred: this._handleSettingsFieldBlurred,
+			fieldEdited: this._handleSettingsFieldEdited
+		};
+
+		return (
+			<Form
+				activePage={activeTab}
+				editable={true}
+				editingLanguageId={editingLanguageId}
+				events={formEvents}
+				pages={pages}
+				paginationMode="tabbed"
+				ref="evaluableForm"
+				rules={rules}
+				spritemap={spritemap}
+			/>
 		);
 	}
 
