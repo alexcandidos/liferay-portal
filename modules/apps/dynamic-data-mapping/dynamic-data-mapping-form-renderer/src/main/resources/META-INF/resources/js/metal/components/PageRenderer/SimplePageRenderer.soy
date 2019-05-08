@@ -11,6 +11,7 @@
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
+	{@param? readOnly: bool}
 
 	{let $classes kind="text"}
 		fade tab-pane
@@ -30,6 +31,12 @@
 			{param pageIndex: $activePage /}
 			{param spritemap: $spritemap /}
 		{/call}
+
+		{if $activePage == $total - 1 and not $readOnly}
+			<button class="btn btn-primary pull-right" type="submit">
+				{msg desc=""}submit{/msg}
+			</button>
+		{/if}
 	</div>
 {/deltemplate}
 
