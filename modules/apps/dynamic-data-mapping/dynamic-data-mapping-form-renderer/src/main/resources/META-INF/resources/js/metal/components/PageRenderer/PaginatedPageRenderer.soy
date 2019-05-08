@@ -13,7 +13,7 @@
 	{@param? page: ?}
 	{@param? readOnly: bool}
 
-	{delcall PageRenderer.container variant="'wizard'"}
+	{delcall PageRenderer.container variant="'single_page'"}
 		{param _handleFieldBlurred: $_handleFieldBlurred /}
 		{param _handleFieldClicked: $_handleFieldClicked /}
 		{param _handleFieldEdited: $_handleFieldEdited /}
@@ -22,7 +22,7 @@
 		{param empty: $empty /}
 		{param page: $page /}
 		{param pageIndex: $pageIndex /}
-		{param paginationMode: 'wizard' /}
+		{param paginationMode: 'paginated' /}
 		{param readOnly: $readOnly /}
 		{param spritemap: $spritemap /}
 		{param total: $total /}
