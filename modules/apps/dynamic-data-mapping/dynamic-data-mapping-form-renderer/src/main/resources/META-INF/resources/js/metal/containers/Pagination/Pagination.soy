@@ -8,20 +8,22 @@
 	{@param? _handlePreviousClicked: any}
 
 	<ul class="ddm-pagination justify-content-center pagination">
-		{let $classes kind="text"}
-			page-item
+		{if $activePage > 0}
+			{let $classes kind="text"}
+				page-item
 
-			{if $activePage == 0}
-				{sp}visibility-hidden
-			{/if}
-		{/let}
+				{if $activePage == 0}
+					{sp}visibility-hidden
+				{/if}
+			{/let}
 
-		<li class="{$classes}" data-onclick="{$_handlePreviousClicked}">
-			<a class="page-link" href="javascript:;" role="button">
-				«
-				<span class="sr-only">{msg desc=""}previous{/msg}</span>
-			</a>
-		</li>
+			<li class="{$classes}" data-onclick="{$_handlePreviousClicked}">
+				<a class="page-link" href="javascript:;" role="button">
+					«
+					<span class="sr-only">{msg desc=""}previous{/msg}</span>
+				</a>
+			</li>
+		{/if}
 
 		{foreach $page in $pages}
 			{let $itemRenderer: $page.paginationItemRenderer ?: 'pagination' /}
@@ -35,20 +37,22 @@
 			{/delcall}
 		{/foreach}
 
-		{let $paginationClasses kind="text"}
-			page-item
+		{if $activePage < length($pages) - 1}
+			{let $classes kind="text"}
+				page-item
 
-			{if ($activePage == (length($pages) - 1)) or ($activePage == -1)}
-				{sp}visibility-hidden
-			{/if}
-		{/let}
+				{if ($activePage == (length($pages) - 1)) or ($activePage == -1)}
+					{sp}visibility-hidden
+				{/if}
+			{/let}
 
-		<li class="{$paginationClasses}" data-onclick="{$_handleNextClicked}">
-			<a class="page-link" href="javascript:;" role="button">
-				»
-				<span class="sr-only">{msg desc=""}next{/msg}</span>
-			</a>
-		</li>
+			<li class="{$classes}" data-onclick="{$_handleNextClicked}">
+				<a class="page-link" href="javascript:;" role="button">
+					»
+					<span class="sr-only">{msg desc=""}next{/msg}</span>
+				</a>
+			</li>
+		{/if}
 	</ul>
 {/template}
 
@@ -60,15 +64,30 @@
 	{@param? _handleItemClicked: any}
 
 	{let $step: $pageIndex + 1 /}
+
 	{let $classes kind="text"}
 		page-item
 
 		{if $pageIndex == $activePage}
 			{sp}active
 		{/if}
+
+		{if not $page.enabled}
+			{sp}disabled
+		{/if}
 	{/let}
 
-	<li class="{$classes}" data-onclick="{$_handleItemClicked}" data-page-index="{$pageIndex}">
+	{let $itemAttributes kind="attributes"}
+		class="{$classes}"
+
+		{if $page.enabled}
+			data-onclick="{$_handleItemClicked}"
+		{/if}
+
+		data-page-index="{$pageIndex}"
+	{/let}
+
+	<li {$itemAttributes}>
 		<a class="page-link" href="javascript:;">{$step}</a>
 	</li>
 {/deltemplate}
