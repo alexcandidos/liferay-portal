@@ -3,6 +3,7 @@
 {deltemplate PageRenderer.container variant="'tabbed'"}
 	{@param activePage: number}
 	{@param pageIndex: number}
+	{@param pages: ?}
 	{@param spritemap: string}
 	{@param total: number}
 	{@param? _handleFieldBlurred: any}
@@ -12,22 +13,37 @@
 	{@param? empty: bool}
 	{@param? page: ?}
 
-	{let $classes kind="text"}
-		fade tab-pane
-		{if $activePage == $pageIndex}
-			{sp}active show
+	<div class="ddm-form-page-container tabbed">
+		{if length($pages) > 0 and $pageIndex == $activePage}
+			{call DDM.Form.Tabs.render}
+				{param activePage: $activePage /}
+				{param editable: $editable /}
+				{param pages: $pages /}
+				{param spritemap: $spritemap /}
+				{param total: $total /}
+			{/call}
 		{/if}
-	{/let}
 
-	<div class="{$classes}" role="tabpanel">
-		{call .page}
-			{param _handleFieldBlurred: $_handleFieldBlurred /}
-			{param _handleFieldEdited: $_handleFieldEdited /}
-			{param editable: $editable /}
-			{param page: $page /}
-			{param pageIndex: $activePage /}
-			{param spritemap: $spritemap /}
-		{/call}
+		{let $classes kind="text"}
+			tab-pane
+
+			{if $activePage == $pageIndex}
+				{sp}active show
+			{else}
+				{sp}hide
+			{/if}
+		{/let}
+
+		<div class="{$classes}" role="tabpanel">
+			{call .page}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
+				{param _handleFieldEdited: $_handleFieldEdited /}
+				{param editable: $editable /}
+				{param page: $page /}
+				{param pageIndex: $activePage /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</div>
 	</div>
 {/deltemplate}
 
