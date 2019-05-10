@@ -8,6 +8,8 @@ import handlePaginationPreviousClicked from './actions/handlePaginationPreviousC
 import {evaluate} from '../util/evaluation.es';
 
 const _handleFieldEdited = function(properties) {
+	const {fieldInstance} = properties;
+	const {evaluable} = fieldInstance;
 	const evaluatorContext = this.getEvaluatorContext();
 
 	handleFieldEdited(
@@ -20,9 +22,6 @@ const _handleFieldEdited = function(properties) {
 					pages: evaluatedPages
 				},
 				() => {
-					const {fieldInstance} = properties;
-					const {evaluable} = fieldInstance;
-
 					if (evaluable) {
 						this.emit('evaluated', evaluatedPages);
 					}
@@ -62,9 +61,17 @@ export default Component => {
 		}
 
 		getEvaluatorContext() {
-			const {pages, portletNamespace, rules} = this;
+			const {
+				defaultLanguageId,
+				editingLanguageId,
+				pages,
+				portletNamespace,
+				rules
+			} = this;
 
 			return {
+				defaultLanguageId,
+				editingLanguageId,
 				pages,
 				portletNamespace,
 				rules
