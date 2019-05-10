@@ -198,6 +198,16 @@ class Options extends Component {
 		return newValue;
 	}
 
+	prepareStateForRender(state) {
+		const {editingLanguageId} = this;
+		const {value} = state;
+
+		return {
+			...state,
+			items: this.getItems(value[editingLanguageId])
+		}
+	}
+
 	shouldGenerateOptionValue(option) {
 		const {defaultLanguageId, editingLanguageId} = this;
 

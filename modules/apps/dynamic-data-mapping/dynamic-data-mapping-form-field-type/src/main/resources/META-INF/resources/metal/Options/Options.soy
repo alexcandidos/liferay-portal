@@ -30,56 +30,53 @@
 			{if $items}
 				<div class="ddm-field-options-container">
 					{foreach $option in $items}
-						<div class="ddm-options-target" data-index="{index($option)}"></div>
+						<div class="ddm-options-target" data-index="{index($option)}" key="target_{index($option)}"></div>
 
-						{let $fieldConfig kind="html"}
-							<div class="ddm-field-options" data-index="{index($option)}">
-								<span class="ddm-options-drag {$readOnly ? 'disabled': ''}">
-									<svg
-										aria-hidden="true"
-										class="lexicon-icon lexicon-icon-drag"
-									>
-										<use xlink:href="{$spritemap}#drag" />
-									</svg>
-								</span>
+						<div class="ddm-field-options" data-index="{index($option)}" key="{index($option)}">
+							<span class="ddm-options-drag {$readOnly ? 'disabled': ''}">
+								<svg
+									aria-hidden="true"
+									class="lexicon-icon lexicon-icon-drag"
+								>
+									<use xlink:href="{$spritemap}#drag" />
+								</svg>
+							</span>
 
-								<div class="ddm-option-entry">
-									{call KeyValue.render}
-										{param events: [
-											'fieldBlurred': $_handleOptionBlurred,
-											'fieldEdited': $_handleOptionLabelEdited,
-											'fieldFocused' : $_handleOptionFocused,
-											'fieldKeywordEdited': $_handleOptionValueEdited
-										] /}
-										{param generateKeyword: $option.generateKeyword /}
-										{param keyword: $option.value /}
-										{param keywordReadOnly: $defaultLanguageId != $editingLanguageId /}
-										{param index: index($option) /}
-										{param name: 'option' + index($option) /}
-										{param placeholder: $placeholder /}
-										{param readOnly: $option.disabled /}
-										{param ref: 'option' + index($option) /}
-										{param required: $required /}
-										{param showLabel: false /}
-										{param spritemap: $spritemap /}
-										{param value: $option.label /}
-									{/call}
+							<div class="ddm-option-entry">
+								{call KeyValue.render}
+									{param events: [
+										'fieldBlurred': $_handleOptionBlurred,
+										'fieldEdited': $_handleOptionLabelEdited,
+										'fieldFocused' : $_handleOptionFocused,
+										'fieldKeywordEdited': $_handleOptionValueEdited
+									] /}
+									{param generateKeyword: $option.generateKeyword /}
+									{param key: 'option' + index($option) /}
+									{param keyword: $option.value /}
+									{param keywordReadOnly: $defaultLanguageId != $editingLanguageId /}
+									{param index: index($option) /}
+									{param name: 'option' + index($option) /}
+									{param placeholder: $placeholder /}
+									{param readOnly: $option.disabled /}
+									{param ref: 'option' + index($option) /}
+									{param required: $required /}
+									{param showLabel: false /}
+									{param spritemap: $spritemap /}
+									{param value: $option.label /}
+								{/call}
 
-									{if not isLast($option) and not $readOnly}
-										<button class="close close-modal" data-onclick="{$_handleOptionDeleted}" type="button">
-											<svg
-												aria-hidden="true"
-												class="lexicon-icon lexicon-icon-times"
-											>
-												<use xlink:href="{$spritemap}#times" />
-											</svg>
-										</button>
-									{/if}
-								</div>
+								{if not isLast($option) and not $readOnly}
+									<button class="close close-modal" data-onclick="{$_handleOptionDeleted}" type="button">
+										<svg
+											aria-hidden="true"
+											class="lexicon-icon lexicon-icon-times"
+										>
+											<use xlink:href="{$spritemap}#times" />
+										</svg>
+									</button>
+								{/if}
 							</div>
-						{/let}
-
-						{$fieldConfig}
+						</div>
 					{/foreach}
 				</div>
 			{/if}
