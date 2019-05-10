@@ -26,8 +26,7 @@ export const normalizeSettingsContextPages = (pages, editingLanguageId, fieldTyp
 			if (fieldName === 'name') {
 				field = {
 					...field,
-					value: generatedFieldName,
-					visible: true
+					value: generatedFieldName
 				};
 			}
 			else if (fieldName === 'label') {

@@ -50,7 +50,7 @@ public interface DDMFormFieldTypeSettings {
 	public String dataType();
 
 	@DDMFormField(
-		label = "%name", required = true, visibilityExpression = "FALSE"
+		label = "%name", required = true
 	)
 	public String name();
 
