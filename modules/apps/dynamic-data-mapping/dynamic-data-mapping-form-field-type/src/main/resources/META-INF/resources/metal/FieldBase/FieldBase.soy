@@ -29,10 +29,11 @@
 		{/let}
 
 		<div class="{$fieldCssClassAttribute}" data-field-name="{$name}">
-			{if $repeatable and not $readOnly}
+			{if $repeatable}
 				<div class="lfr-ddm-form-field-repeatable-toolbar">
 					{if $showRepeatableRemoveButton}
 						{call ClayButton.render}
+							{param disabled: $readOnly /}
 							{param elementClasses: 'btn-xs ddm-form-field-repeatable-delete-button p-0' /}
 							{param events: ['click': $_handleRemoveRepeatedFieldButtonClicked] /}
 							{param icon: 'trash' /}
@@ -42,6 +43,7 @@
 					{/if}
 
 					{call ClayButton.render}
+						{param disabled: $readOnly /}
 						{param elementClasses: 'btn-xs ddm-form-field-repeatable-add-button p-0' /}
 						{param events: ['click': $_handleAddRepeatedFieldButtonClicked] /}
 						{param icon: 'plus' /}
