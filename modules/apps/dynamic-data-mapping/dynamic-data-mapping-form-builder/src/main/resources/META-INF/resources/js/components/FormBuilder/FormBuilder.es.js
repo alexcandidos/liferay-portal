@@ -181,7 +181,10 @@ class FormBuilder extends Component {
 					};
 				}
 
-				return field;
+				return {
+					field,
+					readOnly: true
+				};
 			}
 		);
 	}
