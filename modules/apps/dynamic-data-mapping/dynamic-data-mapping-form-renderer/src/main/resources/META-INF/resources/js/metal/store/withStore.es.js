@@ -19,7 +19,14 @@ const _handleFieldEdited = function(properties) {
 				{
 					pages: evaluatedPages
 				},
-				() => this.emit('evaluated', evaluatedPages)
+				() => {
+					const {fieldInstance} = properties;
+					const {evaluable} = fieldInstance;
+
+					if (evaluable) {
+						this.emit('evaluated', evaluatedPages);
+					}
+				}
 			);
 		}
 	);

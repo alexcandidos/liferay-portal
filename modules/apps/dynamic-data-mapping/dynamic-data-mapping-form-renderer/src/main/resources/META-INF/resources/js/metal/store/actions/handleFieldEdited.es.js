@@ -3,7 +3,7 @@ import {PagesVisitor} from '../../util/visitors.es';
 
 export default (evaluatorContext, properties) => {
 	const {fieldInstance, value} = properties;
-	const {fieldName} = fieldInstance;
+	const {evaluable, fieldName} = fieldInstance;
 	const {pages} = evaluatorContext;
 	const pageVisitor = new PagesVisitor(pages);
 
@@ -37,11 +37,17 @@ export default (evaluatorContext, properties) => {
 		}
 	);
 
-	return evaluate(
-		fieldName,
-		{
-			...evaluatorContext,
-			pages: editedPages
-		}
-	);
+	let promise = Promise.resolve(editedPages);
+
+	if (evaluable) {
+		promise = evaluate(
+			fieldName,
+			{
+				...evaluatorContext,
+				pages: editedPages
+			}
+		);
+	}
+
+	return promise;
 };
