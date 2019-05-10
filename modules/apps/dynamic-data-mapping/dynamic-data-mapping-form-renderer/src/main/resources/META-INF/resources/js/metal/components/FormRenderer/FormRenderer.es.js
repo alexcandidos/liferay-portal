@@ -1,4 +1,6 @@
 import '../../containers/Pagination/Pagination.es';
+import '../../containers/PaginationControls/PaginationControls.es';
+import '../../containers/Tabs/Tabs.es';
 import '../../containers/Wizard/Wizard.es';
 import '../PageRenderer/PageRenderer.es';
 import 'clay-button';

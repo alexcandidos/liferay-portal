@@ -1,6 +1,7 @@
 {namespace PageRenderer}
 
 {template .render}
+	{@param pages: ?}
 	{@param paginationMode: string}
 	{@param spritemap: string}
 	{@param total: number}
@@ -28,6 +29,7 @@
 		{param empty: $empty /}
 		{param page: $page /}
 		{param pageIndex: $pageIndex ?: 0 /}
+		{param pages: $pages /}
 		{param paginationMode: $paginationMode /}
 		{param readOnly: $readOnly /}
 		{param spritemap: $spritemap /}
@@ -36,17 +38,27 @@
 {/template}
 
 {template .page}
+	{@param pageIndex: number}
 	{@param paginationMode: string}
 	{@param spritemap: string}
+	{@param total: number}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
-	{@param? pageIndex: number}
 
-	<div class="layout-page">
+	<div class="active ddm-form-page lfr-ddm-form-page">
+		{let $headerRenderer: $page.headerRenderer ?: '' /}
+
+		{delcall PageRenderer.PageHeader data="$page" variant="$headerRenderer"}
+			{param description: $page.description ?: '' /}
+			{param pageIndex: $pageIndex /}
+			{param title: $page.title ?: '' /}
+			{param total: $total /}
+		{/delcall}
+
 		{if $empty and $editable}
 			{let $attributes kind="attributes"}
 				class="col col-empty col-md-12 last-col lfr-initial-col mt-5 mb-4"
@@ -136,17 +148,9 @@
 
 	{if length($column.fields) != 0}
 		{let $indexes kind="attributes"}
-			{if $rowIndex != 'undefined'}
-				data-ddm-field-row="{$rowIndex}"
-			{/if}
-
-			{if $pageIndex != 'undefined'}
-				data-ddm-field-page="{$pageIndex}"
-			{/if}
-
-			{if $columnIndex != 'undefined'}
-				data-ddm-field-column="{$columnIndex}"
-			{/if}
+			data-ddm-field-row="{$rowIndex}"
+			data-ddm-field-page="{$pageIndex}"
+			data-ddm-field-column="{$columnIndex}"
 		{/let}
 
 		{let $attributes kind="attributes"}

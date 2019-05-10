@@ -68,7 +68,11 @@
 
 			<div class="multi-step-indicator-label">{$title}</div>
 
-			<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
+			{if $editable}
+				<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
+			{else}
+				<span class="multi-step-icon" data-multi-step-icon="{$step}"></span>
+			{/if}
 		</div>
 	</li>
 {/deltemplate}

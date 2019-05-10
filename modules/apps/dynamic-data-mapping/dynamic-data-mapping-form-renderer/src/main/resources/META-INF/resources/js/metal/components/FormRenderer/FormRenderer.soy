@@ -9,21 +9,21 @@
 	{@param? activePage: number}
 	{@param? editable: bool}
 	{@param? paginationMode: string}
+	{@param? readOnly: bool}
 
 	{let $currentPaginationMode: $paginationMode ?: 'wizard' /}
+	{let $currentPage: $activePage ?: 0 /}
 	{let $total: length($pages) /}
 
-	<div class="position-relative">
-		{if (length($pages) > 1) and ($currentPaginationMode == 'wizard')}
-			{call DDM.Form.Wizard.render}
-				{param activePage: $activePage ?: 0 /}
-				{param editable: $editable /}
-				{param pages: $pages /}
-				{param spritemap: $spritemap /}
-				{param total: $total /}
-			{/call}
-		{/if}
+	{let $classes kind="text"}
+		position-relative
 
+		{if not $editable}
+			{sp}ddm-user-view-content
+		{/if}
+	{/let}
+
+	<div class="{$classes}">
 		{foreach $page in $pages}
 			{call PageRenderer.render}
 				{param activePage: $activePage /}
@@ -35,22 +35,14 @@
 				] /}
 				{param page: $page /}
 				{param pageIndex: index($page) /}
+				{param pages: $pages /}
 				{param paginationMode: $currentPaginationMode /}
 				{param ref: 'pageRenderer' + index($page) /}
 				{param key: index($page) /}
+				{param readOnly: $readOnly /}
 				{param spritemap: $spritemap /}
 				{param total: $total /}
 			{/call}
 		{/foreach}
-
-		{if (length($pages) > 0) and ($currentPaginationMode == 'paginated')}
-			{call DDM.Form.Pagination.render}
-				{param activePage: $activePage ?: 0 /}
-				{param editable: $editable /}
-				{param pages: $pages /}
-				{param spritemap: $spritemap /}
-				{param total: $total /}
-			{/call}
-		{/if}
 	</div>
 {/template}
