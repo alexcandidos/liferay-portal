@@ -17,7 +17,7 @@
 				{/if}
 			{/let}
 
-			<li class="{$classes}" data-onclick="{$_handlePreviousClicked}">
+			<li class="{$classes}" data-onclick="{$_handlePreviousClicked}" key="previous">
 				<a class="page-link" href="javascript:;" role="button">
 					«
 					<span class="sr-only">{msg desc=""}previous{/msg}</span>
@@ -46,7 +46,7 @@
 				{/if}
 			{/let}
 
-			<li class="{$classes}" data-onclick="{$_handleNextClicked}">
+			<li class="{$classes}" data-onclick="{$_handleNextClicked}" key="next">
 				<a class="page-link" href="javascript:;" role="button">
 					»
 					<span class="sr-only">{msg desc=""}next{/msg}</span>
@@ -85,6 +85,8 @@
 		{/if}
 
 		data-page-index="{$pageIndex}"
+
+		key="page{$step}"
 	{/let}
 
 	<li {$itemAttributes}>
