@@ -935,6 +935,7 @@ class Sidebar extends Component {
 	_renderSettingsForm() {
 		const {activeTab} = this.state;
 		const {
+			defaultLanguageId,
 			editingLanguageId,
 			portletNamespace,
 			spritemap
@@ -950,6 +951,7 @@ class Sidebar extends Component {
 		return (
 			<Form
 				activePage={activeTab}
+				defaultLanguageId={defaultLanguageId}
 				editable={true}
 				editingLanguageId={editingLanguageId}
 				events={formEvents}
