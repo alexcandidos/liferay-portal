@@ -102,6 +102,15 @@ Text.STATE = {
 	errorMessage: Config.string(),
 
 	/**
+	 * @default false
+	 * @instance
+	 * @memberof Text
+	 * @type {?bool}
+	 */
+
+	evaluable: Config.bool().value(false),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Text

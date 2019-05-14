@@ -108,6 +108,15 @@ Editor.STATE = {
 	editorValue: Config.string(),
 
 	/**
+	 * @default false
+	 * @instance
+	 * @memberof Editor
+	 * @type {?bool}
+	 */
+
+	evaluable: Config.bool().value(false),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Editor

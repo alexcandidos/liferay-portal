@@ -33,6 +33,15 @@ Grid.STATE = {
 	),
 
 	/**
+	 * @default false
+	 * @instance
+	 * @memberof Grid
+	 * @type {?bool}
+	 */
+
+	evaluable: Config.bool().value(false),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Grid
