@@ -38,6 +38,7 @@
 {/template}
 
 {template .page}
+	{@param activePage: number}
 	{@param pageIndex: number}
 	{@param paginationMode: string}
 	{@param spritemap: string}
@@ -52,12 +53,14 @@
 	<div class="active ddm-form-page lfr-ddm-form-page">
 		{let $headerRenderer: $page.headerRenderer ?: '' /}
 
-		{delcall PageRenderer.PageHeader data="$page" variant="$headerRenderer"}
-			{param description: $page.description ?: '' /}
-			{param pageIndex: $pageIndex /}
-			{param title: $page.title ?: '' /}
-			{param total: $total /}
-		{/delcall}
+		{if $activePage == $pageIndex}
+			{delcall PageRenderer.PageHeader data="$page" variant="$headerRenderer"}
+				{param description: $page.description ?: '' /}
+				{param pageIndex: $pageIndex /}
+				{param title: $page.title ?: '' /}
+				{param total: $total /}
+			{/delcall}
+		{/if}
 
 		{if $empty and $editable}
 			{let $attributes kind="attributes"}
