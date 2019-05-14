@@ -32,6 +32,15 @@ Fieldset.STATE = {
 	fieldName: Config.string(),
 
 	/**
+	 * @default false
+	 * @instance
+	 * @memberof Fieldset
+	 * @type {?bool}
+	 */
+
+	evaluable: Config.bool().value(false),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Fieldset
