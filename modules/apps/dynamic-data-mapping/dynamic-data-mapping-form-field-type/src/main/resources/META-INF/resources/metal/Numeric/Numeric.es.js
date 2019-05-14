@@ -119,6 +119,15 @@ Numeric.STATE = {
 	dataType: Config.string().value('integer'),
 
 	/**
+	 * @default false
+	 * @instance
+	 * @memberof Numeric
+	 * @type {?bool}
+	 */
+
+	evaluable: Config.bool().value(false),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Numeric
