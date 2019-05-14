@@ -50,12 +50,18 @@
 			</div>
 		</div>
 
-		{if length($pages) > 1 and $pageIndex == $activePage}
-			{call DDM.Form.PaginationControls.render}
-				{param activePage: $activePage /}
-				{param readOnly: $readOnly /}
-				{param total: $total /}
-			{/call}
+		{if $pageIndex == $activePage}
+			{if length($pages) > 0}
+				{call DDM.Form.PaginationControls.render}
+					{param activePage: $activePage /}
+					{param readOnly: $readOnly /}
+					{param total: $total /}
+				{/call}
+			{else}
+				<button class="btn btn-primary lfr-ddm-form-submit pull-right" type="submit">
+					{msg desc=""}submit{/msg}
+				</button>
+			{/if}
 		{/if}
 	</div>
 {/deltemplate}
