@@ -133,7 +133,14 @@ const withMultiplePages = ChildComponent => {
 				];
 			}
 
-			return pages;
+			return pages.map(
+				page => {
+					return {
+						...page,
+						enabled: true
+					};
+				}
+			);
 		}
 
 		getPaginationPosition() {
