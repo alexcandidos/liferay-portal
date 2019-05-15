@@ -97,17 +97,17 @@ export const mergePages = (defaultLanguageId, editingLanguageId, newPages, sourc
 			if (sourceField.nestedFields && newField.nestedFields) {
 				newField = {
 					...newField,
-					nestedFields: newField.nestedFields.map(
+					nestedFields: sourceField.nestedFields.map(
 						nestedField => {
 							return {
+								...nestedField,
 								...(
-									sourceField.nestedFields.find(
+									newField.nestedFields.find(
 										({fieldName}) => {
 											return fieldName === nestedField.fieldName
 										}
 									) || {}
-								),
-								...nestedField
+								)
 							}
 						}
 					)
