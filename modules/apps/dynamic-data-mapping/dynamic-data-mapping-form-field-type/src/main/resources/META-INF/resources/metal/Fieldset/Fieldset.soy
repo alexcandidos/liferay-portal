@@ -55,14 +55,14 @@
 
 	{foreach $field in $fields}
 		<div class="col-md-{$columnSize} form-group-item">
-			<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container">
+			<div class="clearfix {if $field.visible == false}hide{/if} lfr-ddm-form-field-container">
 				{let $variant: $field.type /}
 
 				{delcall PageRenderer.RegisterFieldType data="$field" variant="$variant"}
 					{param events: [
 						'fieldEdited': $_handleFieldEdited
 					] /}
-					{param ref: 'fieldset_field' + index($field) /}
+					{param ref: 'fieldset_field' + index($field) + $field.fieldName /}
 					{param spritemap: $spritemap /}
 				{/delcall}
 			</div>
