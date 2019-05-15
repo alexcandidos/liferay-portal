@@ -55,7 +55,7 @@ public class GridDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/grid/grid.soy");
+			"/META-INF/resources/alloy/grid/grid.soy");
 	}
 
 	@Override
