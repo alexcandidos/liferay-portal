@@ -67,7 +67,7 @@
 			{/delcall}
 		{/if}
 
-		{if $empty and $editable}
+		{if $empty and $editable and $activePage == $pageIndex}
 			{let $attributes kind="attributes"}
 				class="col col-empty col-md-12 last-col lfr-initial-col mt-5 mb-4"
 				data-ddm-field-column="0"
@@ -82,7 +82,7 @@
 			</div>
 		{else}
 			{foreach $row in $page.rows}
-				{if isFirst($row) and $editable}
+				{if isFirst($row) and $editable and $activePage == $pageIndex}
 					{call .fieldEmpty}
 						{param isRow: true /}
 						{param pageIndex: $pageIndex /}
@@ -96,6 +96,7 @@
 					{param _handleFieldClicked: $_handleFieldClicked /}
 					{param _handleFieldEdited: $_handleFieldEdited /}
 					{param _handleFieldFocused: $_handleFieldFocused /}
+					{param activePage: $activePage /}
 					{param editable: $editable /}
 					{param pageIndex: $pageIndex /}
 					{param paginationMode: $paginationMode /}
@@ -104,7 +105,7 @@
 					{param spritemap: $spritemap /}
 				{/call}
 
-				{if $editable}
+				{if $editable and $activePage == $pageIndex}
 					{call .fieldEmpty}
 						{param isRow: true /}
 						{param pageIndex: $pageIndex /}
@@ -118,6 +119,7 @@
 {/template}
 
 {template .row}
+	{@param activePage: number}
 	{@param spritemap: string}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
@@ -135,6 +137,7 @@
 				{param _handleFieldClicked: $_handleFieldClicked /}
 				{param _handleFieldEdited: $_handleFieldEdited /}
 				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param activePage: $activePage /}
 				{param column: $column /}
 				{param columnIndex: index($column) /}
 				{param editable: $editable /}
@@ -147,6 +150,7 @@
 {/template}
 
 {template .column}
+	{@param activePage: number}
 	{@param spritemap: string}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
@@ -208,7 +212,7 @@
 				{$content}
 			{/if}
 		</div>
-	{elseif $editable}
+	{elseif $editable and $activePage == $pageIndex}
 		{call .fieldEmpty}
 			{param columnIndex: $columnIndex /}
 			{param pageIndex: $pageIndex /}
