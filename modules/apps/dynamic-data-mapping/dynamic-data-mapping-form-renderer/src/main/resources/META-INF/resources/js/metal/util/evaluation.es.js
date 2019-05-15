@@ -94,6 +94,26 @@ export const mergePages = (defaultLanguageId, editingLanguageId, newPages, sourc
 				valid: field.valid !== false
 			};
 
+			if (sourceField.nestedFields && newField.nestedFields) {
+				newField = {
+					...newField,
+					nestedFields: newField.nestedFields.map(
+						nestedField => {
+							return {
+								...(
+									sourceField.nestedFields.find(
+										({fieldName}) => {
+											return fieldName === nestedField.fieldName
+										}
+									) || {}
+								),
+								...nestedField
+							}
+						}
+					)
+				};
+			}
+
 			if (newField.type === 'options') {
 				newField = {
 					...newField,
