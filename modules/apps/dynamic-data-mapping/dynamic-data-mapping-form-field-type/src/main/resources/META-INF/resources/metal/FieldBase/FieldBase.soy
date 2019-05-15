@@ -24,7 +24,7 @@
 			form-group
 
 			{if $errorMessage and $valid == false}
-				has-error
+				{sp}has-error
 			{/if}
 		{/let}
 
@@ -94,9 +94,9 @@
 				<span class="form-text">{$tip}</span>
 			{/if}
 
-			{if $errorMessage and not $valid == false}
+			{if $errorMessage and $valid == false}
 				<div class="form-feedback-group">
-					<div class="form-feedback-item">{$errorMessage}</div>
+					<div class="form-feedback-item help-block">{$errorMessage}</div>
 				</div>
 			{/if}
 		</div>
