@@ -1704,7 +1704,12 @@ class RuleEditor extends Component {
 				) {
 					action.target = '';
 				}
-				else if (action.action == 'auto-fill') {
+				else if (
+					rule &&
+					rule.actions &&
+					rule.actions[index] &&
+					action.action == 'auto-fill'
+				) {
 					action = {
 						...rule.actions[index],
 						calculatorFields: []
