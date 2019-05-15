@@ -54,9 +54,6 @@
 		"text-mask-addons": "^3.7.1",
 		"vanilla-text-mask": "^5.0.1"
 	},
-	"devDependencies": {
-		"eslint-plugin-sort-class-members": "^1.4.0"
-	},
 	"jest": {
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
