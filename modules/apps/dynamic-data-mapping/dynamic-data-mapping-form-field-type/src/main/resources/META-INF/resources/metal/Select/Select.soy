@@ -67,20 +67,6 @@
 	{@param? readOnly: bool}
 
 	{if $options}
-		{let $attributes kind="attributes"}
-			class="form-control select-field-trigger"
-
-			{if $id}
-				id="{$id}"
-			{/if}
-
-			{if $readOnly}
-				disabled
-			{else}
-				data-onclick="{$_handleClick}"
-			{/if}
-		{/let}
-
 		{let $trigger kind="html"}
 			{if not $readOnly}
 				{call .hidden_select}
@@ -92,11 +78,29 @@
 			{/if}
 
 			<div class="form-builder-select-field input-group-container">
-				<div {$attributes}>
+				{let $classes kind="text"}
+					form-control results-chosen select-field-trigger
+
 					{if $multiple}
-						<ul class="multiple-label-list">
+						{sp}multiple-label-list
+					{/if}
+				{/let}
+
+				{let $attributes kind="attributes"}
+					class="{$classes}"
+
+					{if $id}
+						id="{$id}"
 					{/if}
 
+					{if $readOnly}
+						disabled
+					{else}
+						data-onclick="{$_handleClick}"
+					{/if}
+				{/let}
+
+				<ul {$attributes}>
 					{foreach $currentValue in $value}
 						{foreach $option in $options}
 							{if $currentValue == $option.value}
@@ -131,10 +135,6 @@
 							</div>
 					{/foreach}
 
-					{if $multiple}
-						</ul>
-					{/if}
-
 					<a class="select-arrow-down-container" href="javascript:;">
 						{if $spritemap}
 							{call ClayIcon.render}
@@ -143,7 +143,7 @@
 							{/call}
 						{/if}
 					</a>
-				</div>
+				</ul>
 			</div>
 		{/let}
 
