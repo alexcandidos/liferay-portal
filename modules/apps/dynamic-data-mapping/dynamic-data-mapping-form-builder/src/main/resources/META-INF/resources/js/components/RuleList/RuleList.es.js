@@ -163,7 +163,7 @@ class RuleList extends Component {
 									const inputLabel = Object.values(inputs).map(input => this._getFieldLabel(input));
 									const outputLabel = Object.values(outputs).map(output => this._getFieldLabel(output));
 
-									action = {
+									newAction = {
 										...action,
 										inputLabel,
 										outputLabel
