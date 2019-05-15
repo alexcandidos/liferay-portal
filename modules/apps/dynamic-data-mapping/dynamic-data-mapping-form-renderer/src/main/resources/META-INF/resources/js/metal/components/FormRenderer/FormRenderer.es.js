@@ -26,6 +26,10 @@ class FormRenderer extends Component {
 	_handleFieldEdited(event) {
 		this.emit('fieldEdited', event);
 	}
+
+	_handleFieldFocused(event) {
+		this.emit('fieldFocused', event);
+	}
 }
 
 FormRenderer.STATE = {

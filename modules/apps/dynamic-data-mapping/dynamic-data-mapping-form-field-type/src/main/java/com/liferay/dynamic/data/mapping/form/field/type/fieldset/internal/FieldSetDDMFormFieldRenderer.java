@@ -56,7 +56,7 @@ public class FieldSetDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/fieldset/fieldset.soy");
+			"/META-INF/resources/alloy/fieldset/fieldset.soy");
 	}
 
 	@Deactivate

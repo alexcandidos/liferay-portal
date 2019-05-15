@@ -90,7 +90,8 @@ export const mergePages = (defaultLanguageId, editingLanguageId, newPages, sourc
 				...sourceField,
 				...field,
 				defaultLanguageId,
-				editingLanguageId
+				editingLanguageId,
+				valid: field.valid !== false
 			};
 
 			if (newField.type === 'options') {
