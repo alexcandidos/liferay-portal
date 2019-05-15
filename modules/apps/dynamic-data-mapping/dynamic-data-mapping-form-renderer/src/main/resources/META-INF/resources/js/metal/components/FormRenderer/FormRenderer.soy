@@ -6,10 +6,12 @@
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
 	{@param? activePage: number}
 	{@param? editable: bool}
 	{@param? paginationMode: string}
 	{@param? readOnly: bool}
+	{@param? showSubmitButton: bool}
 
 	{let $currentPaginationMode: $paginationMode ?: 'wizard' /}
 	{let $currentPage: $activePage ?: 0 /}
@@ -31,7 +33,8 @@
 				{param events: [
 					'fieldBlurred': $_handleFieldBlurred,
 					'fieldClicked': $_handleFieldClicked,
-					'fieldEdited': $_handleFieldEdited
+					'fieldEdited': $_handleFieldEdited,
+					'fieldFocused': $_handleFieldFocused
 				] /}
 				{param page: $page /}
 				{param pageIndex: index($page) /}
@@ -40,6 +43,7 @@
 				{param ref: 'pageRenderer' + index($page) /}
 				{param key: index($page) /}
 				{param readOnly: $readOnly /}
+				{param showSubmitButton: $showSubmitButton != false /}
 				{param spritemap: $spritemap /}
 				{param total: $total /}
 			{/call}

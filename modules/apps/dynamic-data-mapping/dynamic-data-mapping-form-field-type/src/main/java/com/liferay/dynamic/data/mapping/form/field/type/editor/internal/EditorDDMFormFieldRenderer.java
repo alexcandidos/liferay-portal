@@ -56,7 +56,7 @@ public class EditorDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/editor/editor.soy");
+			"/META-INF/resources/alloy/editor/editor.soy");
 	}
 
 	@Deactivate

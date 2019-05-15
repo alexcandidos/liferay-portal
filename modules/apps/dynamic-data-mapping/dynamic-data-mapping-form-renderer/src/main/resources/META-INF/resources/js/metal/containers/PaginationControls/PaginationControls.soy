@@ -2,6 +2,7 @@
 
 {template .render}
 	{@param activePage: number}
+	{@param showSubmitButton: bool}
 	{@param total: number}
 	{@param? _handleNextClicked: any}
 	{@param? _handlePreviousClicked: any}
@@ -28,7 +29,7 @@
 			</button>
 		{/if}
 
-		{if $activePage == $total - 1 and not $readOnly}
+		{if $activePage == $total - 1 and not $readOnly and $showSubmitButton}
 			<button class="btn btn-primary lfr-ddm-form-submit pull-right" type="submit">
 				{msg desc=""}submit{/msg}
 			</button>

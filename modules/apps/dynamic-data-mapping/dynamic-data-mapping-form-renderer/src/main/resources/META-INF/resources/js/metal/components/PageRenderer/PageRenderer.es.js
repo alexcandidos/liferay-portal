@@ -11,6 +11,7 @@ import core from 'metal';
 import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
 import {Config} from 'metal-state';
+import {PagesVisitor} from '../../util/visitors.es.js';
 
 class PageRenderer extends Component {
 	static STATE = {
@@ -74,7 +75,18 @@ class PageRenderer extends Component {
 			};
 		}
 
-		return page;
+		const visitor = new PagesVisitor([page]);
+
+		const pages = visitor.mapFields(
+			field => {
+				return {
+					...field,
+					errorMessage: (page.invalid || field.wasFocused) ? field.errorMessage : ''
+				};
+			}
+		);
+
+		return pages[0];
 	}
 
 	isEmptyPage({rows}) {
@@ -98,6 +110,7 @@ class PageRenderer extends Component {
 				}
 			);
 		}
+
 		return empty;
 	}
 
@@ -127,6 +140,10 @@ class PageRenderer extends Component {
 
 	_handleFieldEdited(event) {
 		this.emit('fieldEdited', event);
+	}
+
+	_handleFieldFocused(event) {
+		this.emit('fieldFocused', event);
 	}
 }
 
