@@ -1,23 +1,40 @@
 import {evaluate} from '../../util/evaluation.es';
+import {PagesVisitor} from '../../util/visitors.es';
 
 export default (evaluatorContext, dispatch) => {
 	const {activePage, pages} = evaluatorContext;
 
 	return evaluate(null, evaluatorContext).then(
 		evaluatedPages => {
-			const nextActivePageIndex = evaluatedPages.findIndex(
-				({enabled}, index) => {
-					let found = false;
+			let validPage = true;
+			const visitor = new PagesVisitor(evaluatedPages);
 
-					if (enabled && index > activePage) {
-						found = true;
+			visitor.mapFields(
+				({valid}, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+					if (activePage === pageIndex && !valid) {
+						validPage = false;
 					}
-
-					return found;
 				}
 			);
 
-			dispatch('activePageUpdated', Math.min(nextActivePageIndex, pages.length - 1));
+			if (validPage) {
+				const nextActivePageIndex = evaluatedPages.findIndex(
+					({enabled}, index) => {
+						let found = false;
+
+						if (enabled && index > activePage) {
+							found = true;
+						}
+
+						return found;
+					}
+				);
+
+				dispatch('activePageUpdated', Math.min(nextActivePageIndex, pages.length - 1));
+			}
+			else {
+				dispatch('pageValidationFailed', activePage);
+			}
 		}
 	);
 };
