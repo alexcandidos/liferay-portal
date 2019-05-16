@@ -1,26 +1,29 @@
 {namespace Radio}
 
 {template .render}
-	{@param? readOnly: bool}
-	{@param? tip: string}
+	{@param name: string}
+	{@param? _handleValueChanged: any}
+	{@param? id: string}
+	{@param? inline: bool}
+	{@param? label: string}
 	{@param? options: list<[
 		label: string,
 		value: string
 	]>}
-	{@param? id: string}
-	{@param? inline: bool}
-	{@param? label: string}
-	{@param name: string}
 	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
+	{@param? tip: string}
 	{@param? value: ?}
+	{@param? visible: bool}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
+				{param _handleValueChanged: $_handleValueChanged /}
 				{param disabled: $readOnly /}
 				{param inline: $inline /}
 				{param name: $name /}
@@ -38,18 +41,20 @@
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
+		{param visible: $visible /}
 	{/call}
 {/template}
 
 {template .content}
 	{@param name: string}
+	{@param? _handleValueChanged: any}
+	{@param? disabled: bool}
 	{@param? inline: bool}
 	{@param? options: list<[
 		label: string,
 		value: string
 	]>}
 	{@param? predefinedValue: string}
-	{@param? disabled: bool}
 	{@param? value: string}
 
 	{if $options}
@@ -60,6 +65,9 @@
 				{call ClayRadio.render data="$radio"}
 					{param checked: $radioValue == $radio.value ? true : false  /}
 					{param disabled: $disabled /}
+					{param events: [
+						'change': $_handleValueChanged
+					] /}
 					{param inline: $inline /}
 					{param name: $name /}
 				{/call}
