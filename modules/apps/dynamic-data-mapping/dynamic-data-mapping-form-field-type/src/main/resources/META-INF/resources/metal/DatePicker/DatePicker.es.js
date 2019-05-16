@@ -18,21 +18,6 @@ import {EventHandler} from 'metal-events';
  */
 
 class DatePicker extends Component {
-
-	attached() {
-		const {base} = this.refs;
-		const {inputElement} = base.refs;
-
-		this._vanillaTextMask = vanillaTextMask(
-			{
-				inputElement,
-				mask: this.getInputMask(),
-				placeholderChar: '_',
-				showMask: true
-			}
-		);
-	}
-
 	created() {
 		this._eventHandler = new EventHandler();
 
@@ -173,6 +158,25 @@ class DatePicker extends Component {
 		}
 		else {
 			this._eventHandler.removeAllListeners();
+		}
+	}
+
+	syncVisible() {
+		if (this.visible) {
+			const {base} = this.refs;
+			const {inputElement} = base.refs;
+
+			this._vanillaTextMask = vanillaTextMask(
+				{
+					inputElement,
+					mask: this.getInputMask(),
+					placeholderChar: '_',
+					showMask: true
+				}
+			);
+		}
+		else if (this._vanillaTextMask) {
+			this._vanillaTextMask.destroy();
 		}
 	}
 

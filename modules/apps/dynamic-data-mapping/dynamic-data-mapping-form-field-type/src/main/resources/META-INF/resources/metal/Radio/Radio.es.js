@@ -2,7 +2,6 @@ import '../FieldBase/FieldBase.es';
 import './RadioRegister.soy.js';
 import 'clay-radio';
 import Component from 'metal-component';
-import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import templates from './Radio.soy.js';
 import {Config} from 'metal-state';
@@ -13,15 +12,6 @@ import {Config} from 'metal-state';
  */
 
 class Radio extends Component {
-	attached() {
-		dom.delegate(
-			this.element,
-			'change',
-			'input',
-			this._handleValueChanged.bind(this)
-		);
-	}
-
 	prepareStateForRender(state) {
 		const {predefinedValue} = state;
 		const predefinedValueArray = this._getArrayValue(predefinedValue);
@@ -48,7 +38,7 @@ class Radio extends Component {
 			{
 				fieldInstance: this,
 				originalEvent: event,
-				value: event.delegateTarget.value
+				value: event.target.value
 			}
 		);
 	}
