@@ -253,6 +253,10 @@ class Options extends Component {
 			}
 		}
 
+		if (changes.visible) {
+			changed = true;
+		}
+
 		return changed;
 	}
 

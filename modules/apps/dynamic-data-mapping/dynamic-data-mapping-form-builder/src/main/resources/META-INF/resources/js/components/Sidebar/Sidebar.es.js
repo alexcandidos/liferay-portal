@@ -200,6 +200,7 @@ class Sidebar extends Component {
 		this._handlePreviousButtonClicked = this._handlePreviousButtonClicked.bind(this);
 		this._handleSettingsFieldBlurred = this._handleSettingsFieldBlurred.bind(this);
 		this._handleSettingsFieldEdited = this._handleSettingsFieldEdited.bind(this);
+		this._handleSettingsFormAttached = this._handleSettingsFormAttached.bind(this);
 		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
 		this._renderFieldTypeDropdownLabel = this._renderFieldTypeDropdownLabel.bind(this);
 	}
@@ -610,6 +611,10 @@ class Sidebar extends Component {
 		this.emit('settingsFieldEdited', event);
 	}
 
+	_handleSettingsFormAttached() {
+		this.refs.evaluableForm.evaluate();
+	}
+
 	_handleTabItemClicked(event) {
 		const {target} = event;
 		const {dataset: {index}} = dom.closest(target, '.nav-item');
@@ -943,6 +948,7 @@ class Sidebar extends Component {
 		const {pages, rules} = this.getSettingsFormContext();
 
 		const formEvents = {
+			attached: this._handleSettingsFormAttached,
 			evaluated: this._handleEvaluatorChanged,
 			fieldBlurred: this._handleSettingsFieldBlurred,
 			fieldEdited: this._handleSettingsFieldEdited
