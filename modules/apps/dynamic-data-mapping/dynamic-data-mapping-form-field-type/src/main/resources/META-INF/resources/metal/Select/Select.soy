@@ -19,6 +19,7 @@
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? tip: string}
+	{@param? visible: bool}
 
 	{let $displayValues: length($value) > 0 ? $value : $predefinedValue and length($predefinedValue) > 0 ? $predefinedValue : [] /}
 
@@ -49,6 +50,7 @@
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
+		{param visible: $visible /}
 	{/call}
 {/template}
 

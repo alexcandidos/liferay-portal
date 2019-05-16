@@ -13,6 +13,7 @@
 	{@param? spritemap: string}
 	{@param? tip: string}
 	{@param? value: ?}
+	{@param? visible: bool}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -34,6 +35,7 @@
 		{param showLabel: not $showAsSwitcher and $showLabel /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
+		{param visible: $visible /}
 	{/call}
 {/template}
 
