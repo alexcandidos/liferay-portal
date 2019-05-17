@@ -118,7 +118,9 @@ class LayoutProvider extends Component {
 						localizedValue = field.localizedValue[defaultLanguageId];
 					}
 
-					value = localizedValue;
+					if (localizedValue !== undefined) {
+						value = localizedValue;
+					}
 				}
 
 				if (value && value.JSONArray) {
@@ -149,6 +151,8 @@ class LayoutProvider extends Component {
 					options,
 					settingsContext: {
 						...settingsContext,
+						availableLanguageIds: [editingLanguageId],
+						defaultLanguageId,
 						pages: this.getLocalizedPages(settingsContext.pages)
 					}
 				};
