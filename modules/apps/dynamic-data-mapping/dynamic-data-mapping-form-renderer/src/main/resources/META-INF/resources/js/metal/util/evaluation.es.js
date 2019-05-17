@@ -17,7 +17,7 @@ const doEvaluate = debounce(
 			{
 				body: convertToSearchParams(
 					{
-						languageId: themeDisplay.getLanguageId(),
+						languageId: editingLanguageId,
 						p_auth: Liferay.authToken,
 						portletNamespace,
 						serializedFormContext: JSON.stringify(
