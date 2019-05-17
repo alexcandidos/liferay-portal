@@ -19,9 +19,16 @@ class Editor extends Component {
 		);
 	}
 
-	willReceiveState({children, value}) {
-		if (value && value.newVal !== value.prevVal && children) {
-			this._alloyEditor.getNativeEditor().setData(value.newVal);
+	syncValue(value) {
+		const {_alloyEditor} = this;
+
+		if (_alloyEditor && _alloyEditor.getHTML() !== value) {
+			const nativeEditor = _alloyEditor.getNativeEditor();
+			const {hasFocus} = nativeEditor.focusManager;
+
+			if (!hasFocus) {
+				nativeEditor.setData(value);
+			}
 		}
 	}
 
@@ -78,20 +85,13 @@ class Editor extends Component {
 	}
 
 	_onChangeEditor(event) {
-		const value = this._alloyEditor.getHTML();
-
-		this.setState(
+		this.emit(
+			'fieldEdited',
 			{
-				value
-			},
-			() => this.emit(
-				'fieldEdited',
-				{
-					fieldInstance: this,
-					originalEvent: event,
-					value
-				}
-			)
+				fieldInstance: this,
+				originalEvent: event,
+				value: this._alloyEditor.getHTML()
+			}
 		);
 	}
 }
