@@ -313,6 +313,9 @@ class Form extends Component {
 				const translationManager = results[2];
 
 				if (translationManager) {
+					this.props.defaultLanguageId = translationManager.get('defaultLocale');
+					this.props.editingLanguageId = translationManager.get('editingLocale');
+
 					translationManager.on(
 						'editingLocaleChange',
 						event => {
