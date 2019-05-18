@@ -327,6 +327,10 @@ class FormBuilder extends Component {
 			}
 		}
 
+		if (pages[activePage].successPageSettings) {
+			openSidebar = false;
+		}
+
 		if (openSidebar) {
 			this.openSidebar();
 		}
