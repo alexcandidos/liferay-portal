@@ -340,7 +340,9 @@ class Sidebar extends Component {
 						{editMode && (
 							<div class="sidebar-body ddm-field-settings">
 								<div class="tab-content">
-									{this._renderSettingsForm()}
+									<form>
+										{this._renderSettingsForm()}
+									</form>
 								</div>
 							</div>
 						)}
