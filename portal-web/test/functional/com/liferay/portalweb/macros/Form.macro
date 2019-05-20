@@ -423,6 +423,7 @@ definition {
 	}
 
 	macro viewAltSuccessPagePagination {
+
 		AssertElementPresent(locator1 = "Form#ALT_PAGINATION_SUCCESS_PAGE");
 	}
 
