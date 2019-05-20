@@ -100,8 +100,8 @@ public interface TextDDMFormFieldTypeSettings
 		label = "%create-list",
 		optionLabels = {"%manually", "%from-data-provider"},
 		optionValues = {"manual", "data-provider"},
-		predefinedValue = "[\"manual\"]",
-		properties = "showLabel=false", type = "radio"
+		predefinedValue = "[\"manual\"]", properties = "showLabel=false",
+		type = "radio"
 	)
 	public String dataSourceType();
 
