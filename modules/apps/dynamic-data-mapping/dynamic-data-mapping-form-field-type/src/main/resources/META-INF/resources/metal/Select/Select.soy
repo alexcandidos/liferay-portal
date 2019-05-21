@@ -8,6 +8,7 @@
 	{@param? _handleItemClicked: any}
 	{@param? _handleLabelClosed: any}
 	{@param? dataSourceType: string}
+	{@param? errorMessage: string}
 	{@param? expanded: bool}
 	{@param? id: string}
 	{@param? label: string}
@@ -19,6 +20,7 @@
 	{@param? required: bool}
 	{@param? showLabel: bool}
 	{@param? tip: string}
+	{@param? valid: bool}
 	{@param? visible: bool}
 
 	{let $displayValues: length($value) > 0 ? $value : $predefinedValue and length($predefinedValue) > 0 ? $predefinedValue : [] /}
@@ -41,15 +43,17 @@
 				{param value: $value /}
 			{/call}
 		{/param}
+		{param errorMessage: $errorMessage /}
 		{param label: $label /}
 		{param name: $name /}
-		{param ref: 'base' /}
 		{param readOnly: $readOnly /}
+		{param ref: 'base' /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
+		{param valid: $valid /}
 		{param visible: $visible /}
 	{/call}
 {/template}

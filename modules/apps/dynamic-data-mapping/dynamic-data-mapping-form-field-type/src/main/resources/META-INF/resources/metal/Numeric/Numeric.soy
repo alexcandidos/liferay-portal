@@ -4,6 +4,7 @@
 	{@param name: string}
 	{@param? _handleFieldChanged: any}
 	{@param? _value: any}
+	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -15,6 +16,7 @@
 	{@param? spritemap: string}
 	{@param? tip: string}
 	{@param? tooltip: string}
+	{@param? valid: bool}
 	{@param? visible: bool}
 
 	{call FieldBase.render}
@@ -29,6 +31,7 @@
 				{param value: $_value /}
 			{/call}
 		{/param}
+		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
 		{param name: $name /}
@@ -38,6 +41,7 @@
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param tooltip: $tooltip /}
+		{param valid: $valid /}
 		{param visible: $visible /}
 	{/call}
 {/template}

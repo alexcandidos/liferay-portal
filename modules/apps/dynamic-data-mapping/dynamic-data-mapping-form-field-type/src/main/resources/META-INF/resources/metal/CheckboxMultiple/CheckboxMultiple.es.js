@@ -2,8 +2,10 @@ import '../FieldBase/FieldBase.es';
 import './CheckboxMultipleRegister.soy.js';
 import 'clay-checkbox';
 import Component from 'metal-component';
+import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {EventHandler} from 'metal-events';
 
 import templates from './CheckboxMultiple.soy.js';
 
@@ -13,21 +15,51 @@ import templates from './CheckboxMultiple.soy.js';
  */
 
 class CheckboxMultiple extends Component {
-	handleInputChangeEvent(event) {
-		const value = event.delegateTarget.checked;
+	attached() {
+		this._eventHandlers = new EventHandler();
+
+		this._eventHandlers.add(
+			dom.delegate(this.element, 'focus', 'input', this._handleFieldFocused.bind(this))
+		);
+	}
+
+	detached() {
+		this._eventHandlers.removeAllListeners();
+	}
+
+	_handleFieldChanged(event) {
+		const {target} = event;
+		const value = this.value.filter(
+			currentValue => currentValue !== target.value
+		);
+
+		if (target.checked) {
+			value.push(target.value);
+		}
 
 		this.setState(
 			{
 				value
+			},
+			() => {
+				this.emit(
+					'fieldEdited',
+					{
+						fieldInstance: this,
+						originalEvent: event,
+						value
+					}
+				);
 			}
 		);
+	}
 
+	_handleFieldFocused(event) {
 		this.emit(
-			'fieldEdited',
+			'fieldFocused',
 			{
 				fieldInstance: this,
-				originalEvent: event,
-				value
+				originalEvent: event
 			}
 		);
 	}
@@ -196,7 +228,7 @@ CheckboxMultiple.STATE = {
 	 * @type {?(bool)}
 	 */
 
-	value: Config.bool().value(true)
+	value: Config.array().value([])
 };
 
 export default CheckboxMultiple;
