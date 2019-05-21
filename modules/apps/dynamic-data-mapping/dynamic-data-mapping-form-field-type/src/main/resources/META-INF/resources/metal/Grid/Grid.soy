@@ -4,6 +4,9 @@
 	{@param columns: list<[label: string, value: ?]>}
 	{@param name: string}
 	{@param rows: list<[label: string, value: ?]>}
+	{@param value: ?}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
 	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
@@ -20,11 +23,14 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param columns: $columns/}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param columns: $columns /}
 				{param disabled: $readOnly /}
 				{param id: $id /}
 				{param placeholder: $placeholder /}
-				{param rows: $rows/}
+				{param rows: $rows /}
+				{param value: $value /}
 			{/call}
 		{/param}
 		{param errorMessage: $errorMessage /}
@@ -44,46 +50,61 @@
 {template .content}
 	{@param columns: list<[label: string, value: ?]>}
 	{@param rows: list<[label: string, value: ?]>}
+	{@param value: ?}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
 	{@param? disabled: bool}
-		<div class="liferay-ddm-form-field-grid table-responsive">
-			<table class="table table-autofit table-list table-striped">
-				<thead>
-					<tr>
-						<th></th>
-						{foreach $column in $columns}
-							{if $column.value}
-								<th>{$column.label}</th>
-							{/if}
-						{/foreach}
-					</tr>
-				</thead>
 
-				<tbody>
-					{foreach $row in $rows}
-						{if $row.value}
-							<tr name="{$row.value}">
-								<td>{$row.label}</td>
-								{foreach $column in $columns}
-									{if $column.value}
+	<div class="liferay-ddm-form-field-grid table-responsive">
+		<table class="table table-autofit table-list table-striped">
+			<thead>
+				<tr>
+					<th></th>
+
+					{foreach $column in $columns}
+						{if $column.value}
+							<th>{$column.label}</th>
+						{/if}
+					{/foreach}
+				</tr>
+			</thead>
+
+			<tbody>
+				{foreach $row in $rows}
+					{if $row.value}
+						<tr name="{$row.value}">
+							<td>{$row.label}</td>
+
+							{foreach $column in $columns}
+								{if $column.value}
+									<td>
 										{let $inputAttributes kind="attributes"}
+											{if $column.value == $value[$row.value]}
+												checked
+											{/if}
+
 											class="form-builder-grid-field"
+											data-onchange="{$_handleFieldChanged}"
+											data-onfocus="{$_handleFieldFocused}"
 											data-row-index="{index($column)}"
+
 											{if $disabled}
 												disabled
 											{/if}
+
 											name="{$row.value}"
 											type="radio"
 											value="{$column.value}"
 										{/let}
-										<td>
-											<input {$inputAttributes} />
-										</td>
-									{/if}
-								{/foreach}
-							</tr>
-						{/if}
-					{/foreach}
-				</tbody>
-			</table>
-		</div>
+
+										<input {$inputAttributes} />
+									</td>
+								{/if}
+							{/foreach}
+						</tr>
+					{/if}
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
 {/template}
