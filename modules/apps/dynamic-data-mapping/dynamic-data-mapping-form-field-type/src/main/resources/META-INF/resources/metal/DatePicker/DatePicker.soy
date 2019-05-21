@@ -23,6 +23,7 @@
 	{@param? ariaLabel: string}
 	{@param? displayStyle: string}
 	{@param? elementClasses: string}
+	{@param? errorMessage: string}
 	{@param? expanded: bool}
 	{@param? firstDayOfWeek: int}
 	{@param? id: string}
@@ -36,6 +37,7 @@
 	{@param? showLabel: bool}
 	{@param? tip: string}
 	{@param? tooltip: string}
+	{@param? valid: bool}
 	{@param? value: ?}
 	{@param? visible: bool}
 	{@param? weekdaysShort: list<string>}
@@ -74,6 +76,7 @@
 				{param predefinedValue: $predefinedValue /}
 			{/call}
 		{/param}
+		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
 		{param name: $name /}
@@ -84,6 +87,7 @@
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param tooltip: $tooltip /}
+		{param valid: $valid /}
 		{param visible: $visible /}
 	{/call}
 {/template}

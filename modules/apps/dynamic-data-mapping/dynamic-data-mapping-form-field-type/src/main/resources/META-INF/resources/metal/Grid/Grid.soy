@@ -4,6 +4,7 @@
 	{@param columns: list<[label: string, value: ?]>}
 	{@param name: string}
 	{@param rows: list<[label: string, value: ?]>}
+	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -13,6 +14,7 @@
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
 	{@param? tip: string}
+	{@param? valid: bool}
 	{@param? visible: bool}
 
 	{call FieldBase.render}
@@ -25,8 +27,7 @@
 				{param rows: $rows/}
 			{/call}
 		{/param}
-
-		{param tip: $tip /}
+		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
 		{param name: $name /}
@@ -34,6 +35,8 @@
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param valid: $valid /}
 		{param visible: $visible /}
 	{/call}
 {/template}

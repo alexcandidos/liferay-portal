@@ -142,6 +142,11 @@ export default Component => {
 							}
 						);
 					}
+					else {
+						const {activePage} = this;
+
+						this.dispatch('pageValidationFailed', activePage);
+					}
 				}
 			);
 		}
