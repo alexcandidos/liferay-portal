@@ -128,8 +128,12 @@ class DatePicker extends Component {
 	}
 
 	prepareStateForRender(state) {
+		const value = Helpers.formatDate(this._daySelected);
+
 		return {
 			...state,
+			formattedValue: state.value,
+			value: moment(value).format('YYYY-MM-DD'),
 			years: this.getYears()
 		};
 	}
@@ -143,7 +147,7 @@ class DatePicker extends Component {
 	}
 
 	syncCurrentMonth(value) {
-		if (value) {
+		if (moment(value).isValid()) {
 			this._weeks = Helpers.getWeekArray(value, this.firstDayOfWeek);
 			this._month = value.getMonth();
 			this._year = value.getFullYear();
@@ -283,7 +287,7 @@ class DatePicker extends Component {
 			.toDate();
 	}
 
-	_handleOnInput(event) {
+	_handleInput(event) {
 		const {value} = event.target;
 		const format = `${this.dateFormat}`;
 
@@ -338,6 +342,13 @@ class DatePicker extends Component {
 
 				newValue = date;
 			}
+		}
+		else if (moment(value, 'YYYY-MM-DD').isValid()) {
+			const date = moment(value, 'YYYY-MM-DD')
+				.clone()
+				.format(this.dateFormat);
+
+			newValue = date;
 		}
 		else {
 			newValue = value;
