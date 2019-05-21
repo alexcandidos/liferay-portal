@@ -28,6 +28,7 @@
 				{param columns: $columns /}
 				{param disabled: $readOnly /}
 				{param id: $id /}
+				{param name: $name /}
 				{param placeholder: $placeholder /}
 				{param rows: $rows /}
 				{param value: $value /}
@@ -49,13 +50,23 @@
 
 {template .content}
 	{@param columns: list<[label: string, value: ?]>}
+	{@param name: string}
 	{@param rows: list<[label: string, value: ?]>}
 	{@param value: ?}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleFieldFocused: any}
 	{@param? disabled: bool}
+	{@param? readOnly: bool}
 
 	<div class="liferay-ddm-form-field-grid table-responsive">
+		{if not $readOnly}
+			{call .hidden_grid data="all"}
+				{param name: $name /}
+				{param rows: $rows /}
+				{param value: $value /}
+			{/call}
+		{/if}
+
 		<table class="table table-autofit table-list table-striped">
 			<thead>
 				<tr>
@@ -107,4 +118,27 @@
 			</tbody>
 		</table>
 	</div>
+{/template}
+
+/**
+ * Prints the hidden input to send the values to the backend.
+ */
+{template .hidden_grid}
+	{@param name: string}
+	{@param rows: list<[label: string, value: ?]>}
+	{@param value: ?}
+
+	{foreach $row in $rows}
+		{let $inputValue: $value[$row.value] ? $row.value + ';' + $value[$row.value] : '' /}
+
+		<input
+			class="form-control"
+			name="{$name}"
+			type="hidden"
+
+			{if $inputValue}
+				value="{$inputValue}"
+			{/if}
+		/>
+	{/foreach}
 {/template}
