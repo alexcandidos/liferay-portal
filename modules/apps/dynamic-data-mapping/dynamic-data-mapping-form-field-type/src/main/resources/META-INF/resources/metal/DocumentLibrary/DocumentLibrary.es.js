@@ -6,7 +6,6 @@ import templates from './DocumentLibrary.soy.js';
 import {Config} from 'metal-state';
 
 class DocumentLibrary extends Component {
-
 	created() {
 		AUI().use(
 			'liferay-item-selector-dialog',
@@ -89,7 +88,7 @@ class DocumentLibrary extends Component {
 		return portletURL.toString();
 	}
 
-	_handleClearButtonClicked() {
+	_handleClearButtonClicked(event) {
 		this.setState(
 			{
 				value: ''
@@ -97,39 +96,54 @@ class DocumentLibrary extends Component {
 		);
 	}
 
-	_handleSelectButtonClicked() {
+	_handleFieldChanged(event) {
+		var selectedItem = event.newVal;
+
+		if (selectedItem) {
+			const {value} = selectedItem;
+
+			this.setState(
+				{
+					value
+				},
+				() => {
+					this.emit(
+						'fieldEdited',
+						{
+							fieldInstance: this,
+							originalEvent: event,
+							value
+						}
+					);
+				}
+			);
+		}
+	}
+
+	_handleFieldFocused(event) {
+		this.emit(
+			'fieldFocused',
+			{
+				fieldInstance: this,
+				originalEvent: event
+			}
+		);
+	}
+
+	_handleSelectButtonClicked(event) {
 		var {A, portletNamespace} = this;
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 			{
 				eventName: `${portletNamespace}selectDocumentLibrary`,
 				on: {
-					selectedItemChange: event => {
-						var selectedItem = event.newVal;
-
-						if (selectedItem) {
-							this.setState(
-								{
-									value: selectedItem.value
-								}
-							);
-						}
-					},
-					visibleChange(event) {
-
-						// if (event.newVal) {
-						// 	instance._fireFocusEvent();
-						// }
-						// else {
-						// 	instance.showErrorMessage();
-						// 	instance._fireBlurEvent();
-						// }
-
-					}
+					selectedItemChange: this._handleFieldChanged.bind(this)
 				},
 				url: this.getDocumentLibrarySelectorURL()
 			}
 		);
+
+		this._handleFieldFocused(event);
 
 		itemSelectorDialog.open();
 	}
