@@ -29,6 +29,7 @@
 				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param disabled: $readOnly /}
 				{param inline: $inline /}
+				{param name: $name /}
 				{param options: $options /}
 				{param predefinedValue: $predefinedValue /}
 				{param showAsSwitcher: $showAsSwitcher /}
@@ -52,6 +53,7 @@
 {/template}
 
 {template .content}
+	{@param name: string}
 	{@param value: ?}
 	{@param? _handleFieldChanged: any}
 	{@param? disabled: bool}
@@ -93,6 +95,7 @@
 								{if $disabled}
 									disabled
 								{/if}
+								name="{$name}"
 								ref="input{index($option)}"
 								type="checkbox"
 							{/let}
@@ -114,6 +117,7 @@
 						] /}
 						{param inline: $inline /}
 						{param label: $option.label /}
+						{param name: $name /}
 						{param ref: 'input' + index($option) /}
 						{param value: $option.value /}
 					{/call}
