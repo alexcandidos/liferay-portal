@@ -5,6 +5,7 @@
 	{@param spritemap: string}
 	{@param? _handleClearButtonClicked: any}
 	{@param? _handleSelectButtonClicked: any}
+	{@param? errorMessage: string}
 	{@param? fileEntryTitle: string}
 	{@param? fileEntryURL: string}
 	{@param? id: string}
@@ -16,6 +17,7 @@
 	{@param? showLabel: bool}
 	{@param? tip: string}
 	{@param? tooltip: string}
+	{@param? valid: bool}
 	{@param? value: ?}
 	{@param? visible: bool}
 
@@ -35,6 +37,7 @@
 				{param value: $value /}
 			{/call}
 		{/param}
+		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
 		{param name: $name /}
@@ -44,6 +47,7 @@
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param tooltip: $tooltip /}
+		{param valid: $valid /}
 		{param visible: $visible /}
 	{/call}
 {/template}
