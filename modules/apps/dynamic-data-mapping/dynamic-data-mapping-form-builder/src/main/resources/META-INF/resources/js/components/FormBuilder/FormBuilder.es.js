@@ -24,7 +24,6 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/vis
  */
 
 class FormBuilderBase extends Component {
-
 	attached() {
 		const {activePage, pages} = this.props;
 		const {store} = this.context;
@@ -505,6 +504,14 @@ FormBuilderBase.PROPS = {
 	 */
 
 	paginationMode: Config.string().required(),
+
+	/**
+	 * @instance
+	 * @memberof FormBuilder
+	 * @type {string}
+	 */
+
+	portletNamespace: Config.string().required(),
 
 	/**
 	 * @instance

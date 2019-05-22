@@ -179,6 +179,14 @@ const withResizeableColumns = ChildComponent => {
 		 * @type {string}
 		 */
 
+		portletNamespace: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
 		rules: Config.arrayOf(ruleStructure).required(),
 
 		/**
