@@ -238,6 +238,13 @@ class LayoutProvider extends Component {
 		if (focusedField && focusedField.settingsContext) {
 			focusedField = {
 				...focusedField,
+				originalContext: {
+					...focusedField.originalContext,
+					settingsContext: {
+						...focusedField.originalContext.settingsContext,
+						pages: this.getLocalizedPages(focusedField.originalContext.settingsContext.pages)
+					}
+				},
 				settingsContext: {
 					...focusedField.settingsContext,
 					pages: this.getLocalizedPages(focusedField.settingsContext.pages)
@@ -438,13 +445,15 @@ class LayoutProvider extends Component {
 
 	_handleFieldChangesCanceled() {
 		const {focusedField: {originalContext}} = this.state;
+		const {settingsContext} = originalContext;
+		const visitor = new PagesVisitor(settingsContext.pages);
 
-		Object.keys(originalContext).forEach(
-			propertyName => {
+		visitor.mapFields(
+			field => {
 				this._handleFieldEdited(
 					{
-						propertyName,
-						propertyValue: originalContext[propertyName]
+						propertyName: field.fieldName,
+						propertyValue: field.value
 					}
 				);
 			}
