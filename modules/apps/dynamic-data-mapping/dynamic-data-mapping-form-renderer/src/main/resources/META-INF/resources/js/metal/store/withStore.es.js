@@ -110,6 +110,23 @@ export default Component => {
 			return dom.closest(this.element, 'form');
 		}
 
+		toJSON() {
+			const {
+				description,
+				name,
+				paginationMode,
+				successPageSettings
+			} = this;
+
+			return {
+				...this.getEvaluatorContext(),
+				description,
+				name,
+				paginationMode,
+				successPageSettings
+			}
+		}
+
 		_handleActivePageUpdated(event) {
 			this.setState(handleActivePageUpdated(event));
 		}

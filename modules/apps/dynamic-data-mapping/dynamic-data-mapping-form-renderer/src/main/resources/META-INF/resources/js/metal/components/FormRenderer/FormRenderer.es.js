@@ -15,6 +15,16 @@ import {Config} from 'metal-state';
  */
 
 class FormRenderer extends Component {
+	_defaultLanguageIdValueFn() {
+		return themeDisplay.getLanguageId();
+	}
+
+	_editingLanguageIdValueFn() {
+		const {defaultLanguageId} = this;
+
+		return defaultLanguageId;
+	}
+
 	_handleFieldBlurred(event) {
 		this.emit('fieldBlurred', event);
 	}
@@ -50,7 +60,7 @@ FormRenderer.STATE = {
 	 * @required
 	 */
 
-	defaultLanguageId: Config.string(),
+	defaultLanguageId: Config.string().valueFn('_defaultLanguageIdValueFn'),
 
 	/**
 	 * @default false
@@ -68,7 +78,7 @@ FormRenderer.STATE = {
 	 * @required
 	 */
 
-	editingLanguageId: Config.string(),
+	editingLanguageId: Config.string().valueFn('_editingLanguageIdValueFn'),
 
 	/**
 	 * @default []
