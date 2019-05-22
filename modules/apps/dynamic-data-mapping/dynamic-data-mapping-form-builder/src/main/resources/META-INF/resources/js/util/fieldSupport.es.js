@@ -1,4 +1,4 @@
-import {PagesVisitor} from './visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 export const formatFieldName = (instanceId, languageId, value) => {
 	return `ddm$$${value}$${instanceId}$0$$${languageId}`;
@@ -26,8 +26,7 @@ export const normalizeSettingsContextPages = (pages, editingLanguageId, fieldTyp
 			if (fieldName === 'name') {
 				field = {
 					...field,
-					value: generatedFieldName,
-					visible: true
+					value: generatedFieldName
 				};
 			}
 			else if (fieldName === 'label') {

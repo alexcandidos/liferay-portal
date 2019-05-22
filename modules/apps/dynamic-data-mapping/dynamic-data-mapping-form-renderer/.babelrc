@@ -1,3 +1,7 @@
 {
-	"ignore": ["**/js/*.js"]
+    "ignore": [
+        "**/alloy/config.js",
+        "**/alloy/**/*.js",
+        "**/__tests__/*.js"
+    ]
 }

@@ -1,8 +1,8 @@
-import * as FormSupport from 'dynamic-data-mapping-form-builder/js/components/Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {PagesVisitor} from 'dynamic-data-mapping-form-builder/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 class StateSyncronizer extends Component {
 	static PROPS = {
@@ -162,9 +162,11 @@ class StateSyncronizer extends Component {
 		);
 
 		if (settingsDDMForm) {
-			const settings = settingsDDMForm.get('context');
-
-			document.querySelector(`#${namespace}serializedSettingsContext`).value = JSON.stringify(settings);
+			document.querySelector(`#${namespace}serializedSettingsContext`).value = JSON.stringify(
+				{
+					'pages': settingsDDMForm.pages
+				}
+			);
 		}
 
 		document.querySelector(`#${namespace}name`).value = JSON.stringify(name);
@@ -198,6 +200,8 @@ class StateSyncronizer extends Component {
 							...field,
 							settingsContext: {
 								...field.settingsContext,
+								availableLanguageIds: this.getAvailableLanguageIds(),
+								defaultLanguageId: this.getDefaultLanguageId(),
 								pages: this._getSerializedSettingsContextPages(field.settingsContext.pages)
 							}
 						};

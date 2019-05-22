@@ -5,14 +5,47 @@ import Soy from 'metal-soy';
 import templates from './Grid.soy.js';
 import {Config} from 'metal-state';
 
-class Grid extends Component {}
+class Grid extends Component {
+	_handleFieldChanged(event) {
+		const {target} = event;
+		const value = {
+			...this.value,
+			[target.name]: target.value
+		};
+
+		this.setState(
+			{
+				value
+			},
+			() => {
+				this.emit(
+					'fieldEdited',
+					{
+						fieldInstance: this,
+						originalEvent: event,
+						value
+					}
+				);
+			}
+		);
+	}
+
+	_handleFieldFocused(event) {
+		this.emit(
+			'fieldFocused',
+			{
+				fieldInstance: this,
+				originalEvent: event
+			}
+		);
+	}
+}
 
 Grid.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
-	 * @memberof Select
+	 * @memberof Grid
 	 * @type {?array<object>}
 	 */
 
@@ -33,8 +66,15 @@ Grid.STATE = {
 	),
 
 	/**
+	 * @default false
+	 * @memberof Grid
+	 * @type {?bool}
+	 */
+
+	evaluable: Config.bool().value(false),
+
+	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Grid
 	 * @type {?(string|undefined)}
 	 */
@@ -43,7 +83,6 @@ Grid.STATE = {
 
 	/**
 	 * @default false
-	 * @instance
 	 * @memberof Grid
 	 * @type {?bool}
 	 */
@@ -52,7 +91,6 @@ Grid.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Grid
 	 * @type {?(bool|undefined)}
 	 */
@@ -61,7 +99,6 @@ Grid.STATE = {
 
 	/**
 	 * @default false
-	 * @instance
 	 * @memberof Grid
 	 * @type {?(bool|undefined)}
 	 */
@@ -70,8 +107,7 @@ Grid.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
-	 * @memberof Select
+	 * @memberof Grid
 	 * @type {?array<object>}
 	 */
 
@@ -93,7 +129,6 @@ Grid.STATE = {
 
 	/**
 	 * @default true
-	 * @instance
 	 * @memberof Grid
 	 * @type {?(bool|undefined)}
 	 */
@@ -102,7 +137,6 @@ Grid.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Grid
 	 * @type {?(string|undefined)}
 	 */
@@ -111,7 +145,6 @@ Grid.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Grid
 	 * @type {?(string|undefined)}
 	 */
@@ -119,13 +152,20 @@ Grid.STATE = {
 	tip: Config.string(),
 
 	/**
-	 * @default undefined
-	 * @instance
+	 * @default grid
 	 * @memberof Grid
 	 * @type {?(string|undefined)}
 	 */
 
-	type: Config.string().value('grid')
+	type: Config.string().value('grid'),
+
+	/**
+	 * @default {}
+	 * @memberof Grid
+	 * @type {?(string|undefined)}
+	 */
+
+	value: Config.object().value({})
 };
 
 Soy.register(Grid, templates);

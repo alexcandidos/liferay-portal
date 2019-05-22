@@ -1,9 +1,9 @@
-import * as FormSupport from '../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {getFieldProperties} from '../../util/fieldSupport.es';
 import {pageStructure, ruleStructure} from '../../util/config.es';
-import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
+import {PagesVisitor, RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 
 import handleColumnResized from './handlers/columnResizedHandler.es';
@@ -15,6 +15,9 @@ import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
+import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/metal/store/actions/handlePaginationItemClicked.es';
+import handlePaginationNextClicked from 'dynamic-data-mapping-form-renderer/js/metal/store/actions/handlePaginationNextClicked.es';
+import handlePaginationPreviousClicked from 'dynamic-data-mapping-form-renderer/js/metal/store/actions/handlePaginationPreviousClicked.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -187,9 +190,13 @@ class LayoutProvider extends Component {
 		return page;
 	}
 
+	dispatch(event, payload) {
+		this.emit(event, payload);
+	}
+
 	getChildContext() {
 		return {
-			dispatch: this.emit.bind(this),
+			dispatch: this.dispatch.bind(this),
 			store: this
 		};
 	}
@@ -213,7 +220,10 @@ class LayoutProvider extends Component {
 			pageDeleted: this._handlePageDeleted.bind(this),
 			pageReset: this._handlePageReset.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this),
+			paginationItemClicked: this._handlePaginationItemClicked.bind(this),
 			paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
+			paginationNextClicked: this._handlePaginationNextClicked.bind(this),
+			paginationPreviousClicked: this._handlePaginationPreviousClicked.bind(this),
 			ruleAdded: this._handleRuleAdded.bind(this),
 			ruleDeleted: this._handleRuleDeleted.bind(this),
 			ruleSaved: this._handleRuleSaved.bind(this),
@@ -256,7 +266,9 @@ class LayoutProvider extends Component {
 						localizedValue = field.localizedValue[defaultLanguageId];
 					}
 
-					value = localizedValue;
+					if (localizedValue !== undefined) {
+						value = localizedValue;
+					}
 				}
 
 				if (value && value.JSONArray) {
@@ -286,6 +298,8 @@ class LayoutProvider extends Component {
 					...getFieldProperties(settingsContext, defaultLanguageId, editingLanguageId),
 					settingsContext: {
 						...settingsContext,
+						availableLanguageIds: [editingLanguageId],
+						defaultLanguageId,
 						pages: this.getLocalizedPages(settingsContext.pages)
 					}
 				};
@@ -573,6 +587,10 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	_handlePaginationItemClicked({pageIndex}) {
+		handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
+	}
+
 	_handlePaginationModeUpdated() {
 		const {paginationMode} = this.state;
 		let newMode = 'paginated';
@@ -586,6 +604,24 @@ class LayoutProvider extends Component {
 				paginationMode: newMode
 			}
 		);
+	}
+
+	_handlePaginationNextClicked() {
+		const {activePage, pages} = this.state;
+
+		handlePaginationNextClicked(
+			{
+				activePage,
+				pages
+			},
+			this.dispatch.bind(this)
+		);
+	}
+
+	_handlePaginationPreviousClicked() {
+		const {activePage} = this.state;
+
+		handlePaginationPreviousClicked({activePage}, this.dispatch.bind(this));
 	}
 
 	_handleRuleAdded(rule) {

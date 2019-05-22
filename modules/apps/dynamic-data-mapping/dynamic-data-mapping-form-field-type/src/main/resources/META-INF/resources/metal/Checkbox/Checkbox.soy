@@ -1,6 +1,8 @@
 {namespace Checkbox}
 
 {template .render}
+	{@param name: string}
+	{@param? errorMessage: string}
 	{@param? handleInputChangeEvent: any}
 	{@param? id: string}
 	{@param? label: string}
@@ -11,7 +13,9 @@
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
 	{@param? tip: string}
-	{@param? value: bool}
+	{@param? value: ?}
+	{@param? visible: bool}
+	{@param? valid: bool}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -24,14 +28,17 @@
 				{param showLabel: $showLabel /}
 			{/call}
 		{/param}
-
+		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
+		{param name: $name /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: not $showAsSwitcher and $showLabel /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
 	{/call}
 {/template}
 

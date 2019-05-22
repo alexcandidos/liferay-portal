@@ -9,7 +9,7 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
 import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 /**
  * RuleList.
@@ -136,7 +136,6 @@ class RuleList extends Component {
 	}
 
 	prepareStateForRender(states) {
-		const {pages} = this;
 		const rules = this._setDataProviderNames(states);
 
 		return {
@@ -156,7 +155,7 @@ class RuleList extends Component {
 						...rule,
 						actions: rule.actions.map(
 							action => {
-								let newAction = '';
+								let newAction;
 
 								if (action.action === 'auto-fill') {
 									const {inputs, outputs} = action;
@@ -164,46 +163,22 @@ class RuleList extends Component {
 									const inputLabel = Object.values(inputs).map(input => this._getFieldLabel(input));
 									const outputLabel = Object.values(outputs).map(output => this._getFieldLabel(output));
 
-									action = {
+									newAction = {
 										...action,
 										inputLabel,
 										outputLabel
 									};
 								}
-
-								let fieldLabel = this._getFieldLabel(action.target);
-
-								if (action.action == 'jump-to-page') {
-									const fieldTarget = (parseInt(action.target, 10) + 1).toString();
-
-									if (action.label) {
-										fieldLabel = action.label;
-									}
-									else {
-										const maxPageIndexRes = maxPageIndex(rule.conditions, pages);
-
-										const pageOptionsList = pageOptions(pages, maxPageIndexRes);
-
-										const selectedPage = pageOptionsList.find(
-											option => {
-												return option.value == fieldTarget;
-											}
-										);
-
-										fieldLabel = selectedPage.label;
-									}
-
+								else if (action.action == 'jump-to-page') {
 									newAction = {
 										...action,
-										label: fieldLabel,
-										target: fieldTarget
+										label: this._getJumpToPageLabel(rule, action)
 									};
 								}
 								else {
 									newAction = {
 										...action,
-										label: fieldLabel,
-										target: fieldLabel
+										label: this._getFieldLabel(action.target)
 									};
 								}
 
@@ -267,6 +242,26 @@ class RuleList extends Component {
 		const pages = this.pages;
 
 		return getFieldProperty(pages, fieldName, 'type');
+	}
+
+	_getJumpToPageLabel(rule, action) {
+		const {pages} = this;
+		let pageLabel = '';
+
+		const fieldTarget = (parseInt(action.target, 10) + 1).toString();
+		const maxPageIndexRes = maxPageIndex(rule.conditions, pages);
+		const pageOptionsList = pageOptions(pages, maxPageIndexRes);
+		const selectedPage = pageOptionsList.find(
+			option => {
+				return option.value == fieldTarget;
+			}
+		);
+
+		if (selectedPage) {
+			pageLabel = selectedPage.label;
+		}
+
+		return pageLabel;
 	}
 
 	_getOperandLabel(operands, index) {

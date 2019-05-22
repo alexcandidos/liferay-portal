@@ -1,8 +1,9 @@
+import '../SuccessPage/SuccessPage.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
-import compose from '../../util/compose.es';
+import compose from 'dynamic-data-mapping-form-renderer/js/metal/util/compose.es';
 import dom from 'metal-dom';
-import FormRenderer from '../../components/Form/FormRenderer.es';
+import FormRenderer from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormRenderer.es';
 import Sidebar from '../../components/Sidebar/Sidebar.es';
 import withActionableFields from './withActionableFields.es';
 import withEditablePageHeader from './withEditablePageHeader.es';
@@ -13,9 +14,9 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
 import {generateFieldName} from '../LayoutProvider/util/fields.es';
-import {makeFetch} from '../../util/fetch.es';
+import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/metal/util/fetch.es';
 import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 /**
  * Builder.
@@ -86,6 +87,14 @@ class FormBuilderBase extends Component {
 		 */
 
 		paginationMode: Config.string().required(),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		portletNamespace: Config.string().required(),
 
 		/**
 		 * @instance
@@ -180,7 +189,10 @@ class FormBuilderBase extends Component {
 					};
 				}
 
-				return field;
+				return {
+					field,
+					readOnly: true
+				};
 			}
 		);
 	}
@@ -194,9 +206,9 @@ class FormBuilderBase extends Component {
 			fieldSets,
 			fieldTypes,
 			focusedField,
-			namespace,
 			pages,
 			paginationMode,
+			portletNamespace,
 			rules,
 			spritemap,
 			visible
@@ -213,6 +225,7 @@ class FormBuilderBase extends Component {
 							events={this.getFormRendererEvents()}
 							pages={this.preparePagesForRender(pages)}
 							paginationMode={paginationMode}
+							portletNamespace={portletNamespace}
 							ref="FormRenderer"
 							spritemap={spritemap}
 						/>
@@ -251,7 +264,7 @@ class FormBuilderBase extends Component {
 					fieldSets={fieldSets}
 					fieldTypes={fieldTypes}
 					focusedField={focusedField}
-					namespace={namespace}
+					portletNamespace={portletNamespace}
 					ref="sidebar"
 					rules={rules}
 					spritemap={spritemap}
@@ -322,6 +335,10 @@ class FormBuilderBase extends Component {
 			}
 		}
 
+		if (pages[activePage].successPageSettings) {
+			openSidebar = false;
+		}
+
 		if (openSidebar) {
 			this.openSidebar();
 		}
@@ -332,13 +349,13 @@ class FormBuilderBase extends Component {
 			editingLanguageId,
 			fieldSetDefinitionURL,
 			groupId,
-			namespace
+			portletNamespace
 		} = this.props;
 
 		return makeFetch(
 			{
 				method: 'GET',
-				url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${namespace}&scopeGroupId=${groupId}`
+				url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${portletNamespace}&scopeGroupId=${groupId}`
 			}
 		).then(
 			({pages}) => pages

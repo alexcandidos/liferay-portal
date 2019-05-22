@@ -1,17 +1,17 @@
 import '../Calculator/Calculator.es';
-import '../Page/PageRenderer.es';
 import 'clay-alert';
 import 'clay-button';
 import 'clay-modal';
+import 'dynamic-data-mapping-form-renderer/js/metal/components/PageRenderer/PageRenderer.es';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './RuleEditor.soy.js';
 import {Config} from 'metal-state';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
-import {makeFetch} from '../../util/fetch.es';
+import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/metal/util/fetch.es';
 import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 
 const fieldOptionStructure = Config.shapeOf(
 	{
@@ -912,7 +912,11 @@ class RuleEditor extends Component {
 			}
 		}
 
-		return {dataType, repeatable, type};
+		return {
+			dataType,
+			repeatable,
+			type
+		};
 	}
 
 	_getIndex(fieldInstance, fieldClass) {
@@ -942,7 +946,15 @@ class RuleEditor extends Component {
 
 	_handleActionAdded() {
 		const {actions} = this;
-		const newAction = {action: '', calculatorFields: [], expression: '', inputs: {}, label: '', outputs: {}, target: ''};
+		const newAction = {
+			action: '',
+			calculatorFields: [],
+			expression: '',
+			inputs: {},
+			label: '',
+			outputs: {},
+			target: ''
+		};
 
 		if (actions.length == 0) {
 			actions.push(newAction);
@@ -1687,7 +1699,12 @@ class RuleEditor extends Component {
 				) {
 					action.target = '';
 				}
-				else if (action.action == 'auto-fill') {
+				else if (
+					rule &&
+					rule.actions &&
+					rule.actions[index] &&
+					action.action == 'auto-fill'
+				) {
 					action = {
 						...rule.actions[index],
 						calculatorFields: []

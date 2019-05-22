@@ -1,7 +1,7 @@
 import AutoSave from './util/AutoSave.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
-import compose from 'dynamic-data-mapping-form-builder/js/util/compose.es';
+import compose from 'dynamic-data-mapping-form-renderer/js/metal/util/compose.es';
 import core from 'metal';
 import dom from 'metal-dom';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
@@ -21,6 +21,7 @@ import {EventHandler} from 'metal-events';
 import {FormBuilderBase} from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import {isKeyInSet, isModifyingKey} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 
 /**
@@ -312,6 +313,9 @@ class Form extends Component {
 				const translationManager = results[2];
 
 				if (translationManager) {
+					this.props.defaultLanguageId = translationManager.get('defaultLocale');
+					this.props.editingLanguageId = translationManager.get('editingLocale');
+
 					translationManager.on(
 						'editingLocaleChange',
 						event => {
@@ -492,7 +496,10 @@ class Form extends Component {
 							fieldTypes={fieldTypes}
 							functionsMetadata={this.props.functionsMetadata}
 							functionsURL={this.props.functionsURL}
+							groupId={groupId}
 							pages={context.pages}
+							portletNamespace={this.props.namespace}
+							ref="builder"
 							rolesURL={this.props.rolesURL}
 							rules={this.props.rules}
 							spritemap={spritemap}
@@ -505,7 +512,7 @@ class Form extends Component {
 						fieldSets={fieldSets}
 						fieldTypes={fieldTypes}
 						groupId={groupId}
-						namespace={this.props.namespace}
+						portletNamespace={this.props.namespace}
 						ref="builder"
 						rules={this.props.rules}
 						spritemap={spritemap}
@@ -698,7 +705,21 @@ class Form extends Component {
 
 		const settingsDDMForm = Liferay.component('settingsDDMForm');
 
-		if (settingsDDMForm && settingsDDMForm.getField('requireAuthentication').getValue()) {
+		let requireAuthentication = false;
+
+		if (settingsDDMForm) {
+			const settingsPageVisitor = new PagesVisitor(settingsDDMForm.pages);
+
+			settingsPageVisitor.mapFields(
+				field => {
+					if (field.fieldName === 'requireAuthentication') {
+						requireAuthentication = field.value;
+					}
+				}
+			);
+		}
+
+		if (requireAuthentication) {
 			formURL = Liferay.DDM.FormSettings.restrictedFormURL;
 		}
 		else {

@@ -3,6 +3,7 @@
 {template .render}
 	{@param name: string}
 	{@param? editorValue: string}
+	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -12,6 +13,8 @@
 	{@param? spritemap: string}
 	{@param? tip: string}
 	{@param? tooltip: string}
+	{@param? valid: bool}
+	{@param? visible: bool}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -21,14 +24,18 @@
 				{param placeholder: $placeholder /}
 			{/call}
 		{/param}
+		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
+		{param name: $name /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param tooltip: $tooltip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
 	{/call}
 {/template}
 
@@ -39,7 +46,7 @@
 
 	<div class="field-type-editor form-control input-group-container">
 		<div class="alloy-editor-container input-group" id="{$name}Container">
-			<div class="alloy-editor alloy-editor-placeholder"  contenteditable="false" data-placeholder="{$placeholder}" id="{$name}EditorContainer" name="{$name}Editor">
+			<div class="alloy-editor alloy-editor-placeholder" contenteditable="false" data-placeholder="{$placeholder}" id="{$name}EditorContainer" name="{$name}Editor">
 				{$editorValue}
 			</div>
 		</div>

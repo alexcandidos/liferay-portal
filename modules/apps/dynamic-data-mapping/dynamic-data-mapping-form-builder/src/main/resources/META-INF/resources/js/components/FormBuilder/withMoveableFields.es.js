@@ -1,4 +1,4 @@
-import * as FormSupport from '../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
@@ -69,6 +69,14 @@ const withMoveableFields = ChildComponent => {
 			 */
 
 			paginationMode: Config.string().required(),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
+			portletNamespace: Config.string().required(),
 
 			/**
 			 * @instance

@@ -10,7 +10,7 @@ import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {
 	normalizeFieldName
-} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/fields.es';
+} from 'dynamic-data-mapping-form-renderer/js/metal/util/fields.es';
 
 /**
  * Options.
@@ -38,7 +38,6 @@ class Options extends Component {
 	}
 
 	deleteOption(deletedIndex) {
-		const {editingLanguageId} = this;
 		let {value} = this;
 
 		for (const languageId in value) {
@@ -50,12 +49,7 @@ class Options extends Component {
 			};
 		}
 
-		this.setState(
-			{
-				items: this.getItems(value[editingLanguageId])
-			},
-			() => this._handleFieldEdited({}, value)
-		);
+		this._handleFieldEdited({}, value);
 	}
 
 	disposeDragAndDrop() {
@@ -120,7 +114,6 @@ class Options extends Component {
 	}
 
 	moveOption(sourceIndex, targetIndex) {
-		const {editingLanguageId} = this;
 		let {value} = this;
 
 		for (const languageId in value) {
@@ -148,12 +141,7 @@ class Options extends Component {
 			}
 		}
 
-		this.setState(
-			{
-				items: this.getItems(value[editingLanguageId])
-			},
-			() => this._handleFieldEdited({}, value)
-		);
+		this._handleFieldEdited({}, value);
 	}
 
 	normalizeOption(options, option, force) {
@@ -198,6 +186,16 @@ class Options extends Component {
 		return newValue;
 	}
 
+	prepareStateForRender(state) {
+		const {editingLanguageId} = this;
+		const {value} = state;
+
+		return {
+			...state,
+			items: this.getItems(value[editingLanguageId])
+		};
+	}
+
 	shouldGenerateOptionValue(option) {
 		const {defaultLanguageId, editingLanguageId} = this;
 
@@ -228,6 +226,38 @@ class Options extends Component {
 				() => this._handleFieldEdited({}, this.value)
 			);
 		}
+	}
+
+	shouldUpdate(changes) {
+		let changed = false;
+
+		if (changes.items) {
+			const {newVal, prevVal} = changes.items;
+
+			if (!prevVal) {
+				changed = true;
+			}
+			else if (newVal.length !== prevVal.length) {
+				changed = true;
+			}
+			else {
+				for (let i = 0; i < newVal.length; i++) {
+					const {label, value} = newVal[i];
+
+					if (label !== prevVal[i].label || value !== prevVal[i].value) {
+						changed = true;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (changes.visible) {
+			changed = true;
+		}
+
+		return changed;
 	}
 
 	syncValue() {
@@ -404,12 +434,6 @@ class Options extends Component {
 		this._handleOptionEdited(event, 'value');
 	}
 
-	_internalItemsValueFn() {
-		const options = this.getCurrentLocaleValue();
-
-		return this.getItems(options || []);
-	}
-
 	_setValue(value = {}) {
 		const {defaultLanguageId} = this;
 		const formattedValue = {...value};
@@ -488,7 +512,7 @@ Options.STATE = {
 				value: Config.string()
 			}
 		)
-	).internal().valueFn('_internalItemsValueFn'),
+	).internal(),
 
 	/**
 	 * @default undefined

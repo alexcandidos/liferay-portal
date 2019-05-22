@@ -18,21 +18,6 @@ import {EventHandler} from 'metal-events';
  */
 
 class DatePicker extends Component {
-
-	attached() {
-		const {base} = this.refs;
-		const {inputElement} = base.refs;
-
-		this._vanillaTextMask = vanillaTextMask(
-			{
-				inputElement,
-				mask: this.getInputMask(),
-				placeholderChar: '_',
-				showMask: true
-			}
-		);
-	}
-
 	created() {
 		this._eventHandler = new EventHandler();
 
@@ -143,8 +128,12 @@ class DatePicker extends Component {
 	}
 
 	prepareStateForRender(state) {
+		const value = Helpers.formatDate(this._daySelected);
+
 		return {
 			...state,
+			formattedValue: state.value,
+			value: moment(value).format('YYYY-MM-DD'),
 			years: this.getYears()
 		};
 	}
@@ -158,7 +147,7 @@ class DatePicker extends Component {
 	}
 
 	syncCurrentMonth(value) {
-		if (value) {
+		if (moment(value).isValid()) {
 			this._weeks = Helpers.getWeekArray(value, this.firstDayOfWeek);
 			this._month = value.getMonth();
 			this._year = value.getFullYear();
@@ -173,6 +162,25 @@ class DatePicker extends Component {
 		}
 		else {
 			this._eventHandler.removeAllListeners();
+		}
+	}
+
+	syncVisible() {
+		if (this.visible) {
+			const {base} = this.refs;
+			const {inputElement} = base.refs;
+
+			this._vanillaTextMask = vanillaTextMask(
+				{
+					inputElement,
+					mask: this.getInputMask(),
+					placeholderChar: '_',
+					showMask: true
+				}
+			);
+		}
+		else if (this._vanillaTextMask) {
+			this._vanillaTextMask.destroy();
 		}
 	}
 
@@ -279,7 +287,7 @@ class DatePicker extends Component {
 			.toDate();
 	}
 
-	_handleOnInput(event) {
+	_handleInput(event) {
 		const {value} = event.target;
 		const format = `${this.dateFormat}`;
 
@@ -334,6 +342,13 @@ class DatePicker extends Component {
 
 				newValue = date;
 			}
+		}
+		else if (moment(value, 'YYYY-MM-DD').isValid()) {
+			const date = moment(value, 'YYYY-MM-DD')
+				.clone()
+				.format(this.dateFormat);
+
+			newValue = date;
 		}
 		else {
 			newValue = value;
@@ -440,6 +455,15 @@ DatePicker.STATE = {
 	*/
 
 	elementClasses: Config.string(),
+
+	/**
+	 * @default false
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?bool}
+	 */
+
+	evaluable: Config.bool().value(false),
 
 	/**
 	* Flag to indicate if date is expanded.

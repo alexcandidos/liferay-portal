@@ -1,4 +1,4 @@
-import * as FormSupport from '../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/metal/components/FormRenderer/FormSupport.es';
 import ClayButton from 'clay-button';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
@@ -139,6 +139,14 @@ const withActionableFields = ChildComponent => {
 			 */
 
 			paginationMode: Config.string().required(),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
+			portletNamespace: Config.string().required(),
 
 			/**
 			 * @instance

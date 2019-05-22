@@ -79,6 +79,14 @@ const withMultiplePages = ChildComponent => {
 			 * @type {string}
 			 */
 
+			portletNamespace: Config.string().required(),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
 			rules: Config.arrayOf(ruleStructure).required(),
 
 			/**
@@ -119,21 +127,28 @@ const withMultiplePages = ChildComponent => {
 
 		getPages() {
 			let {pages} = this.props;
-			const {successPageSettings} = this.props;
+			const {paginationMode, successPageSettings} = this.props;
 
 			if (successPageSettings.enabled) {
 				pages = [
 					...pages,
 					{
 						contentRenderer: 'success',
-						paginationItemRenderer: 'success',
+						paginationItemRenderer: `${paginationMode}_success`,
 						rows: [],
 						successPageSettings
 					}
 				];
 			}
 
-			return pages;
+			return pages.map(
+				page => {
+					return {
+						...page,
+						enabled: true
+					};
+				}
+			);
 		}
 
 		getPaginationPosition() {

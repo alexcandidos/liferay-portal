@@ -117,11 +117,14 @@ class Select extends Component {
 	_handleDocumentClicked({target}) {
 		const {base} = this.refs;
 		const {dropdown} = base.refs;
-		const {menu} = dropdown.refs.portal.refs;
-		const {expanded} = this;
 
-		if (expanded && !this.element.contains(target) && !dropdown.element.contains(target) && !menu.contains(target)) {
-			this.setState({expanded: false});
+		if (dropdown) {
+			const {menu} = dropdown.refs.portal.refs;
+			const {expanded} = this;
+
+			if (expanded && !this.element.contains(target) && !dropdown.element.contains(target) && !menu.contains(target)) {
+				this.setState({expanded: false});
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
 	{@param? tooltip: string}
+	{@param? visible: bool}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -20,11 +21,13 @@
 		{/param}
 		{param id: $id /}
 		{param label: $label /}
+		{param name: $name /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
 		{param tooltip: $tooltip /}
+		{param visible: $visible /}
 	{/call}
 {/template}
 

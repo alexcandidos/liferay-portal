@@ -1,5 +1,15 @@
 {
-    "ignore": [
-		"**/js/*.js"
-	]
+	"config": {
+		"imports": {
+			"dynamic-data-mapping-form-field-type": {
+				"/": ">=4.0.0"
+			}
+		}
+	},
+	"ignore": [
+		"**/alloy/**/*.js",
+		"**/alloy/config.js",
+		"**/__tests__/*.js"
+	],
+	"preset": "liferay-npm-bundler-preset-liferay-dev"
 }

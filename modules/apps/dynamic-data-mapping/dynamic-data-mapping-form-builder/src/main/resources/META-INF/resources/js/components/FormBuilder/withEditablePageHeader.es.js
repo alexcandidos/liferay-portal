@@ -3,7 +3,7 @@ import Component, {Fragment} from 'metal-jsx';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/metal/util/visitors.es';
 import {sub} from '../../util/strings.es.js';
 
 const withEditablePageHeader = ChildComponent => {
@@ -71,6 +71,14 @@ const withEditablePageHeader = ChildComponent => {
 			 */
 
 			paginationMode: Config.string().required(),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
+			portletNamespace: Config.string().required(),
 
 			/**
 			 * @instance

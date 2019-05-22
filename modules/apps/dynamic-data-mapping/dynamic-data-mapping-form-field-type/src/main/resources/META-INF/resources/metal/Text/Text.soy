@@ -19,6 +19,8 @@
 	{@param? spritemap: string}
 	{@param? tip: string}
 	{@param? tooltip: string}
+	{@param? valid: bool}
+	{@param? visible: bool}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -38,12 +40,16 @@
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
+		{param name: $name /}
+		{param readOnly: $readOnly /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param tooltip: $tooltip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
 	{/call}
 {/template}
 
