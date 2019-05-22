@@ -11,11 +11,6 @@ class Numeric extends Component {
 	applyMask() {
 		const {dataType, element} = this;
 		const inputElement = element.querySelector('input');
-
-		if (this.maskInstance) {
-			this.maskInstance.destroy();
-		}
-
 		const numberMaskOptions = this.getMaskConfig(dataType);
 
 		const mask = createNumberMask(numberMaskOptions);
@@ -28,11 +23,11 @@ class Numeric extends Component {
 		);
 	}
 
-	attached() {
-		this.applyMask();
+	disposed() {
+		this.disposeMask();
 	}
 
-	disposed() {
+	disposeMask() {
 		if (this.maskInstance) {
 			this.maskInstance.destroy();
 		}
@@ -59,11 +54,22 @@ class Numeric extends Component {
 		return config;
 	}
 
-	willReceiveState(changes) {
-		if (changes.dataType && changes.dataType.newVal) {
+	syncDataType() {
+		const {visible} = this;
+
+		this.syncVisible(visible);
+	}
+
+	syncVisible(visible) {
+		if (visible) {
 			this.applyMask();
 		}
+		else {
+			this.disposeMask();
+		}
+	}
 
+	willReceiveState(changes) {
 		if (changes.value) {
 			this.setState(
 				{
