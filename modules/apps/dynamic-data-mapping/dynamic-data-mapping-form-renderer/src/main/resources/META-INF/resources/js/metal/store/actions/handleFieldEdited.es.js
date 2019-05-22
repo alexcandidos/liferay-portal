@@ -4,7 +4,7 @@ import {PagesVisitor} from '../../util/visitors.es';
 export default (evaluatorContext, properties) => {
 	const {fieldInstance, value} = properties;
 	const {evaluable, fieldName} = fieldInstance;
-	const {pages} = evaluatorContext;
+	const {editingLanguageId, pages} = evaluatorContext;
 	const pageVisitor = new PagesVisitor(pages);
 
 	const editedPages = pageVisitor.mapFields(
@@ -12,6 +12,10 @@ export default (evaluatorContext, properties) => {
 			if (field.name === fieldInstance.name) {
 				field = {
 					...field,
+					localizedValue: {
+						...field.localizedValue,
+						[editingLanguageId]: value
+					},
 					value
 				};
 			}
@@ -23,6 +27,10 @@ export default (evaluatorContext, properties) => {
 							if (nestedField.name === fieldInstance.name) {
 								nestedField = {
 									...nestedField,
+									localizedValue: {
+										...field.localizedValue,
+										[editingLanguageId]: value
+									},
 									value
 								};
 							}

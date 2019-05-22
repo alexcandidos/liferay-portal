@@ -145,7 +145,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							</div>
 						</div>
 
-						<div class="container-fluid-1280 ddm-form-builder-app ddm-form-builder-app-not-ready">
+						<div class="container-fluid-1280 ddm-form-builder-app ddm-form-builder-app-not-ready" id="<%= ddmFormDisplayContext.getContainerId() %>container">
 							<%= ddmFormDisplayContext.getDDMFormHTML() %>
 
 							<aui:input name="empty" type="hidden" value="" />
@@ -190,6 +190,12 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								<portlet:param name="preview" value="<%= String.valueOf(ddmFormDisplayContext.isPreview()) %>" />
 							</liferay-portlet:resourceURL>
 
+							function <portlet:namespace />enableForm() {
+								const container = document.querySelector('#<%= ddmFormDisplayContext.getContainerId() %>container');
+
+								container.classList.remove('ddm-form-builder-app-not-ready');
+							}
+
 							function <portlet:namespace />autoSave() {
 								A.io.request(
 									'<%= autoSaveFormInstanceRecordURL.toString() %>',
@@ -211,23 +217,22 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								<portlet:namespace />intervalId = setInterval(<portlet:namespace />autoSave, 60000);
 							}
 
-							<portlet:namespace />form = Liferay.component('<%= ddmFormDisplayContext.getContainerId() %>DDMForm');
+							<portlet:namespace />form = Liferay.component('<%= ddmFormDisplayContext.getContainerId() %>');
 
 							if (<portlet:namespace />form) {
-								<portlet:namespace />startAutoSave();
-
+								<portlet:namespace />enableForm();
 								<portlet:namespace />fireFormView();
+								<portlet:namespace />startAutoSave();
 							}
 							else {
-								Liferay.after(
-									'<%= ddmFormDisplayContext.getContainerId() %>DDMForm:render',
-									function(event) {
-										<portlet:namespace />form = Liferay.component('<%= ddmFormDisplayContext.getContainerId() %>DDMForm');
+								Liferay.componentReady('<%= ddmFormDisplayContext.getContainerId() %>').then(
+									function(component) {
+										<portlet:namespace />form = component;
 
-										if (<portlet:namespace />form) {
-											<portlet:namespace />startAutoSave();
-
+										if (component) {
+											<portlet:namespace />enableForm();
 											<portlet:namespace />fireFormView();
+											<portlet:namespace />startAutoSave();
 										}
 									}
 								);
