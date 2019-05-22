@@ -499,7 +499,7 @@ class Form extends Component {
 							groupId={groupId}
 							pages={context.pages}
 							portletNamespace={this.props.namespace}
-							ref="builder"
+							ref="ruleBuilder"
 							rolesURL={this.props.rolesURL}
 							rules={this.props.rules}
 							spritemap={spritemap}
@@ -513,7 +513,7 @@ class Form extends Component {
 						fieldTypes={fieldTypes}
 						groupId={groupId}
 						portletNamespace={this.props.namespace}
-						ref="builder"
+						ref="formBuilder"
 						rules={this.props.rules}
 						spritemap={spritemap}
 						view={view}
@@ -846,16 +846,6 @@ class Form extends Component {
 		);
 
 		this.submitForm();
-	}
-
-	_openSidebar() {
-		const {builder} = this.refs;
-
-		if (builder) {
-			const {sidebar} = builder.refs;
-
-			sidebar.open();
-		}
 	}
 
 	_pagesValueFn() {
