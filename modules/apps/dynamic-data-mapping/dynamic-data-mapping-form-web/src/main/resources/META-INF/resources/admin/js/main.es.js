@@ -1,7 +1,7 @@
 import AutoSave from './util/AutoSave.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
-import compose from 'dynamic-data-mapping-form-builder/js/util/compose.es';
+import compose from 'dynamic-data-mapping-form-renderer/js/metal/util/compose.es';
 import core from 'metal';
 import dom from 'metal-dom';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
@@ -270,7 +270,7 @@ class Form extends Component {
 						fieldSets={fieldSets}
 						fieldTypes={fieldTypes}
 						groupId={groupId}
-						namespace={this.props.namespace}
+						portletNamespace={this.props.namespace}
 						ref="builder"
 						rules={this.props.rules}
 						spritemap={spritemap}
