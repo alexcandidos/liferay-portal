@@ -213,15 +213,21 @@ class Form extends Component {
 		const {ComposedFormBuilder} = this;
 		const {
 			context,
+			dataProviderInstanceParameterSettingsURL,
+			dataProviderInstancesURL,
 			defaultLanguageId,
 			editingLanguageId,
 			fieldSetDefinitionURL,
 			fieldSets,
 			fieldTypes,
+			functionsMetadata,
+			functionsURL,
 			groupId,
 			namespace,
 			published,
 			redirectURL,
+			rolesURL,
+			rules,
 			spritemap,
 			view
 		} = this.props;
@@ -249,17 +255,16 @@ class Form extends Component {
 				<LayoutProviderTag {...layoutProviderProps}>
 					{this.isFormBuilderView() && (
 						<RuleBuilder
-							dataProviderInstanceParameterSettingsURL={this.props.dataProviderInstanceParameterSettingsURL}
-							dataProviderInstancesURL={this.props.dataProviderInstancesURL}
+							dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
+							dataProviderInstancesURL={dataProviderInstancesURL}
 							fieldTypes={fieldTypes}
-							functionsMetadata={this.props.functionsMetadata}
-							functionsURL={this.props.functionsURL}
+							functionsMetadata={functionsMetadata}
+							functionsURL={functionsURL}
 							groupId={groupId}
-							pages={context.pages}
-							portletNamespace={this.props.namespace}
+							portletNamespace={namespace}
 							ref="ruleBuilder"
-							rolesURL={this.props.rolesURL}
-							rules={this.props.rules}
+							rolesURL={rolesURL}
+							rules={rules}
 							spritemap={spritemap}
 							visible={this.isShowRuleBuilder()}
 						/>
@@ -270,9 +275,9 @@ class Form extends Component {
 						fieldSets={fieldSets}
 						fieldTypes={fieldTypes}
 						groupId={groupId}
-						portletNamespace={this.props.namespace}
+						portletNamespace={namespace}
 						ref="formBuilder"
-						rules={this.props.rules}
+						rules={rules}
 						spritemap={spritemap}
 						view={view}
 						visible={!this.isShowRuleBuilder()}
