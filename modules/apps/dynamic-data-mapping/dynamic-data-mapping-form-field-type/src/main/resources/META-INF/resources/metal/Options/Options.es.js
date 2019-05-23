@@ -222,8 +222,7 @@ class Options extends Component {
 						[editingLanguageId]: this.value[defaultLanguageId]
 							.filter(({value}) => !!value)
 					}
-				},
-				() => this._handleFieldEdited({}, this.value)
+				}
 			);
 		}
 	}
