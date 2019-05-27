@@ -116,45 +116,6 @@ FormRenderer.STATE = {
 	spritemap: Config.string().required()
 };
 
-FormRenderer.STATE = {
-
-	/**
-	 * @default
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?number}
-	 */
-
-	activePage: Config.number().value(0),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?bool}
-	 */
-
-	editable: Config.bool().value(false),
-
-	/**
-	 * @default []
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?array<object>}
-	 */
-
-	pages: Config.arrayOf(pageStructure).value([]),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {!string}
-	 */
-
-	spritemap: Config.string().required()
-};
-
 Soy.register(FormRenderer, templates);
 
 export default FormRenderer;

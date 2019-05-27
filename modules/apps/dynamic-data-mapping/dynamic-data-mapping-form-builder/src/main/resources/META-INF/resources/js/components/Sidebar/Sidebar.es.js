@@ -1054,6 +1054,15 @@ Sidebar.PROPS = {
 	 * @default undefined
 	 * @instance
 	 * @memberof Sidebar
+	 * @type {?string}
+	 */
+
+	portletNamespace: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Sidebar
 	 * @type {?(string|undefined)}
 	 */
 
