@@ -126,7 +126,7 @@ PageRenderer.STATE = {
 	 * @type {?array<object>}
 	 */
 
-	page: pageStructure,
+	page: Config.object(),
 
 	/**
 	 * @default 1
