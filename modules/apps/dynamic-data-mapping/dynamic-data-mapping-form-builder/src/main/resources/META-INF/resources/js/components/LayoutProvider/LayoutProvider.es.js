@@ -90,18 +90,24 @@ class LayoutProvider extends Component {
 		if (focusedField && focusedField.settingsContext) {
 			focusedField = {
 				...focusedField,
-				originalContext: {
-					...focusedField.originalContext,
-					settingsContext: {
-						...focusedField.originalContext.settingsContext,
-						pages: this.getLocalizedPages(focusedField.originalContext.settingsContext.pages)
-					}
-				},
 				settingsContext: {
 					...focusedField.settingsContext,
 					pages: this.getLocalizedPages(focusedField.settingsContext.pages)
 				}
 			};
+
+			if (focusedField.originalContext) {
+				focusedField = {
+					...focusedField,
+					originalContext: {
+						...focusedField.originalContext,
+						settingsContext: {
+							...focusedField.originalContext.settingsContext,
+							pages: this.getLocalizedPages(focusedField.originalContext.settingsContext.pages)
+						}
+					}
+				};
+			}
 		}
 
 		return focusedField;
