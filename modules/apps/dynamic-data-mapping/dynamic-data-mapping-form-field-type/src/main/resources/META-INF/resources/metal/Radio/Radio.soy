@@ -3,6 +3,7 @@
 {template .render}
 	{@param name: string}
 	{@param? _handleValueChanged: any}
+	{@param? displayErrors: bool}
 	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? inline: bool}
@@ -34,6 +35,7 @@
 				{param value: $value /}
 			{/call}
 		{/param}
+		{param displayErrors: $displayErrors /}
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}

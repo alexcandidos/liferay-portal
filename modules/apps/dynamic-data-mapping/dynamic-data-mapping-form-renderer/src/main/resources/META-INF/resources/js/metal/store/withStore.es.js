@@ -1,5 +1,6 @@
 import dom from 'metal-dom';
 import handleActivePageUpdated from './actions/handleActivePageUpdated.es';
+import handleFieldBlurred from './actions/handleFieldBlurred.es';
 import handleFieldEdited from './actions/handleFieldEdited.es';
 import handleFieldFocused from './actions/handleFieldFocused.es';
 import handleFieldRemoved from './actions/handleFieldRemoved.es';
@@ -35,6 +36,20 @@ const _handleFieldEdited = function(properties) {
 	);
 };
 
+const _handleFieldBlurred = function(properties) {
+	const {pages} = this;
+
+	handleFieldBlurred(pages, properties).then(
+		blurredFieldPages => {
+			this.setState(
+				{
+					pages: blurredFieldPages
+				}
+			);
+		}
+	);
+};
+
 const _handleFieldFocused = function(properties) {
 	const {pages} = this;
 
@@ -55,6 +70,7 @@ export default Component => {
 			super.attached();
 
 			this.on('activePageUpdated', this._handleActivePageUpdated.bind(this));
+			this.on('fieldBlurred', _handleFieldBlurred.bind(this));
 			this.on('fieldEdited', _handleFieldEdited.bind(this));
 			this.on('fieldFocused', _handleFieldFocused.bind(this));
 			this.on('fieldRemoved', this._handleFieldRemoved.bind(this));
@@ -124,7 +140,7 @@ export default Component => {
 				name,
 				paginationMode,
 				successPageSettings
-			}
+			};
 		}
 
 		_handleActivePageUpdated(event) {
@@ -180,16 +196,12 @@ export default Component => {
 
 			this.setState(
 				{
-					pages: visitor.mapPages(
-						(page, index) => {
-							if (index === pageIndex) {
-								page = {
-									...page,
-									invalid: true
-								};
-							}
-
-							return page;
+					pages: visitor.mapFields(
+						(field, currentPageIndex) => {
+							return {
+								...field,
+								displayErrors: currentPageIndex === pageIndex
+							};
 						}
 					)
 				}

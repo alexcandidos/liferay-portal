@@ -122,10 +122,42 @@ class Select extends Component {
 			const {menu} = dropdown.refs.portal.refs;
 			const {expanded} = this;
 
-			if (expanded && !this.element.contains(target) && !dropdown.element.contains(target) && !menu.contains(target)) {
-				this.setState({expanded: false});
+			if (
+				expanded &&
+				!this.element.contains(target) &&
+				!dropdown.element.contains(target) &&
+				!menu.contains(target)
+			) {
+				this.setState(
+					{
+						expanded: false
+					}
+				);
 			}
 		}
+	}
+
+	_handleExpandedChanged({newVal}) {
+		if (newVal) {
+			this.emit(
+				'fieldFocused',
+				{
+					fieldInstance: this,
+					originalEvent: event
+				}
+			);
+		}
+		else {
+			this.emit(
+				'fieldBlurred',
+				{
+					fieldInstance: this,
+					originalEvent: event
+				}
+			);
+		}
+
+		this.expanded = newVal;
 	}
 
 	_handleItemClicked({data, preventDefault}) {
@@ -211,7 +243,6 @@ Select.STATE = {
 
 	/**
 	 * @default 'string'
-	 * @instance
 	 * @memberof Select
 	 * @type {?(string|undefined)}
 	 */
@@ -220,7 +251,6 @@ Select.STATE = {
 
 	/**
 	 * @default 'string'
-	 * @instance
 	 * @memberof Select
 	 * @type {?(string|undefined)}
 	 */
@@ -228,8 +258,7 @@ Select.STATE = {
 	dataType: Config.string().value('string'),
 
 	/**
-	 * @default 'boolean'
-	 * @instance
+	 * @default false
 	 * @memberof Select
 	 * @type {?(boolean|undefined)}
 	 */
@@ -237,8 +266,7 @@ Select.STATE = {
 	evaluable: Config.bool().value(false),
 
 	/**
-	 * @default undefined
-	 * @instance
+	 * @default false
 	 * @memberof Select
 	 * @type {?bool}
 	 */
@@ -247,12 +275,17 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Text
 	 * @type {?(string|undefined)}
 	 */
 
 	fieldName: Config.string(),
+
+	/**
+	 * @default []
+	 * @memberof Select
+	 * @type {?array<object>}
+	 */
 
 	fixedOptions: Config.arrayOf(
 		Config.shapeOf(
@@ -271,7 +304,6 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Select
 	 * @type {?(string|undefined)}
 	 */
@@ -280,7 +312,6 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Select
 	 * @type {?(string|undefined)}
 	 */
@@ -288,8 +319,7 @@ Select.STATE = {
 	multiple: Config.bool(),
 
 	/**
-	 * @default undefined
-	 * @instance
+	 * @default []
 	 * @memberof Select
 	 * @type {?array<object>}
 	 */
@@ -311,7 +341,6 @@ Select.STATE = {
 
 	/**
 	 * @default Choose an Option
-	 * @instance
 	 * @memberof Select
 	 * @type {?string}
 	 */
@@ -320,7 +349,6 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Select
 	 * @type {?string}
 	 */
@@ -329,7 +357,6 @@ Select.STATE = {
 
 	/**
 	 * @default false
-	 * @instance
 	 * @memberof Select
 	 * @type {?bool}
 	 */
@@ -338,7 +365,6 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof FieldBase
 	 * @type {?(bool|undefined)}
 	 */
@@ -347,7 +373,6 @@ Select.STATE = {
 
 	/**
 	 * @default false
-	 * @instance
 	 * @memberof Select
 	 * @type {?bool}
 	 */
@@ -356,7 +381,6 @@ Select.STATE = {
 
 	/**
 	 * @default false
-	 * @instance
 	 * @memberof Select
 	 * @type {?bool}
 	 */
@@ -365,7 +389,6 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Select
 	 * @type {?(string|undefined)}
 	 */
@@ -374,7 +397,6 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof FieldBase
 	 * @type {?(string|undefined)}
 	 */
@@ -383,7 +405,6 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Text
 	 * @type {?(string|undefined)}
 	 */
@@ -392,7 +413,6 @@ Select.STATE = {
 
 	/**
 	 * @default undefined
-	 * @instance
 	 * @memberof Select
 	 * @type {?(string|undefined)}
 	 */

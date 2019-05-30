@@ -9,6 +9,7 @@
 	{@param? _handleOptionLabelEdited: any}
 	{@param? _handleOptionValueEdited: any}
 	{@param? defaultLanguageId: string}
+	{@param? displayErrors: bool}
 	{@param? editingLanguageId: string}
 	{@param? id: string}
 	{@param? items: list<[
@@ -82,7 +83,7 @@
 				</div>
 			{/if}
 		{/param}
-
+		{param displayErrors: $displayErrors /}
 		{param id: $id /}
 		{param label: $label /}
 		{param name: $name /}

@@ -9,6 +9,7 @@
 	{@param? _handleValueInputFocused: any}
 	{@param? _keyword: string}
 	{@param? _value: string}
+	{@param? displayErrors: bool}
 	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? keywordReadOnly: bool}
@@ -43,6 +44,7 @@
 				{param value: $_value /}
 			{/call}
 		{/param}
+		{param displayErrors: $displayErrors /}
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}

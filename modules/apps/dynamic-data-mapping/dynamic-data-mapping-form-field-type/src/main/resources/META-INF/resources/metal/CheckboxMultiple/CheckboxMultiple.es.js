@@ -27,6 +27,17 @@ class CheckboxMultiple extends Component {
 		this._eventHandlers.removeAllListeners();
 	}
 
+	_handleFieldBlurred(event) {
+		this.emit(
+			'fieldBlurred',
+			{
+				fieldInstance: this,
+				originalEvent: event,
+				value: event.target.value
+			}
+		);
+	}
+
 	_handleFieldChanged(event) {
 		const {target} = event;
 		const value = this.value.filter(

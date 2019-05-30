@@ -79,6 +79,17 @@ class Numeric extends Component {
 		}
 	}
 
+	_handleFieldBlurred(event) {
+		this.emit(
+			'fieldBlurred',
+			{
+				fieldInstance: this,
+				originalEvent: event,
+				value: event.target.value
+			}
+		);
+	}
+
 	_handleFieldChanged(event) {
 		const value = event.target.value;
 
@@ -94,6 +105,17 @@ class Numeric extends Component {
 					value
 				}
 			)
+		);
+	}
+
+	_handleFieldFocused(event) {
+		this.emit(
+			'fieldFocused',
+			{
+				fieldInstance: this,
+				originalEvent: event,
+				value: event.target.value
+			}
 		);
 	}
 

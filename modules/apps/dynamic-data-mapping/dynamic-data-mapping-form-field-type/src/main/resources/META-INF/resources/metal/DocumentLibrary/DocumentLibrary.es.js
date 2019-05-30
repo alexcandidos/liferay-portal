@@ -120,16 +120,6 @@ class DocumentLibrary extends Component {
 		}
 	}
 
-	_handleFieldFocused(event) {
-		this.emit(
-			'fieldFocused',
-			{
-				fieldInstance: this,
-				originalEvent: event
-			}
-		);
-	}
-
 	_handleSelectButtonClicked(event) {
 		var {A, portletNamespace} = this;
 
@@ -137,15 +127,35 @@ class DocumentLibrary extends Component {
 			{
 				eventName: `${portletNamespace}selectDocumentLibrary`,
 				on: {
-					selectedItemChange: this._handleFieldChanged.bind(this)
+					selectedItemChange: this._handleFieldChanged.bind(this),
+					visibleChange: this._handleVisibleChange.bind(this)
 				},
 				url: this.getDocumentLibrarySelectorURL()
 			}
 		);
 
-		this._handleFieldFocused(event);
-
 		itemSelectorDialog.open();
+	}
+
+	_handleVisibleChange(event) {
+		if (event.newVal) {
+			this.emit(
+				'fieldFocused',
+				{
+					fieldInstance: this,
+					originalEvent: event
+				}
+			);
+		}
+		else {
+			this.emit(
+				'fieldBlurred',
+				{
+					fieldInstance: this,
+					originalEvent: event
+				}
+			);
+		}
 	}
 
 }

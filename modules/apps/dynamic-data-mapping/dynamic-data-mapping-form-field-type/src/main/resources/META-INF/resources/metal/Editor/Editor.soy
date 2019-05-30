@@ -2,6 +2,7 @@
 
 {template .render}
 	{@param name: string}
+	{@param? displayErrors: bool}
 	{@param? editorValue: string}
 	{@param? errorMessage: string}
 	{@param? id: string}
@@ -24,6 +25,7 @@
 				{param placeholder: $placeholder /}
 			{/call}
 		{/param}
+		{param displayErrors: $displayErrors /}
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}

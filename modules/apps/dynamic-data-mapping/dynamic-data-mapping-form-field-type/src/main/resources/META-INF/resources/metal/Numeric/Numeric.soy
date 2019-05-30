@@ -2,8 +2,11 @@
 
 {template .render}
 	{@param name: string}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
 	{@param? _value: any}
+	{@param? displayErrors: bool}
 	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
@@ -22,7 +25,9 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
 				{param id: $id /}
 				{param name: $name /}
 				{param placeholder: $placeholder /}
@@ -31,6 +36,7 @@
 				{param value: $_value /}
 			{/call}
 		{/param}
+		{param displayErrors: $displayErrors /}
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
@@ -48,7 +54,9 @@
 
 {template .content}
 	{@param name: string}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
 	{@param? id: string}
 	{@param? placeholder: string}
 	{@param? predefinedValue: any}
@@ -57,6 +65,14 @@
 
 	{let $attributes kind="attributes"}
 		class="form-control"
+
+		data-onblur="{$_handleFieldBlurred}"
+		data-onfocus="{$_handleFieldFocused}"
+		data-oninput="{$_handleFieldChanged}"
+
+		{if $readOnly}
+			disabled="disabled"
+		{/if}
 
 		{if $id}
 			id="{$id}"
@@ -69,12 +85,6 @@
 		{/if}
 
 		type="text"
-
-		data-oninput="{$_handleFieldChanged}"
-
-		{if $readOnly}
-			disabled="disabled"
-		{/if}
 
 		{if $value}
 			value="{$value}"

@@ -11,7 +11,6 @@ import core from 'metal';
 import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
 import {Config} from 'metal-state';
-import {PagesVisitor} from '../../util/visitors.es.js';
 
 class PageRenderer extends Component {
 	getPage(page) {
@@ -30,18 +29,7 @@ class PageRenderer extends Component {
 			};
 		}
 
-		const visitor = new PagesVisitor([page]);
-
-		const pages = visitor.mapFields(
-			field => {
-				return {
-					...field,
-					errorMessage: (page.invalid || field.wasFocused) ? field.errorMessage : ''
-				};
-			}
-		);
-
-		return pages[0];
+		return page;
 	}
 
 	isEmptyPage({rows}) {

@@ -8,6 +8,7 @@
 	{@param name: string}
 	{@param nestedFields: list<?>}
 	{@param? _handleFieldEdited: ?}
+	{@param? displayErrors: bool}
 	{@param? errorMessage: string}
 	{@param? label: string}
 	{@param? readOnly: bool}
@@ -34,6 +35,7 @@
 					{param spritemap: $spritemap /}
 				{/call}
 			{/param}
+			{param displayErrors: $displayErrors /}
 			{param errorMessage: $errorMessage /}
 			{param label: $label /}
 			{param name: $name /}

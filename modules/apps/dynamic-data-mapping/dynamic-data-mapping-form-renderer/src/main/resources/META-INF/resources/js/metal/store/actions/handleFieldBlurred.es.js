@@ -7,11 +7,12 @@ export default (pages, properties) => {
 	return Promise.resolve(
 		pageVisitor.mapFields(
 			field => {
-				const focused = field.name === fieldInstance.name;
+				const matches = field.name === fieldInstance.name;
 
 				return {
 					...field,
-					focused
+					displayErrors: field.displayErrors || matches,
+					focused: matches ? false : field.focused
 				};
 			}
 		)

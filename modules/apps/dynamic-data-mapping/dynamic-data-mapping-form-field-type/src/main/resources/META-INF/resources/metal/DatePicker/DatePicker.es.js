@@ -159,9 +159,25 @@ class DatePicker extends Component {
 			this._eventHandler.add(
 				dom.on(document, 'click', this._handleDocClick.bind(this), true)
 			);
+
+			this.emit(
+				'fieldFocused',
+				{
+					fieldInstance: this,
+					originalEvent: event
+				}
+			);
 		}
 		else {
 			this._eventHandler.removeAllListeners();
+
+			this.emit(
+				'fieldBlurred',
+				{
+					fieldInstance: this,
+					originalEvent: event
+				}
+			);
 		}
 	}
 
@@ -264,6 +280,26 @@ class DatePicker extends Component {
 		);
 	}
 
+	_handleInput(event) {
+		const {value} = event.target;
+		const format = `${this.dateFormat}`;
+
+		const date = moment(value, format);
+
+		if (date.isValid() && date._i.length === 10) {
+			this.currentMonth = date.toDate();
+			this._daySelected = Helpers.setDateSelected(this.currentMonth);
+		}
+
+		this.value = value;
+
+		if (!value) {
+			this._daySelected = '';
+		}
+
+		this._handleFieldEdited();
+	}
+
 	_handleInputBlurred({target}) {
 		if (!this.isEmptyValue(target.value)) {
 			this.value = Helpers.formatDate(this._daySelected);
@@ -285,26 +321,6 @@ class DatePicker extends Component {
 			.clone()
 			.add(1, 'M')
 			.toDate();
-	}
-
-	_handleInput(event) {
-		const {value} = event.target;
-		const format = `${this.dateFormat}`;
-
-		const date = moment(value, format);
-
-		if (date.isValid() && date._i.length === 10) {
-			this.currentMonth = date.toDate();
-			this._daySelected = Helpers.setDateSelected(this.currentMonth);
-		}
-
-		this.value = value;
-
-		if (!value) {
-			this._daySelected = '';
-		}
-
-		this._handleFieldEdited();
 	}
 
 	_handlePreviousMonth() {

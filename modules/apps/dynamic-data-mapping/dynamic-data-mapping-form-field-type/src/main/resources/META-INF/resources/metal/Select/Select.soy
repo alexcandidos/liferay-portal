@@ -4,10 +4,11 @@
 	{@param name: string}
 	{@param spritemap: string}
 	{@param value: ?}
-	{@param? _handleClick: any}
+	{@param? _handleExpandedChanged: any}
 	{@param? _handleItemClicked: any}
 	{@param? _handleLabelClosed: any}
 	{@param? dataSourceType: string}
+	{@param? displayErrors: bool}
 	{@param? errorMessage: string}
 	{@param? expanded: bool}
 	{@param? id: string}
@@ -28,7 +29,7 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param _handleClick: $_handleClick /}
+				{param _handleExpandedChanged: $_handleExpandedChanged /}
 				{param _handleItemClicked: $_handleItemClicked /}
 				{param _handleLabelClosed: $_handleLabelClosed /}
 				{param dataSourceType: $dataSourceType /}
@@ -43,6 +44,7 @@
 				{param value: $value /}
 			{/call}
 		{/param}
+		{param displayErrors: $displayErrors /}
 		{param errorMessage: $errorMessage /}
 		{param label: $label /}
 		{param name: $name /}
@@ -63,7 +65,7 @@
 	{@param name: string}
 	{@param spritemap: string}
 	{@param value: list<string>}
-	{@param? _handleClick: any}
+	{@param? _handleExpandedChanged: any}
 	{@param? _handleItemClicked: any}
 	{@param? _handleLabelClosed: any}
 	{@param? expanded: bool}
@@ -101,8 +103,6 @@
 
 					{if $readOnly}
 						disabled
-					{else}
-						data-onclick="{$_handleClick}"
 					{/if}
 				{/let}
 
@@ -156,6 +156,7 @@
 		{call ClayDropdownBase.render}
 			{param disabled: $readOnly /}
 			{param events: [
+				'expandedChanged': $_handleExpandedChanged,
 				'itemClicked': $_handleItemClicked
 			]/}
 			{param elementClasses: 'ddm-btn-full ddm-select-dropdown' /}

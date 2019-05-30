@@ -3,7 +3,10 @@
 {template .render}
 	{@param name: string}
 	{@param value: ?}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
+	{@param? displayErrors: bool}
 	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? inline: bool}
@@ -26,7 +29,9 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
 				{param disabled: $readOnly /}
 				{param inline: $inline /}
 				{param name: $name /}
@@ -37,6 +42,7 @@
 				{param value: $value /}
 			{/call}
 		{/param}
+		{param displayErrors: $displayErrors /}
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
@@ -55,7 +61,9 @@
 {template .content}
 	{@param name: string}
 	{@param value: ?}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
 	{@param? disabled: bool}
 	{@param? inline: bool}
 	{@param? options: list<[
@@ -67,7 +75,7 @@
 
 	{let $displayValue: $value ? $value : $predefinedValue /}
 
-	<div class="form-group">
+	<div class="lfr-ddm-checkbox-multiple">
 		{if $options}
 			{foreach $option in $options}
 				{let $checked kind="text"}
@@ -86,7 +94,9 @@
 							{let $attributes kind="attributes"}
 								class="toggle-switch-check"
 								data-index="{index($option)}"
+								data-onblur="{$_handleFieldBlurred}"
 								data-onchange="{$_handleFieldChanged}"
+								data-onfocus="{$_handleFieldFocused}"
 
 								{if $checked == 'checked'}
 									checked
@@ -95,6 +105,7 @@
 								{if $disabled}
 									disabled
 								{/if}
+
 								name="{$name}"
 								ref="input{index($option)}"
 								type="checkbox"
@@ -109,20 +120,98 @@
 						</label>
 					</div>
 				{else}
-					{call ClayCheckbox.render}
-						{param checked: $checked == 'checked' ? true : false /}
-						{param disabled: $disabled /}
-						{param events: [
-							'change': $_handleFieldChanged
-						] /}
-						{param inline: $inline /}
-						{param label: $option.label /}
-						{param name: $name /}
-						{param ref: 'input' + index($option) /}
-						{param value: $option.value /}
-					{/call}
+					{let $attributes kind="attributes"}
+						class="custom-control custom-checkbox
+							{if $inline}
+								{sp}custom-control-inline
+							{/if}
+						"
+					{/let}
+
+					<div {$attributes}>
+						{call .input}
+							{param _handleFieldBlurred: $_handleFieldBlurred /}
+							{param _handleFieldChanged: $_handleFieldChanged /}
+							{param _handleFieldFocused: $_handleFieldFocused /}
+							{param checked: $checked == 'checked' ? true : false /}
+							{param disabled: $disabled /}
+							{param label: $option.label /}
+							{param name: $name /}
+							{param showLabel: true /}
+							{param value: $option.value /}
+						{/call}
+					</div>
 				{/if}
 			{/foreach}
 		{/if}
 	</div>
+{/template}
+
+/**
+ * This renders the checkbox input
+ */
+{template .input}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
+	{@param? ariaLabelledBy: string}
+	{@param? checked: bool}
+	{@param? disabled: bool}
+	{@param? label: string}
+	{@param? labelContent: html}
+	{@param? name: string}
+	{@param? showLabel: bool}
+	{@param? value: string}
+
+	<label>
+		{let $inputAttributes kind="attributes"}
+			{if $ariaLabelledBy}
+				aria-labelledby="{$ariaLabelledBy}"
+			{/if}
+
+			{if $checked}
+				checked="checked"
+			{/if}
+
+			{if $disabled}
+				disabled="disabled"
+			{/if}
+
+			class="custom-control-input"
+
+			data-onblur="{$_handleFieldBlurred}"
+			data-onchange="{$_handleFieldChanged}"
+			data-onfocus="{$_handleFieldFocused}"
+
+			{if $name}
+				name="{$name}"
+			{/if}
+
+			{if $value}
+				value="{$value}"
+			{/if}
+
+			ref="input"
+			type="checkbox"
+		{/let}
+
+		<input {$inputAttributes} />
+
+		<span class="custom-control-label">
+			{if $label}
+				{let $spanLabelClasses kind="text"}
+					custom-control-label-text
+					{if not $showLabel}
+						{sp}sr-only
+					{/if}
+				{/let}
+
+				<span class="{$spanLabelClasses}">{$label}</span>
+			{/if}
+		</span>
+
+		{if $labelContent}
+			{$labelContent}
+		{/if}
+	</label>
 {/template}

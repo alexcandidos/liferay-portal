@@ -2,6 +2,7 @@
 
 {template .render}
 	{@param name: string}
+	{@param? displayErrors: bool}
 	{@param? errorMessage: string}
 	{@param? handleInputChangeEvent: any}
 	{@param? id: string}
@@ -28,6 +29,7 @@
 				{param showLabel: $showLabel /}
 			{/call}
 		{/param}
+		{param displayErrors: $displayErrors /}
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}

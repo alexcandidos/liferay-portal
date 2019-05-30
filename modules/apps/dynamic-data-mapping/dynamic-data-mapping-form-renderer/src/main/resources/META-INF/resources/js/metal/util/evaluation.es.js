@@ -104,11 +104,11 @@ export const mergePages = (defaultLanguageId, editingLanguageId, newPages, sourc
 								...(
 									newField.nestedFields.find(
 										({fieldName}) => {
-											return fieldName === nestedField.fieldName
+											return fieldName === nestedField.fieldName;
 										}
 									) || {}
 								)
-							}
+							};
 						}
 					)
 				};
