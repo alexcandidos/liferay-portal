@@ -169,9 +169,12 @@ export default Component => {
 			handleFormSubmitted(this.getEvaluatorContext()).then(
 				validForm => {
 					if (validForm) {
+						const {target} = event;
+
 						Liferay.Util.submitForm(
 							{
-								getDOM: () => event.target
+								getDOM: () => target,
+								one: selector => target.querySelector(selector)
 							}
 						);
 					}
