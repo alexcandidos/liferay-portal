@@ -200,7 +200,7 @@ export default Component => {
 			this.setState(
 				{
 					pages: visitor.mapFields(
-						(field, currentPageIndex) => {
+						(field, fieldIndex, columnIndex, rowIndex, currentPageIndex) => {
 							return {
 								...field,
 								displayErrors: currentPageIndex === pageIndex
