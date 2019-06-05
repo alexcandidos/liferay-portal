@@ -19,6 +19,10 @@ class Editor extends Component {
 		);
 	}
 
+	shouldUpdate() {
+		return false;
+	}
+
 	syncValue(value) {
 		const {_alloyEditor} = this;
 
@@ -72,15 +76,15 @@ class Editor extends Component {
 		this._alloyEditor.getNativeEditor().on('actionPerformed', this._onActionPerformed.bind(this));
 	}
 
-	_onActionPerformed(e) {
+	_onActionPerformed(event) {
 		const {
 			data: {
 				props
 			}
-		} = e;
+		} = event;
 
 		if (!props.command) {
-			this._onChangeEditor(e);
+			this._onChangeEditor(event);
 		}
 	}
 
@@ -97,15 +101,6 @@ class Editor extends Component {
 }
 
 Editor.STATE = {
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Editor
-	 * @type {?(string|undefined)}
-	 */
-
-	editorValue: Config.string(),
 
 	/**
 	 * @default false
