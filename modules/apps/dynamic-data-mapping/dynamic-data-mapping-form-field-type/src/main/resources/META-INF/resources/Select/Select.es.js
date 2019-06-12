@@ -218,6 +218,10 @@ class Select extends Component {
 			type: multiple ? 'checkbox' : 'item'
 		};
 	}
+
+	_setPred(pred) {
+		console.log('_setPred', pred);
+	}
 }
 
 Select.STATE = {
@@ -331,7 +335,7 @@ Select.STATE = {
 	 * @type {?string}
 	 */
 
-	predefinedValue: Config.oneOfType([Config.array(), Config.string()]).value(
+	predefinedValue: Config.oneOfType([Config.array(), Config.string()]).setter('_setPred').value(
 		[]
 	),
 

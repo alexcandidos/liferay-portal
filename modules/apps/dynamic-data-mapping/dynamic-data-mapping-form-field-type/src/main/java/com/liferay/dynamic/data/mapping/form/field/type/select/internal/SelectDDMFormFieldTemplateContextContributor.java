@@ -71,6 +71,10 @@ public class SelectDDMFormFieldTemplateContextContributor
 			GetterUtil.getString(
 				ddmFormField.getProperty("dataSourceType"), "manual"));
 		parameters.put(
+			"localizedValue",
+			getLocalizedValue(
+				ddmFormFieldRenderingContext.getLocalizedValue()));
+		parameters.put(
 			"multiple",
 			getMultiple(ddmFormField, ddmFormFieldRenderingContext));
 
