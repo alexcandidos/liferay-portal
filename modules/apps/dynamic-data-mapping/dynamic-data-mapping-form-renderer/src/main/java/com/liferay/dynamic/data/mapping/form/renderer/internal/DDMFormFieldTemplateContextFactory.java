@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.util.DDMFormTemplateContextFactoryUtil;
@@ -609,28 +608,12 @@ public class DDMFormFieldTemplateContextFactory {
 			return;
 		}
 
-		DDMFormField ddmFormField = _ddmFormFieldsMap.get(
-			ddmFormFieldValue.getName());
-
-		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
-				ddmFormField.getType());
-
 		Map<String, Object> localizedValue = new HashMap<>();
 
 		for (Locale availableLocale : value.getAvailableLocales()) {
 			String languageId = LanguageUtil.getLanguageId(availableLocale);
 
-			if (ddmFormFieldValueAccessor == null) {
-				localizedValue.put(
-					languageId, value.getString(availableLocale));
-			}
-			else {
-				localizedValue.put(
-					languageId,
-					ddmFormFieldValueAccessor.getValue(
-						ddmFormFieldValue, availableLocale));
-			}
+			localizedValue.put(languageId, value.getString(availableLocale));
 		}
 
 		ddmFormFieldTemplateContext.put("localizedValue", localizedValue);
