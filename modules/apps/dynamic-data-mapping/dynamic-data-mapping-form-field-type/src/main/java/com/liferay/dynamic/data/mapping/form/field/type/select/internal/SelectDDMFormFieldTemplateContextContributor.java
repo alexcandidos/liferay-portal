@@ -73,7 +73,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"localizedValue",
 			getLocalizedValue(
-				ddmFormFieldRenderingContext.getLocalizedValue()));
+				(Map<String, Object>)ddmFormFieldRenderingContext.getProperty(
+					"localizedValue")));
 		parameters.put(
 			"multiple",
 			getMultiple(ddmFormField, ddmFormFieldRenderingContext));
@@ -136,6 +137,22 @@ public class SelectDDMFormFieldTemplateContextContributor
 				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getLocale();
+	}
+
+	protected Map<String, List<String>> getLocalizedValue(
+		Map<String, Object> localizedValue) {
+
+		Map<String, List<String>> normalizedLocalizedValue = new HashMap<>();
+
+		if (localizedValue != null) {
+			for (Map.Entry<String, Object> entry : localizedValue.entrySet()) {
+				normalizedLocalizedValue.put(
+					entry.getKey(),
+					getValue(GetterUtil.getString(entry.getValue(), "[]")));
+			}
+		}
+
+		return normalizedLocalizedValue;
 	}
 
 	protected boolean getMultiple(
