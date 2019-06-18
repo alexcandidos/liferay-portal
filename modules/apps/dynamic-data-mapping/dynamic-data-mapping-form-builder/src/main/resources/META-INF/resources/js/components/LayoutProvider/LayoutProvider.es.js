@@ -148,10 +148,14 @@ class LayoutProvider extends Component {
 				if (localizedValue !== undefined) {
 					value = localizedValue;
 				}
-			}
-
-			if (value && value.JSONArray) {
-				value = value.JSONArray;
+			} else if (
+				field.dataType === 'ddm-options' &&
+				value[editingLanguageId] === undefined
+			) {
+				value = {
+					...value,
+					[editingLanguageId]: value[defaultLanguageId]
+				};
 			}
 
 			return {
