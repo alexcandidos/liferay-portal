@@ -36,9 +36,14 @@ const _handleFieldEdited = function(properties) {
 };
 
 const _handleFieldBlurred = function(properties) {
+	const {fieldInstance} = properties;
 	const {pages} = this;
 
 	handleFieldBlurred(pages, properties).then(blurredFieldPages => {
+		if (fieldInstance.isDisposed()) {
+			return;
+		}
+
 		this.setState({
 			pages: blurredFieldPages
 		});
