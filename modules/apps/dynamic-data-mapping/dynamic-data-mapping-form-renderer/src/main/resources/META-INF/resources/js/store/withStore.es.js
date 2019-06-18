@@ -18,6 +18,10 @@ const _handleFieldEdited = function(properties) {
 	const evaluatorContext = this.getEvaluatorContext();
 
 	handleFieldEdited(evaluatorContext, properties).then(evaluatedPages => {
+		if (fieldInstance.isDisposed()) {
+			return;
+		}
+
 		this.setState(
 			{
 				pages: evaluatedPages
