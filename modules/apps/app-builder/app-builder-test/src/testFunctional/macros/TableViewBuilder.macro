@@ -32,7 +32,11 @@ definition {
 	macro deleteSelectedColumnByName {
 		Click(locator1 = "TableViewBuilder#COLUMN_LABEL");
 
-		Click(locator1 = "TableViewBuilder#DELETE_COLUMN");
+		Click(locator1 = "TableViewBuilder#DELETE_COLUMN_BY_NAME");
+
+		AssertElementNotPresent(
+			locator1 = "TableViewBuilder#COLUMN_LABEL",
+			value1 = "${columnLabel}");
 	}
 
 	macro save {
