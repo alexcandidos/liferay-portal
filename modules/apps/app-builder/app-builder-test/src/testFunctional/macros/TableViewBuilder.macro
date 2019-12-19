@@ -29,6 +29,12 @@ definition {
 		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
 	}
 
+	macro deleteSelectedColumnByName {
+		Click(locator1 = "TableViewBuilder#COLUMN_LABEL");
+
+		Click(locator1 = "TableViewBuilder#DELETE_COLUMN");
+	}
+
 	macro save {
 		AppBuilderAdmin.save();
 	}
