@@ -891,6 +891,29 @@ definition {
 		AppBuilderAdmin.deleteEntry(itemName = "Pepe");
 	}
 
+	@description = "User can delete column from the Table View by clicking the X button"
+	@priority = "5"
+	test DeleteColumnFromTable {
+		property portal.acceptance = "false";   
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Upload",
+			formViewName = "Form View Title - Upload");
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Upload");
+		
+		TableViewBuilder.deleteSelectedColumnByName(columnLabel = "Upload");
+	}
+
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
 	test DeleteCustomObjectWithAssociatedRelationship {
