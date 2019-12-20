@@ -1366,6 +1366,17 @@ definition {
 		for (var fieldType : list "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,color-field-type-label,Grid,separator-field-type-label,Upload") {
 			TableViewBuilder.addColumnByDoubleClick(fieldType = "${fieldType}");
 		}
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "Table View Title - All Fields");
+
+		for (var columnLabel : list "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,color-field-type-label,Grid,separator-field-type-label,Upload") {
+			TableViewBuilder.validateColumnLabel(columnLabel = "${columnLabel}");
+
+			TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${columnLabel}");
+		}
+
 	}
 
 }
