@@ -1376,7 +1376,6 @@ definition {
 
 			TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${columnLabel}");
 		}
-
 	}
 
 }
