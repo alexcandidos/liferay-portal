@@ -147,7 +147,7 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "${key_fieldLabel}");
+			fieldLabel = "${fieldLabel}");
 	}
 
 	macro openFormView {
