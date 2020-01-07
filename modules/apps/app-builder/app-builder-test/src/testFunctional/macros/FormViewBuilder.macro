@@ -114,6 +114,22 @@ definition {
 		FormViewBuilder.viewCheckboxChecked(fieldName = "${fieldName}");
 	}
 
+	macro fieldEllipsisAction {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${key_fieldLabel}");
+
+		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		AssertElementNotPresent(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${key_fieldLabel}");
+	}
+
 	macro openFormView {
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	}
@@ -193,6 +209,24 @@ definition {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = "${fieldLabel}");
+	}
+
+	macro validateNoFieldLabel {
+		AssertElementNotPresent(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
+	macro validateNoObjectFieldName {
+		AssertElementNotPresent(
+			locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME",
+			value1 = "${fieldName}");
+	}
+
+	macro validateObjectFieldName {
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME",
+			value1 = "${fieldName}");
 	}
 
 	macro viewCheckboxChecked {
