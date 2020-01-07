@@ -190,7 +190,22 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>FIELD_ELLIPSIS</td>
+	<td>//div[@class='dropdown dropdown-action']//*[@class='lexicon-icon lexicon-icon-ellipsis-v']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_ELLIPSIS_ACTION</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(@class,'btn dropdown-item btn-sm btn-link')][contains(text(),'${key_selectAction}')]</td>
+	<td></td>
+</tr>
 
+<tr>
+	<td>VALIDATE_OBJECT_SIDEBAR_FIELD_NAME</td>
+	<td>//div[@class='custom-object-field autofit-row autofit-row-center field-type']//small[contains(text(),'${fieldName}')]</td>
+	<td></td>
+</tr>
 
 
 
