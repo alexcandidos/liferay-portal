@@ -1189,6 +1189,39 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
+	@description = "Make sure removing a field from a specific Form View is not impacting another Form View"
+	@priority = "5"
+	test RemoveFieldInMultipleFormViews {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "My Form View Title 1");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "My Form View Title 2");
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title 1");
+
+		FormViewBuilder.fieldEllipsisAction(
+			fieldLabel = "Text Field",
+			selectAction = "Remove");
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title 2");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text Field");
+
+		FormViewBuilder.validateObjectFieldName(fieldName = "Text Field");
+	}
+
 	@description = "Remove fields from the Form View through the 'Remove' option"
 	@priority = "5"
 	test RemoveFormViewFields {
