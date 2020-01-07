@@ -1232,6 +1232,45 @@ definition {
 
 	}
 
+	@description = "Remove a field from the Form View from the Objects Sidebar"
+	@priority = "5"
+	test RemoveFormViewFieldInObjectSidebar {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "My Form View Title");
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title");
+
+		FormViewBuilder.deleteObjectSidebarField(
+			fieldLabel = "Text Field",
+			fieldName = "Text Field");
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+
+		FormViewBuilder.deleteObjectSidebarField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title");
+
+		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Numeric");
+
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Numeric");
+	}
+
 	@description = "Search for an object in the object list"
 	@priority = "5"
 	test SearchForObject {
