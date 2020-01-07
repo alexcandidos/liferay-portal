@@ -62,6 +62,26 @@ definition {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
 	}
 
+	macro deleteObjectSidebarField {
+		MouseOver(locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
+
+		Click(locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON");
+
+		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE")) {
+
+			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+		}
+
+		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE")) {
+
+			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+		}
+
+		FormViewBuilder.validateNoFieldLabel(fieldLabel = "${fieldLabel}");
+
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "${fieldName}");
+	}
+
 	macro deselectSelectWithMultipleOptions {
 		var key_fieldName = "${fieldName}";
 
@@ -114,26 +134,6 @@ definition {
 		FormViewBuilder.viewCheckboxChecked(fieldName = "${fieldName}");
 	}
 
-	macro deleteObjectSidebarField {
-		MouseOver(locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
-
-		Click(locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON");
-
-		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE")) {
-
-			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
-		}
-
-		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE")) {
-
-			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
-		}
-
-		FormViewBuilder.validateNoFieldLabel(fieldLabel = "${fieldLabel}");
-
-		FormViewBuilder.validateNoObjectFieldName(fieldName = "${fieldName}");
-	}
-
 	macro fieldEllipsisAction {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
@@ -146,8 +146,8 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 
 		AssertElementNotPresent(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
-			fieldLabel = "${fieldLabel}");
+			fieldLabel = "${fieldLabel}",
+			locator1 = "FormViewBuilder#FIELD_LABEL");
 	}
 
 	macro openFormView {
