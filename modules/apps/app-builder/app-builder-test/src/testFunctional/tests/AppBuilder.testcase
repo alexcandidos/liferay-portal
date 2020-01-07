@@ -1189,6 +1189,49 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
+	@description = "Remove fields from the Form View through the 'Remove' option"
+	@priority = "5"
+	test RemoveFormViewFields {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setName(formViewName = "Form View Title 1");
+
+		for (var fieldType : list "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+			
+			FormViewBuilder.closeSidebar();
+		}
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "Form View Title 1");
+
+		for (var fieldLabel : list "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.fieldEllipsisAction(
+				fieldLabel = "${fieldLabel}",
+				selectAction = "Remove");
+		}
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "Form View Title 1");
+
+		for (var fieldType : list "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.validateNoFieldLabel(fieldLabel = "${fieldType}");
+
+			FormViewBuilder.validateObjectFieldName(fieldName = "${fieldType}");
+		}
+
+	}
+
 	@description = "Search for an object in the object list"
 	@priority = "5"
 	test SearchForObject {
