@@ -2014,6 +2014,10 @@ definition {
 		AppBuilderAdmin.openItem(itemName = "My Form View");
 
 		FormViewBuilder.addFromObjectField(fieldName = "Full name");
+
+		FormViewBuilder.addFieldToObject(fieldName = "Text");
+
+		FormViewBuilder.addFieldToObject(fieldName = "Select from List");
 }
 
 	@description = "Search for an object in the object list"
