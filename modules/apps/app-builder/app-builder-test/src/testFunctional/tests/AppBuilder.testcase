@@ -1617,7 +1617,7 @@ definition {
 			deployOption = "Product Menu",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
-		
+
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",
 			portlet = "Test App C");
