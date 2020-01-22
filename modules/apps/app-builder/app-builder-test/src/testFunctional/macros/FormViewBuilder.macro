@@ -9,6 +9,15 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
+	macro addFieldByDoubleClickFromObjectSidebar {
+
+		var key_fieldType = "${fieldType}";
+
+		DoubleClick(locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+	}
+
 	macro addFieldByDragAndDrop {
 
 		Pause(locator1 = "10000");
@@ -52,6 +61,10 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
+	macro cancelButtonInDeleteFromObject {
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
+	}
+
 	macro clickOnSwitcher {
 		Click(
 			key_switcherOption = "${propertyName}",
@@ -60,6 +73,40 @@ definition {
 
 	macro closeSidebar() {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
+	}
+
+	macro deleteButtonInDeleteFromObject {
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+	}
+
+	macro deleteFromObjectViaX {
+		MouseOver(
+			fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
+
+		Click(
+			fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON");
+	}
+
+	macro deleteObjectSidebarField {
+		MouseOver(locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
+
+		Click(locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON");
+
+		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE")) {
+
+			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+		}
+
+		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE")) {
+
+			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+		}
+
+		FormViewBuilder.validateNoFieldLabel();
+
+		FormViewBuilder.validateNoObjectFieldName();
 	}
 
 	macro deselectSelectWithMultipleOptions {
@@ -87,6 +134,16 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editFieldLabel {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+
+		Type(
+			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
+			value1 = "${label}");
+	}
+
 	macro editOptionsRow {
 		var key_rowNumber = "${rowNumber}";
 
@@ -112,6 +169,34 @@ definition {
 		}
 
 		FormViewBuilder.viewCheckboxChecked(fieldName = "${fieldName}");
+	}
+
+	macro fieldEllipsisAction {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${key_fieldLabel}");
+
+		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		AssertElementNotPresent(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${key_fieldLabel}");
+	}
+
+	macro fieldEllipsisDelete {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${key_fieldLabel}");
+
+		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
+
+		Click(
+			key_selectAction = "Delete from Object",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
 	macro openFormView {
@@ -189,107 +274,18 @@ definition {
 		AppBuilderAdmin.switchTab(tabName = "Form Views");
 	}
 
+	macro validateDeleteObjectMessage {
+		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE");
+	}
+
+	macro validateDeleteUsedObjectMessage {
+		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE");
+	}
+
 	macro validateFieldLabel {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = "${fieldLabel}");
-	}
-
-	macro viewCheckboxChecked {
-		AssertChecked.assertCheckedNotVisible(
-			key_fieldName = "${fieldName}",
-			locator1 = "FormViewBuilder#CHECKBOX");
-	}
-
-	macro viewCheckboxNotChecked {
-		AssertNotChecked.assertNotCheckedNotVisible(
-			key_fieldName = "${fieldName}",
-			locator1 = "FormViewBuilder#CHECKBOX");
-	}
-
-	macro addFieldByDoubleClickFromObjectSidebar {
-
-		var key_fieldType = "${fieldType}";
-
-		DoubleClick(locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
-
-		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
-	}
-
-	macro cancelButtonInDeleteFromObject {
-		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
-	}
-
-	macro deleteButtonInDeleteFromObject {
-		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
-	}
-
-	macro deleteFromObjectViaX {
-		MouseOver(
-			locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME",
-			fieldName = "${fieldName}");
-
-		Click(
-			locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON",
-			fieldName = "${fieldName}");
-	}
-
-	macro deleteObjectSidebarField {
-		MouseOver(locator1 = "FormViewBuilder#VALIDATE_OBJECT_SIDEBAR_FIELD_NAME");
-
-		Click(locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON");
-
-		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE")) {
-
-			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
-		}
-
-		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE")) {
-
-			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
-		}
-
-		FormViewBuilder.validateNoFieldLabel();
-
-		FormViewBuilder.validateNoObjectFieldName();
-	}
-
-	macro editFieldLabel {
-		Click(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "${fieldLabel}");
-
-		Type(
-			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
-			value1 = "${label}");
-	}
-
-	macro fieldEllipsisAction {
-		Click(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "${key_fieldLabel}");
-
-		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
-
-		Click(
-			key_selectAction = "${selectAction}",
-			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
-
-		AssertElementNotPresent(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "${key_fieldLabel}");
-	}
-
-	macro fieldEllipsisDelete {
-		Click(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "${key_fieldLabel}");
-
-		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
-
-		Click(
-			key_selectAction = "Delete from Object",
-			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
 	macro validateNoFieldLabel {
@@ -310,20 +306,24 @@ definition {
 			value1 = "${fieldName}");
 	}
 
-	macro validateDeleteUsedObjectMessage {
-		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE");
-	}
-
-	macro validateDeleteObjectMessage {
-		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE");
-	}
-
 	macro validateUsedFormView {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_USED_FORM_VIEW");
 	}
 
 	macro validateUsedTableView {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_USED_TABLE_VIEW");
+	}
+
+	macro viewCheckboxChecked {
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#CHECKBOX");
+	}
+
+	macro viewCheckboxNotChecked {
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#CHECKBOX");
 	}
 
 }
