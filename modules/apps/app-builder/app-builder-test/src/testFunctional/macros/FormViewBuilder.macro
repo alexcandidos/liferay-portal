@@ -113,7 +113,7 @@ definition {
 		Click(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_RESULT");
-		
+
 		FormViewBuilder.setFieldLabel(fieldLabel = "${fieldLabel}");
 	}
 
