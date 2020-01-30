@@ -23,6 +23,14 @@
 	<td></td>
 </tr>
 
+<!--HOMEPAGE_TABLE_VIEW-->
+
+<tr>
+	<td>VALIDATE_PORTLET_FIELD_TYPE</td>
+	<td>//div[contains(.,'${key_fieldType}')]//h2[contains(text(),'(Table View)')]</td>
+	<td></td>
+</tr>
+
 <!--SIDEBAR-->
 
 <tr>
