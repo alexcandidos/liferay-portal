@@ -56,4 +56,10 @@ definition {
 			value1 = "${columnLabel}");
 	}
 
+	macro validatePortletFieldType {
+		AssertElementPresent(
+			key_fieldType = "${fieldType}",
+			locator1 = "TableViewBuilder#VALIDATE_PORTLET_FIELD_TYPE");
+	}
+
 }
