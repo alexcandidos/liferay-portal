@@ -32,6 +32,12 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	macro deployAppToggleSwitcher {
+		Check.checkToggleSwitch(
+			key_deployOption = "${deployOption}",
+			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+	}
+
 	macro selectFormView {
 		Click(
 			key_itemName = "${formViewName}",
