@@ -219,6 +219,16 @@ definition {
 			value1 = "${title}");
 	}
 
+	macro validateNewButtonIconIsNotPresent {
+		AssertElementNotPresent(locator1 = "AppBuilder#BUTTON_ADD");
+	}
+
+	macro validateNewButtonIsNotPresent {
+		AssertElementNotPresent(
+			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
+			value1 = "${buttonValue}");
+	}
+
 	macro validateRequiredValidNameMessage {
 
 		AssertTextEquals(
