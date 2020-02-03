@@ -12,9 +12,37 @@
 import React from 'react';
 
 import BasicInformation from './components/BasicInformation.es';
+import TotalCount from './components/TotalCount.es';
+import APIService from './util/APIService.es';
 
-export default function({props}) {
+export default function({context, props}) {
+	const {endpoints, namespace, page} = context;
 	const {authorName, publishDate, title} = props;
+
+	const {
+		getAnalyticsReportsTotalReadsURL,
+		getAnalyticsReportsTotalViewsURL
+	} = endpoints;
+
+	const api = APIService({
+		endpoints: {
+			getAnalyticsReportsTotalReadsURL,
+			getAnalyticsReportsTotalViewsURL
+		},
+		namespace,
+		page
+	});
+
+	function _handleTotalReads() {
+		return api.getTotalReads().then(response => {
+			return response.analyticsReportsTotalReads;
+		});
+	}
+	function _handleTotalViews() {
+		return api.getTotalViews().then(response => {
+			return response.analyticsReportsTotalViews;
+		});
+	}
 
 	return (
 		<div className="p-3">
@@ -22,6 +50,25 @@ export default function({props}) {
 				authorName={authorName}
 				publishDate={publishDate}
 				title={title}
+			/>
+
+			<TotalCount
+				className="mt-4"
+				dataProvider={_handleTotalViews}
+				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
+				popoverHeader={Liferay.Language.get('views')}
+				popoverMessage={Liferay.Language.get(
+					'this-number-is-the-total-amount-of-views-since-the-content-was-published'
+				)}
+			/>
+			<TotalCount
+				className="mt-2"
+				dataProvider={_handleTotalReads}
+				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
+				popoverHeader={Liferay.Language.get('reads')}
+				popoverMessage={Liferay.Language.get(
+					'this-number-is-the-total-amount-of-reads-since-the-content-was-published'
+				)}
 			/>
 		</div>
 	);

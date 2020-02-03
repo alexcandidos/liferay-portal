@@ -15,18 +15,12 @@
 package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.EntityModelListener;
-import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ContactLocalService;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,38 +50,8 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 
 	@Override
 	protected boolean isExcluded(Contact contact) {
-		try {
-			User user = userLocalService.getUser(contact.getClassPK());
-
-			if (!user.isActive() ||
-				Objects.equals(
-					user.getScreenName(),
-					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN)) {
-
-				return true;
-			}
-
-			AnalyticsConfiguration analyticsConfiguration =
-				analyticsConfigurationTracker.getAnalyticsConfiguration(
-					contact.getCompanyId());
-
-			if (analyticsConfiguration.syncAllContacts()) {
-				return false;
-			}
-
-			return isExcluded(analyticsConfiguration, user);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			return true;
-		}
+		return isUserExcluded(userLocalService.fetchUser(contact.getClassPK()));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ContactModelListener.class);
 
 	private static final List<String> _attributeNames = Arrays.asList(
 		"accountId", "birthday", "classNameId", "classPK", "companyId",

@@ -72,14 +72,19 @@ const BulkReassignModal = () => {
 
 					setSuccessToast([
 						...successToast,
-						Liferay.Language.get('these-tasks-have-been-reassigned')
+						sub(
+							Liferay.Language.get(
+								'x-tasks-have-been-reassigned'
+							),
+							[reassignedTasks.length]
+						)
 					]);
 
 					setSelectedItems([]);
 				})
 				.catch(() => {
 					const error = `${Liferay.Language.get(
-						'your-connection-was-unexpectedly-lost'
+						'your-request-has-failed'
 					)} ${Liferay.Language.get('select-reassign-to-retry')}`;
 
 					setBulkModal({

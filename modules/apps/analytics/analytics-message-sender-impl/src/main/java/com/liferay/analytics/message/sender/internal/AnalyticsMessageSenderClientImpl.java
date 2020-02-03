@@ -64,7 +64,7 @@ public class AnalyticsMessageSenderClientImpl
 		}
 
 		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
-			body,
+			body, analyticsConfiguration.liferayAnalyticsDataSourceId(),
 			analyticsConfiguration.
 				liferayAnalyticsFaroBackendSecuritySignature(),
 			HttpMethods.POST,
@@ -84,7 +84,7 @@ public class AnalyticsMessageSenderClientImpl
 		}
 
 		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
-			null,
+			null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
 			analyticsConfiguration.
 				liferayAnalyticsFaroBackendSecuritySignature(),
 			HttpMethods.GET,
@@ -96,8 +96,8 @@ public class AnalyticsMessageSenderClientImpl
 	}
 
 	private HttpUriRequest _buildHttpUriRequest(
-			String body, String liferayAnalyticsFaroBackendSecuritySignature,
-			String method, String url)
+			String body, String dataSourceId,
+			String faroBackendSecuritySignature, String method, String url)
 		throws Exception {
 
 		HttpUriRequest httpUriRequest = null;
@@ -116,9 +116,10 @@ public class AnalyticsMessageSenderClientImpl
 		}
 
 		httpUriRequest.setHeader("Content-Type", "application/json");
+		httpUriRequest.setHeader("OSB-Asah-Data-Source-ID", dataSourceId);
 		httpUriRequest.setHeader(
 			"OSB-Asah-Faro-Backend-Security-Signature",
-			liferayAnalyticsFaroBackendSecuritySignature);
+			faroBackendSecuritySignature);
 
 		return httpUriRequest;
 	}

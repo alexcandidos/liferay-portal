@@ -88,8 +88,18 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		for (long companyId : _analyticsMessageLocalService.getCompanyIds()) {
+		long companyId = message.getLong("companyId");
+
+		if (companyId != 0) {
 			_process(companyId);
+
+			return;
+		}
+
+		for (long curCompanyId :
+				_analyticsMessageLocalService.getCompanyIds()) {
+
+			_process(curCompanyId);
 		}
 	}
 

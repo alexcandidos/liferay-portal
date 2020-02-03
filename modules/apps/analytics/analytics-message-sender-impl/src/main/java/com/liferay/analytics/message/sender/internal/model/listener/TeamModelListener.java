@@ -18,6 +18,7 @@ import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TeamLocalService;
 
 import java.util.Arrays;
@@ -37,6 +38,16 @@ public class TeamModelListener extends BaseEntityModelListener<Team> {
 	@Override
 	public List<String> getAttributeNames() {
 		return _attributeNames;
+	}
+
+	@Override
+	public long[] getMembershipIds(User user) {
+		return user.getTeamIds();
+	}
+
+	@Override
+	public String getModelClassName() {
+		return Team.class.getName();
 	}
 
 	@Override

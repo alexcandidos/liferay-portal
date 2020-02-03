@@ -26,9 +26,9 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 		}
 	}
 
-	removeUserGroupSiteRole(itemData) {
+	removeUserGroupRole(itemData) {
 		if (confirm(itemData.message)) {
-			submitForm(this.one('#fm'), itemData.removeUserGroupSiteRoleURL);
+			submitForm(this.one('#fm'), itemData.removeUserGroupRoleURL);
 		}
 	}
 
@@ -40,8 +40,8 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 					destroyOnHide: true,
 					modal: true
 				},
-				eventName: this.ns('selectSiteRole'),
-				title: Liferay.Language.get('select-site-role'),
+				eventName: this.ns('selectRole'),
+				title: Liferay.Language.get('select-role'),
 				uri: itemData.selectRolesURL
 			},
 			event => {
@@ -53,12 +53,12 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 		);
 	}
 
-	selectSiteRole(itemData) {
+	selectRole(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
-			eventName: this.ns('selectSiteRole'),
-			title: Liferay.Language.get('assign-site-roles'),
-			url: itemData.selectSiteRoleURL
+			eventName: this.ns('selectRole'),
+			title: Liferay.Language.get('assign-roles'),
+			url: itemData.selectRoleURL
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -71,7 +71,7 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 					dom.append(fm, item);
 				});
 
-				submitForm(fm, itemData.editUserGroupsSiteRolesURL);
+				submitForm(fm, itemData.editUserGroupsRolesURL);
 			}
 		});
 
@@ -82,7 +82,10 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.ns('selectUserGroups'),
-			title: Liferay.Language.get('assign-user-groups-to-this-site'),
+			title: Liferay.Util.sub(
+				Liferay.Language.get('assign-user-groups-to-this-x'),
+				itemData.groupTypeLabel
+			),
 			url: itemData.selectUserGroupsURL
 		});
 

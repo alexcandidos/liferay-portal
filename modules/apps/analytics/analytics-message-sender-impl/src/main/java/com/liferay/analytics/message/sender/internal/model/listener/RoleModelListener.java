@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 
@@ -43,12 +44,27 @@ public class RoleModelListener extends BaseEntityModelListener<Role> {
 	}
 
 	@Override
+	public long[] getMembershipIds(User user) {
+		return user.getRoleIds();
+	}
+
+	@Override
+	public String getModelClassName() {
+		return Role.class.getName();
+	}
+
+	@Override
 	protected ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_roleLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				Property nameProperty = PropertyFactoryUtil.forName("name");
+
+				dynamicQuery.add(
+					nameProperty.eq(RoleConstants.ANALYTICS_ADMINISTRATOR));
+
 				Property typeProperty = PropertyFactoryUtil.forName("type");
 
 				dynamicQuery.add(typeProperty.eq(RoleConstants.TYPE_REGULAR));

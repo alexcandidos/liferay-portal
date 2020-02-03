@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,6 +40,22 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 	@Override
 	public List<String> getAttributeNames() {
 		return _attributeNames;
+	}
+
+	@Override
+	public long[] getMembershipIds(User user) throws Exception {
+		List<Group> groups = user.getSiteGroups();
+
+		Stream<Group> stream = groups.stream();
+
+		return stream.mapToLong(
+			Group::getGroupId
+		).toArray();
+	}
+
+	@Override
+	public String getModelClassName() {
+		return Group.class.getName();
 	}
 
 	@Override

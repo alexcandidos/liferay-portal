@@ -18,6 +18,7 @@ import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 
@@ -38,6 +39,16 @@ public class UserGroupModelListener extends BaseEntityModelListener<UserGroup> {
 	@Override
 	public List<String> getAttributeNames() {
 		return _attributeNames;
+	}
+
+	@Override
+	public long[] getMembershipIds(User user) {
+		return user.getUserGroupIds();
+	}
+
+	@Override
+	public String getModelClassName() {
+		return UserGroup.class.getName();
 	}
 
 	@Override

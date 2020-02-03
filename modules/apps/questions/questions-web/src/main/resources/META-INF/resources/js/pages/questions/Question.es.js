@@ -12,11 +12,13 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import parser from 'bbcode-to-react';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Answer from '../../components/Answer.es';
@@ -144,15 +146,27 @@ export default ({
 									</p>
 								</div>
 								<div>
-									<Subscription
-										onSubscription={subscribed =>
-											setQuestion({
-												...question,
-												subscribed
-											})
-										}
-										question={question}
-									/>
+									<ClayButton.Group spaced={true}>
+										<ClayButton displayType="unstyled">
+											<Subscription
+												onSubscription={subscribed =>
+													setQuestion({
+														...question,
+														subscribed
+													})
+												}
+												question={question}
+											/>
+										</ClayButton>
+
+										<ClayButton className="btn btn-secondary">
+											<Link
+												to={`/questions/${questionId}/edit`}
+											>
+												{Liferay.Language.get('edit')}
+											</Link>
+										</ClayButton>
+									</ClayButton.Group>
 								</div>
 							</div>
 							<div>

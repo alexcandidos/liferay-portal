@@ -20,7 +20,6 @@ import com.liferay.account.rest.client.dto.v1_0.Account;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,8 +38,28 @@ import org.junit.runner.RunWith;
 public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		for (AccountEntry accountEntry : _accountEntries) {
+			AccountEntry curAccountEntry =
+				_accountEntryLocalService.fetchAccountEntry(
+					accountEntry.getAccountEntryId());
+
+			if (curAccountEntry != null) {
+				_accountEntryLocalService.deleteAccountEntry(curAccountEntry);
+			}
+		}
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
+	}
+
+	@Override
+	protected Account testDeleteAccount_addAccount() throws Exception {
+		return _addAccount();
 	}
 
 	@Override
@@ -109,7 +128,6 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		};
 	}
 
-	@DeleteAfterTestRun
 	private final List<AccountEntry> _accountEntries = new ArrayList<>();
 
 	@Inject

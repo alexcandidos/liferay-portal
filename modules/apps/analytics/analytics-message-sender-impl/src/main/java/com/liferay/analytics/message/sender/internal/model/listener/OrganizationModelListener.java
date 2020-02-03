@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 
 import java.util.Arrays;
@@ -39,6 +40,16 @@ public class OrganizationModelListener
 	@Override
 	public List<String> getAttributeNames() {
 		return _attributeNames;
+	}
+
+	@Override
+	public long[] getMembershipIds(User user) throws Exception {
+		return user.getOrganizationIds();
+	}
+
+	@Override
+	public String getModelClassName() {
+		return Organization.class.getName();
 	}
 
 	@Override

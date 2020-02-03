@@ -19,14 +19,15 @@ import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -77,9 +78,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 		try {
 			AnalyticsMessage.Builder analyticsMessageBuilder =
-				AnalyticsMessage.builder(
-					_getDataSourceId(shardedModel.getCompanyId()),
-					model.getModelClassName());
+				AnalyticsMessage.builder(model.getModelClassName());
 
 			analyticsMessageBuilder.action(eventType);
 			analyticsMessageBuilder.object(jsonObject);
@@ -101,8 +100,40 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	}
 
 	@Override
+	public long[] getMembershipIds(User user) throws Exception {
+		return new long[0];
+	}
+
+	@Override
+	public String getModelClassName() {
+		return null;
+	}
+
+	@Override
+	public void onAfterAddAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK)
+		throws ModelListenerException {
+
+		_onAfterUpdateAssociation(
+			classPK, associationClassName, associationClassPK,
+			"addAssociation");
+	}
+
+	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
 		addAnalyticsMessage("add", getAttributeNames(), model);
+	}
+
+	@Override
+	public void onAfterRemoveAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK)
+		throws ModelListenerException {
+
+		_onAfterUpdateAssociation(
+			classPK, associationClassName, associationClassPK,
+			"deleteAssociation");
 	}
 
 	@Override
@@ -115,7 +146,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		try {
 			List<String> modifiedAttributeNames = _getModifiedAttributeNames(
 				getAttributeNames(), model,
-				getModel((Long)model.getPrimaryKeyObj()));
+				getModel((long)model.getPrimaryKeyObj()));
 
 			if (modifiedAttributeNames.isEmpty()) {
 				return;
@@ -152,11 +183,41 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	protected abstract String getPrimaryKeyName();
 
-	protected boolean isExcluded(
-			AnalyticsConfiguration analyticsConfiguration, User user)
-		throws PortalException {
+	protected boolean isExcluded(T model) {
+		return false;
+	}
 
-		for (long organizationId : user.getOrganizationIds()) {
+	protected boolean isUserExcluded(User user) {
+		if ((user == null) || !user.isActive() ||
+			Objects.equals(
+				user.getScreenName(),
+				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN)) {
+
+			return true;
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			analyticsConfigurationTracker.getAnalyticsConfiguration(
+				user.getCompanyId());
+
+		if (analyticsConfiguration.syncAllContacts()) {
+			return false;
+		}
+
+		long[] organizationIds = null;
+
+		try {
+			organizationIds = user.getOrganizationIds();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return true;
+		}
+
+		for (long organizationId : organizationIds) {
 			if (ArrayUtil.contains(
 					analyticsConfiguration.syncedOrganizationIds(),
 					String.valueOf(organizationId))) {
@@ -175,10 +236,6 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		}
 
 		return true;
-	}
-
-	protected boolean isExcluded(T model) {
-		return false;
 	}
 
 	protected void updateConfigurationProperties(
@@ -269,20 +326,15 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		return sb.toString();
 	}
 
-	private String _getDataSourceId(long companyId) {
-		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
-
-		return analyticsConfiguration.liferayAnalyticsDataSourceId();
-	}
-
 	private List<String> _getModifiedAttributeNames(
 		List<String> attributeNames, T model, T originalModel) {
 
 		List<String> modifiedAttributeNames = new ArrayList<>();
 
 		for (String attributeName : attributeNames) {
-			if (attributeName.equalsIgnoreCase("modifiedDate")) {
+			if (attributeName.equalsIgnoreCase("memberships") ||
+				attributeName.equalsIgnoreCase("modifiedDate")) {
+
 				continue;
 			}
 
@@ -311,9 +363,9 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception, exception);
 			}
-		}
 
-		return null;
+			return null;
+		}
 	}
 
 	private String _getName(String name) {
@@ -324,6 +376,65 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		Locale locale = LocaleUtil.getDefault();
 
 		return LocalizationUtil.getLocalization(name, locale.getLanguage());
+	}
+
+	private void _onAfterUpdateAssociation(
+		Object classPK, String associationClassName, Object associationClassPK,
+		String eventType) {
+
+		String modelClassName = getModelClassName();
+
+		if ((modelClassName == null) ||
+			!associationClassName.equals(User.class.getName())) {
+
+			return;
+		}
+
+		try {
+			T model = getModel((long)classPK);
+
+			if (isExcluded(model)) {
+				return;
+			}
+
+			User user = userLocalService.fetchUser((long)associationClassPK);
+
+			if (isUserExcluded(user)) {
+				return;
+			}
+
+			Map<String, Object> modelAttributes = model.getModelAttributes();
+
+			long companyId = (long)modelAttributes.get("companyId");
+
+			AnalyticsMessage.Builder analyticsMessageBuilder =
+				AnalyticsMessage.builder(getModelClassName());
+
+			analyticsMessageBuilder.action(eventType);
+			analyticsMessageBuilder.object(
+				JSONUtil.put(
+					"classPK", classPK
+				).put(
+					"emailAddress", user.getEmailAddress()
+				).put(
+					"userId", associationClassPK
+				));
+
+			String analyticsMessageJSON =
+				analyticsMessageBuilder.buildJSONString();
+
+			analyticsMessageLocalService.addAnalyticsMessage(
+				companyId, userLocalService.getDefaultUserId(companyId),
+				analyticsMessageJSON.getBytes(Charset.defaultCharset()));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get ", modelClassName, StringPool.SPACE,
+						classPK));
+			}
+		}
 	}
 
 	private JSONObject _serialize(List<String> includeAttributeNames, T model) {
