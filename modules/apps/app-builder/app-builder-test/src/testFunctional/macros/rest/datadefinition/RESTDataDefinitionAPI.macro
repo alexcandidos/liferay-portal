@@ -1,0 +1,19 @@
+definition {
+
+	@summary = "Adds an internal data definition via REST API. See BaseDataDefinitionResourceImpl.java"
+	macro _addInternalDataDefinition {
+		Variables.assertDefined(parameterList = "${json},${siteId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+				${portalURL}/o/data-engine/v1.0/sites/${siteId}/data-definitions \
+					-u test@liferay.com:test \
+					-H 'Content-Type: application/json' \
+					-d '${json}'
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

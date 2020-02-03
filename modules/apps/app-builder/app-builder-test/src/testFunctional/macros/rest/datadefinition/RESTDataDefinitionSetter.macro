@@ -1,0 +1,18 @@
+definition {
+
+	macro setJSON {
+		Variables.assertDefined(parameterList = "${fileName}");
+
+		var json = AppBuilderDependencies.readFileContent(fileName = "${fileName}");
+
+		return "${json}";
+	}
+
+	@summary = "Site ID has to be the Global Site for the Internal Data Definition to be visible"
+	macro setSiteId {
+		var siteId = JSONGroupAPI._getGroupIdByName(groupName = "Global");
+
+		return "${siteId}";
+	}
+
+}

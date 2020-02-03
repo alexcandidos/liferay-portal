@@ -1,0 +1,19 @@
+definition {
+
+	macro getDependenciesDir {
+		var baseDir = PropsUtil.get("project.dir");
+
+		var dependenciesDir = "${baseDir}/modules/apps/app-builder/app-builder-test/src/testFunctional/dependencies";
+
+		return "${dependenciesDir}";
+	}
+
+	macro readFileContent {
+		var dependenciesDir = AppBuilderDependencies.getDependenciesDir();
+
+		var content = FileUtil.read("${dependenciesDir}/${fileName}");
+
+		return "${content}";
+	}
+
+}

@@ -1,0 +1,15 @@
+definition {
+
+	macro addInternalDataDefinition {
+		Variables.assertDefined(parameterList = "${fileName}");
+
+		var json = RESTDataDefinitionSetter.setJSON(fileName = "${fileName}");
+
+		var siteId = RESTDataDefinitionSetter.setSiteId();
+
+		RESTDataDefinitionAPI._addInternalDataDefinition(
+			json = "${json}",
+			siteId = "${siteId}");
+	}
+
+}

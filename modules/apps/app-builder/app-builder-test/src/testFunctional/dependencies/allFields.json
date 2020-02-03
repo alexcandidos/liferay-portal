@@ -1,0 +1,114 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"dataDefinitionFields": [
+		{
+			"fieldType": "text",
+			"label" : {
+				"en_US" : "Text Field English"
+			},
+			"name": "Text Field"
+		},
+		{
+			"fieldType": "date",
+			"label" : {
+				"en_US" : "Date Field English"
+			},
+			"name": "Date field"
+		},
+		{
+			"fieldType": "numeric",
+			"label" : {
+				"en_US" : "Numeric Field English"
+			},
+			"name": "Numeric"
+		},
+		{
+			"fieldType": "text",
+			"label" : {
+				"en_US" : "Product English"
+			},
+			"name": "product"
+		},
+		{
+			"fieldType": "checkbox",
+			"label" : {
+				"en_US" : "Checkbox English"
+			},
+			"name": "Checkbox"
+		},
+		{
+			"fieldType": "checkbox_multiple",
+			"label" : {
+				"en_US" : "Checkbox Multiple English"
+			},
+			"name": "Checkbox Multiple"
+		},
+		{
+			"fieldType": "document_library",
+			"label" : {
+				"en_US" : "Document Library English"
+			},
+			"name": "document library"
+		},
+		{
+			"fieldType": "editor",
+			"label" : {
+				"en_US" : "Editor English"
+			},
+			"name": "editor"
+		},
+		{
+			"fieldType": "fieldset",
+			"label" : {
+				"en_US" : "Fieldset English"
+			},
+			"name": "fieldset"
+		},
+		{
+			"fieldType": "grid",
+			"label" : {
+				"en_US" : "Grid English"
+			},
+			"name": "GRID"
+		},
+		{
+			"fieldType": "paragraph",
+			"label" : {
+				"en_US" : "Paragraph English"
+			},
+			"name": "Paragraph"
+		},
+		{
+			"fieldType": "password",
+			"label" : {
+				"en_US" : "Password English"
+			},
+			"name": "Password"
+		},
+		{
+			"fieldType": "radio",
+			"label" : {
+				"en_US" : "Radio English"
+			},
+			"name": "Radio button"
+		},
+		{
+			"customProperties": {
+				"dataSourceType": "manual"
+			},
+			"fieldType": "select",
+			"label" : {
+				"en_US" : "List English"
+			},
+			"name": "list"
+		}
+	],
+	"description": {
+		"value": "Description"
+	},
+	"name": {
+		"value": "All Field Types"
+	}
+}
