@@ -1281,6 +1281,8 @@ definition {
 		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Multiple Selection");
 		FormViewBuilder.validateNoObjectFieldName(fieldName = "Multiple Selection");
 
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+
 		FormViewBuilder.save();
 
 		AppBuilderAdmin.switchTab(tabName = "Table Views");
