@@ -31,6 +31,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>VALIDATE_PORTLET_TEXT_INPUT</td>
+	<td>//div[contains(.,'${key_textInput}') and contains(.,'Text')]//h2[contains(text(),'Table View')]</td>
+	<td></td>
+</tr>
+
 <!--SIDEBAR-->
 
 <tr>
