@@ -18,6 +18,18 @@ definition {
 		Button.click(button = "Deploy");
 	}
 
+	macro clickDeploy {
+		Button.click(button = "Deploy");
+	}
+
+	macro clickNext {
+		Button.click(button = "Next");
+	}
+
+	macro clickPrevious {
+		Button.click(button = "Previous");
+	}
+
 	macro deployAppToggleSwitcher {
 		Check.checkToggleSwitch(
 			key_deployOption = "${deployOption}",
