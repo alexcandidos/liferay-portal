@@ -50,6 +50,10 @@ definition {
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
 	}
 
+	macro saveApp {
+		Button.click(button = "Save");
+	}
+
 	macro selectFormView {
 		Click(
 			key_itemName = "${formViewName}",
