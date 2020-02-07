@@ -1306,10 +1306,27 @@ definition {
 
 		AppBuilderAdmin.switchTab(tabName = "Form Views");
 
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Upload",
-			formViewName = "Upload Form View ",
-			tableViewName = "My Table View 2");
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.setName(formViewName = "Upload Form View");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Text");
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Upload");
+
+		TableViewBuilder.setName(tableViewName = "My Table View 2");
+
+		TableViewBuilder.save();
 
 		AppBuilderAdmin.switchTab(tabName = "Apps");
 
@@ -1321,25 +1338,38 @@ definition {
 
 		App.selectTableView(tableViewName = "My Table View 2");
 
-		Button.click(button = "Previous");
+		App.clickPrevious();
 
 		App.selectTableView(tableViewName = "My Table View 1");
 
 		App.deployAppToggleSwitcher(deployOption = "Widget");
 
-		Button.click(button = "Deploy");
+		App.clickDeploy();
 
-		Navigator.openURL();
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Page");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
 
 		Portlet.addPG(portletName = "My First App");
 
-		Button.click(button = "New Entry");
+		AppBuilderAdmin.add();
+
+		PortletEntry.inputText(
+			fieldLabel = "Text",
+			text = "Heilung");
 
 		Button.click(button = "Save");
 
 		Portlet.addPG(portletName = "My First App (Table View)");
 
 		TableViewBuilder.validatePortletFieldType(fieldType = "Text");
+
+		TableViewBuilder.validatePortletTextInput(textInput = "Heilung");
 
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
@@ -1352,15 +1382,36 @@ definition {
 
 		AppBuilderAdmin.openItem(itemName = "My First App");
 
-		Button.click(button = "Next");
+		App.clickNext();
 
 		App.selectTableView(tableViewName = "My Table View 2");
 
-		Button.click(button = "Save");
+		AppBuilderAdmin.save();
 
-		Navigator.openURL();
+		Navigator.gotoPage(pageName = "App Builder Page");
 
 		TableViewBuilder.validatePortletFieldType(fieldType = "Upload");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "Custom Object Title");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.openItem(itemName = "My First App");
+
+		App.clickNext();
+
+		App.selectTableView(tableViewName = "My Table View 1");
+
+		AppBuilderAdmin.save();
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		TableViewBuilder.validatePortletTextInput(textInput = "Heilung");
 	}
 
 	@description = "Clear search results when clicking the Clear button on the search results banner"
