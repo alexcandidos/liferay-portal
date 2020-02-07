@@ -38,9 +38,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 					"\\)[^()]*") &&
 			!ifClause.matches("[^()]*\\([^()]*\\)[^()]*")) {
 
-			addMessage(
-				fileName, "Redundant parentheses", "parentheses.markdown",
-				lineNumber);
+			addMessage(fileName, "Redundant parentheses", lineNumber);
 
 			return;
 		}
@@ -58,9 +56,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 		if (_hasRedundantParentheses(ifClause, "||", "&&") ||
 			_hasRedundantParentheses(ifClause, "&&", "||")) {
 
-			addMessage(
-				fileName, "Redundant parentheses", "parentheses.markdown",
-				lineNumber);
+			addMessage(fileName, "Redundant parentheses", lineNumber);
 
 			return;
 		}
@@ -98,32 +94,30 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 				String s = ifClause.substring(x + 1, y);
 
-				if (getLevel(s) == 0) {
-					char nextChar = ifClause.charAt(y + 1);
-
-					if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
-						(nextChar == CharPool.CLOSE_PARENTHESIS)) {
-
-						addMessage(
-							fileName, "Redundant parentheses",
-							"parentheses.markdown", lineNumber);
-
-						return;
-					}
-
-					if (((nextChar == CharPool.CLOSE_PARENTHESIS) ||
-						 (nextChar == CharPool.SPACE)) &&
-						_hasRedundantParentheses(s)) {
-
-						addMessage(
-							fileName, "Redundant parentheses",
-							"parentheses.markdown", lineNumber);
-
-						return;
-					}
-
-					break;
+				if (getLevel(s) != 0) {
+					continue;
 				}
+
+				char nextChar = ifClause.charAt(y + 1);
+
+				if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
+					(nextChar == CharPool.CLOSE_PARENTHESIS)) {
+
+					addMessage(fileName, "Redundant parentheses", lineNumber);
+
+					return;
+				}
+
+				if (((nextChar == CharPool.CLOSE_PARENTHESIS) ||
+					 (nextChar == CharPool.SPACE)) &&
+					_hasRedundantParentheses(s)) {
+
+					addMessage(fileName, "Redundant parentheses", lineNumber);
+
+					return;
+				}
+
+				break;
 			}
 		}
 	}
@@ -144,9 +138,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			String s = ifClause.substring(Math.min(y, z), Math.max(y, z));
 
 			if (getLevel(s) == 0) {
-				addMessage(
-					fileName, "Missing parentheses", "parentheses.markdown",
-					lineNumber);
+				addMessage(fileName, "Missing parentheses", lineNumber);
 
 				return;
 			}
@@ -197,9 +189,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				String s = ifClause.substring(previousParenthesisPos + 1, i);
 
 				if (_hasMissingParentheses(s)) {
-					addMessage(
-						fileName, "Missing parentheses", "parentheses.markdown",
-						lineNumber);
+					addMessage(fileName, "Missing parentheses", lineNumber);
 
 					return;
 				}

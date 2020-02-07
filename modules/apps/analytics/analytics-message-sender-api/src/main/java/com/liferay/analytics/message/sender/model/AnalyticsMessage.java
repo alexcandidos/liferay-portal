@@ -30,18 +30,12 @@ public final class AnalyticsMessage implements Serializable {
 		return new AnalyticsMessage.Builder(analyticsMessage);
 	}
 
-	public static AnalyticsMessage.Builder builder(
-		String dataSourceId, String type) {
-
-		return new AnalyticsMessage.Builder(dataSourceId, type);
+	public static AnalyticsMessage.Builder builder(String type) {
+		return new AnalyticsMessage.Builder(type);
 	}
 
 	public String getAction() {
 		return _action;
-	}
-
-	public String getDataSourceId() {
-		return _dataSourceId;
 	}
 
 	public JSONObject getObjectJSONObject() {
@@ -64,8 +58,6 @@ public final class AnalyticsMessage implements Serializable {
 			JSONObject jsonObject = JSONUtil.put(
 				"action", _analyticsMessage.getAction()
 			).put(
-				"dataSourceId", _analyticsMessage.getDataSourceId()
-			).put(
 				"objectJSONObject", _analyticsMessage.getObjectJSONObject()
 			).put(
 				"type", _analyticsMessage.getType()
@@ -82,15 +74,12 @@ public final class AnalyticsMessage implements Serializable {
 
 		protected Builder(AnalyticsMessage analyticsMessage) {
 			_analyticsMessage._action = analyticsMessage.getAction();
-			_analyticsMessage._dataSourceId =
-				analyticsMessage.getDataSourceId();
 			_analyticsMessage._objectJSONObject =
 				analyticsMessage.getObjectJSONObject();
 			_analyticsMessage._type = analyticsMessage.getType();
 		}
 
-		protected Builder(String dataSourceId, String type) {
-			_analyticsMessage._dataSourceId = dataSourceId;
+		protected Builder(String type) {
 			_analyticsMessage._type = type;
 		}
 
@@ -103,7 +92,6 @@ public final class AnalyticsMessage implements Serializable {
 	}
 
 	private String _action;
-	private String _dataSourceId;
 	private JSONObject _objectJSONObject;
 	private String _type;
 

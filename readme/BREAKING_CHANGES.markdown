@@ -372,3 +372,109 @@ value has also changed to avoid the execution of new upgrade processes on
 startup in production environments.
 
 ---------------------------------------
+
+### Changed Control Menu and Product Menu positioning
+- **Date:** 2020-Feb-04
+- **JIRA Ticket:** [LPS-107487](https://issues.liferay.com/browse/LPS-107487)
+
+#### What changed?
+
+The placement and structure of the Control and Product Menus has changed to
+address several accessibility concerns and common visual glitches.
+
+In particular, the changes that have been applied can be summarized as:
+- The Product Menu has been moved outside of the Control Menu
+- The Control Menu now uses position:sticky to control its behaviour
+- Styles of the different menus inside the Control Menu have been updated to
+account for the new sticky behaviour
+
+#### Who is affected?
+
+This could affect developers that have a custom Control Panel Theme and have
+customized the `portlet.ftl` template or those that have developed a custom menu
+that behaves as a sticky bar and is included using the `*ControlMenuEntry` API.
+
+#### How should I update my code?
+
+##### Control Panel Themes
+
+Developers with custom Control Panel themes should move the call (if any) to the
+`@liferay.control_menu` macro above the portlet section in their `portlet.ftl`.
+
+**Before:**
+
+```
+<section class="portlet" id="portlet_${htmlUtil.escapeAttribute(portletDisplay.getId())}">
+	${portletDisplay.writeContent(writer)}
+</section>
+
+<#if portletDisplay.isStateMax()>
+	<@liferay.control_menu />
+</#if>
+```
+
+**After:**
+
+```
+<#if portletDisplay.isStateMax()>
+	<@liferay.control_menu />
+</#if>
+
+<section class="portlet" id="portlet_${htmlUtil.escapeAttribute(portletDisplay.getId())}">
+	${portletDisplay.writeContent(writer)}
+</section>
+```
+
+##### Custom Sticky Bars
+
+Developers with custom Sticky Bars included using the `*ControlMenuEntry` API
+can use the newly included extension points in the Control Menu to inject their
+components.
+
+Developers should move the code that injects their menu to a `DynamicInclude`
+component and registered depending on the positioning of their bar:
+- Use `com.liferay.product.navigation.taglib#/page.jsp#pre` for bars positioned
+on top of the Control Menu
+- Use `com.liferay.product.navigation.taglib#/page.jsp#post` to position menu
+bars after the Control Menu
+
+#### Why was this change made?
+
+This change was necessary for several reasons:
+- Improves accessibility by providing a more correct and expected markup
+- Simplifies the positioning and control of top-positioned menus avoiding common
+visual glitches
+
+---------------------------------------
+### jQuery is no longer included by default
+- **Date:** 2020-Feb-04
+- **JIRA Ticket:** [LPS-95726](https://issues.liferay.com/browse/LPS-95726)
+
+#### What changed?
+
+Previously, `jQuery` was being included in every page by default and made
+available through the global `window.$` and the scoped `AUI.$` variables. After
+this change, `jQuery` is no longer included by default and those variables will
+be `undefined`.
+
+#### Who is affected?
+
+This affects any developer who used `AUI.$` or `window.$` in their custom
+scripts.
+
+#### How should I update my code?
+
+You should provide your own version `jQuery` to be used by your custom
+developments following any of the possible strategies to add third party
+libraries.
+
+Additionally, as a temporary measure, you can bring back the old behaviour by
+setting the `Enable jQuery` property in `System Settings > Third Party > jQuery`
+to `true`.
+
+#### Why was this change made?
+
+This change was made to avoid bundling and serving additional library code on
+every page that was mostly unused and redundant.
+
+---------------------------------------

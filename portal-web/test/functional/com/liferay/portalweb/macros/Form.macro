@@ -28,6 +28,10 @@ definition {
 			value1 = "Add Success Page");
 	}
 
+	macro addTextField {
+		Form.gotoAddField(fieldType = "Text");
+	}
+
 	macro addTranslation {
 		Click(locator1 = "Translation#ADD");
 

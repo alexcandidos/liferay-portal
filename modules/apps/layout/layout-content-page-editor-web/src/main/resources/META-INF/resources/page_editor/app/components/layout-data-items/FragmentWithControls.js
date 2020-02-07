@@ -31,16 +31,20 @@ import React, {useContext} from 'react';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
+import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector, useDispatch} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
-import FloatingToolbar from '../FloatingToolbar';
+import {useSelectItem} from '../Controls';
 import Topper from '../Topper';
+import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import FragmentContent from './FragmentContent';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
+	const selectItem = useSelectItem();
 	const state = useSelector(state => state);
+	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
 	const {fragmentEntryLinks} = state;
 
@@ -54,6 +58,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 					config,
 					fragmentEntryLinkId: item.config.fragmentEntryLinkId,
 					itemId: item.itemId,
+					selectItem,
 					store: state
 				})
 			);
@@ -84,7 +89,24 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		);
 	}
 
-	return (
+	const content = (
+		<>
+			<FloatingToolbar
+				buttons={floatingToolbarButtons}
+				item={item}
+				itemRef={ref}
+				onButtonClick={handleButtonClick}
+			/>
+
+			<FragmentContent
+				fragmentEntryLink={fragmentEntryLink}
+				itemId={item.itemId}
+				ref={ref}
+			/>
+		</>
+	);
+
+	return showLayoutItemTopper ? (
 		<Topper
 			acceptDrop={[
 				LAYOUT_DATA_ITEM_TYPES.container,
@@ -92,24 +114,11 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 			]}
 			item={item}
 			layoutData={layoutData}
-			name={fragmentEntryLink.name}
 		>
-			{() => (
-				<>
-					<FloatingToolbar
-						buttons={floatingToolbarButtons}
-						item={item}
-						itemRef={ref}
-						onButtonClick={handleButtonClick}
-					/>
-
-					<FragmentContent
-						fragmentEntryLink={fragmentEntryLink}
-						ref={ref}
-					/>
-				</>
-			)}
+			{() => content}
 		</Topper>
+	) : (
+		content
 	);
 });
 

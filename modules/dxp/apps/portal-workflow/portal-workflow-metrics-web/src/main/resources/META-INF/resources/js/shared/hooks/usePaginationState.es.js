@@ -21,8 +21,11 @@ const usePaginationState = props => {
 		initialPageSize = defaultDelta,
 		items = false
 	} = props;
+
+	const defaultPageSize =
+		initialPageSize <= defaultDelta ? initialPageSize : defaultDelta;
 	const [page, setPage] = useState(initialPage);
-	const [pageSize, setPageSize] = useState(initialPageSize);
+	const [pageSize, setPageSize] = useState(defaultPageSize);
 
 	const pagination = useMemo(
 		() => ({

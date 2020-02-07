@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -72,9 +74,13 @@ public class DataRecordValuesUtil {
 			true);
 
 		for (Map.Entry<String, DDMFormField> entry : ddmFormFields.entrySet()) {
-			ddmFormValues.addDDMFormFieldValue(
-				createDDMFormFieldValue(
-					dataRecordValues, entry.getValue(), locale));
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				createDDMFormFieldValues(
+					dataRecordValues, entry.getValue(), locale);
+
+			Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+
+			stream.forEach(ddmFormValues::addDDMFormFieldValue);
 		}
 
 		return ddmFormValues;
@@ -117,7 +123,7 @@ public class DataRecordValuesUtil {
 		return jsonObject.toString();
 	}
 
-	protected static DDMFormFieldValue createDDMFormFieldValue(
+	protected static List<DDMFormFieldValue> createDDMFormFieldValues(
 		Map<String, Object> dataRecordValues, DDMFormField ddmFormField,
 		Locale locale) {
 
@@ -128,7 +134,52 @@ public class DataRecordValuesUtil {
 		ddmFormFieldValue.setName(name);
 
 		if ((dataRecordValues == null) || !dataRecordValues.containsKey(name)) {
-			return ddmFormFieldValue;
+			return ListUtil.fromArray(ddmFormFieldValue);
+		}
+
+		if (ddmFormField.isRepeatable()) {
+			Object[] instancesValue = null;
+
+			if (ddmFormField.isLocalizable()) {
+				Object value = dataRecordValues.get(name);
+
+				if (!(value instanceof Map)) {
+					throw new IllegalArgumentException(
+						"Field value is not a map");
+				}
+
+				Map<String, Object> localizedValues =
+					(Map<String, Object>)value;
+
+				instancesValue = (Object[])localizedValues.get(
+					LanguageUtil.getLanguageId(locale));
+			}
+			else {
+				instancesValue = (Object[])dataRecordValues.get(name);
+			}
+
+			if (instancesValue == null) {
+				return ListUtil.fromArray(ddmFormFieldValue);
+			}
+
+			List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>(
+				instancesValue.length);
+
+			for (Object instanceValue : instancesValue) {
+				ddmFormFieldValue = new DDMFormFieldValue();
+
+				ddmFormFieldValue.setName(ddmFormField.getName());
+
+				LocalizedValue localizedValue = new LocalizedValue();
+
+				localizedValue.addString(locale, String.valueOf(instanceValue));
+
+				ddmFormFieldValue.setValue(localizedValue);
+
+				ddmFormFieldValues.add(ddmFormFieldValue);
+			}
+
+			return ddmFormFieldValues;
 		}
 
 		ddmFormFieldValue.setValue(
@@ -138,13 +189,17 @@ public class DataRecordValuesUtil {
 			for (DDMFormField nestedDDMFormField :
 					ddmFormField.getNestedDDMFormFields()) {
 
-				ddmFormFieldValue.addNestedDDMFormFieldValue(
-					createDDMFormFieldValue(
-						dataRecordValues, nestedDDMFormField, locale));
+				List<DDMFormFieldValue> ddmFormFieldValues =
+					createDDMFormFieldValues(
+						dataRecordValues, nestedDDMFormField, locale);
+
+				Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+
+				stream.forEach(ddmFormFieldValue::addNestedDDMFormFieldValue);
 			}
 		}
 
-		return ddmFormFieldValue;
+		return ListUtil.fromArray(ddmFormFieldValue);
 	}
 
 	protected static LocalizedValue createLocalizedValue(

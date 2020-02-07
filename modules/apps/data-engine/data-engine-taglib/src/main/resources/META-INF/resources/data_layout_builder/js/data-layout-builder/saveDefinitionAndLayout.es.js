@@ -103,7 +103,6 @@ export default ({
 		}
 
 		return addItem(endpoint, {
-			availableLanguageIds: [themeDisplay.getLanguageId()],
 			...dataDefinition,
 			...(params.dataDefinition || {}),
 			defaultDataLayout: normalizedDataLayout

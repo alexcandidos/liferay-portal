@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import React, {useContext, useEffect, useCallback, useState} from 'react';
 
@@ -33,7 +33,8 @@ export const EditEntry = ({
 	const onCancel = useCallback(() => {
 		if (redirect) {
 			Liferay.Util.navigate(redirect);
-		} else {
+		}
+		else {
 			Liferay.Util.navigate(basePortletURL);
 		}
 	}, [basePortletURL, redirect]);
@@ -56,7 +57,8 @@ export const EditEntry = ({
 					dataRecord.dataRecordValues[fieldName] = {
 						[themeDisplay.getLanguageId()]: value
 					};
-				} else {
+				}
+				else {
 					dataRecord.dataRecordValues[fieldName] = value;
 				}
 			});
@@ -81,7 +83,8 @@ export const EditEntry = ({
 					openSuccessToast(false);
 					onCancel();
 				});
-			} else {
+			}
+			else {
 				addItem(
 					`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
 					dataRecord

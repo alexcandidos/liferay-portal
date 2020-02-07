@@ -20,7 +20,7 @@ import {removeItem, removeFilters} from '../filter/util/filterUtil.es';
 
 const ResultsBar = ({children}) => {
 	return (
-		<nav className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down">
+		<nav className="mt-0 subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down">
 			<div className="container-fluid container-fluid-max-xl">
 				<ul className="tbar-nav tbar-nav-wrap">{children}</ul>
 			</div>

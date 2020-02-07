@@ -23,6 +23,8 @@ import {ItemSelectorDialog} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import Lang from '../utils/lang.es';
+
 function AssetVocabulariesCategoriesSelector({
 	eventName,
 	id,
@@ -106,7 +108,8 @@ function AssetVocabulariesCategoriesSelector({
 				)
 			) {
 				validAddedItems.push(item);
-			} else {
+			}
+			else {
 				invalidAddedItems.push(item);
 			}
 		});
@@ -227,10 +230,15 @@ function AssetVocabulariesCategoriesSelector({
 								<ClayForm.FeedbackItem>
 									<ClayForm.FeedbackIndicator symbol="info-circle" />
 
-									{Liferay.Language.get(
-										`category-${invalidItems
-											.map(item => item.label)
-											.join(',')}-does-not-exist`
+									{Lang.sub(
+										Liferay.Language.get(
+											`category-x-does-not-exist`
+										),
+										[
+											invalidItems
+												.map(item => item.label)
+												.join(',')
+										]
 									)}
 								</ClayForm.FeedbackItem>
 							</ClayForm.FeedbackGroup>

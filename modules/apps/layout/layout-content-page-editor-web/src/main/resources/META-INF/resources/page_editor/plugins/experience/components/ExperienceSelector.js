@@ -30,7 +30,7 @@ import {
 	storeModalExperienceState,
 	recoverModalExperienceState,
 	useDebounceCallback
-} from '../utils.js';
+} from '../utils';
 import ExperienceModal from './ExperienceModal';
 import ExperiencesList from './ExperiencesList';
 
@@ -51,7 +51,8 @@ function getUpdateExperiencePriorityTargets(
 
 	if (direction === 'up') {
 		subtargetIndex = targetIndex - 1;
-	} else {
+	}
+	else {
 		subtargetIndex = targetIndex + 1;
 	}
 
@@ -184,7 +185,8 @@ const ExperienceSelector = ({
 						});
 					}
 				});
-		} else {
+		}
+		else {
 			return dispatch(
 				createExperience(
 					{

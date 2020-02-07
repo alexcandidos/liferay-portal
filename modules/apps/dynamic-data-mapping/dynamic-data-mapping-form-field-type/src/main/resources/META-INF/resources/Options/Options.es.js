@@ -16,16 +16,16 @@ import '../FieldBase/FieldBase.es';
 
 import '../KeyValue/KeyValue.es';
 
-import './OptionsRegister.soy.js';
+import './OptionsRegister.soy';
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Options.soy.js';
+import templates from './Options.soy';
 
 /**
  * Options.
@@ -91,7 +91,8 @@ class Options extends Component {
 
 		if (localizedValue && localizedValue[editingLanguageId]) {
 			return localizedValue[editingLanguageId];
-		} else if (localizedValue && localizedValue[defaultLanguageId]) {
+		}
+		else if (localizedValue && localizedValue[defaultLanguageId]) {
 			return localizedValue[defaultLanguageId];
 		}
 
@@ -358,7 +359,8 @@ class Options extends Component {
 					  }
 					: option;
 			});
-		} else {
+		}
+		else {
 			options = [
 				...options,
 				{

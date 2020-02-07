@@ -12,37 +12,35 @@
 import ClayModal from '@clayui/modal';
 import React from 'react';
 
-import EmptyState from '../../../../../shared/components/list/EmptyState.es';
+import EmptyState from '../../../../../shared/components/empty-state/EmptyState.es';
 import RetryButton from '../../../../../shared/components/list/RetryButton.es';
 import LoadingState from '../../../../../shared/components/loading/LoadingState.es';
 import PaginationBar from '../../../../../shared/components/pagination-bar/PaginationBar.es';
 import PromisesResolver from '../../../../../shared/components/promises-resolver/PromisesResolver.es';
 import {Table} from './BulkReassignSelectTasksStepTable.es';
 
-const Body = ({items, pagination, setRetry}) => {
+const Body = ({items, pagination, setRetry, totalCount}) => {
 	return (
 		<ClayModal.Body>
-			<div style={{maxHeight: '23rem'}}>
-				<PromisesResolver.Pending>
-					<Body.Loading />
-				</PromisesResolver.Pending>
+			<PromisesResolver.Pending>
+				<Body.Loading />
+			</PromisesResolver.Pending>
 
-				<PromisesResolver.Resolved>
-					{items && items.length > 0 ? (
-						<>
-							<Body.Table items={items} />
+			<PromisesResolver.Resolved>
+				{items && items.length > 0 ? (
+					<>
+						<Body.Table items={items} totalCount={totalCount} />
 
-							<PaginationBar routing={false} {...pagination} />
-						</>
-					) : (
-						<Body.Empty />
-					)}
-				</PromisesResolver.Resolved>
+						<PaginationBar routing={false} {...pagination} />
+					</>
+				) : (
+					<Body.Empty />
+				)}
+			</PromisesResolver.Resolved>
 
-				<PromisesResolver.Rejected>
-					<Body.Error onClick={() => setRetry(retry => retry + 1)} />
-				</PromisesResolver.Rejected>
-			</div>
+			<PromisesResolver.Rejected>
+				<Body.Error onClick={() => setRetry(retry => retry + 1)} />
+			</PromisesResolver.Rejected>
 		</ClayModal.Body>
 	);
 };
@@ -50,7 +48,7 @@ const Body = ({items, pagination, setRetry}) => {
 const EmptyView = () => {
 	return (
 		<EmptyState
-			className="border-0"
+			className="border-0 pb-6 pt-6 sheet"
 			message={Liferay.Language.get('no-results-were-found')}
 			messageClassName="small"
 			type="not-found"
@@ -62,7 +60,7 @@ const ErrorView = ({onClick}) => {
 	return (
 		<EmptyState
 			actionButton={<RetryButton onClick={onClick} />}
-			className="border-0 pb-6 pt-8"
+			className="border-0 pb-7 pt-8"
 			hideAnimation={true}
 			message={Liferay.Language.get('unable-to-retrieve-data')}
 			messageClassName="small"
@@ -71,7 +69,7 @@ const ErrorView = ({onClick}) => {
 };
 
 const LoadingView = () => {
-	return <LoadingState className="border-0 pb-8 pt-8" />;
+	return <LoadingState className="border-0 mb-4 mt-6 pb-8 pt-8" />;
 };
 
 Body.Empty = EmptyView;

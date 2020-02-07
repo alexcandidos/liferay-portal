@@ -175,7 +175,7 @@ class CollapseProvider {
 	}
 
 	_getTrigger(panel) {
-		return document.querySelector(`[href="${panel.getAttribute('id')}"]`);
+		return document.querySelector(`[href="#${panel.getAttribute('id')}"]`);
 	}
 
 	_onTriggerClick = event => {
@@ -190,7 +190,8 @@ class CollapseProvider {
 		if (panel) {
 			if (panel.classList.contains(CssClass.SHOW)) {
 				this.hide({panel, trigger});
-			} else {
+			}
+			else {
 				this.show({panel, trigger});
 			}
 		}

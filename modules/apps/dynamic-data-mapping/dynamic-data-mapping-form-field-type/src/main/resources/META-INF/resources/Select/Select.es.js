@@ -18,7 +18,7 @@ import '../FieldBase/FieldBase.es';
 
 import '../Text/Text.es';
 
-import './SelectRegister.soy.js';
+import './SelectRegister.soy';
 
 import 'clay-dropdown';
 
@@ -32,7 +32,7 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import {setJSONArrayValue} from '../util/setters.es';
-import templates from './Select.soy.js';
+import templates from './Select.soy';
 
 class Select extends Component {
 	addValue(value) {
@@ -160,7 +160,8 @@ class Select extends Component {
 				fieldInstance: this,
 				originalEvent: window.event
 			});
-		} else {
+		}
+		else {
 			this.emit('fieldBlurred', {
 				fieldInstance: this,
 				originalEvent: window.event
@@ -184,10 +185,12 @@ class Select extends Component {
 				if (document.activeElement) {
 					document.activeElement.blur();
 				}
-			} else {
+			}
+			else {
 				newValue = this.addValue(itemValue);
 			}
-		} else {
+		}
+		else {
 			newValue = this.setValue(itemValue);
 		}
 

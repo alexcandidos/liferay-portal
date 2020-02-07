@@ -12,14 +12,14 @@
  * details.
  */
 
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import {
+	FormSupport,
+	PagesVisitor,
+	RulesVisitor
+} from 'dynamic-data-mapping-form-renderer';
 import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
 import handlePaginationNextClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationNextClicked.es';
 import handlePaginationPreviousClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationPreviousClicked.es';
-import {
-	PagesVisitor,
-	RulesVisitor
-} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
@@ -148,7 +148,8 @@ class LayoutProvider extends Component {
 				if (localizedValue !== undefined) {
 					value = localizedValue;
 				}
-			} else if (
+			}
+			else if (
 				field.dataType === 'ddm-options' &&
 				value[editingLanguageId] === undefined
 			) {
@@ -205,13 +206,15 @@ class LayoutProvider extends Component {
 
 			if (page.localizedDescription[editingLanguageId]) {
 				description = page.localizedDescription[editingLanguageId];
-			} else if (page.localizedDescription[defaultLanguageId]) {
+			}
+			else if (page.localizedDescription[defaultLanguageId]) {
 				description = page.localizedDescription[defaultLanguageId];
 			}
 
 			if (page.localizedTitle[editingLanguageId]) {
 				title = page.localizedTitle[editingLanguageId];
-			} else if (page.localizedTitle[defaultLanguageId]) {
+			}
+			else if (page.localizedTitle[defaultLanguageId]) {
 				title = page.localizedTitle[defaultLanguageId];
 			}
 

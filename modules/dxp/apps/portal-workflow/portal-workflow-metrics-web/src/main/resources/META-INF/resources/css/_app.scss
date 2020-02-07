@@ -18,16 +18,6 @@
 		}
 	}
 
-	.modal {
-		.modal-dialog.modal-lg {
-			max-width: 800px;
-		}
-
-		&.show {
-			display: block;
-		}
-	}
-
 	.navbar-nav .nav-link.active {
 		pointer-events: none;
 	}
@@ -92,5 +82,14 @@
 				display: none;
 			}
 		}
+	}
+}
+
+.modal-metrics-content {
+	background-color: #f1f2f5;
+
+	&.fixed-height {
+		height: 35rem;
+		overflow: auto;
 	}
 }

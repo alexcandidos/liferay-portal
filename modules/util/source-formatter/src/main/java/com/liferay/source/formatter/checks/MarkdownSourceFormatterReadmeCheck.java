@@ -1,0 +1,644 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.checks;
+
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.lang.reflect.Field;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+
+/**
+ * @author Hugo Huijser
+ */
+public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
+
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws DocumentException, IOException {
+
+		if (!absolutePath.endsWith("/source-formatter/README.markdown")) {
+			return content;
+		}
+
+		return _getReadmeContent(absolutePath, _getCheckInfoMap());
+	}
+
+	private Map<String, CheckInfo> _addCheckstyleChecks(
+		Map<String, CheckInfo> checkInfoMap, Element moduleElement,
+		String sourceProcessorName) {
+
+		String checkName = moduleElement.attributeValue("name");
+
+		if (!checkName.endsWith("Check")) {
+			for (Element childModuleElement :
+					(List<Element>)moduleElement.elements("module")) {
+
+				checkInfoMap = _addCheckstyleChecks(
+					checkInfoMap, childModuleElement, sourceProcessorName);
+			}
+
+			return checkInfoMap;
+		}
+
+		int x = checkName.lastIndexOf(CharPool.PERIOD);
+
+		if (x != -1) {
+			checkName = checkName.substring(x + 1);
+		}
+
+		CheckInfo checkInfo = checkInfoMap.get(checkName);
+
+		if (checkInfo != null) {
+			checkInfo.addSourceProcessorName(sourceProcessorName);
+
+			checkInfoMap.put(checkName, checkInfo);
+
+			return checkInfoMap;
+		}
+
+		String category = _getPropertyValue(moduleElement, "category");
+
+		if (Validator.isNull(category)) {
+			category = "Miscellaneous";
+		}
+
+		checkInfoMap.put(
+			checkName,
+			new CheckInfo(
+				checkName, category,
+				_getPropertyValue(moduleElement, "description"),
+				_getPropertyValue(moduleElement, "documentationLocation"),
+				sourceProcessorName));
+
+		return checkInfoMap;
+	}
+
+	private Map<String, CheckInfo> _addCheckstyleChecks(
+			Map<String, CheckInfo> checkInfoMap,
+			String configurationFileLocation, String sourceProcessorName)
+		throws DocumentException, IOException {
+
+		String checkstyleConfigurationContent = getContent(
+			configurationFileLocation, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		Document document = SourceUtil.readXML(checkstyleConfigurationContent);
+
+		return _addCheckstyleChecks(
+			checkInfoMap, document.getRootElement(), sourceProcessorName);
+	}
+
+	private Map<String, CheckInfo> _addSourceChecks(
+			Map<String, CheckInfo> checkInfoMap,
+			String configurationFileLocation)
+		throws DocumentException, IOException {
+
+		String sourceChecksConfigurationContent = getContent(
+			configurationFileLocation, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		Document document = SourceUtil.readXML(
+			sourceChecksConfigurationContent);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element sourceProcessorElement :
+				(List<Element>)rootElement.elements("source-processor")) {
+
+			String sourceProcessorName = sourceProcessorElement.attributeValue(
+				"name");
+
+			for (Element checkElement :
+					(List<Element>)sourceProcessorElement.elements("check")) {
+
+				String checkName = checkElement.attributeValue("name");
+
+				CheckInfo checkInfo = checkInfoMap.get(checkName);
+
+				if (checkInfo != null) {
+					checkInfo.addSourceProcessorName(sourceProcessorName);
+
+					checkInfoMap.put(checkName, checkInfo);
+
+					continue;
+				}
+
+				Element categoryElement = checkElement.element("category");
+
+				String category = "Miscellaneous";
+
+				if (categoryElement != null) {
+					category = categoryElement.attributeValue("name");
+				}
+
+				Element descriptionElement = checkElement.element(
+					"description");
+
+				String description = StringPool.BLANK;
+
+				if (descriptionElement != null) {
+					description = descriptionElement.attributeValue("name");
+				}
+
+				checkInfoMap.put(
+					checkName,
+					new CheckInfo(
+						checkName, category, description, StringPool.BLANK,
+						sourceProcessorName));
+			}
+		}
+
+		return checkInfoMap;
+	}
+
+	private void _createChecksTableMarkdown(
+			String header, File file, Collection<CheckInfo> checkInfos,
+			File documentationChecksDir, boolean displayCategory,
+			boolean displayFileExtensions)
+		throws IOException {
+
+		String content = StringPool.BLANK;
+
+		if (file.exists()) {
+			content = FileUtil.read(file);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("# ");
+		sb.append(header);
+		sb.append("\n\n");
+
+		sb.append("Check | ");
+
+		if (displayCategory) {
+			sb.append("Category | ");
+		}
+
+		if (displayFileExtensions) {
+			sb.append("File Extensions | ");
+		}
+
+		sb.append("Description\n");
+
+		sb.append("----- | ");
+
+		if (displayCategory) {
+			sb.append("-------- | ");
+		}
+
+		if (displayFileExtensions) {
+			sb.append("--------------- | ");
+		}
+
+		sb.append("-----------\n");
+
+		for (CheckInfo checkInfo : checkInfos) {
+			String checkName = checkInfo.getName();
+
+			String link = null;
+
+			String documentationLocation = checkInfo.getDocumentationLocation();
+
+			if (Validator.isNotNull(documentationLocation)) {
+				link =
+					SourceFormatterUtil.CHECKSTYLE_DOCUMENTATION_URL_BASE +
+						documentationLocation;
+			}
+			else {
+				String markdownFileName =
+					SourceFormatterUtil.getMarkdownFileName(checkName);
+
+				File markdownFile = new File(
+					documentationChecksDir, markdownFileName);
+
+				if (markdownFile.exists()) {
+					link = _DOCUMENTATION_CHECKS_DIR_NAME + markdownFileName;
+				}
+			}
+
+			if (link != null) {
+				sb.append("[");
+				sb.append(checkName);
+				sb.append("](");
+				sb.append(link);
+				sb.append(") | ");
+			}
+			else {
+				sb.append(checkName);
+				sb.append(" | ");
+			}
+
+			if (displayCategory) {
+				if (Validator.isNotNull(checkInfo.getCategory())) {
+					sb.append(checkInfo.getCategory());
+					sb.append(" | ");
+				}
+				else {
+					sb.append("| ");
+				}
+			}
+
+			if (displayFileExtensions) {
+				String fileExtensionsString = _getFileExtensionsString(
+					checkInfo.getSourceProcessorNames());
+
+				if (Validator.isNotNull(fileExtensionsString)) {
+					sb.append(fileExtensionsString);
+					sb.append(" | ");
+				}
+				else {
+					sb.append("| ");
+				}
+			}
+
+			if (Validator.isNotNull(checkInfo.getDescription())) {
+				sb.append(checkInfo.getDescription());
+				sb.append(" |");
+			}
+			else {
+				sb.append("|");
+			}
+
+			sb.append("\n");
+		}
+
+		String newContent = StringUtil.trim(sb.toString());
+
+		if (content.equals(newContent)) {
+			return;
+		}
+
+		String absolutePath = SourceUtil.getAbsolutePath(file);
+
+		if (Validator.isNull(content)) {
+			System.out.println("Added " + absolutePath);
+		}
+		else {
+			System.out.println("Updated " + absolutePath);
+		}
+
+		FileUtil.write(file, StringUtil.trim(sb.toString()));
+	}
+
+	private Set<String> _getCategories(Map<String, CheckInfo> checkInfoMap) {
+		Set<String> categories = new TreeSet<>();
+
+		for (CheckInfo checkInfo : checkInfoMap.values()) {
+			categories.add(checkInfo.getCategory());
+		}
+
+		return categories;
+	}
+
+	private List<CheckInfo> _getCategoryCheckInfos(
+		String category, Map<String, CheckInfo> checkInfoMap) {
+
+		List<CheckInfo> checkInfos = new ArrayList<>();
+
+		for (CheckInfo checkInfo : checkInfoMap.values()) {
+			if (category.equals(checkInfo.getCategory())) {
+				checkInfos.add(checkInfo);
+			}
+		}
+
+		return checkInfos;
+	}
+
+	private Map<String, CheckInfo> _getCheckInfoMap()
+		throws DocumentException, IOException {
+
+		Map<String, CheckInfo> checkInfoMap = new TreeMap<>();
+
+		String resourcesDirLocation =
+			"modules/util/source-formatter/src/main/resources/";
+
+		checkInfoMap = _addCheckstyleChecks(
+			checkInfoMap, resourcesDirLocation + "checkstyle.xml",
+			"JavaSourceProcessor");
+		checkInfoMap = _addCheckstyleChecks(
+			checkInfoMap, resourcesDirLocation + "checkstyle-jsp.xml",
+			"JSPSourceProcessor");
+		checkInfoMap = _addSourceChecks(
+			checkInfoMap, resourcesDirLocation + "sourcechecks.xml");
+
+		return checkInfoMap;
+	}
+
+	private List<String> _getFileExtensions(String sourceProcessorName) {
+		List<String> fileExtensions = _sourceProcessorFileExtensionsMap.get(
+			sourceProcessorName);
+
+		if (fileExtensions != null) {
+			return fileExtensions;
+		}
+
+		fileExtensions = new ArrayList<>();
+
+		try {
+			Class<?> clazz = Class.forName(
+				"com.liferay.source.formatter." + sourceProcessorName);
+
+			Field field = clazz.getDeclaredField("_INCLUDES");
+
+			field.setAccessible(true);
+
+			String[] includes = (String[])field.get(null);
+
+			for (String include : includes) {
+				int x = include.lastIndexOf(CharPool.PERIOD);
+				int y = include.lastIndexOf(CharPool.SLASH);
+
+				if (x < y) {
+					fileExtensions.add(include.substring(y + 1));
+				}
+				else {
+					fileExtensions.add(include.substring(x));
+				}
+			}
+		}
+		catch (Exception exception) {
+		}
+
+		_sourceProcessorFileExtensionsMap.put(
+			sourceProcessorName, fileExtensions);
+
+		return fileExtensions;
+	}
+
+	private String _getFileExtensionsString(List<String> sourceProcessorNames) {
+		List<String> fileExtensions = new ArrayList<>();
+
+		for (String sourceProcessorName : sourceProcessorNames) {
+			fileExtensions.addAll(_getFileExtensions(sourceProcessorName));
+		}
+
+		Collections.sort(fileExtensions);
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < fileExtensions.size(); i++) {
+			sb.append(fileExtensions.get(i));
+
+			if (i == (fileExtensions.size() - 2)) {
+				sb.append(" or ");
+			}
+			else if (i < (fileExtensions.size() - 1)) {
+				sb.append(", ");
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private String _getPropertyValue(
+		Element moduleElement, String propertyName) {
+
+		for (Element propertyElement :
+				(List<Element>)moduleElement.elements("property")) {
+
+			if (propertyName.equals(propertyElement.attributeValue("name"))) {
+				return propertyElement.attributeValue("value");
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getReadmeContent(
+			String absolutePath, Map<String, CheckInfo> checkInfoMap)
+		throws DocumentException, IOException {
+
+		int x = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		String rootFolderLocation = absolutePath.substring(0, x + 1);
+
+		File documentationDir = new File(
+			rootFolderLocation + _DOCUMENTATION_DIR_LOCATION);
+
+		File documentationChecksDir = new File(
+			documentationDir, _DOCUMENTATION_CHECKS_DIR_NAME);
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("# Source Formatter\n\n");
+
+		String allChecksMarkdownFileName =
+			SourceFormatterUtil.getMarkdownFileName("AllChecks");
+
+		sb.append("### [All Checks](");
+		sb.append(_DOCUMENTATION_DIR_LOCATION);
+		sb.append(allChecksMarkdownFileName);
+		sb.append(")\n\n");
+
+		_createChecksTableMarkdown(
+			"All Checks", new File(documentationDir, allChecksMarkdownFileName),
+			checkInfoMap.values(), documentationChecksDir, true, true);
+
+		sb.append("## Categories:\n");
+
+		for (String category : _getCategories(checkInfoMap)) {
+			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+				StringUtil.removeChar(category, CharPool.SPACE) + "Checks");
+
+			sb.append("- [");
+			sb.append(category);
+			sb.append("](");
+			sb.append(_DOCUMENTATION_DIR_LOCATION);
+			sb.append(markdownFileName);
+			sb.append(")\n");
+
+			_createChecksTableMarkdown(
+				category + " Checks",
+				new File(documentationDir, markdownFileName),
+				_getCategoryCheckInfos(category, checkInfoMap),
+				documentationChecksDir, false, true);
+		}
+
+		sb.append("\n");
+
+		sb.append("## File Extensions:\n");
+
+		for (String sourceProcessorName :
+				_getSourceProcessorNames(checkInfoMap)) {
+
+			if (sourceProcessorName.equals("all")) {
+				continue;
+			}
+
+			sb.append("- [");
+
+			String fileExtensionsString = _getFileExtensionsString(
+				ListUtil.fromArray(sourceProcessorName));
+
+			sb.append(fileExtensionsString);
+
+			sb.append("](");
+			sb.append(_DOCUMENTATION_DIR_LOCATION);
+
+			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+				sourceProcessorName + "Checks");
+
+			sb.append(markdownFileName);
+
+			sb.append(")\n");
+
+			_createChecksTableMarkdown(
+				"Checks for " + fileExtensionsString,
+				new File(documentationDir, markdownFileName),
+				_getSourceProcessorCheckInfos(
+					sourceProcessorName, checkInfoMap),
+				documentationChecksDir, true, false);
+		}
+
+		return StringUtil.trim(sb.toString());
+	}
+
+	private List<CheckInfo> _getSourceProcessorCheckInfos(
+		String sourceProcessorName, Map<String, CheckInfo> checkInfoMap) {
+
+		List<CheckInfo> checkInfos = new ArrayList<>();
+
+		for (CheckInfo checkInfo : checkInfoMap.values()) {
+			List<String> sourceProcessorNames =
+				checkInfo.getSourceProcessorNames();
+
+			if (sourceProcessorNames.contains(sourceProcessorName)) {
+				checkInfos.add(checkInfo);
+			}
+		}
+
+		return checkInfos;
+	}
+
+	private Set<String> _getSourceProcessorNames(
+		Map<String, CheckInfo> checkInfoMap) {
+
+		Set<String> sourceProcessorNames = new TreeSet<>(
+			new Comparator<String>() {
+
+				@Override
+				public int compare(
+					String sourceProcessorName1, String sourceProcessorName2) {
+
+					String fileExtensionsString1 = _getFileExtensionsString(
+						ListUtil.fromArray(sourceProcessorName1));
+					String fileExtensionsString2 = _getFileExtensionsString(
+						ListUtil.fromArray(sourceProcessorName2));
+
+					return fileExtensionsString1.compareTo(
+						fileExtensionsString2);
+				}
+
+			});
+
+		for (CheckInfo checkInfo : checkInfoMap.values()) {
+			for (String sourceProcessorName :
+					checkInfo.getSourceProcessorNames()) {
+
+				if (!sourceProcessorName.equals("all")) {
+					sourceProcessorNames.add(sourceProcessorName);
+				}
+			}
+		}
+
+		return sourceProcessorNames;
+	}
+
+	private static final String _DOCUMENTATION_CHECKS_DIR_NAME = "checks/";
+
+	private static final String _DOCUMENTATION_DIR_LOCATION =
+		"src/main/resources/documentation/";
+
+	private final Map<String, List<String>> _sourceProcessorFileExtensionsMap =
+		new HashMap<>();
+
+	private class CheckInfo implements Comparable<CheckInfo> {
+
+		public CheckInfo(
+			String name, String category, String description,
+			String documentationLocation, String sourceProcessorName) {
+
+			_name = name;
+			_category = category;
+			_description = description;
+			_documentationLocation = documentationLocation;
+
+			_sourceProcessorNames.add(sourceProcessorName);
+		}
+
+		public void addSourceProcessorName(String sourceProcessorName) {
+			_sourceProcessorNames.add(sourceProcessorName);
+		}
+
+		@Override
+		public int compareTo(CheckInfo checkInfo) {
+			return _name.compareTo(checkInfo.getName());
+		}
+
+		public String getCategory() {
+			return _category;
+		}
+
+		public String getDescription() {
+			return _description;
+		}
+
+		public String getDocumentationLocation() {
+			return _documentationLocation;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public List<String> getSourceProcessorNames() {
+			return _sourceProcessorNames;
+		}
+
+		private final String _category;
+		private final String _description;
+		private final String _documentationLocation;
+		private final String _name;
+		private final List<String> _sourceProcessorNames = new ArrayList<>();
+
+	}
+
+}

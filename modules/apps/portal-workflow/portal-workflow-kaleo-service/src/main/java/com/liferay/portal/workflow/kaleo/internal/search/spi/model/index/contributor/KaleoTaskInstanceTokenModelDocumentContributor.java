@@ -32,8 +32,11 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.workflow.kaleo.internal.search.KaleoTaskInstanceTokenField;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -101,7 +104,26 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 		document.addDateSortable(
 			KaleoTaskInstanceTokenField.DUE_DATE,
 			kaleoTaskInstanceToken.getDueDate());
-		document.addKeyword(
+
+		try {
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+					kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
+
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionVersion.getKaleoDefinition();
+
+			document.addKeyword(
+				KaleoTaskInstanceTokenField.KALEO_DEFINITION_ID,
+				kaleoDefinition.getKaleoDefinitionId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+		}
+
+		document.addNumberSortable(
 			KaleoTaskInstanceTokenField.KALEO_INSTANCE_ID,
 			kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addNumberSortable(
@@ -218,6 +240,10 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 
 	@Reference
 	protected ClassNameLocalService classNameLocalService;
+
+	@Reference
+	protected KaleoDefinitionVersionLocalService
+		kaleoDefinitionVersionLocalService;
 
 	@Reference
 	protected Portal portal;

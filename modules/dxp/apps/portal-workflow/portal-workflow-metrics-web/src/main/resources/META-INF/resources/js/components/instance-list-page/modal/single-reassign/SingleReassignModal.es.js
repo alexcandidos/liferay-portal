@@ -14,7 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useCallback, useContext, useMemo, useState} from 'react';
 
-import EmptyState from '../../../../shared/components/list/EmptyState.es';
+import EmptyState from '../../../../shared/components/empty-state/EmptyState.es';
 import RetryButton from '../../../../shared/components/list/RetryButton.es';
 import LoadingState from '../../../../shared/components/loading/LoadingState.es';
 import PromisesResolver from '../../../../shared/components/promises-resolver/PromisesResolver.es';
@@ -28,7 +28,7 @@ const ErrorView = ({onClick}) => {
 	return (
 		<EmptyState
 			actionButton={<RetryButton onClick={onClick} />}
-			className="border-0"
+			className="border-0 pb-5 pt-5 sheet"
 			hideAnimation={true}
 			message={Liferay.Language.get(
 				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
@@ -40,7 +40,7 @@ const ErrorView = ({onClick}) => {
 };
 
 const LoadingView = () => {
-	return <LoadingState className="border-0 pb-6 pt-6 sheet" />;
+	return <LoadingState className="border-0 pt-7" />;
 };
 
 const SingleReassignModal = () => {
@@ -118,7 +118,8 @@ const SingleReassignModal = () => {
 					setErrorToast(() => true);
 					setSendingPost(() => false);
 				});
-		} else {
+		}
+		else {
 			onClose();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,38 +172,44 @@ const SingleReassignModal = () => {
 
 						{errorToast && (
 							<ClayAlert
+								className="mb-0"
 								data-testid="alertError"
 								displayType="danger"
 								title={Liferay.Language.get('error')}
 							>
 								{Liferay.Language.get(
-									'your-connection-was-unexpectedly-lost'
+									'your-request-has-failed'
 								)}
 							</ClayAlert>
 						)}
 
-						<ClayModal.Body>
-							<PromisesResolver.Pending>
-								<SingleReassignModal.LoadingView />
-							</PromisesResolver.Pending>
+						<div
+							className="modal-metrics-content"
+							style={{height: '20rem'}}
+						>
+							<ClayModal.Body>
+								<PromisesResolver.Pending>
+									<SingleReassignModal.LoadingView />
+								</PromisesResolver.Pending>
 
-							<PromisesResolver.Rejected>
-								<SingleReassignModal.ErrorView
-									onClick={() => {
-										setRetry(retry => retry + 1);
-									}}
-								/>
-							</PromisesResolver.Rejected>
+								<PromisesResolver.Rejected>
+									<SingleReassignModal.ErrorView
+										onClick={() => {
+											setRetry(retry => retry + 1);
+										}}
+									/>
+								</PromisesResolver.Rejected>
 
-							<PromisesResolver.Resolved>
-								<SingleReassignModal.Table
-									data={data}
-									reassignedTasks={reassignedTasks}
-									setReassignedTasks={setReassignedTasks}
-									{...instanceItem}
-								></SingleReassignModal.Table>
-							</PromisesResolver.Resolved>
-						</ClayModal.Body>
+								<PromisesResolver.Resolved>
+									<SingleReassignModal.Table
+										data={data}
+										reassignedTasks={reassignedTasks}
+										setReassignedTasks={setReassignedTasks}
+										{...instanceItem}
+									></SingleReassignModal.Table>
+								</PromisesResolver.Resolved>
+							</ClayModal.Body>
+						</div>
 
 						<ClayModal.Footer
 							first={

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
@@ -376,7 +377,7 @@ public abstract class UpgradeProcess
 									indexMetadata.getColumnNames()))) {
 
 							runSQLTemplateString(
-								objectValuePair.getKey(), false, true);
+								objectValuePair.getKey(), true);
 						}
 					}
 				}
@@ -509,21 +510,15 @@ public abstract class UpgradeProcess
 	}
 
 	protected long increment() {
-		DB db = DBManagerUtil.getDB();
-
-		return db.increment();
+		return CounterLocalServiceUtil.increment();
 	}
 
 	protected long increment(String name) {
-		DB db = DBManagerUtil.getDB();
-
-		return db.increment(name);
+		return CounterLocalServiceUtil.increment(name);
 	}
 
 	protected long increment(String name, int size) {
-		DB db = DBManagerUtil.getDB();
-
-		return db.increment(name, size);
+		return CounterLocalServiceUtil.increment(name, size);
 	}
 
 	protected boolean isPortal62TableName(String tableName) {

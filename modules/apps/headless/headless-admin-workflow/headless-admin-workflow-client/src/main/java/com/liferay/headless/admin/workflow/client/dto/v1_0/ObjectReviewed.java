@@ -28,6 +28,48 @@ import javax.annotation.Generated;
 @Generated("")
 public class ObjectReviewed {
 
+	public String getAssetTitle() {
+		return assetTitle;
+	}
+
+	public void setAssetTitle(String assetTitle) {
+		this.assetTitle = assetTitle;
+	}
+
+	public void setAssetTitle(
+		UnsafeSupplier<String, Exception> assetTitleUnsafeSupplier) {
+
+		try {
+			assetTitle = assetTitleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String assetTitle;
+
+	public String getAssetType() {
+		return assetType;
+	}
+
+	public void setAssetType(String assetType) {
+		this.assetType = assetType;
+	}
+
+	public void setAssetType(
+		UnsafeSupplier<String, Exception> assetTypeUnsafeSupplier) {
+
+		try {
+			assetType = assetTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String assetType;
+
 	public Long getId() {
 		return id;
 	}

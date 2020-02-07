@@ -38,6 +38,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,9 +91,9 @@ public class WikiAttachmentItemSelectorView
 		WikiAttachmentItemSelectorViewDisplayContext
 			wikiAttachmentItemSelectorViewDisplayContext =
 				new WikiAttachmentItemSelectorViewDisplayContext(
-					wikiAttachmentItemSelectorCriterion, this,
-					_itemSelectorReturnTypeResolverHandler,
-					itemSelectedEventName, search, portletURL);
+					(HttpServletRequest)servletRequest, itemSelectedEventName,
+					_itemSelectorReturnTypeResolverHandler, portletURL, search,
+					wikiAttachmentItemSelectorCriterion, this);
 
 		servletRequest.setAttribute(
 			WikiItemSelectorWebKeys.

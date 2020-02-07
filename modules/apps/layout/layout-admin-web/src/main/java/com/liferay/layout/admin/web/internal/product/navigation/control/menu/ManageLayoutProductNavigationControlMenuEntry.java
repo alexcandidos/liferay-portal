@@ -23,7 +23,9 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
@@ -191,6 +193,13 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			return false;
 		}
 
+		if (layout.isSystem() && layout.isTypeContent()) {
+			layout = _layoutLocalService.getLayout(layout.getClassPK());
+
+			return _layoutPermission.contains(
+				themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
+		}
+
 		return super.isShow(httpServletRequest);
 	}
 
@@ -236,6 +245,9 @@ public class ManageLayoutProductNavigationControlMenuEntry
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private Portal _portal;

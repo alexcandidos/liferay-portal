@@ -53,7 +53,7 @@ definition {
 
 			Form.editPageTitle(formPageName = "Page ${pageNumber}");
 
-			Form.gotoAddField(fieldType = "Text Field");
+			Form.addTextField();
 
 			Form.editFieldLabelMetal(fieldValue = "Destiny ${option}");
 

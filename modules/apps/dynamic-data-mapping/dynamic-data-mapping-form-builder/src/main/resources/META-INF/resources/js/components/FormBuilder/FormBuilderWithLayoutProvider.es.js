@@ -13,6 +13,7 @@
  */
 
 import Component from 'metal-jsx';
+import {Config} from 'metal-state';
 
 import LayoutProvider from '../LayoutProvider/LayoutProvider.es';
 import FormBuilder from './FormBuilder.es';
@@ -38,5 +39,10 @@ class LayoutProviderWithFormBuilder extends Component {
 		);
 	}
 }
+
+LayoutProviderWithFormBuilder.PROPS = {
+	formBuilderProps: Config.object(),
+	layoutProviderProps: Config.object()
+};
 
 export default LayoutProviderWithFormBuilder;

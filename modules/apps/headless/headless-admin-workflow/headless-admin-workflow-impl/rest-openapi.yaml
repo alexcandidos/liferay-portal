@@ -78,6 +78,12 @@ components:
             description:
                 Represents the resource modified by the current workflow.
             properties:
+                assetTitle:
+                    readOnly: true
+                    type: string
+                assetType:
+                    readOnly: true
+                    type: string
                 id:
                     description:
                         The resource's ID.
@@ -1062,6 +1068,11 @@ paths:
                       items:
                           type: string
                       type: array
+                - in: query
+                  name: workflowDefinitionId
+                  schema:
+                      format: int64
+                      type: integer
                 - in: query
                   name: workflowInstanceIds
                   schema:

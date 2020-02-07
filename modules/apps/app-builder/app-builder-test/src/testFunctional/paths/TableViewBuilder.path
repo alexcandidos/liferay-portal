@@ -23,6 +23,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>FIELD_LABEL</td>
+	<td>//div[@class='autofit-col']//span[contains(text(),'${key_fieldType}')]</td>
+	<td></td>
+</tr>
+
 <!--HOMEPAGE_TABLE_VIEW-->
 
 <tr>

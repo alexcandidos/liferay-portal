@@ -17,7 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.portlet.util.ExportUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -78,20 +78,20 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 			for (long exportLayoutPageTemplateEntryId :
 					exportLayoutPageTemplateEntryIds) {
 
-				LayoutPageTemplateEntry layoutPageTemplateEntryEntry =
-					_layoutPageTemplateEntryEntryService.
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
 						fetchLayoutPageTemplateEntry(
 							exportLayoutPageTemplateEntryId);
 
-				layoutPageTemplateEntries.add(layoutPageTemplateEntryEntry);
+				layoutPageTemplateEntries.add(layoutPageTemplateEntry);
 			}
 
-			File file = _exportUtil.exportLayoutPageTemplateEntries(
+			File file = _exportUtil.exportPageTemplateDefinitions(
 				layoutPageTemplateEntries);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
-				"layout-page-template-entries-" + Time.getTimestamp() + ".zip",
+				"page-templates-" + Time.getTimestamp() + ".zip",
 				new FileInputStream(file), ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {
@@ -105,6 +105,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 	private ExportUtil _exportUtil;
 
 	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryEntryService;
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

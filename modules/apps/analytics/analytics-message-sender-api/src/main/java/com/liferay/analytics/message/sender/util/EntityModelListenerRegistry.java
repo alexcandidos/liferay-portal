@@ -16,11 +16,15 @@ package com.liferay.analytics.message.sender.util;
 
 import com.liferay.analytics.message.sender.model.EntityModelListener;
 
+import java.util.Collection;
+
 /**
  * @author Rachael Koestartyo
  */
 public interface EntityModelListenerRegistry {
 
 	public EntityModelListener getEntityModelListener(String className);
+
+	public Collection<EntityModelListener> getEntityModelListeners();
 
 }

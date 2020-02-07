@@ -53,7 +53,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.gotoAddField(fieldType = "Text Field");
+		Form.addTextField();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
@@ -276,7 +276,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.gotoAddField(fieldType = "Text Field");
+		Form.addTextField();
 
 		Form.editFieldLabelMetal(fieldValue = "Text One");
 
@@ -292,7 +292,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.gotoAddField(fieldType = "Text Field");
+		Form.addTextField();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Two");
 

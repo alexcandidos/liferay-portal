@@ -25,7 +25,6 @@ export default endpoint => {
 
 	useEffect(() => {
 		request(endpoint)
-			.then(response => response.json())
 			.then(response => {
 				setState({
 					error: null,

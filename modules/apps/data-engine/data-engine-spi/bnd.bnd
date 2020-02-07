@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Data Engine SPI
 Bundle-SymbolicName: com.liferay.data.engine.spi
-Bundle-Version: 4.0.1
+Bundle-Version: 6.0.0
 Export-Package: com.liferay.data.engine.spi.resource
 Import-Package:\
 	!com.fasterxml.jackson.*,\

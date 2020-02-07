@@ -12,12 +12,10 @@
  * details.
  */
 
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
-const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
-
-const UNIMPLIMENTED_PROPERTIES = [
+const UNIMPLEMENTED_PROPERTIES = [
 	'fieldNamespace',
 	'indexType',
 	'localizable',
@@ -38,7 +36,7 @@ export const getFilteredSettingsContext = settingsContext => {
 				fields: column.fields
 					.filter(
 						({fieldName}) =>
-							UNIMPLIMENTED_PROPERTIES.indexOf(fieldName) === -1
+							UNIMPLEMENTED_PROPERTIES.indexOf(fieldName) === -1
 					)
 					.map(field => {
 						if (field.fieldName === 'dataSourceType') {
@@ -88,6 +86,8 @@ export default ({dispatchEvent, settingsContext}, container) => {
 	const handleFormAttached = function() {
 		this.evaluate();
 	};
+
+	const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
 	return new Form(
 		{

@@ -1593,7 +1593,12 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("permissionsURL", getPermissionsURL(layout));
 		}
 
-		jsonObject.put("viewLayoutURL", getViewLayoutURL(layout));
+		if (layout.isPending()) {
+			jsonObject.put("previewLayoutURL", getViewLayoutURL(layout));
+		}
+		else {
+			jsonObject.put("viewLayoutURL", getViewLayoutURL(layout));
+		}
 
 		return jsonObject;
 	}

@@ -31,9 +31,7 @@ page import="com.liferay.portal.kernel.model.CompanyConstants" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerClassNameComparator" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys" %><%@
-page import="com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayContext" %>
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -48,8 +46,6 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-IndexActionsDisplayContext indexActionsDisplayContext = (IndexActionsDisplayContext)request.getAttribute(SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
@@ -57,6 +53,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 
 <portlet:renderURL var="redirectURL">
 	<portlet:param name="mvcRenderCommandName" value="/search_admin/view" />
+	<portlet:param name="tabs1" value="index-actions" />
 </portlet:renderURL>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -67,25 +64,6 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 		id="adminSearchAdministrationActionsPanelContainer"
 		persistState="<%= true %>"
 	>
-		<div class="panel panel-default search-admin-tabs" id="adminSearchInformationPanel">
-			<div class="panel-body">
-				<c:choose>
-					<c:when test="<%= !indexActionsDisplayContext.isMissingSearchEngine() %>">
-						<div class="alert alert-info">
-							<liferay-ui:message key="search-engine-vendor" />: <strong><%= indexActionsDisplayContext.getVendorString() %></strong>,
-							<liferay-ui:message key="client-version" />: <strong><%= indexActionsDisplayContext.getClientVersionString() %></strong>,
-							<liferay-ui:message key="nodes" />: <strong><%= indexActionsDisplayContext.getNodesString() %></strong>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="alert alert-warning">
-							<liferay-ui:message key="no-search-engine-detected-help" />
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-
 		<liferay-ui:panel
 			collapsible="<%= true %>"
 			cssClass="search-admin-actions-panel"
@@ -191,6 +169,10 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 	</liferay-ui:panel-container>
 </aui:form>
 
+<portlet:actionURL name="/search_admin/edit" var="searchAdminEditURL">
+	<portlet:param name="redirect" value="<%= redirectURL %>" />
+</portlet:actionURL>
+
 <aui:script use="liferay-admin">
 	new Liferay.Portlet.Admin({
 		form: document.<portlet:namespace />fm,
@@ -198,6 +180,6 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 		namespace: '<portlet:namespace />',
 		redirectUrl: '<%= redirectURL %>',
 		submitButton: '.save-server-button',
-		url: '<portlet:actionURL name="/search_admin/edit" />'
+		url: '<%= searchAdminEditURL %>'
 	});
 </aui:script>

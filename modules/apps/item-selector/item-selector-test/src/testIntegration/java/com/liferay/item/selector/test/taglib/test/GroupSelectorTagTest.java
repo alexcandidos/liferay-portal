@@ -57,16 +57,20 @@ public class GroupSelectorTagTest {
 
 	@Test
 	public void testGetGroupsCountWithoutGroupType() throws Exception {
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, getThemeDisplay());
 
 		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
-			httpServletRequest);
+			mockHttpServletRequest);
 
 		groupSelectorTag.doEndTag();
 
 		Assert.assertEquals(
 			0,
-			httpServletRequest.getAttribute(
+			mockHttpServletRequest.getAttribute(
 				"liferay-item-selector:group-selector:groupsCount"));
 	}
 
@@ -100,15 +104,60 @@ public class GroupSelectorTagTest {
 	}
 
 	@Test
-	public void testGetGroupsWithoutGroupType() throws Exception {
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+	public void testGetGroupsCountWithSiteGroupTypeAndRefererGroup()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setParameter("groupType", "site");
 
 		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
-			httpServletRequest);
+			mockHttpServletRequest);
 
 		groupSelectorTag.doEndTag();
 
-		List<Group> groups = (List<Group>)httpServletRequest.getAttribute(
+		int initialGroupsCount = (Integer)mockHttpServletRequest.getAttribute(
+			"liferay-item-selector:group-selector:groupsCount");
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			themeDisplay.setRefererGroupId(group.getGroupId());
+
+			groupSelectorTag.doEndTag();
+
+			List<Group> groups =
+				(List<Group>)mockHttpServletRequest.getAttribute(
+					"liferay-item-selector:group-selector:groups");
+
+			Assert.assertEquals(
+				groups.toString(), initialGroupsCount + 1, groups.size());
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group);
+		}
+	}
+
+	@Test
+	public void testGetGroupsWithoutGroupType() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, getThemeDisplay());
+
+		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
+			mockHttpServletRequest);
+
+		groupSelectorTag.doEndTag();
+
+		List<Group> groups = (List<Group>)mockHttpServletRequest.getAttribute(
 			"liferay-item-selector:group-selector:groups");
 
 		Assert.assertEquals(groups.toString(), 0, groups.size());
@@ -128,21 +177,27 @@ public class GroupSelectorTagTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		groupSelectorTag.doEndTag();
+		try {
+			groupSelectorTag.doEndTag();
 
-		List<Group> groups = (List<Group>)mockHttpServletRequest.getAttribute(
-			"liferay-item-selector:group-selector:groups");
+			List<Group> groups =
+				(List<Group>)mockHttpServletRequest.getAttribute(
+					"liferay-item-selector:group-selector:groups");
 
-		Stream<Group> stream = groups.stream();
+			Stream<Group> stream = groups.stream();
 
-		stream.filter(
-			currentGroup -> Objects.equals(
-				currentGroup.getGroupId(), group.getGroupId())
-		).findAny(
-		).orElseThrow(
-			() -> new AssertionError(
-				"Group " + group.getGroupId() + " was not found")
-		);
+			stream.filter(
+				currentGroup -> Objects.equals(
+					currentGroup.getGroupId(), group.getGroupId())
+			).findAny(
+			).orElseThrow(
+				() -> new AssertionError(
+					"Group " + group.getGroupId() + " was not found")
+			);
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group);
+		}
 	}
 
 	protected ThemeDisplay getThemeDisplay() throws Exception {

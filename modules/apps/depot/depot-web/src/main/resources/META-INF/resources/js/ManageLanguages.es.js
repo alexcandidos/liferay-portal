@@ -44,7 +44,8 @@ const ManageLanguages = ({
 					localeId: selectedLocaleId
 				})
 			);
-		} else {
+		}
+		else {
 			setSelectedLocales(
 				selectedLocales.filter(
 					({localeId}) => localeId != selectedLocaleId
@@ -66,32 +67,29 @@ const ManageLanguages = ({
 					<ClayCheckbox
 						checked={checked}
 						disabled={isDefault}
+						label={displayName}
 						onChange={() => {
 							onChangeLocale(!checked, displayName, localeId);
 						}}
-					/>
-				</ClayTable.Cell>
-
-				<ClayTable.Cell expanded>
-					{displayName}
-
-					{isDefault && (
-						<ClayLabel className="ml-3" displayType="info">
-							{Liferay.Language.get('default')}
-						</ClayLabel>
-					)}
+					>
+						{isDefault && (
+							<ClayLabel className="ml-3" displayType="info">
+								{Liferay.Language.get('default')}
+							</ClayLabel>
+						)}
+					</ClayCheckbox>
 				</ClayTable.Cell>
 			</ClayTable.Row>
 		);
 	};
 
 	return (
-		<ClayModal observer={observer}>
+		<ClayModal observer={observer} size="md">
 			<ClayModal.Header>
 				{Liferay.Language.get('language-selection')}
 			</ClayModal.Header>
 
-			<ClayModal.Body>
+			<ClayModal.Body scrollable>
 				<ClayTable borderless headVerticalAlignment="middle">
 					<ClayTable.Body>
 						{availableLocales.map(locale => {

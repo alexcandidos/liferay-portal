@@ -16,10 +16,13 @@ package com.liferay.data.engine.taglib.servlet.taglib;
 
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.data.engine.taglib.servlet.taglib.util.DataLayoutTaglibUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 
@@ -32,18 +35,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	@Override
 	public int doStartTag() throws JspException {
 		int result = super.doStartTag();
-
-		Set<Locale> availableLocales = DataLayoutTaglibUtil.getAvailableLocales(
-			getDataDefinitionId(), getDataLayoutId(), request);
-
-		setNamespacedAttribute(
-			request, "availableLocales",
-			availableLocales.toArray(new Locale[0]));
-		setNamespacedAttribute(
-			request, "dataLayout",
-			DataLayoutTaglibUtil.getDataLayoutJSONObject(
-				availableLocales, getDataDefinitionId(), getDataLayoutId(),
-				request, (HttpServletResponse)pageContext.getResponse()));
 
 		setNamespacedAttribute(
 			request, "dataLayoutBuilderModule",
@@ -58,6 +49,37 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			DataLayoutTaglibUtil.resolveFieldTypesModules());
 
 		return result;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		super.setAttributes(httpServletRequest);
+
+		Set<Locale> availableLocales = DataLayoutTaglibUtil.getAvailableLocales(
+			getDataDefinitionId(), getDataLayoutId(), httpServletRequest);
+
+		setNamespacedAttribute(
+			httpServletRequest, "availableLanguageIds",
+			_getLanguageIds(availableLocales));
+		setNamespacedAttribute(
+			httpServletRequest, "availableLocales",
+			availableLocales.toArray(new Locale[0]));
+		setNamespacedAttribute(
+			httpServletRequest, "dataLayout",
+			DataLayoutTaglibUtil.getDataLayoutJSONObject(
+				availableLocales, getDataDefinitionId(), getDataLayoutId(),
+				httpServletRequest,
+				(HttpServletResponse)pageContext.getResponse()));
+	}
+
+	private String[] _getLanguageIds(Set<Locale> locales) {
+		Stream<Locale> stream = locales.stream();
+
+		return stream.map(
+			LanguageUtil::getLanguageId
+		).toArray(
+			String[]::new
+		);
 	}
 
 }

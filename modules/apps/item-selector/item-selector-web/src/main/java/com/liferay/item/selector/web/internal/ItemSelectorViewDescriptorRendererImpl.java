@@ -17,9 +17,12 @@ package com.liferay.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.web.internal.display.context.ItemSelectorViewDescriptorRendererDisplayContext;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
@@ -27,6 +30,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,10 +50,16 @@ public class ItemSelectorViewDescriptorRendererImpl<T>
 			ItemSelectorViewDescriptor itemSelectorViewDescriptor)
 		throws IOException, ServletException {
 
+		PortletResponse portletResponse =
+			(PortletResponse)servletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		servletRequest.setAttribute(
 			ItemSelectorViewDescriptorRendererDisplayContext.class.getName(),
 			new ItemSelectorViewDescriptorRendererDisplayContext(
-				itemSelectedEventName, itemSelectorViewDescriptor));
+				(HttpServletRequest)servletRequest, itemSelectedEventName,
+				itemSelectorViewDescriptor,
+				_portal.getLiferayPortletResponse(portletResponse)));
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
@@ -58,14 +68,10 @@ public class ItemSelectorViewDescriptorRendererImpl<T>
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
+	@Reference
+	private Portal _portal;
 
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.item.selector.web)")
 	private ServletContext _servletContext;
 
 }

@@ -14,7 +14,7 @@ import React from 'react';
 
 import {Item} from './InstanceListPageItem.es';
 
-const Table = ({items}) => {
+const Table = ({items, totalCount}) => {
 	return (
 		<ClayTable>
 			<ClayTable.Head>
@@ -49,7 +49,7 @@ const Table = ({items}) => {
 
 			<ClayTable.Body>
 				{items.map((item, index) => (
-					<Table.Item {...item} key={index} />
+					<Table.Item {...item} key={index} totalCount={totalCount} />
 				))}
 			</ClayTable.Body>
 		</ClayTable>

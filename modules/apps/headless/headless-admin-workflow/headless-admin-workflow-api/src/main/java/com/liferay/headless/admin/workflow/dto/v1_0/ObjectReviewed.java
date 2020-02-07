@@ -44,6 +44,62 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ObjectReviewed")
 public class ObjectReviewed {
 
+	@Schema
+	public String getAssetTitle() {
+		return assetTitle;
+	}
+
+	public void setAssetTitle(String assetTitle) {
+		this.assetTitle = assetTitle;
+	}
+
+	@JsonIgnore
+	public void setAssetTitle(
+		UnsafeSupplier<String, Exception> assetTitleUnsafeSupplier) {
+
+		try {
+			assetTitle = assetTitleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String assetTitle;
+
+	@Schema
+	public String getAssetType() {
+		return assetType;
+	}
+
+	public void setAssetType(String assetType) {
+		this.assetType = assetType;
+	}
+
+	@JsonIgnore
+	public void setAssetType(
+		UnsafeSupplier<String, Exception> assetTypeUnsafeSupplier) {
+
+		try {
+			assetType = assetTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String assetType;
+
 	@Schema(description = "The resource's ID.")
 	public Long getId() {
 		return id;
@@ -124,6 +180,34 @@ public class ObjectReviewed {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (assetTitle != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetTitle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(assetTitle));
+
+			sb.append("\"");
+		}
+
+		if (assetType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(assetType));
+
+			sb.append("\"");
+		}
 
 		if (id != null) {
 			if (sb.length() > 1) {

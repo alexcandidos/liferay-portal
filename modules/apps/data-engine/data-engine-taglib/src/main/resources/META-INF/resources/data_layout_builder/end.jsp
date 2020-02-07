@@ -16,13 +16,12 @@
 
 <%@ include file="/data_layout_builder/init.jsp" %>
 
-<div id="<%= componentId + "container" %>"></div>
-
 <portlet:renderURL var="basePortletURL" />
 
 <%
 Map<String, Object> data = new HashMap<>();
 
+data.put("availableLanguageIds", availableLanguageIds);
 data.put("contentType", contentType);
 data.put("context", dataLayoutJSONObject);
 data.put("dataDefinitionId", dataDefinitionId);
@@ -32,10 +31,13 @@ data.put("dataLayoutId", dataLayoutId);
 data.put("fieldTypes", fieldTypesJSONArray);
 data.put("fieldTypesModules", fieldTypesModules);
 data.put("groupId", groupId);
+data.put("localizable", localizable);
 data.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 %>
 
-<react:component
-	data="<%= data %>"
-	module="data_layout_builder/js/App.es"
-/>
+<div id="<%= componentId + "container" %>">
+	<react:component
+		data="<%= data %>"
+		module="data_layout_builder/js/App.es"
+	/>
+</div>

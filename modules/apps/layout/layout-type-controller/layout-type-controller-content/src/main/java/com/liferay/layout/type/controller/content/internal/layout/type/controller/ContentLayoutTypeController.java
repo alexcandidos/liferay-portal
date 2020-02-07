@@ -100,6 +100,10 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			Layout curLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
 
+			if (curLayout.isPending()) {
+				curLayout = layout;
+			}
+
 			if (!_hasUpdatePermissions(
 					themeDisplay.getPermissionChecker(), curLayout)) {
 

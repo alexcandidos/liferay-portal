@@ -33,11 +33,15 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -222,8 +226,8 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
 			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 			Date dateDueEnd, Date dateDueStart, Boolean searchByUserRoles,
-			String[] taskNames, Long[] workflowInstanceIds,
-			Pagination pagination, Sort[] sorts)
+			String[] taskNames, Long workflowDefinitionId,
+			Long[] workflowInstanceIds, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(
@@ -232,17 +236,18 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 					contextCompany.getCompanyId(), contextUser.getUserId(),
 					assetTitle, taskNames, assetTypes, assetPrimaryKeys,
 					assigneeUserIds, dateDueStart, dateDueEnd, completed,
-					searchByUserRoles, workflowInstanceIds,
+					searchByUserRoles, workflowDefinitionId,
+					workflowInstanceIds,
 					GetterUtil.getBoolean(andOperator, true),
 					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
+					_toOrderByComparator((Sort)ArrayUtil.getValue(sorts, 0))),
 				this::_toWorkflowTask),
 			pagination,
 			_workflowTaskManager.searchCount(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				assetTitle, taskNames, assetTypes, assetPrimaryKeys,
 				assigneeUserIds, dateDueStart, dateDueEnd, completed,
-				searchByUserRoles, workflowInstanceIds,
+				searchByUserRoles, workflowDefinitionId, workflowInstanceIds,
 				GetterUtil.getBoolean(andOperator, true)));
 	}
 
@@ -386,6 +391,38 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		return roles.toArray(new Role[0]);
 	}
 
+	private OrderByComparator<com.liferay.portal.kernel.workflow.WorkflowTask>
+		_toOrderByComparator(Sort sort) {
+
+		if (sort != null) {
+			boolean ascending = !sort.isReverse();
+
+			String sortFieldName = sort.getFieldName();
+
+			if (StringUtil.startsWith(sortFieldName, "dateCompletion")) {
+				return _workflowComparatorFactory.
+					getTaskCompletionDateComparator(ascending);
+			}
+			else if (StringUtil.startsWith(sortFieldName, "dateCreated")) {
+				return _workflowComparatorFactory.getTaskCreateDateComparator(
+					ascending);
+			}
+			else if (StringUtil.startsWith(sortFieldName, "dateDue")) {
+				return _workflowComparatorFactory.getTaskDueDateComparator(
+					ascending);
+			}
+			else if (StringUtil.startsWith(sortFieldName, "name")) {
+				return _workflowComparatorFactory.getTaskNameComparator(
+					ascending);
+			}
+
+			return _workflowComparatorFactory.getTaskInstanceIdComparator(
+				ascending);
+		}
+
+		return null;
+	}
+
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
 		throws PortalException {
 
@@ -422,6 +459,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				id = workflowTask.getWorkflowTaskId();
 				name = workflowTask.getName();
 				objectReviewed = ObjectReviewedUtil.toObjectReviewed(
+					contextAcceptLanguage.getPreferredLocale(),
 					workflowTask.getOptionalAttributes());
 				workflowInstanceId = workflowTask.getWorkflowInstanceId();
 			}
@@ -450,6 +488,9 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference(target = "(proxy.bean=false)")
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 	@Reference
 	private WorkflowTaskManager _workflowTaskManager;

@@ -12,7 +12,8 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
+import {createPortal} from 'react-dom';
 
 import {useSelector} from '../store/index';
 import DisabledArea from './DisabledArea';
@@ -23,13 +24,26 @@ import Toolbar from './Toolbar';
 
 export default function App() {
 	const masterLayoutData = useSelector(state => state.masterLayoutData);
+	const languageId = useSelector(state => state.languageId);
+
+	useEffect(() => {
+		AUI().use('portal-available-languages', () => {
+			const languageDirection = Liferay.Language.direction[languageId];
+			const wrapper = document.getElementById('wrapper');
+
+			if (wrapper) {
+				wrapper.dir = languageDirection;
+				wrapper.lang = languageId;
+			}
+		});
+	}, [languageId]);
 
 	return (
 		<>
 			<DisabledArea />
 			<Toolbar />
 			{masterLayoutData.items ? <MasterLayout /> : <PageEditor />}
-			<Sidebar />
+			{createPortal(<Sidebar />, document.body)}
 		</>
 	);
 }

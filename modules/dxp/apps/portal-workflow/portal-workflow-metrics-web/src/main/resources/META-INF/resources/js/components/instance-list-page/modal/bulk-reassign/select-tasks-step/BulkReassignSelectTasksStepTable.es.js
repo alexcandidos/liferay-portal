@@ -15,15 +15,14 @@ import React, {useContext, useEffect, useState, useCallback} from 'react';
 
 import {ModalContext} from '../../ModalContext.es';
 
-const Item = task => {
+const Item = ({totalCount, ...task}) => {
 	const {bulkModal, setBulkModal} = useContext(ModalContext);
 
 	const {
-		assetTitle,
-		assetType,
 		assigneePerson,
 		id,
 		name,
+		objectReviewed: {assetTitle, assetType},
 		workflowInstanceId
 	} = task;
 	const {selectedTasks} = bulkModal;
@@ -39,24 +38,22 @@ const Item = task => {
 		({target}) => {
 			setChecked(target.checked);
 
-			if (target.checked) {
-				setBulkModal({
-					...bulkModal,
-					selectedTasks: [...selectedTasks, task]
-				});
-			} else {
-				setBulkModal({
-					...bulkModal,
-					selectedTasks: selectedTasks.filter(task => task.id !== id)
-				});
-			}
+			const updatedItems = target.checked
+				? [...selectedTasks, task]
+				: selectedTasks.filter(task => task.id !== id);
+
+			setBulkModal({
+				...bulkModal,
+				selectAll: totalCount > 0 && totalCount === updatedItems.length,
+				selectedTasks: updatedItems
+			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[selectedTasks]
 	);
 
 	return (
-		<ClayTable.Row>
+		<ClayTable.Row className={checked ? 'table-active' : ''}>
 			<ClayTable.Cell>
 				<ClayCheckbox
 					checked={checked}
@@ -82,9 +79,9 @@ const Item = task => {
 	);
 };
 
-const Table = ({items}) => {
+const Table = ({items, totalCount}) => {
 	return (
-		<ClayTable borderless={true} data-testid="bulkReassignModalTable">
+		<ClayTable data-testid="bulkReassignModalTable">
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell
@@ -145,7 +142,11 @@ const Table = ({items}) => {
 				{items &&
 					items.length > 0 &&
 					items.map((item, index) => (
-						<Table.Item {...item} key={index} />
+						<Table.Item
+							{...item}
+							key={index}
+							totalCount={totalCount}
+						/>
 					))}
 			</ClayTable.Body>
 		</ClayTable>

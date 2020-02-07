@@ -14,28 +14,31 @@
 
 package com.liferay.batch.engine.internal.test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.liferay.batch.engine.BatchEngineTaskFieldId;
-import com.liferay.batch.engine.BatchEngineTaskMethod;
-import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
-import com.liferay.headless.delivery.dto.v1_0.Rating;
-import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -44,31 +47,26 @@ import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.io.Serializable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
+import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MultivaluedMap;
 
 import org.junit.After;
 import org.junit.Before;
@@ -103,77 +101,18 @@ public class BaseBatchEngineTaskExecutorTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		blogPostingResourceServiceRegistration = bundleContext.registerService(
-			BlogPostingResource.class, new TestBlogPostingResourceImpl(),
-			new HashMapDictionary<String, String>() {
-				{
-					put("api.version", "v1.0");
-					put("osgi.jaxrs.resource", "true");
-				}
-			});
+		_batchEngineTaskItemDelegateRegistration =
+			bundleContext.registerService(
+				BatchEngineTaskItemDelegate.class.getName(),
+				new TestBlogPostingBatchEngineTaskItemDelegate(),
+				new HashMapDictionary<String, String>());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		blogsEntryLocalService.deleteEntries(group.getGroupId());
 
-		blogPostingResourceServiceRegistration.unregister();
-	}
-
-	public abstract class BaseBlogPostingResourceImpl
-		implements BlogPostingResource {
-
-		@DELETE
-		@Override
-		@Path("/blog-postings/{blogPostingId}")
-		@Produces("application/json")
-		public void deleteBlogPosting(
-				@PathParam("blogPostingId") Long blogPostingId)
-			throws Exception {
-		}
-
-		@GET
-		@Override
-		@Path("/sites/{siteId}/blog-postings")
-		@Produces({"application/json", "application/xml"})
-		public Page<BlogPosting> getSiteBlogPostingsPage(
-				@PathParam("siteId") Long siteId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
-			throws Exception {
-
-			return Page.of(Collections.emptyList());
-		}
-
-		@Consumes({"application/json", "application/xml"})
-		@Override
-		@Path("/sites/{siteId}/blog-postings")
-		@POST
-		@Produces({"application/json", "application/xml"})
-		public BlogPosting postSiteBlogPosting(
-				@PathParam("siteId") Long siteId, BlogPosting blogPosting)
-			throws Exception {
-
-			return new BlogPosting();
-		}
-
-		@Consumes({"application/json", "application/xml"})
-		@Override
-		@Path("/blog-postings/{blogPostingId}")
-		@Produces({"application/json", "application/xml"})
-		@PUT
-		public BlogPosting putBlogPosting(
-				@PathParam("blogPostingId") Long blogPostingId,
-				BlogPosting blogPosting)
-			throws Exception {
-
-			return new BlogPosting();
-		}
-
-		protected AcceptLanguage contextAcceptLanguage;
-		protected Company contextCompany;
-		protected User contextUser;
-
+		_batchEngineTaskItemDelegateRegistration.unregister();
 	}
 
 	public class BlogPostingEntityModel implements EntityModel {
@@ -215,136 +154,146 @@ public class BaseBatchEngineTaskExecutorTest {
 
 	}
 
-	public class TestBlogPostingResourceImpl
-		extends BaseBlogPostingResourceImpl implements EntityModelResource {
+	public class TestBlogPostingBatchEngineTaskItemDelegate
+		extends BaseBatchEngineTaskItemDelegate<BlogPosting> {
 
-		@BatchEngineTaskMethod(
-			batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
-			itemClass = BlogPosting.class
-		)
 		@Override
-		public void deleteBlogPosting(
-				@BatchEngineTaskFieldId("id") Long blogPostingId)
+		public void createItem(
+				BlogPosting blogPosting,
+				Map<String, Serializable> queryParameters)
 			throws Exception {
 
-			_initContextFields();
+			LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+				blogPosting.getDatePublished());
+			Image image = blogPosting.getImage();
 
-			blogPostingResource.deleteBlogPosting(blogPostingId);
+			_blogsEntryService.addEntry(
+				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
+				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				new String[0], _getCaption(image), _getImageSelector(image),
+				null,
+				ServiceContextUtil.createServiceContext(
+					blogPosting.getTaxonomyCategoryIds(),
+					blogPosting.getKeywords(), Collections.emptyMap(),
+					blogPosting.getSiteId(),
+					blogPosting.getViewableByAsString()));
 		}
 
 		@Override
-		public void deleteBlogPostingMyRating(Long blogPostingId)
+		public void deleteItem(
+				BlogPosting blogPosting,
+				Map<String, Serializable> queryParameters)
 			throws Exception {
+
+			_blogsEntryService.deleteEntry(blogPosting.getId());
 		}
 
 		@Override
-		public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
-			return null;
-		}
-
-		@Override
-		public Rating getBlogPostingMyRating(Long blogPostingId)
-			throws Exception {
-
-			return null;
-		}
-
-		@Override
-		public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		public EntityModel getEntityModel(
+				Map<String, List<String>> multivaluedMap)
 			throws Exception {
 
 			return new BlogPostingEntityModel();
 		}
 
-		@BatchEngineTaskMethod(
-			batchEngineTaskOperation = BatchEngineTaskOperation.READ,
-			itemClass = BlogPosting.class
-		)
 		@Override
-		public Page<BlogPosting> getSiteBlogPostingsPage(
-				Long siteId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+		public Page<BlogPosting> read(
+				Filter filter, Pagination pagination, Sort[] sorts,
+				Map<String, Serializable> parameters, String search)
 			throws Exception {
 
-			_initContextFields();
+			long siteId = GetterUtil.getLong(parameters.get("siteId"));
 
-			return blogPostingResource.getSiteBlogPostingsPage(
-				siteId, search, filter, pagination, sorts);
+			return SearchUtil.search(
+				booleanQuery -> {
+				},
+				filter, BlogsEntry.class, search, pagination,
+				queryConfig -> queryConfig.setSelectedFieldNames(
+					Field.ENTRY_CLASS_PK),
+				searchContext -> {
+					searchContext.setAttribute(
+						Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+					searchContext.setCompanyId(contextCompany.getCompanyId());
+					searchContext.setGroupIds(new long[] {siteId});
+				},
+				document -> _toBlogPosting(
+					_blogsEntryService.getEntry(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+					contextUser),
+				sorts, Collections.emptyMap());
 		}
 
 		@Override
-		public BlogPosting patchBlogPosting(
-				Long blogPostingId, BlogPosting blogPosting)
+		public void updateItem(
+				BlogPosting blogPosting, Map<String, Serializable> parameters)
 			throws Exception {
 
-			return null;
+			LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+				blogPosting.getDatePublished());
+			Image image = blogPosting.getImage();
+
+			BlogsEntry blogsEntry = _blogsEntryService.getEntry(
+				blogPosting.getId());
+
+			_blogsEntryService.updateEntry(
+				blogPosting.getId(), blogPosting.getHeadline(),
+				blogPosting.getAlternativeHeadline(),
+				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				new String[0], _getCaption(image), _getImageSelector(image),
+				null,
+				ServiceContextUtil.createServiceContext(
+					blogPosting.getTaxonomyCategoryIds(),
+					blogPosting.getKeywords(), Collections.emptyMap(),
+					blogsEntry.getGroupId(),
+					blogPosting.getViewableByAsString()));
 		}
 
-		@Override
-		public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
+		private String _getCaption(Image image) {
+			if (image == null) {
+				return null;
+			}
+
+			return image.getCaption();
+		}
+
+		private ImageSelector _getImageSelector(Image image) {
+			if ((image == null) || (image.getImageId() == 0)) {
+				return new ImageSelector();
+			}
+
+			try {
+				FileEntry fileEntry = _dlAppService.getFileEntry(
+					image.getImageId());
+
+				return new ImageSelector(
+					FileUtil.getBytes(fileEntry.getContentStream()),
+					fileEntry.getFileName(), fileEntry.getMimeType(),
+					"{\"height\": 0, \"width\": 0, \"x\": 0, \"y\": 0}");
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(
+					"Unable to get file entry " + image.getImageId(),
+					exception);
+			}
+		}
+
+		private BlogPosting _toBlogPosting(BlogsEntry blogsEntry, User user)
 			throws Exception {
 
-			return null;
-		}
+			DTOConverter<BlogsEntry, BlogPosting> blogPostingDTOConverter =
+				_dtoConverterRegistry.getDTOConverter(
+					BlogsEntry.class.getName());
 
-		@BatchEngineTaskMethod(
-			batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
-			itemClass = BlogPosting.class
-		)
-		@Override
-		public BlogPosting postSiteBlogPosting(
-				Long siteId, BlogPosting blogPosting)
-			throws Exception {
-
-			_initContextFields();
-
-			return blogPostingResource.postSiteBlogPosting(siteId, blogPosting);
-		}
-
-		@BatchEngineTaskMethod(
-			batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
-			itemClass = BlogPosting.class
-		)
-		@Override
-		public BlogPosting putBlogPosting(
-				@BatchEngineTaskFieldId("id") Long blogPostingId,
-				BlogPosting blogPosting)
-			throws Exception {
-
-			_initContextFields();
-
-			return blogPostingResource.putBlogPosting(
-				blogPostingId, blogPosting);
-		}
-
-		@Override
-		public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
-			throws Exception {
-
-			return null;
-		}
-
-		@Override
-		public void putSiteBlogPostingSubscribe(Long siteId) throws Exception {
-		}
-
-		@Override
-		public void putSiteBlogPostingUnsubscribe(Long siteId)
-			throws Exception {
-		}
-
-		@Override
-		public void setContextCompany(Company contextCompany) {
-		}
-
-		@Override
-		public void setContextUser(User contextUser) {
-		}
-
-		private void _initContextFields() {
-			blogPostingResource.setContextAcceptLanguage(contextAcceptLanguage);
-			blogPostingResource.setContextCompany(contextCompany);
-			blogPostingResource.setContextUser(contextUser);
+			return blogPostingDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					false, Collections.emptyMap(), _dtoConverterRegistry,
+					blogsEntry.getEntryId(), user.getLocale(), null, user));
 		}
 
 	}
@@ -373,15 +322,7 @@ public class BaseBatchEngineTaskExecutorTest {
 
 	protected static final int ROWS_COUNT = 18;
 
-	protected static final ObjectMapper objectMapper = new ObjectMapper();
-
 	protected Date baseDate;
-
-	@Inject
-	protected BlogPostingResource blogPostingResource;
-
-	protected ServiceRegistration<BlogPostingResource>
-		blogPostingResourceServiceRegistration;
 
 	@Inject
 	protected BlogsEntryLocalService blogsEntryLocalService;
@@ -394,5 +335,16 @@ public class BaseBatchEngineTaskExecutorTest {
 
 	@DeleteAfterTestRun
 	protected User user;
+
+	private ServiceRegistration<?> _batchEngineTaskItemDelegateRegistration;
+
+	@Inject
+	private BlogsEntryService _blogsEntryService;
+
+	@Inject
+	private DLAppService _dlAppService;
+
+	@Inject
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 }

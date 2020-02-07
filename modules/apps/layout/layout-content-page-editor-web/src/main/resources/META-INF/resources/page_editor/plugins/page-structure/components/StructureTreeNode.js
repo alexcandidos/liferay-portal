@@ -24,6 +24,7 @@ import {
 	useSelectItem
 } from '../../../app/components/Controls';
 import {ConfigContext} from '../../../app/config/index';
+import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowLayoutItemRemoveButton';
 import {useSelector, useDispatch} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
@@ -70,7 +71,11 @@ const RemoveButton = ({node}) => {
 export default function StructureTreeNode({node}) {
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
+	const isSelected = useIsSelected();
 	const selectItem = useSelectItem();
+	const showLayoutItemRemoveButton = useSelector(
+		selectShowLayoutItemRemoveButton
+	);
 
 	return (
 		<div
@@ -93,7 +98,11 @@ export default function StructureTreeNode({node}) {
 			}}
 		>
 			<NameButton id={node.id} name={node.name} />
-			{node.removable && <RemoveButton node={node} />}
+			{showLayoutItemRemoveButton &&
+				node.removable &&
+				(isHovered(node.id) || isSelected(node.id)) && (
+					<RemoveButton node={node} />
+				)}
 		</div>
 	);
 }

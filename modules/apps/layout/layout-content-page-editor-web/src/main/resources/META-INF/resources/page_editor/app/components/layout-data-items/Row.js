@@ -23,7 +23,6 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],
 		...item.config
 	};
-
 	const parent = layoutData.items[item.parentId];
 
 	const rowContent = (

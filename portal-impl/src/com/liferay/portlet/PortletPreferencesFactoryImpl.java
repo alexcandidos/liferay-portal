@@ -909,8 +909,25 @@ public class PortletPreferencesFactoryImpl
 			}
 		}
 
-		if (PortletIdCodec.hasUserId(originalPortletId) &&
-			(PortletIdCodec.decodeUserId(originalPortletId) == userId)) {
+		long masterLayoutPlid = layout.getMasterLayoutPlid();
+
+		boolean hasMasterLayoutPreferences = false;
+
+		long portletPreferencesCount =
+			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, masterLayoutPlid,
+				portletId);
+
+		if ((masterLayoutPlid > 0) && (portletPreferencesCount > 0)) {
+			hasMasterLayoutPreferences = true;
+		}
+
+		if (hasMasterLayoutPreferences) {
+			ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+			plid = masterLayoutPlid;
+		}
+		else if (PortletIdCodec.hasUserId(originalPortletId) &&
+				 (PortletIdCodec.decodeUserId(originalPortletId) == userId)) {
 
 			ownerId = userId;
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;

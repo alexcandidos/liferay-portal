@@ -159,6 +159,7 @@ public class StructuredContentResourceImpl
 			contentStructureId);
 
 		return _getStructuredContentsPage(
+			_getContentStructureListActions(ddmStructure),
 			booleanQuery -> {
 				if (contentStructureId != null) {
 					BooleanFilter booleanFilter =
@@ -233,6 +234,7 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return _getStructuredContentsPage(
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -271,6 +273,7 @@ public class StructuredContentResourceImpl
 			structuredContentFolderId);
 
 		return _getStructuredContentsPage(
+			_getStructuredContentFolderListActions(journalFolder),
 			booleanQuery -> {
 				if (structuredContentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -702,6 +705,18 @@ public class StructuredContentResourceImpl
 		).build();
 	}
 
+	private Map<String, Map<String, String>> _getContentStructureListActions(
+		DDMStructure ddmStructure) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", ddmStructure.getStructureId(),
+				"getContentStructureStructuredContentsPage",
+				"com.liferay.journal", ddmStructure.getGroupId())
+		).build();
+	}
+
 	private DDMFormField _getDDMFormField(
 		DDMStructure ddmStructure, String name) {
 
@@ -738,7 +753,15 @@ public class StructuredContentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Map<String, String>> _getListActions(Long siteId) {
+	private List<DDMFormField> _getRootDDMFormFields(
+		DDMStructure ddmStructure) {
+
+		return transform(
+			ddmStructure.getRootFieldNames(),
+			fieldName -> _getDDMFormField(ddmStructure, fieldName));
+	}
+
+	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
@@ -750,14 +773,6 @@ public class StructuredContentResourceImpl
 				"VIEW", "getSiteStructuredContentsPage", "com.liferay.journal",
 				siteId)
 		).build();
-	}
-
-	private List<DDMFormField> _getRootDDMFormFields(
-		DDMStructure ddmStructure) {
-
-		return transform(
-			ddmStructure.getRootFieldNames(),
-			fieldName -> _getDDMFormField(ddmStructure, fieldName));
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -780,7 +795,26 @@ public class StructuredContentResourceImpl
 		return _toStructuredContent(journalArticle);
 	}
 
+	private Map<String, Map<String, String>>
+		_getStructuredContentFolderListActions(JournalFolder journalFolder) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_ARTICLE", journalFolder.getFolderId(),
+				"postStructuredContentFolderStructuredContent",
+				"com.liferay.journal", journalFolder.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", journalFolder.getFolderId(),
+				"getStructuredContentFolderStructuredContentsPage",
+				"com.liferay.journal", journalFolder.getGroupId())
+		).build();
+	}
+
 	private Page<StructuredContent> _getStructuredContentsPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -812,7 +846,7 @@ public class StructuredContentResourceImpl
 					document.get(
 						com.liferay.portal.kernel.search.Field.ARTICLE_ID),
 					WorkflowConstants.STATUS_APPROVED)),
-			sorts, (Map)_getListActions(siteId));
+			sorts, (Map)actions);
 	}
 
 	private ThemeDisplay _getThemeDisplay(JournalArticle journalArticle)

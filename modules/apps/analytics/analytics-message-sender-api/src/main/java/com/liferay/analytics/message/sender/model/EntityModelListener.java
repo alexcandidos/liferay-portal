@@ -15,6 +15,7 @@
 package com.liferay.analytics.message.sender.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
@@ -27,5 +28,11 @@ public interface EntityModelListener<T extends BaseModel<T>> {
 		String eventType, List<String> includeAttributeNames, T model);
 
 	public List<String> getAttributeNames();
+
+	public long[] getMembershipIds(User user) throws Exception;
+
+	public String getModelClassName();
+
+	public void syncAll() throws Exception;
 
 }

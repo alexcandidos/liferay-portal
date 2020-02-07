@@ -63,7 +63,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 		<div class="app-builder-form-view-body">
 			<div class="app-builder-custom-object-sidebar" id="<%= customObjectSidebarElementId %>"></div>
 
-			<div class="data-layout-builder-sidebar-content" id="<%= dataLayoutBuilderElementId %>">
+			<div class="data-layout-builder-wrapper" id="<%= dataLayoutBuilderElementId %>">
 				<liferay-data-engine:data-layout-builder
 					componentId="<%= componentId %>"
 					dataDefinitionId="<%= dataDefinitionId %>"

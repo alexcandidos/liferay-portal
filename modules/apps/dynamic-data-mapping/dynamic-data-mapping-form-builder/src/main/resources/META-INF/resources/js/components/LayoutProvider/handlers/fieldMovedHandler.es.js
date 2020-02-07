@@ -12,7 +12,7 @@
  * details.
  */
 
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
 export default (props, state, {addedToPlaceholder, source, target}) => {
 	let {pages} = state;
@@ -38,7 +38,8 @@ export default (props, state, {addedToPlaceholder, source, target}) => {
 			target.pageIndex,
 			FormSupport.implAddRow(12, fields)
 		);
-	} else {
+	}
+	else {
 		pages = FormSupport.addFieldToColumn(
 			pages,
 			target.pageIndex,

@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.data.domain=number",
 		"ddm.form.field.type.description=numeric-field-type-description",
 		"ddm.form.field.type.display.order:Integer=7",
-		"ddm.form.field.type.group=basic",
-		"ddm.form.field.type.icon=caret-double",
+		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=integer",
 		"ddm.form.field.type.label=numeric-field-type-label",
 		"ddm.form.field.type.name=numeric",
 		"ddm.form.field.type.scope=app-builder,forms"

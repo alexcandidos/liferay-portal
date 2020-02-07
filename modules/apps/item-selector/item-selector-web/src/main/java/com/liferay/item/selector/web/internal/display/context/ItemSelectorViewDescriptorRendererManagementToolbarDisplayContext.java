@@ -43,13 +43,38 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getClearResultsURL() {
+		return String.valueOf(getPortletURL());
+	}
+
+	@Override
 	public String[] getOrderByKeys() {
 		return _itemSelectorViewDescriptor.getOrderByKeys();
 	}
 
 	@Override
+	public String getSearchActionURL() {
+		return String.valueOf(getPortletURL());
+	}
+
+	@Override
 	public Boolean isSelectable() {
 		return false;
+	}
+
+	@Override
+	public Boolean isShowSearch() {
+		return _itemSelectorViewDescriptor.isShowSearch();
+	}
+
+	@Override
+	protected String getDefaultDisplayStyle() {
+		return "icon";
+	}
+
+	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"descriptive", "icon"};
 	}
 
 	private final ItemSelectorViewDescriptor _itemSelectorViewDescriptor;

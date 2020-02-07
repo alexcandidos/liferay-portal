@@ -142,6 +142,7 @@ public class MessageBoardThreadResourceImpl
 			messageBoardSectionId);
 
 		return _getSiteMessageBoardThreadsPage(
+			_getMessageBoardSectionListActions(mbCategory),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -202,6 +203,7 @@ public class MessageBoardThreadResourceImpl
 		throws Exception {
 
 		return _getSiteMessageBoardThreadsPage(
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -410,11 +412,29 @@ public class MessageBoardThreadResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Map<String, String>> _getListActions(long groupId) {
+	private Map<String, Map<String, String>> _getMessageBoardSectionListActions(
+		MBCategory mbCategory) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
-				"ADD_MESSAGE", "postMessageBoardSectionMessageBoardThread",
+				"ADD_MESSAGE", mbCategory.getCategoryId(),
+				"postMessageBoardSectionMessageBoardThread",
+				"com.liferay.message.boards", mbCategory.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", mbCategory.getCategoryId(),
+				"getMessageBoardSectionMessageBoardThreadsPage",
+				"com.liferay.message.boards", mbCategory.getGroupId())
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getSiteListActions(long groupId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_MESSAGE", "postSiteMessageBoardThread",
 				"com.liferay.message.boards", groupId)
 		).put(
 			"get",
@@ -425,6 +445,7 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -442,7 +463,7 @@ public class MessageBoardThreadResourceImpl
 			document -> _toMessageBoardThread(
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)_getListActions(siteId));
+			sorts, (Map)actions);
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {

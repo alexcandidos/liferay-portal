@@ -139,6 +139,7 @@ public class WorkflowInstanceResourceImpl
 					workflowInstance.getWorkflowDefinitionVersion());
 				id = workflowInstance.getWorkflowInstanceId();
 				objectReviewed = ObjectReviewedUtil.toObjectReviewed(
+					contextAcceptLanguage.getPreferredLocale(),
 					workflowInstance.getWorkflowContext());
 			}
 		};

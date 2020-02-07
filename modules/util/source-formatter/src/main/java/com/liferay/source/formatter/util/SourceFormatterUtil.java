@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.ExcludeSyntax;
@@ -28,6 +29,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -54,6 +56,9 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class SourceFormatterUtil {
+
+	public static final String CHECKSTYLE_DOCUMENTATION_URL_BASE =
+		"https://checkstyle.sourceforge.io/";
 
 	public static final String GIT_LIFERAY_PORTAL_BRANCH =
 		"git.liferay.portal.branch";
@@ -124,33 +129,33 @@ public class SourceFormatterUtil {
 			String encodedFileName = SourceUtil.getAbsolutePath(fileName);
 
 			for (String includeRegex : includeRegexList) {
-				if (encodedFileName.matches(includeRegex)) {
-					for (String excludeRegex : excludeRegexList) {
-						if (encodedFileName.matches(excludeRegex)) {
-							continue outerLoop;
-						}
+				if (!encodedFileName.matches(includeRegex)) {
+					continue;
+				}
+
+				for (String excludeRegex : excludeRegexList) {
+					if (encodedFileName.matches(excludeRegex)) {
+						continue outerLoop;
 					}
+				}
 
-					for (Map.Entry<String, List<String>> entry :
-							excludeRegexMap.entrySet()) {
+				for (Map.Entry<String, List<String>> entry :
+						excludeRegexMap.entrySet()) {
 
-						String propertiesFileLocation = entry.getKey();
+					String propertiesFileLocation = entry.getKey();
 
-						if (encodedFileName.startsWith(
-								propertiesFileLocation)) {
-
-							for (String excludeRegex : entry.getValue()) {
-								if (encodedFileName.matches(excludeRegex)) {
-									continue outerLoop;
-								}
+					if (encodedFileName.startsWith(propertiesFileLocation)) {
+						for (String excludeRegex : entry.getValue()) {
+							if (encodedFileName.matches(excludeRegex)) {
+								continue outerLoop;
 							}
 						}
 					}
-
-					fileNames.add(fileName);
-
-					continue outerLoop;
 				}
+
+				fileNames.add(fileName);
+
+				continue outerLoop;
 			}
 		}
 
@@ -200,6 +205,31 @@ public class SourceFormatterUtil {
 		catch (IOException ioException) {
 			return null;
 		}
+	}
+
+	public static String getMarkdownFileName(String camelCaseName) {
+		String markdownFileName = TextFormatter.format(
+			camelCaseName, TextFormatter.K);
+
+		markdownFileName = TextFormatter.format(
+			markdownFileName, TextFormatter.N);
+
+		return markdownFileName + ".markdown";
+	}
+
+	public static String getMarkdownURLString(String checkName) {
+		String markdownFileName = getMarkdownFileName(checkName);
+
+		ClassLoader classLoader = SourceFormatterUtil.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"documentation/checks/" + markdownFileName);
+
+		if (inputStream != null) {
+			return _DOCUMENTATION_URL + markdownFileName;
+		}
+
+		return null;
 	}
 
 	public static File getPortalDir(String baseDirName) {
@@ -629,6 +659,10 @@ public class SourceFormatterUtil {
 
 		return fileNames;
 	}
+
+	private static final String _DOCUMENTATION_URL =
+		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
+			"/source-formatter/src/main/resources/documentation/checks/";
 
 	private static class PathMatchers {
 

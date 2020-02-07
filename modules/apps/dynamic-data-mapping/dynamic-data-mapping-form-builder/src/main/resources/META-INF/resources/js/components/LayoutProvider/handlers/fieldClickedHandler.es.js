@@ -12,8 +12,7 @@
  * details.
  */
 
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 const handleFieldClicked = (state, event) => {
 	const {columnIndex, pageIndex, rowIndex} = event;
@@ -40,9 +39,11 @@ const handleFieldClicked = (state, event) => {
 
 				if (fieldName === 'name') {
 					field.visible = true;
-				} else if (fieldName === 'label') {
+				}
+				else if (fieldName === 'label') {
 					field.type = 'text';
-				} else if (fieldName === 'validation') {
+				}
+				else if (fieldName === 'validation') {
 					field = {
 						...field,
 						validation: {

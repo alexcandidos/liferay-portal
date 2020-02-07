@@ -9,6 +9,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:captcha:captcha-taglib")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
+	compileOnly project(":apps:map:map-api")
 	compileOnly project(":apps:portal-template:portal-template-soy-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:osgi-service-tracker-collections")

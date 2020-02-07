@@ -15,15 +15,16 @@
 package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.EntityModelListener;
-import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,6 +43,22 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 	}
 
 	@Override
+	public long[] getMembershipIds(User user) throws Exception {
+		List<Group> groups = user.getSiteGroups();
+
+		Stream<Group> stream = groups.stream();
+
+		return stream.mapToLong(
+			Group::getGroupId
+		).toArray();
+	}
+
+	@Override
+	public String getModelClassName() {
+		return Group.class.getName();
+	}
+
+	@Override
 	public void onAfterRemove(Group group) throws ModelListenerException {
 		updateConfigurationProperties(
 			group.getCompanyId(), "syncedGroupIds",
@@ -49,8 +66,13 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 	}
 
 	@Override
-	protected Group getOriginalModel(Group group) throws Exception {
-		return _groupLocalService.getGroup(group.getGroupId());
+	protected ActionableDynamicQuery getActionableDynamicQuery() {
+		return _groupLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	protected Group getModel(long id) throws Exception {
+		return _groupLocalService.getGroup(id);
 	}
 
 	@Override
@@ -64,26 +86,11 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 			return true;
 		}
 
-		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(
-				group.getCompanyId());
-
-		if (!ArrayUtil.contains(
-				analyticsConfiguration.syncedGroupIds(), group.getGroupId())) {
-
-			return true;
-		}
-
 		return false;
 	}
 
-	private static final List<String> _attributeNames = Arrays.asList(
-		"active", "classNameId", "classPK", "companyId", "creatorUserId",
-		"description", "descriptionCurrentValue", "descriptiveName",
-		"friendlyURL", "groupKey", "inheritContent", "liveGroupId",
-		"manualMembership", "membershipRestriction", "modifiedDate", "name",
-		"nameCurrentValue", "parentGroupId", "remoteStagingGroupCount", "site",
-		"treePath", "type", "uuid");
+	private static final List<String> _attributeNames =
+		Collections.singletonList("name");
 
 	@Reference
 	private GroupLocalService _groupLocalService;

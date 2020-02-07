@@ -24,7 +24,7 @@ const EmptyState = ({emptyState, keywords = ''}) => {
 
 	const defaultSearch = {
 		description: lang.sub(
-			Liferay.Language.get('sorry,-there-are-not-results-for-x'),
+			Liferay.Language.get('there-are-no-results-for-x'),
 			[keywords]
 		),
 		title: Liferay.Language.get('no-results-were-found')

@@ -107,6 +107,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -438,7 +439,12 @@ public class DataDefinitionResourceImpl
 				_getSPIDataLayoutResource();
 
 			dataLayout = spiDataLayoutResource.updateDataLayout(
-				dataLayout.getId(),
+				Optional.ofNullable(
+					dataLayout.getId()
+				).orElse(
+					_getDefaultDataLayoutId(
+						dataDefinitionId, spiDataLayoutResource)
+				),
 				DataLayoutUtil.serialize(dataLayout, _ddmFormLayoutSerializer),
 				dataLayout.getDescription(), dataLayout.getName());
 
@@ -541,6 +547,21 @@ public class DataDefinitionResourceImpl
 			dataDefinitionId);
 
 		return ddmStructure.getClassNameId();
+	}
+
+	private long _getDefaultDataLayoutId(
+			long dataDefinitionId,
+			SPIDataLayoutResource<DataLayout> spiDataLayoutResource)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		DataLayout dataLayout = spiDataLayoutResource.getDataLayout(
+			ddmStructure.getClassNameId(), ddmStructure.getStructureKey(),
+			ddmStructure.getGroupId());
+
+		return dataLayout.getId();
 	}
 
 	private JSONObject _getFieldTypeMetadataJSONObject(

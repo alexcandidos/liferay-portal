@@ -12,15 +12,15 @@
  * details.
  */
 
-import './EditablePageHeader.soy.js';
+import './EditablePageHeader.soy';
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
-import {sub} from '../../util/strings.es.js';
+import {sub} from '../../util/strings.es';
 
 const withEditablePageHeader = ChildComponent => {
 	class EditablePageHeader extends Component {

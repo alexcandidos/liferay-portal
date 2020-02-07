@@ -18,16 +18,20 @@ import classNames from 'classnames';
 import React, {useContext, useRef, useMemo} from 'react';
 
 import {switchSidebarPanel} from '../actions/index';
+import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
+import selectShowLayoutItemRemoveButton from '../selectors/selectShowLayoutItemRemoveButton';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
 import {
+	useActiveItemId,
+	useHoveredItemId,
+	useHoverItem,
 	useIsSelected,
 	useIsHovered,
-	useSelectItem,
-	useHoverItem
+	useSelectItem
 } from './Controls';
 import useDragAndDrop, {TARGET_POSITION} from './useDragAndDrop';
 
@@ -59,6 +63,8 @@ export default function Topper({
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
+	const activeItemId = useActiveItemId();
+	const hoveredItemId = useHoveredItemId();
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
@@ -87,10 +93,12 @@ export default function Topper({
 			)
 	});
 
-	const showDeleteButton = useMemo(() => isRemovable(item, layoutData), [
+	const itemIsRemovable = useMemo(() => isRemovable(item, layoutData), [
 		item,
 		layoutData
 	]);
+	const showRemoveButton =
+		useSelector(selectShowLayoutItemRemoveButton) && itemIsRemovable;
 
 	const childrenElement = children({canDrop, isOver});
 
@@ -105,17 +113,42 @@ export default function Topper({
 
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 			name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
-			name = Liferay.Language.get('section');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
-			name = Liferay.Language.get('column');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
-			name = Liferay.Language.get('drop-zone');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
-			name = Liferay.Language.get('row');
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.container;
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.column;
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.dropZone;
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.row;
 		}
 
 		return name;
+	};
+
+	const fragmentShouldBeHovered = () => {
+		const [activeItemfragmentEntryLinkId] = activeItemId
+			? activeItemId.split('-')
+			: '';
+		const [hoveredItemfragmentEntryLinkId] = hoveredItemId
+			? hoveredItemId.split('-')
+			: '';
+
+		const childIsActive =
+			Number(activeItemfragmentEntryLinkId) ===
+			item.config.fragmentEntryLinkId;
+		const childIsHovered =
+			Number(hoveredItemfragmentEntryLinkId) ===
+			item.config.fragmentEntryLinkId;
+
+		return (
+			item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
+			(hoveredItemId === item.itemId || (childIsActive && childIsHovered))
+		);
 	};
 
 	return (
@@ -129,7 +162,7 @@ export default function Topper({
 				'drag-over-top':
 					targetPosition === TARGET_POSITION.TOP && isOver,
 				dragged: isDragging,
-				hovered: isHovered(item.itemId),
+				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
 				'page-editor-topper': true
 			})}
 			onClick={event => {
@@ -205,7 +238,7 @@ export default function Topper({
 							</ClayButton>
 						</TopperListItem>
 					)}
-					{showDeleteButton && (
+					{showRemoveButton && (
 						<TopperListItem>
 							<ClayButton
 								displayType="unstyled"

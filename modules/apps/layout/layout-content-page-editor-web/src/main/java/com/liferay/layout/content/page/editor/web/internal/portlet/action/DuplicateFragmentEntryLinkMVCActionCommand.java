@@ -29,6 +29,8 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.excecption.NoninstanceablePortletException;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -62,6 +64,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -243,25 +246,47 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 			SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
 		}
 		catch (PortalException portalException) {
-			String errorMessage = "an-unexpected-error-occurred";
-
-			if (portalException instanceof NoSuchEntryLinkException) {
-				errorMessage =
-					"the-section-could-not-be-duplicated-because-it-has-been-" +
-						"deleted";
-			}
-			else if (portalException instanceof PortletIdException) {
-				errorMessage =
-					"layouts-that-include-noninstantiable-widgets-cannot-be-" +
-						"duplicated";
-			}
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
+			String errorMessage = StringPool.BLANK;
+
+			if (portalException instanceof NoSuchEntryLinkException) {
+				errorMessage = LanguageUtil.get(
+					themeDisplay.getRequest(),
+					"the-section-could-not-be-duplicated-because-it-has-been-" +
+						"deleted");
+			}
+			else if (portalException instanceof
+						NoninstanceablePortletException) {
+
+				NoninstanceablePortletException
+					noninstanceablePortletException =
+						(NoninstanceablePortletException)portalException;
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					themeDisplay.getCompanyId(),
+					noninstanceablePortletException.getPortletId());
+
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(actionRequest);
+
+				HttpSession httpSession = httpServletRequest.getSession();
+
+				errorMessage = LanguageUtil.format(
+					themeDisplay.getRequest(),
+					"the-layout-could-not-be-duplicated-because-it-contains-" +
+						"a-widget-x-that-can-only-appear-once-in-the-page",
+					_portal.getPortletTitle(
+						portlet, httpSession.getServletContext(),
+						themeDisplay.getLocale()));
+			}
+			else {
+				errorMessage = LanguageUtil.get(
+					themeDisplay.getRequest(), "an-unexpected-error-occurred");
+			}
+
+			jsonObject.put("error", errorMessage);
 		}
 
 		return jsonObject;

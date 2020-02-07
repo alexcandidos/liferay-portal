@@ -283,43 +283,51 @@ public abstract class BaseSocialActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		String className = activity.getClassName();
-		long classPK = activity.getClassPK();
+		try {
+			String className = activity.getClassName();
+			long classPK = activity.getClassPK();
 
-		String viewEntryInTrashURL = getViewEntryInTrashURL(
-			className, classPK, serviceContext);
+			String viewEntryInTrashURL = getViewEntryInTrashURL(
+				className, classPK, serviceContext);
 
-		if (viewEntryInTrashURL != null) {
-			return viewEntryInTrashURL;
+			if (viewEntryInTrashURL != null) {
+				return viewEntryInTrashURL;
+			}
+
+			String path = getPath(activity, serviceContext);
+
+			if (Validator.isNull(path)) {
+				return null;
+			}
+
+			path = addNoSuchEntryRedirect(
+				path, className, classPK, serviceContext);
+
+			if (!path.startsWith(StringPool.SLASH)) {
+				return path;
+			}
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(serviceContext.getPortalURL());
+
+			if (!path.startsWith(PortalUtil.getPathContext())) {
+				sb.append(PortalUtil.getPathContext());
+			}
+
+			if (!path.startsWith(serviceContext.getPathMain())) {
+				sb.append(serviceContext.getPathMain());
+			}
+
+			sb.append(path);
+
+			return sb.toString();
 		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
-		String path = getPath(activity, serviceContext);
-
-		if (Validator.isNull(path)) {
 			return null;
 		}
-
-		path = addNoSuchEntryRedirect(path, className, classPK, serviceContext);
-
-		if (!path.startsWith(StringPool.SLASH)) {
-			return path;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(serviceContext.getPortalURL());
-
-		if (!path.startsWith(PortalUtil.getPathContext())) {
-			sb.append(PortalUtil.getPathContext());
-		}
-
-		if (!path.startsWith(serviceContext.getPathMain())) {
-			sb.append(serviceContext.getPathMain());
-		}
-
-		sb.append(path);
-
-		return sb.toString();
 	}
 
 	protected String getPath(

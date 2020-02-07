@@ -116,7 +116,7 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_TYPE</td>
-	<td>//a[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //li[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //div[contains(@class,'list-group-body')]//div/h4[contains(.,'${key_fieldType}')] | //h4[contains(@class, 'list-group-title text-truncate')]//span[contains(.,'${key_fieldType}')]</td>
+	<td>//div[contains(@class,'field-type')]//span[contains(text(),'${key_fieldType}')]</td>
 	<td></td>
 </tr>
 <tr>

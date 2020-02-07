@@ -154,12 +154,13 @@
 		}
 	}
 
-	.data-layout-builder-sidebar-content {
-		flex-direction: column;
-		flex-grow: 1;
+	.data-layout-builder-wrapper {
 		margin-top: 3.5rem;
 		padding-left: 306px;
+		width: 100%;
+	}
 
+	.data-layout-builder-sidebar-content {
 		.ddm-form-builder {
 			.ddm-paginated-builder-dropdown,
 			.form-builder-page-header-description,

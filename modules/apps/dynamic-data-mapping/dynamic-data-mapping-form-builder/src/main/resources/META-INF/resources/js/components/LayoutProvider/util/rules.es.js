@@ -12,7 +12,7 @@
  * details.
  */
 
-import {RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {RulesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import Token from '../../../expressions/Token.es';
 import Tokenizer from '../../../expressions/Tokenizer.es';
@@ -95,7 +95,8 @@ export const updateRulesReferences = (rules, oldProperties, newProperties) => {
 						...operand,
 						value: newFieldName
 					};
-				} else if (
+				}
+				else if (
 					index === 1 &&
 					isFieldValueOperand(condition.operands) &&
 					isEqualLengthOptions(oldOptions, newOptions) &&

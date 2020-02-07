@@ -53,6 +53,7 @@ const Header = ({data}) => {
 	const handleCheck = ({target}) => {
 		setBulkModal({
 			...bulkModal,
+			reassignedTasks: [],
 			selectedAssignee: null,
 			useSameAssignee: target.checked
 		});

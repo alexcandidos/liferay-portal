@@ -25,6 +25,8 @@ import usePlugins from '../../core/hooks/usePlugins';
 import useStateSafe from '../../core/hooks/useStateSafe';
 import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
+import selectAvailablePanels from '../selectors/selectAvailablePanels';
+import selectAvailableSidebarPanels from '../selectors/selectAvailableSidebarPanels';
 import {useSelector, useDispatch} from '../store/index';
 import {useSelectItem} from './Controls';
 
@@ -46,11 +48,16 @@ export default function Sidebar() {
 	const load = useLoad();
 	const {getInstance, register} = usePlugins();
 
-	const {panels, sidebarPanels} = config;
+	const panels = useSelector(selectAvailablePanels(config.panels));
+	const sidebarPanels = useSelector(
+		selectAvailableSidebarPanels(config.sidebarPanels)
+	);
 	const {sidebarOpen, sidebarPanelId} = store;
 
 	const panel = sidebarPanels[sidebarPanelId];
-	const promise = load(sidebarPanelId, panel.pluginEntryPoint);
+	const promise = panel
+		? load(sidebarPanelId, panel.pluginEntryPoint)
+		: Promise.resolve();
 
 	const app = {
 		Actions,
@@ -65,7 +72,16 @@ export default function Sidebar() {
 		() => {
 			if (panel) {
 				togglePlugin(panel);
-			} else {
+			}
+			else if (sidebarPanelId) {
+				dispatch(
+					Actions.switchSidebarPanel({
+						sidebarOpen: false,
+						sidebarPanelId: null
+					})
+				);
+			}
+			else {
 				adjustWrapperPadding({sidebarOpen: false});
 			}
 		},
@@ -77,7 +93,8 @@ export default function Sidebar() {
 		useCallback(({instance}) => {
 			if (typeof instance.renderSidebar === 'function') {
 				return instance.renderSidebar();
-			} else {
+			}
+			else {
 				return null;
 			}
 		}, [])
@@ -115,7 +132,8 @@ export default function Sidebar() {
 				isMounted()
 			) {
 				plugin.activate();
-			} else if (!plugin) {
+			}
+			else if (!plugin) {
 				setHasError(true);
 			}
 		});
@@ -160,9 +178,10 @@ export default function Sidebar() {
 						});
 
 						// Add separator between groups.
-						if (groupIndex === sidebarPanels.length - 1) {
+						if (groupIndex === panels.length - 1) {
 							return elements.concat(buttons);
-						} else {
+						}
+						else {
 							return elements.concat([
 								...buttons,
 								<hr key={`separator-${groupIndex}`} />
@@ -237,7 +256,8 @@ class ErrorBoundary extends React.Component {
 	render() {
 		if (this.state.hasError) {
 			return null;
-		} else {
+		}
+		else {
 			return this.props.children;
 		}
 	}
@@ -252,7 +272,8 @@ function adjustWrapperPadding({sidebarOpen}) {
 		if (sidebarOpen) {
 			classList.add('page-editor-sidebar-padding-open');
 			classList.remove('page-editor-sidebar-padding');
-		} else {
+		}
+		else {
 			classList.add('page-editor-sidebar-padding');
 			classList.remove('page-editor-sidebar-padding-open');
 		}

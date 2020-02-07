@@ -20,7 +20,8 @@ import com.liferay.account.rest.client.dto.v1_0.Account;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.runner.RunWith;
 
 /**
@@ -38,9 +40,20 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class AccountResourceTest extends BaseAccountResourceTestCase {
 
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		_deleteAccountEntries(_accountEntries);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
+	}
+
+	@Override
+	protected Account testDeleteAccount_addAccount() throws Exception {
+		return _addAccount();
 	}
 
 	@Override
@@ -49,24 +62,71 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	}
 
 	@Override
+	protected Account testGetAccountsPage_addAccount(Account account)
+		throws Exception {
+
+		return _addAccount(account);
+	}
+
+	@Override
 	protected Account testGraphQLAccount_addAccount() throws Exception {
 		return _addAccount();
+	}
+
+	@Override
+	protected Account testPostAccount_addAccount(Account account)
+		throws Exception {
+
+		return _addAccount(account);
 	}
 
 	private Account _addAccount() throws Exception {
 		return _toAccount(_addAccountEntry());
 	}
 
+	private Account _addAccount(Account account) throws Exception {
+		return _toAccount(_addAccountEntry(account));
+	}
+
 	private AccountEntry _addAccountEntry() throws PortalException {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
+		return _addAccountEntry(
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, WorkflowConstants.STATUS_APPROVED);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
+	}
+
+	private AccountEntry _addAccountEntry(Account account)
+		throws PortalException {
+
+		return _addAccountEntry(
+			account.getParentAccountId(), account.getName(),
+			account.getDescription(), account.getDomains());
+	}
+
+	private AccountEntry _addAccountEntry(
+			long parentAccountEntryId, String name, String description,
+			String[] domains)
+		throws PortalException {
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(), parentAccountEntryId, name,
+			description, domains, null, WorkflowConstants.STATUS_APPROVED);
 
 		_accountEntries.add(accountEntry);
 
 		return accountEntry;
+	}
+
+	private void _deleteAccountEntries(List<AccountEntry> accountEntries) {
+		for (AccountEntry accountEntry : accountEntries) {
+			try {
+				_accountEntryLocalService.deleteAccountEntry(accountEntry);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+		}
 	}
 
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {
@@ -82,7 +142,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		};
 	}
 
-	@DeleteAfterTestRun
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountResourceTest.class);
+
 	private final List<AccountEntry> _accountEntries = new ArrayList<>();
 
 	@Inject

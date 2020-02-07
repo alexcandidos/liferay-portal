@@ -17,6 +17,7 @@ import React from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
+import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../app/config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/store/index';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
@@ -33,14 +34,18 @@ export default function PageStructureSidebar() {
 
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 			name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
-			name = Liferay.Language.get('container');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
-			name = Liferay.Language.get('column');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
-			name = Liferay.Language.get('drop-zone');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
-			name = Liferay.Language.get('row');
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.container;
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.column;
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.dropZone;
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.row;
 		}
 
 		return name;
@@ -63,7 +68,8 @@ export default function PageStructureSidebar() {
 					removable: false
 				});
 			});
-		} else {
+		}
+		else {
 			item.children.forEach(childId => {
 				const childItem = items[childId];
 

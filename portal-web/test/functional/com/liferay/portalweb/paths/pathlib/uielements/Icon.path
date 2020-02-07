@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>MOVE_TO_RECYCLE_BIN</td>
-	<td>//a[contains(@data-qa-id,'recycle-binButton')]/span[contains(@class,'icon-monospaced')] | //*[*[name()='svg'][contains(@class,'icon-trash')] | //a[@data-title='Deactivate']]</td>
+	<td>//a[contains(@data-qa-id,'recycle-binButton')]/span[contains(@class,'icon-monospaced')] | //*[*[name()='svg'][contains(@class,'icon-trash')] | //a[@data-title='Deactivate']]  | //a[@title='Deactivate'] | //a[@title='Delete']</td>
 	<td></td>
 </tr>
 <tr>
@@ -201,6 +201,11 @@
 <tr>
 	<td>REMOVE</td>
 	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-minus-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_USER</td>
+	<td>//td[contains(.,'${key_userFirstName}')]//..//span[contains(@class,'remove')]</td>
 	<td></td>
 </tr>
 <tr>

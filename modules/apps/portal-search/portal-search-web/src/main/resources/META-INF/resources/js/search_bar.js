@@ -26,11 +26,8 @@ AUI.add(
 				'.search-bar-empty-search-input'
 			);
 
-			if (emptySearchInput.val() === 'true') {
-				instance.emptySearchEnabled = true;
-			} else {
-				instance.emptySearchEnabled = false;
-			}
+			instance.emptySearchEnabled =
+				emptySearchInput && emptySearchInput.val() === 'true';
 
 			instance.keywordsInput = instance.form.one(
 				'.search-bar-keywords-input'
@@ -56,6 +53,10 @@ AUI.add(
 
 			getKeywords() {
 				var instance = this;
+
+				if (!instance.keywordsInput) {
+					return '';
+				}
 
 				var keywords = instance.keywordsInput.val();
 
@@ -89,12 +90,16 @@ AUI.add(
 
 				var searchParams = new URLSearchParams(queryString);
 
-				searchParams.set(
-					instance.keywordsInput.get('name'),
-					instance.getKeywords()
-				);
-				searchParams.delete('p_p_id');
-				searchParams.delete('p_p_state');
+				if (instance.keywordsInput) {
+					searchParams.set(
+						instance.keywordsInput.get('name'),
+						instance.getKeywords()
+					);
+				}
+
+				if (instance.resetStartPage) {
+					searchParams.delete(instance.resetStartPage.get('name'));
+				}
 
 				if (instance.scopeSelect) {
 					searchParams.set(
@@ -103,15 +108,9 @@ AUI.add(
 					);
 				}
 
+				searchParams.delete('p_p_id');
+				searchParams.delete('p_p_state');
 				searchParams.delete('start');
-
-				if (instance.resetStartPage) {
-					var resetStartPageName = instance.resetStartPage.get(
-						'name'
-					);
-
-					searchParams.delete(resetStartPageName);
-				}
 
 				return '?' + searchParams.toString();
 			}

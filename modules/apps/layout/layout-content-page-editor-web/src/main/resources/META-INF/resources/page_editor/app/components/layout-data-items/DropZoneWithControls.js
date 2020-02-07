@@ -15,32 +15,39 @@
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
+import {useSelector} from '../../store/index';
 import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
 import Topper from '../Topper';
 
 const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
-	return (
+	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+
+	const content = (
+		<div className="fragments-editor__drop-zone" ref={ref}>
+			<p>{Liferay.Language.get('drop-zone')}</p>
+
+			<p>
+				{Liferay.Language.get(
+					'fragments-and-widgets-for-pages-based-on-this-master-will-be-placed-here'
+				)}
+			</p>
+
+			<ManageAllowedFragmentButton item={item} />
+		</div>
+	);
+
+	return showLayoutItemTopper ? (
 		<Topper
 			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.fragment]}
 			active
 			item={item}
 			layoutData={layoutData}
-			name={Liferay.Language.get('drop-zone')}
 		>
-			{() => (
-				<div className="fragments-editor__drop-zone" ref={ref}>
-					<p>{Liferay.Language.get('drop-zone')}</p>
-
-					<p>
-						{Liferay.Language.get(
-							'fragments-and-widgets-for-pages-based-on-this-master-will-be-placed-here'
-						)}
-					</p>
-
-					<ManageAllowedFragmentButton item={item} />
-				</div>
-			)}
+			{() => content}
 		</Topper>
+	) : (
+		content
 	);
 });
 

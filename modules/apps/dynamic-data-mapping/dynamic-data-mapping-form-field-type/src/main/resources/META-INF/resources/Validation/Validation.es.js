@@ -24,7 +24,7 @@ import '../Select/Select.es';
 
 import '../Text/Text.es';
 
-import './ValidationRegister.soy.js';
+import './ValidationRegister.soy';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
@@ -32,7 +32,7 @@ import {Config} from 'metal-state';
 
 import {subWords} from '../util/strings.es';
 import VALIDATIONS from '../util/validations.es';
-import templates from './Validation.soy.js';
+import templates from './Validation.soy';
 
 class Validation extends Component {
 	prepareStateForRender(state) {
@@ -121,7 +121,8 @@ class Validation extends Component {
 
 			if (selectedValidation) {
 				parameterMessage = selectedValidation.parameterMessage;
-			} else {
+			}
+			else {
 				selectedValidation = {
 					name: this.validations[0].name,
 					parameterMessage: this.validations[0].parameterMessage,

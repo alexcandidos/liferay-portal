@@ -185,6 +185,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 						contentType="journal"
 						dataDefinitionId="<%= ddmStructureId %>"
 						groupId="<%= groupId %>"
+						localizable="<%= true %>"
 						namespace="<%= renderResponse.getNamespace() %>"
 					/>
 				</c:when>
@@ -326,7 +327,8 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				contextualSidebarContainer.classList.remove(
 					'contextual-sidebar-visible'
 				);
-			} else {
+			}
+			else {
 				contextualSidebarContainer.classList.add(
 					'contextual-sidebar-visible'
 				);

@@ -23,7 +23,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)request.getAttribute(WebKeys.DO
 
 long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryTypeId");
 
-DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
+com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.dynamic.data.mapping.model.DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
@@ -33,7 +33,7 @@ if (fileEntryType != null) {
 	ddmStructures = fileEntryType.getDDMStructures();
 
 	if (ddmStructure != null) {
-		ddmStructures = new ArrayList<DDMStructure>(ddmStructures);
+		ddmStructures = new ArrayList<>(ddmStructures);
 
 		ddmStructures.remove(ddmStructure);
 	}
@@ -152,21 +152,18 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 <aui:script>
 	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.openDDMPortlet(
+		Liferay.Util.selectEntity(
 			{
-				basePortletURL:
-					'<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
-				classPK: '<%= ddmStructureId %>',
 				dialog: {
-					destroyOnHide: true
+					constrain: true,
+					modal: true
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
-				mvcPath: '/select_structure.jsp',
-				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
-				refererPortletName: '<%= DLPortletKeys.DOCUMENT_LIBRARY %>',
-				showAncestorScopes: true,
-				showManageTemplates: false,
-				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
+				id: '<portlet:namespace />selectDDMStructure',
+				title:
+					'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
+				uri:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>'
 			},
 			function(event) {
 				var searchContainer = Liferay.SearchContainer.get(

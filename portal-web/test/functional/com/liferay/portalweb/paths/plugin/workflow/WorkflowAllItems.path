@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DETAIL_PAGE_CLOSE</td>
-	<td>//div[contains(@class,'modal-header')]//button[@class='close']</td>
+	<td>//div[contains(@class,'modal-header')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,6 +62,11 @@
 	<td>DETAIL_PAGE_TITLE</td>
 	<td>//div[contains(@class,'modal-header')]/div[contains(@class,'modal-title')]</td>
 	<td></td>
+</tr>
+<tr>
+    <td>METRICS_ALL_ITEMS_TABLE_ROW</td>
+    <td>//tr[${key_rowNumber}]//td[3]</td>
+    <td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_BY</td>

@@ -9,7 +9,15 @@ definition {
 
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.clickPublish();
+		Button.click(button = "Publish Master");
+	}
+
+	macro deleteMasters {
+		LexiconCard.clickEllipsisItem(
+			card = "${masterLayoutName}",
+			item = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
 	macro gotoMastersEllipsisItem {

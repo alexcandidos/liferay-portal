@@ -14,17 +14,31 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.util;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
+import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
@@ -43,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ExportUtil.class)
 public class ExportUtil {
 
-	public File exportLayoutPageTemplateEntries(
+	public File exportPageTemplateDefinitions(
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
 		throws PortletException {
 
@@ -53,15 +67,7 @@ public class ExportUtil {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 					layoutPageTemplateEntries) {
 
-				LayoutPageTemplateCollection layoutPageTemplateCollection =
-					_layoutPageTemplateCollectionService.
-						fetchLayoutPageTemplateCollection(
-							layoutPageTemplateEntry.
-								getLayoutPageTemplateCollectionId());
-
-				_populateZipWriter(
-					layoutPageTemplateEntry, zipWriter,
-					layoutPageTemplateCollection.getName());
+				_populateZipWriter(layoutPageTemplateEntry, zipWriter);
 			}
 
 			zipWriter.finish();
@@ -73,16 +79,14 @@ public class ExportUtil {
 		}
 	}
 
-	private FileEntry _getPreviewFileEntry(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		if (layoutPageTemplateEntry.getPreviewFileEntryId() <= 0) {
+	private FileEntry _getPreviewFileEntry(long previewFileEntryId) {
+		if (previewFileEntryId <= 0) {
 			return null;
 		}
 
 		try {
 			return PortletFileRepositoryUtil.getPortletFileEntry(
-				layoutPageTemplateEntry.getPreviewFileEntryId());
+				previewFileEntryId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -95,25 +99,41 @@ public class ExportUtil {
 
 	private void _populateZipWriter(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
-			ZipWriter zipWriter, String path)
+			ZipWriter zipWriter)
 		throws Exception {
 
-		path = path + StringPool.SLASH + layoutPageTemplateEntry.getName();
-
-		JSONObject jsonObject = JSONUtil.put(
-			"name", layoutPageTemplateEntry.getName());
-
-		FileEntry previewFileEntry = _getPreviewFileEntry(
+		PageTemplate pageTemplate = PageTemplateConverterUtil.toPageTemplate(
 			layoutPageTemplateEntry);
 
-		if (previewFileEntry != null) {
-			jsonObject.put(
-				"thumbnailPath",
-				"thumbnail." + previewFileEntry.getExtension());
-		}
+		String path =
+			pageTemplate.getCollectionName() + StringPool.SLASH +
+				pageTemplate.getName();
+
+		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
+
+		FilterProvider filterProvider = simpleFilterProvider.addFilter(
+			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+
+		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
-			path + "/layout-template.json", jsonObject.toString());
+			path + "/page-template.json",
+			objectWriter.writeValueAsString(pageTemplate));
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		if (layout != null) {
+			PageDefinition pageDefinition =
+				PageDefinitionConverterUtil.toPageDefinition(layout);
+
+			zipWriter.addEntry(
+				path + "/page-definition.json",
+				objectWriter.writeValueAsString(pageDefinition));
+		}
+
+		FileEntry previewFileEntry = _getPreviewFileEntry(
+			layoutPageTemplateEntry.getPreviewFileEntryId());
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(
@@ -124,8 +144,21 @@ public class ExportUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(ExportUtil.class);
 
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
+			setDateFormat(new ISO8601DateFormat());
+			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			setVisibility(
+				PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+			setVisibility(
+				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+		}
+	};
+
 	@Reference
-	private LayoutPageTemplateCollectionService
-		_layoutPageTemplateCollectionService;
+	private LayoutLocalService _layoutLocalService;
 
 }

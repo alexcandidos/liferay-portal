@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"ddm.form.field.type.data.domain=list",
 		"ddm.form.field.type.description=grid-field-type-description",
-		"ddm.form.field.type.display.order:Integer=8",
+		"ddm.form.field.type.display.order:Integer=5",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=table2",
 		"ddm.form.field.type.label=grid-field-type-label",
 		"ddm.form.field.type.name=grid", "ddm.form.field.type.scope=forms"

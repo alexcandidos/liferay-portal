@@ -141,6 +141,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			PortalUtil.getPortletNamespace(
 				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));
 		formRenderingContext.setReadOnly(true);
+		formRenderingContext.setViewMode(true);
 
 		return formRenderingContext;
 	}

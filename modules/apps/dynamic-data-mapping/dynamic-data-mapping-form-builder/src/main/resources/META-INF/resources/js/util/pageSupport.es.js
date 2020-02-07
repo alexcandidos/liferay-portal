@@ -12,9 +12,9 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
-import {sub} from './strings.es.js';
+import {sub} from './strings.es';
 
 export function pageOptions(pages, maxPageIndex = 0) {
 	const pageOptions = [];

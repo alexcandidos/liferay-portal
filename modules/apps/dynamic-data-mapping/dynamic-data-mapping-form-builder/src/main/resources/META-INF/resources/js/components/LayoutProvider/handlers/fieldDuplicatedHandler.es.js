@@ -12,8 +12,7 @@
  * details.
  */
 
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {sub} from '../../../util/strings.es';
 import {getFieldLocalizedValue} from '../util/fields.es';
@@ -52,7 +51,8 @@ const handleFieldDuplicated = (
 						...field,
 						value: newFieldName
 					};
-				} else if (field.fieldName === 'label') {
+				}
+				else if (field.fieldName === 'label') {
 					field = {
 						...field,
 						localizedValue: {
@@ -61,7 +61,8 @@ const handleFieldDuplicated = (
 						},
 						value: label
 					};
-				} else if (field.fieldName === 'validation') {
+				}
+				else if (field.fieldName === 'validation') {
 					const expression = field.value.expression;
 
 					if (expression && expression.value) {

@@ -17,10 +17,9 @@ import ClayButton from 'clay-button';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import ClayModal from 'clay-modal';
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import dom from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
@@ -33,7 +32,7 @@ import {
 	getFieldProperties,
 	normalizeSettingsContextPages
 } from '../../util/fieldSupport.es';
-import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
+import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es';
 
 /**
  * Sidebar is a tooling to mount forms.
@@ -439,7 +438,8 @@ class Sidebar extends Component {
 			if (next.group && !next.system) {
 				if (next.group === 'interface') {
 					prev.basic.fields.push(next);
-				} else {
+				}
+				else {
 					prev[next.group].fields.push(next);
 				}
 			}
@@ -555,7 +555,8 @@ class Sidebar extends Component {
 					indexes
 				});
 			});
-		} else {
+		}
+		else {
 			const fieldType = fieldTypes.find(({name}) => {
 				return name === data.source.dataset.fieldTypeName;
 			});
@@ -607,9 +608,11 @@ class Sidebar extends Component {
 		if (!item.disabled) {
 			if (settingsItem === 'duplicate-field') {
 				this._duplicateField(indexes);
-			} else if (settingsItem === 'delete-field') {
+			}
+			else if (settingsItem === 'delete-field') {
 				this._deleteField(indexes);
-			} else if (settingsItem === 'cancel-field-changes') {
+			}
+			else if (settingsItem === 'cancel-field-changes') {
 				this._cancelFieldChanges(indexes);
 			}
 		}
@@ -808,7 +811,8 @@ class Sidebar extends Component {
 
 		if (groups.length > 0) {
 			elementSetsArea = this._renderElementSetsGroups(groups);
-		} else {
+		}
+		else {
 			elementSetsArea = this._renderEmptyElementSets();
 		}
 

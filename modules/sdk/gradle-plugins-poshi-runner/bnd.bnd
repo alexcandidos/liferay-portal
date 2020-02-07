@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Gradle Plugins Poshi Runner
 Bundle-SymbolicName: com.liferay.gradle.plugins.poshi.runner
-Bundle-Version: 2.2.19
+Bundle-Version: 2.2.20
 Export-Package: com.liferay.gradle.plugins.poshi.runner

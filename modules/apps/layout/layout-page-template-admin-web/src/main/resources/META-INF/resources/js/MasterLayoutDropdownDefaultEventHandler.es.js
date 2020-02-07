@@ -38,6 +38,17 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 		this._send(itemData.deleteMasterLayoutPreviewURL);
 	}
 
+	markAsDefaultMasterLayout(itemData) {
+		if (itemData.message !== '') {
+			if (confirm(Liferay.Language.get(itemData.message))) {
+				this._send(itemData.markAsDefaultMasterLayoutURL);
+			}
+		}
+		else {
+			this._send(itemData.markAsDefaultMasterLayoutURL);
+		}
+	}
+
 	permissionsMasterLayout(itemData) {
 		Liferay.Util.openWindow({
 			dialog: {

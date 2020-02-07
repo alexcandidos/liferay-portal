@@ -41,10 +41,12 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.web.internal.exportimport.data.handler.util.LayoutPageTemplateStructureDataHandlerUtil;
+import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -382,6 +384,18 @@ public class LayoutStagedModelDataHandler
 		fixExportTypeSettings(layout);
 
 		exportTheme(portletDataContext, layout);
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(layout.getPlid());
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutClassedModelUsage,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
 
 		portletDataContext.addClassedModel(
 			layoutElement, ExportImportPathUtil.getModelPath(layout),
@@ -866,6 +880,8 @@ public class LayoutStagedModelDataHandler
 			portletDataContext, layout, importedLayout);
 
 		importLayoutSEOEntries(portletDataContext, layout);
+
+		importLayoutClassedModelUsages(portletDataContext, layout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}
@@ -1373,6 +1389,29 @@ public class LayoutStagedModelDataHandler
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, fragmentEntryLink);
+		}
+	}
+
+	protected void importLayoutClassedModelUsages(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+
+		List<Element> layoutClassedModelUsageElements =
+			portletDataContext.getReferenceDataElements(
+				layout, LayoutClassedModelUsage.class);
+
+		for (Element layoutClassedModelUsageElement :
+				layoutClassedModelUsageElements) {
+
+			String layoutClassedModelUsagePath =
+				layoutClassedModelUsageElement.attributeValue("path");
+
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				(LayoutClassedModelUsage)portletDataContext.getZipEntryAsObject(
+					layoutClassedModelUsagePath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, layoutClassedModelUsage);
 		}
 	}
 
@@ -2235,6 +2274,11 @@ public class LayoutStagedModelDataHandler
 
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private LayoutLocalServiceHelper _layoutLocalServiceHelper;

@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.regex.Matcher;
@@ -31,8 +30,6 @@ public class JSPStylingCheck extends StylingCheck {
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
-
-		_checkChaining(fileName, content);
 
 		content = _formatLineBreak(fileName, content);
 
@@ -58,63 +55,12 @@ public class JSPStylingCheck extends StylingCheck {
 
 		content = content.replaceAll("'<%= (\"[^.(\\[\"]+\") %>'", "$1");
 
-		_checkIllegalSyntax(
-			fileName, content, "=>", "Do not use arrow function",
-			"arrow_functions.markdown");
-		_checkIllegalSyntax(
-			fileName, content, "console.log(", "Do not use console.log");
-		_checkIllegalSyntax(
-			fileName, content, "debugger.", "Do not use debugger");
-
-		if (!fileName.endsWith("test.jsp")) {
-			_checkIllegalSyntax(
-				fileName, content, "System.out.print",
-				"Do not call 'System.out.print'");
-		}
-
 		return formatStyling(content);
 	}
 
 	@Override
 	protected boolean isJavaSource(String content, int pos) {
 		return JSPSourceUtil.isJavaSource(content, pos, true);
-	}
-
-	private void _checkChaining(String fileName, String content) {
-		Matcher matcher = _chainingPattern.matcher(content);
-
-		if (matcher.find()) {
-			addMessage(
-				fileName, "Avoid chaining on 'getClass'", "chaining.markdown",
-				getLineNumber(content, matcher.start()));
-		}
-	}
-
-	private void _checkIllegalSyntax(
-		String fileName, String content, String syntax, String message) {
-
-		_checkIllegalSyntax(fileName, content, syntax, message, null);
-	}
-
-	private void _checkIllegalSyntax(
-		String fileName, String content, String syntax, String message,
-		String markdownFileName) {
-
-		int pos = -1;
-
-		while (true) {
-			pos = content.indexOf(syntax, pos + 1);
-
-			if (pos == -1) {
-				return;
-			}
-
-			if (!ToolsUtil.isInsideQuotes(content, pos)) {
-				addMessage(
-					fileName, message, markdownFileName,
-					getLineNumber(content, pos));
-			}
-		}
 	}
 
 	private String _fixEmptyJavaSourceTag(String content) {
@@ -194,8 +140,6 @@ public class JSPStylingCheck extends StylingCheck {
 		return matcher.replaceAll("$1\n\t$2$4\n$2$5");
 	}
 
-	private static final Pattern _chainingPattern = Pattern.compile(
-		"\\WgetClass\\(\\)\\.");
 	private static final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\\!?\n+\t*%>(\n|\\Z)");
 	private static final Pattern _incorrectClosingTagPattern = Pattern.compile(

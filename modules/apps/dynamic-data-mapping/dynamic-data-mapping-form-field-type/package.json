@@ -1,12 +1,15 @@
 {
 	"dependencies": {
-		"clay-button": "2.20.0",
-		"clay-checkbox": "2.20.0",
-		"clay-dropdown": "2.20.0",
-		"clay-icon": "2.20.0",
-		"clay-label": "2.20.0",
-		"clay-radio": "2.20.0",
+		"clay-button": "2.20.2",
+		"clay-checkbox": "2.20.2",
+		"clay-dropdown": "2.20.2",
+		"clay-icon": "2.20.2",
+		"clay-label": "2.20.2",
+		"clay-radio": "2.20.2",
 		"frontend-js-web": "*",
+		"leaflet": "1.2.0",
+		"map-google-maps": "*",
+		"map-openstreetmap": "*",
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",
 		"metal-drag-drop": "3.3.1",
@@ -17,12 +20,6 @@
 		"vanilla-text-mask": "^5.0.1"
 	},
 	"jest": {
-		"moduleNameMapper": {
-			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/$1.js"
-		},
-		"modulePathIgnorePatterns": [
-			"/__mock__/"
-		],
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"
 		],
@@ -39,7 +36,6 @@
 			"Validation"
 		]
 	},
-	"main": "./",
 	"name": "dynamic-data-mapping-form-field-type",
 	"private": true,
 	"scripts": {

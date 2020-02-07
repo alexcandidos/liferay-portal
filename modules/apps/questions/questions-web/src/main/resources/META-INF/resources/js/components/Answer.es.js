@@ -17,6 +17,7 @@ import ClayIcon from '@clayui/icon';
 import parser from 'bbcode-to-react';
 import classnames from 'classnames';
 import React, {useCallback, useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 import {
 	deleteMessage,
@@ -110,16 +111,25 @@ export default ({answer, answerChange, deleteAnswer}) => {
 								</ClayButton>
 							)}
 							{answer.actions.replace && (
-								<ClayButton
-									displayType="unstyled"
-									onClick={_answerChange}
-								>
-									{Liferay.Language.get(
-										showAsAnswer
-											? 'unmark as answer'
-											: 'mark as answer'
-									)}
-								</ClayButton>
+								<>
+									<ClayButton
+										displayType="unstyled"
+										onClick={_answerChange}
+									>
+										{Liferay.Language.get(
+											showAsAnswer
+												? 'unmark as answer'
+												: 'mark as answer'
+										)}
+									</ClayButton>
+									<ClayButton displayType="unstyled">
+										<Link to={`/answers/${answer.id}/edit`}>
+											<span>
+												{Liferay.Language.get('edit')}
+											</span>
+										</Link>
+									</ClayButton>
+								</>
 							)}
 						</ClayButton.Group>
 					</div>

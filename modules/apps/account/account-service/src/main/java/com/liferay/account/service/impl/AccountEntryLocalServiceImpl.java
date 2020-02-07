@@ -16,6 +16,7 @@ package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
+import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
@@ -114,7 +115,11 @@ public class AccountEntryLocalServiceImpl
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
 			AccountEntry.class.getName(), "name");
 
-		accountEntry.setName(StringUtil.shorten(name, nameMaxLength));
+		name = StringUtil.shorten(name, nameMaxLength);
+
+		_validateName(name);
+
+		accountEntry.setName(name);
 
 		accountEntry.setDescription(description);
 
@@ -258,7 +263,11 @@ public class AccountEntryLocalServiceImpl
 			accountEntryId);
 
 		accountEntry.setParentAccountEntryId(parentAccountEntryId);
+
+		_validateName(name);
+
 		accountEntry.setName(name);
+
 		accountEntry.setDescription(description);
 
 		domains = _validateDomains(domains);
@@ -352,33 +361,35 @@ public class AccountEntryLocalServiceImpl
 			searchContext.setKeywords(keywords);
 		}
 
-		if (MapUtil.isNotEmpty(params)) {
-			long[] accountUserIds = (long[])params.get("accountUserIds");
-
-			if (ArrayUtil.isNotEmpty(accountUserIds)) {
-				searchContext.setAttribute("accountUserIds", accountUserIds);
-			}
-
-			String[] domains = (String[])params.get("domains");
-
-			if (ArrayUtil.isNotEmpty(domains)) {
-				searchContext.setAttribute("domains", domains);
-			}
-
-			long parentAccountEntryId = GetterUtil.getLong(
-				params.get("parentAccountEntryId"),
-				AccountConstants.ACCOUNT_ENTRY_ID_ANY);
-
-			if (parentAccountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) {
-				searchContext.setAttribute(
-					"parentAccountEntryId", parentAccountEntryId);
-			}
-
-			int status = GetterUtil.getInteger(
-				params.get("status"), WorkflowConstants.STATUS_APPROVED);
-
-			searchContext.setAttribute("status", status);
+		if (MapUtil.isEmpty(params)) {
+			return;
 		}
+
+		long[] accountUserIds = (long[])params.get("accountUserIds");
+
+		if (ArrayUtil.isNotEmpty(accountUserIds)) {
+			searchContext.setAttribute("accountUserIds", accountUserIds);
+		}
+
+		String[] domains = (String[])params.get("domains");
+
+		if (ArrayUtil.isNotEmpty(domains)) {
+			searchContext.setAttribute("domains", domains);
+		}
+
+		long parentAccountEntryId = GetterUtil.getLong(
+			params.get("parentAccountEntryId"),
+			AccountConstants.ACCOUNT_ENTRY_ID_ANY);
+
+		if (parentAccountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) {
+			searchContext.setAttribute(
+				"parentAccountEntryId", parentAccountEntryId);
+		}
+
+		int status = GetterUtil.getInteger(
+			params.get("status"), WorkflowConstants.STATUS_APPROVED);
+
+		searchContext.setAttribute("status", status);
 	}
 
 	private String[] _validateDomains(String[] domains) throws PortalException {
@@ -395,6 +406,12 @@ public class AccountEntryLocalServiceImpl
 		}
 
 		return ArrayUtil.distinct(domains);
+	}
+
+	private void _validateName(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new AccountEntryNameException();
+		}
 	}
 
 	@Reference

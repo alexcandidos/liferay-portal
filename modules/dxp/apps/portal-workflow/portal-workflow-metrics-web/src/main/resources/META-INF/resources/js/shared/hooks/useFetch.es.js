@@ -23,6 +23,7 @@ const useFetch = ({admin = false, params = {}, url}) => {
 		() =>
 			client.get(url, {params}).then(({data}) => {
 				setData(data);
+				return data;
 			}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[queryParamsStr, url, admin]

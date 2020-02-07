@@ -28,15 +28,32 @@ const instance = {
 	taskNames: ['Review', 'Update']
 };
 
+let selectedItems = [];
+
+const setSelectedItems = jest.fn(value => {
+	selectedItems = value;
+});
+
+const instanceContextValue = {
+	selectedItems,
+	setInstanceId: jest.fn(),
+	setSelectAll: jest.fn(),
+	setSelectedItems
+};
+
+const modalContextValue = {
+	setInstanceDetailsModal: jest.fn(),
+	setSingleModal: jest.fn(),
+	singleModal: false
+};
+
 describe('The instance list item should', () => {
 	afterEach(cleanup);
 
 	test('Be rendered with "User 1", "Jan 01, 2019, 12:00 AM", and "Review, Update" columns', () => {
 		const {getByTestId} = render(
-			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
+			<InstanceListContext.Provider value={instanceContextValue}>
+				<ModalContext.Provider value={modalContextValue}>
 					<Table.Item {...instance} />
 				</ModalContext.Provider>
 			</InstanceListContext.Provider>
@@ -53,10 +70,8 @@ describe('The instance list item should', () => {
 
 	test('Be rendered with check icon when the slaStatus is "OnTime"', () => {
 		const {getByTestId} = render(
-			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
+			<InstanceListContext.Provider value={instanceContextValue}>
+				<ModalContext.Provider value={modalContextValue}>
 					<Table.Item {...instance} slaStatus="OnTime" />
 				</ModalContext.Provider>
 			</InstanceListContext.Provider>
@@ -71,10 +86,8 @@ describe('The instance list item should', () => {
 
 	test('Be rendered with exclamation icon when the slaStatus is "Overdue"', () => {
 		const {getByTestId} = render(
-			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
+			<InstanceListContext.Provider value={instanceContextValue}>
+				<ModalContext.Provider value={modalContextValue}>
 					<Table.Item {...instance} slaStatus="Overdue" />
 				</ModalContext.Provider>
 			</InstanceListContext.Provider>
@@ -89,10 +102,8 @@ describe('The instance list item should', () => {
 
 	test('Be rendered with hr icon when the slaStatus is "Untracked"', () => {
 		const {getByTestId} = render(
-			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
+			<InstanceListContext.Provider value={instanceContextValue}>
+				<ModalContext.Provider value={modalContextValue}>
 					<Table.Item {...instance} slaStatus="Untracked" />
 				</ModalContext.Provider>
 			</InstanceListContext.Provider>
@@ -104,14 +115,12 @@ describe('The instance list item should', () => {
 	});
 
 	test('Call setInstanceId with "1" as instance id param', () => {
-		const contextMock = {setInstanceId: jest.fn()};
+		const contextMock = instanceContextValue;
 		instance.status = 'Completed';
 
 		const {getByTestId} = render(
 			<InstanceListContext.Provider value={contextMock}>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
+				<ModalContext.Provider value={modalContextValue}>
 					<Table.Item {...instance} />
 				</ModalContext.Provider>
 			</InstanceListContext.Provider>
@@ -136,14 +145,10 @@ describe('The InstanceListPageItem quick action menu should', () => {
 		taskNames: ['Review']
 	};
 
-	const setSingleModal = jest.fn();
-
 	test('set modal visualization by clicking the reassign task button', () => {
 		const {getByTestId} = render(
-			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<ModalContext.Provider
-					value={{setSingleModal, singleModal: false}}
-				>
+			<InstanceListContext.Provider value={instanceContextValue}>
+				<ModalContext.Provider value={modalContextValue}>
 					<Table.Item {...instance} />
 				</ModalContext.Provider>
 			</InstanceListContext.Provider>
@@ -152,7 +157,7 @@ describe('The InstanceListPageItem quick action menu should', () => {
 		const reassignTaskButton = getByTestId('dropDownItem');
 
 		fireEvent.click(reassignTaskButton);
-		expect(setSingleModal).toHaveBeenCalledTimes(1);
+		expect(modalContextValue.setSingleModal).toHaveBeenCalledTimes(1);
 	});
 });
 
@@ -167,23 +172,10 @@ describe('The InstanceListPageItem instance checkbox component should', () => {
 		taskNames: ['Review']
 	};
 
-	let selectedItems = [];
-	const setSelectedItems = jest.fn(value => {
-		selectedItems = value;
-	});
-
 	test('Set checkbox value by clicking it', () => {
 		const {getByTestId} = render(
-			<InstanceListContext.Provider
-				value={{
-					selectedItems,
-					setInstanceId: jest.fn(),
-					setSelectedItems
-				}}
-			>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
+			<InstanceListContext.Provider value={instanceContextValue}>
+				<ModalContext.Provider value={modalContextValue}>
 					<Table.Item {...instance} />
 				</ModalContext.Provider>
 			</InstanceListContext.Provider>

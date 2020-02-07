@@ -38,6 +38,7 @@ page import="java.util.Map" %>
 
 <%
 Locale[] availableLocales = (Locale[])request.getAttribute("liferay-data-engine:data-layout-builder:availableLocales");
+String[] availableLanguageIds = (String[])request.getAttribute("liferay-data-engine:data-layout-builder:availableLanguageIds");
 JSONObject dataLayoutJSONObject = (JSONObject)request.getAttribute("liferay-data-engine:data-layout-builder:dataLayout");
 JSONArray fieldTypesJSONArray = (JSONArray)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypes");
 String fieldTypesModules = (String)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypesModules");

@@ -23,10 +23,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -39,22 +42,37 @@ import javax.servlet.http.HttpServletRequest;
 public class ItemSelectorViewDescriptorRendererDisplayContext {
 
 	public ItemSelectorViewDescriptorRendererDisplayContext(
-		String itemSelectedEventName,
-		ItemSelectorViewDescriptor itemSelectorViewDescriptor) {
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
+		ItemSelectorViewDescriptor itemSelectorViewDescriptor,
+		LiferayPortletResponse liferayPortletResponse) {
 
+		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
 		_itemSelectorViewDescriptor = itemSelectorViewDescriptor;
+		_liferayPortletResponse = liferayPortletResponse;
 	}
 
-	public List<BreadcrumbEntry> getBreadcrumbEntries(
-			PortletURL currentURL, HttpServletRequest httpServletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+	public List<BreadcrumbEntry> getBreadcrumbEntries(PortletURL currentURL)
 		throws PortalException, PortletException {
 
 		return Arrays.asList(
-			_getGroupSelectorBreadcrumbEntry(
-				currentURL, httpServletRequest, liferayPortletResponse),
-			_getCurrentGroupBreadcrumbEntry(currentURL, httpServletRequest));
+			_getGroupSelectorBreadcrumbEntry(currentURL),
+			_getCurrentGroupBreadcrumbEntry(currentURL));
+	}
+
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
+
+		if (Validator.isNull(_displayStyle)) {
+			_displayStyle = "icon";
+		}
+
+		return _displayStyle;
 	}
 
 	public String getItemSelectedEventName() {
@@ -75,12 +93,20 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		return itemSelectorReturnTypeClass.getName();
 	}
 
+	public boolean isIconDisplayStyle() {
+		if (Objects.equals(getDisplayStyle(), "icon")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private BreadcrumbEntry _getCurrentGroupBreadcrumbEntry(
-			PortletURL currentURL, HttpServletRequest httpServletRequest)
+			PortletURL currentURL)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
+			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
@@ -88,19 +114,18 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
-			scopeGroup.getDescriptiveName(httpServletRequest.getLocale()));
+			scopeGroup.getDescriptiveName(_httpServletRequest.getLocale()));
 		breadcrumbEntry.setURL(currentURL.toString());
 
 		return breadcrumbEntry;
 	}
 
 	private BreadcrumbEntry _getGroupSelectorBreadcrumbEntry(
-			PortletURL currentURL, HttpServletRequest httpServletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			PortletURL currentURL)
 		throws PortletException {
 
 		PortletURL viewGroupSelectorURL = PortletURLUtil.clone(
-			currentURL, liferayPortletResponse);
+			currentURL, _liferayPortletResponse);
 
 		viewGroupSelectorURL.setParameter("groupType", "site");
 		viewGroupSelectorURL.setParameter(
@@ -108,13 +133,17 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(LanguageUtil.get(httpServletRequest, "sites"));
+		breadcrumbEntry.setTitle(
+			LanguageUtil.get(_httpServletRequest, "sites"));
 		breadcrumbEntry.setURL(viewGroupSelectorURL.toString());
 
 		return breadcrumbEntry;
 	}
 
+	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final ItemSelectorViewDescriptor _itemSelectorViewDescriptor;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

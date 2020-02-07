@@ -139,8 +139,9 @@ public class SourceChecksUtil {
 						sourceChecksResult.addSourceFormatterMessage(
 							new SourceFormatterMessage(
 								fileName, parseException.getMessage(),
-								CheckType.SOURCE_CHECK, clazz.getSimpleName(),
-								null, -1));
+								CheckType.SOURCE_CHECK,
+								JavaClassParser.class.getSimpleName(), null,
+								-1));
 
 						continue;
 					}
@@ -160,31 +161,33 @@ public class SourceChecksUtil {
 					clazz.getSimpleName(), endTime - startTime);
 			}
 
-			if (!content.equals(sourceChecksResult.getContent())) {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append(file.toString());
-				sb.append(CharPool.SPACE);
-				sb.append(CharPool.OPEN_PARENTHESIS);
-
-				CheckType checkType = CheckType.SOURCE_CHECK;
-
-				sb.append(checkType.getValue());
-
-				sb.append(CharPool.COLON);
-				sb.append(clazz.getSimpleName());
-				sb.append(CharPool.CLOSE_PARENTHESIS);
-
-				modifiedMessages.add(sb.toString());
-
-				if (showDebugInformation) {
-					DebugUtil.printContentModifications(
-						clazz.getSimpleName(), fileName, content,
-						sourceChecksResult.getContent());
-				}
-
-				return sourceChecksResult;
+			if (content.equals(sourceChecksResult.getContent())) {
+				continue;
 			}
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append(file.toString());
+			sb.append(CharPool.SPACE);
+			sb.append(CharPool.OPEN_PARENTHESIS);
+
+			CheckType checkType = CheckType.SOURCE_CHECK;
+
+			sb.append(checkType.getValue());
+
+			sb.append(CharPool.COLON);
+			sb.append(clazz.getSimpleName());
+			sb.append(CharPool.CLOSE_PARENTHESIS);
+
+			modifiedMessages.add(sb.toString());
+
+			if (showDebugInformation) {
+				DebugUtil.printContentModifications(
+					clazz.getSimpleName(), fileName, content,
+					sourceChecksResult.getContent());
+			}
+
+			return sourceChecksResult;
 		}
 
 		return sourceChecksResult;

@@ -75,6 +75,7 @@ public class KnowledgeBaseArticleDTOConverter
 
 		return new KnowledgeBaseArticle() {
 			{
+				actions = dtoConverterContext.getActions();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						KBArticle.class.getName(),
@@ -121,7 +122,9 @@ public class KnowledgeBaseArticleDTOConverter
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
-					TaxonomyCategoryUtil::toTaxonomyCategory,
+					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory, dtoConverterContext.getLocale()),
 					TaxonomyCategory.class);
 				title = kbArticle.getTitle();
 

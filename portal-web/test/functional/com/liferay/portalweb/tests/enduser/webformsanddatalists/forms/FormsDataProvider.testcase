@@ -67,7 +67,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.gotoAddField(fieldType = "Text Field");
+		Form.addTextField();
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field With Autocomplete");
 

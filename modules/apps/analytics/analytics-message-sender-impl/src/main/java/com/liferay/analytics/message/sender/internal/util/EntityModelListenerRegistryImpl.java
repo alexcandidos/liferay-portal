@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import java.util.Collection;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -40,6 +42,11 @@ public class EntityModelListenerRegistryImpl
 	@Override
 	public EntityModelListener getEntityModelListener(String className) {
 		return _serviceTrackerMap.getService(className);
+	}
+
+	@Override
+	public Collection<EntityModelListener> getEntityModelListeners() {
+		return _serviceTrackerMap.values();
 	}
 
 	@Activate

@@ -55,6 +55,34 @@ public class ObjectReviewedSerDes {
 
 		sb.append("{");
 
+		if (objectReviewed.getAssetTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetTitle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectReviewed.getAssetTitle()));
+
+			sb.append("\"");
+		}
+
+		if (objectReviewed.getAssetType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectReviewed.getAssetType()));
+
+			sb.append("\"");
+		}
+
 		if (objectReviewed.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -98,6 +126,21 @@ public class ObjectReviewedSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (objectReviewed.getAssetTitle() == null) {
+			map.put("assetTitle", null);
+		}
+		else {
+			map.put(
+				"assetTitle", String.valueOf(objectReviewed.getAssetTitle()));
+		}
+
+		if (objectReviewed.getAssetType() == null) {
+			map.put("assetType", null);
+		}
+		else {
+			map.put("assetType", String.valueOf(objectReviewed.getAssetType()));
+		}
+
 		if (objectReviewed.getId() == null) {
 			map.put("id", null);
 		}
@@ -135,7 +178,17 @@ public class ObjectReviewedSerDes {
 			ObjectReviewed objectReviewed, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "assetTitle")) {
+				if (jsonParserFieldValue != null) {
+					objectReviewed.setAssetTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetType")) {
+				if (jsonParserFieldValue != null) {
+					objectReviewed.setAssetType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					objectReviewed.setId(
 						Long.valueOf((String)jsonParserFieldValue));

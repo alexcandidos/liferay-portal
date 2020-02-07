@@ -1,23 +1,34 @@
 definition {
 
 	macro assertEngineVendorAndVersions {
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-			position = "1",
-			searchInformation = "${engineVendor}",
-			value1 = "${engineVendor}");
+		if (IsElementNotPresent(locator1 = "SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR")) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
+				value1 = "${engineVendor}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-			position = "2",
-			searchInformation = "${clientVersion}",
-			value1 = "${clientVersion}");
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#CLIENT_VERSION",
+				value1 = "${clientVersion}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-			position = "3",
-			searchInformation = "${serverVersion}",
-			value1 = "${serverVersion}");
+			Panel.expandPanel(panel = "Nodes (1)");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#SERVER_VERSION",
+				value1 = "${serverVersion}");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR",
+				value1 = "${engineVendor}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#ELASTICSEARCH6_CLIENT_VERSION",
+				value1 = "${clientVersion}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#ELASTICSEARCH6_NODES",
+				value1 = "${serverVersion}");
+		}
 	}
 
 	macro executeSearchActions {
@@ -25,8 +36,14 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
-		var searchClientVersion = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[2]");
-		var searchEngineVendor = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[1]");
+		if (IsElementPresent(locator1 = "SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR")) {
+			var searchClientVersion = selenium.getText("SearchAdmin#ELASTICSEARCH6_CLIENT_VERSION");
+			var searchEngineVendor = selenium.getText("SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR");
+		}
+		else {
+			var searchClientVersion = selenium.getText("SearchAdmin#CLIENT_VERSION");
+			var searchEngineVendor = selenium.getText("SearchAdmin#SEARCH_ENGINE_VENDOR");
+		}
 
 		if (contains("${searchEngineVendor}", "Elasticsearch")) {
 			if (contains("${searchClientVersion}", "7.") && contains("${searchEngineVendor}", "Embedded")) {
@@ -37,7 +54,7 @@ definition {
 			}
 		}
 
-		Panel.expandPanel(panel = "Index Actions");
+		Navigator.gotoNavItem(navItem = "Index Actions");
 
 		AssertClick.assertTextClickAt(
 			key_actionsDescription = "${actionsDescription}",

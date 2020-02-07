@@ -17,7 +17,9 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
 import NavigationBar from './pages/NavigationBar.es';
+import EditAnswer from './pages/answers/EditAnswer.es';
 import Keywords from './pages/keywords/Keywords.es';
+import EditQuestion from './pages/questions/EditQuestion.es';
 import NewQuestion from './pages/questions/NewQuestion.es';
 import Question from './pages/questions/Question.es';
 import Questions from './pages/questions/Questions.es';
@@ -38,6 +40,10 @@ export default props => {
 							)}
 						/>
 						<Route
+							component={EditAnswer}
+							path="/answers/:answerId/edit"
+						/>
+						<Route
 							path="/questions/keyword/:keyword"
 							render={props => (
 								<Questions
@@ -45,6 +51,20 @@ export default props => {
 									keyword={props.match.params.keyword}
 								/>
 							)}
+						/>
+						<Route
+							path="/questions/creator/:creatorId"
+							render={props => (
+								<Questions
+									{...props}
+									keyword={props.match.params.creatorId}
+								/>
+							)}
+						/>
+						<Route
+							component={EditQuestion}
+							exact
+							path="/questions/:questionId/edit"
 						/>
 						<Route component={Questions} exact path="/questions" />
 						<Route

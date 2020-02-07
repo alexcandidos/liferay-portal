@@ -9,20 +9,13 @@
  * distribution rights of the Software.
  */
 
-import {ClayCheckbox} from '@clayui/form';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import React, {
-	useContext,
-	useState,
-	useEffect,
-	useCallback,
-	useMemo
-} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
 import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
-import {sub} from '../../shared/util/lang.es';
+import ToolbarWithSelection from '../../shared/components/toolbar-with-selection/ToolbarWithSelection.es';
 import AssigneeFilter from '../filter/AssigneeFilter.es';
 import ProcessStatusFilter, {
 	processStatusConstants
@@ -35,7 +28,7 @@ import {InstanceListContext} from './store/InstanceListPageStore.es';
 
 const Header = ({
 	dispatch,
-	items,
+	items = [],
 	routeParams,
 	selectedFilters,
 	totalCount
@@ -48,11 +41,6 @@ const Header = ({
 	} = useContext(InstanceListContext);
 	const {bulkModal, setBulkModal, setSingleModal} = useContext(ModalContext);
 
-	const [toolbarOptions, setToolbarOptions] = useState({
-		active: false,
-		indeterminateCheckbox: false
-	});
-
 	const kebabItems = [
 		{
 			action: () => {
@@ -61,7 +49,8 @@ const Header = ({
 					selectedItems[0].taskNames.length > 1
 				) {
 					setBulkModal({...bulkModal, visible: true});
-				} else {
+				}
+				else {
 					setSingleModal({
 						selectedItem: selectedItems[0],
 						visible: true
@@ -80,47 +69,51 @@ const Header = ({
 	);
 
 	const allPageSelected =
-		items && items.length > 0 && items.length === selectedOnPage.length;
+		items.length > 0 && items.length === selectedOnPage.length;
+
+	const checkbox = {
+		checked: allPageSelected || selectAll,
+		indeterminate:
+			selectedOnPage.length > 0 && !allPageSelected && !selectAll
+	};
+
+	const remainingItems = useMemo(() => {
+		return items.filter(
+			item =>
+				!selectedItems.find(({id}) => item.id === id) &&
+				item.status !== processStatusConstants.completed
+		);
+	}, [items, selectedItems]);
+
+	const toolbarActive = useMemo(() => selectedItems.length > 0, [
+		selectedItems
+	]);
 
 	useEffect(() => {
-		const active = selectedItems.length > 0;
-		const label = selectAll ? Liferay.Language.get('all-selected') : '';
-
-		setSelectAll(totalCount > 0 && totalCount === selectedItems.length);
-
-		setToolbarOptions({
-			active,
-			checked: allPageSelected || selectAll,
-			indeterminateCheckbox:
-				selectedOnPage.length > 0 && !allPageSelected && !selectAll,
-			label
-		});
+		if (selectAll && remainingItems.length > 0) {
+			setSelectedItems(items);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [items, selectedItems, selectAll]);
+	}, [items]);
 
-	const handleSelectAll = useCallback(
-		checked => {
-			let updatedItems;
+	const handleClear = () => {
+		setSelectedItems([]);
+		setSelectAll(false);
+	};
 
-			if (checked) {
-				updatedItems = [
-					...selectedItems,
-					...items.filter(
-						item =>
-							!selectedItems.find(({id}) => item.id === id) &&
-							item.status !== processStatusConstants.completed
-					)
-				];
-			} else {
-				updatedItems = selectedItems.filter(
-					item => !items.find(({id}) => item.id === id)
-				);
-			}
+	const handleCheck = useCallback(
+		checked => () => {
+			const updatedItems = checked
+				? [...selectedItems, ...remainingItems]
+				: selectedItems.filter(
+						item => !items.find(({id}) => item.id === id)
+				  );
 
+			setSelectAll(totalCount > 0 && totalCount === updatedItems.length);
 			setSelectedItems(updatedItems);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[items, selectedItems]
+		[items, remainingItems, selectedItems]
 	);
 
 	const statusesFilterItem = useMemo(
@@ -147,107 +140,29 @@ const Header = ({
 		[completedStatusSelected, selectedFilters]
 	);
 
-	const timeRangeStyle = completedStatusSelected
-		? {display: 'inherit'}
-		: {display: 'none'};
+	const timeRangeStyle = {
+		display: completedStatusSelected ? 'inherit' : 'none'
+	};
 
 	return (
 		<>
-			<ClayManagementToolbar
-				active={toolbarOptions.active}
-				className="show-quick-actions-on-hover"
+			<ToolbarWithSelection
+				{...checkbox}
+				active={toolbarActive}
+				handleCheck={handleCheck(
+					!checkbox.indeterminate && !selectAll && !allPageSelected
+				)}
+				handleClear={handleClear}
+				handleSelectAll={() => {
+					setSelectedItems(items);
+					setSelectAll(true);
+				}}
+				selectAll={selectAll}
+				selectedCount={selectedItems.length}
+				totalCount={totalCount}
 			>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item
-						className="ml-2"
-						style={{padding: '1.2rem 0'}}
-					>
-						<ClayCheckbox
-							checked={toolbarOptions.checked}
-							data-testid="checkAllButton"
-							indeterminate={toolbarOptions.indeterminateCheckbox}
-							label={toolbarOptions.label}
-							onChange={() => {
-								handleSelectAll(
-									!toolbarOptions.indeterminateCheckbox &&
-										!selectAll &&
-										!allPageSelected
-								);
-							}}
-						/>
-					</ClayManagementToolbar.Item>
-
-					{!toolbarOptions.active ? (
-						<>
-							<ClayManagementToolbar.Item>
-								<strong className="ml-0 mr-0 navbar-text">
-									{Liferay.Language.get('filter-by')}
-								</strong>
-							</ClayManagementToolbar.Item>
-
-							<SLAStatusFilter
-								dispatch={dispatch}
-								processId={routeParams.processId}
-							/>
-
-							<ProcessStatusFilter
-								dispatch={dispatch}
-								processId={routeParams.processId}
-							/>
-
-							<TimeRangeFilter
-								dispatch={dispatch}
-								options={{
-									withSelectionTitle: false
-								}}
-								processId={routeParams.processId}
-								style={timeRangeStyle}
-							/>
-
-							<ProcessStepFilter
-								dispatch={dispatch}
-								processId={routeParams.processId}
-							/>
-
-							<AssigneeFilter
-								dispatch={dispatch}
-								processId={routeParams.processId}
-							/>
-						</>
-					) : (
-						!selectAll && (
-							<>
-								<ClayManagementToolbar.Item>
-									<span className="ml-0 mr-0 navbar-text">
-										{sub(
-											Liferay.Language.get(
-												'x-of-x-items-selected'
-											),
-											[selectedItems.length, totalCount]
-										)}
-									</span>
-								</ClayManagementToolbar.Item>
-
-								<ClayManagementToolbar.Item>
-									<button
-										className="btn btn-link btn-sm font-weight-bold pl-0 text-primary"
-										data-testid="selectRemainingButton"
-										onClick={() => {
-											handleSelectAll(true);
-										}}
-									>
-										{Liferay.Language.get(
-											'select-all-remaining-items'
-										)}
-									</button>
-								</ClayManagementToolbar.Item>
-							</>
-						)
-					)}
-				</ClayManagementToolbar.ItemList>
-
-				{toolbarOptions.active && (
-					<ClayManagementToolbar.Item>
+				{toolbarActive ? (
+					<ClayManagementToolbar.Item className="navbar-nav-last">
 						<div
 							className="autofit-col"
 							data-testid="headerQuickAction"
@@ -255,8 +170,38 @@ const Header = ({
 							<QuickActionKebab items={kebabItems} />
 						</div>
 					</ClayManagementToolbar.Item>
+				) : (
+					<>
+						<ClayManagementToolbar.Item>
+							<strong className="ml-0 mr-0 navbar-text">
+								{Liferay.Language.get('filter-by')}
+							</strong>
+						</ClayManagementToolbar.Item>
+
+						<SLAStatusFilter dispatch={dispatch} />
+
+						<ProcessStatusFilter dispatch={dispatch} />
+
+						<TimeRangeFilter
+							dispatch={dispatch}
+							options={{
+								withSelectionTitle: false
+							}}
+							style={timeRangeStyle}
+						/>
+
+						<ProcessStepFilter
+							dispatch={dispatch}
+							processId={routeParams.processId}
+						/>
+
+						<AssigneeFilter
+							dispatch={dispatch}
+							processId={routeParams.processId}
+						/>
+					</>
 				)}
-			</ClayManagementToolbar>
+			</ToolbarWithSelection>
 
 			{selectedFilterItems.length > 0 && (
 				<ResultsBar>

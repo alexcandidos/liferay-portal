@@ -48,6 +48,7 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -312,12 +313,6 @@ public class ContentPageEditorDisplayContext {
 				"hasEditSegmentsEntryPermission",
 				editorSoyContext.get("hasEditSegmentsEntryPermission")
 			).put(
-				"hasUpdateContentPermissions",
-				editorSoyContext.get("hasUpdateContentPermissions")
-			).put(
-				"hasUpdatePermissions",
-				editorSoyContext.get("hasUpdatePermissions")
-			).put(
 				"imageSelectorURL", editorSoyContext.get("imageSelectorURL")
 			).put(
 				"infoItemSelectorURL",
@@ -384,9 +379,6 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"fragmentEntryLinks", editorSoyContext.get("fragmentEntryLinks")
 			).put(
-				"hasLockedSegmentsExperiment",
-				editorSoyContext.get("hasLockedSegmentsExperiment")
-			).put(
 				"languageId", editorSoyContext.get("languageId")
 			).put(
 				"layoutData", editorSoyContext.get("layoutData")
@@ -398,6 +390,18 @@ public class ContentPageEditorDisplayContext {
 				"masterLayoutData", editorSoyContext.get("masterLayoutData")
 			).put(
 				"pageContents", editorSoyContext.get("pageContents")
+			).put(
+				"permissions",
+				HashMapBuilder.<String, Object>put(
+					ContentPageEditorActionKeys.LOCKED_SEGMENTS_EXPERIMENT,
+					editorSoyContext.get("hasLockedSegmentsExperiment")
+				).put(
+					ContentPageEditorActionKeys.UPDATE,
+					editorSoyContext.get("hasUpdatePermissions")
+				).put(
+					ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT,
+					editorSoyContext.get("hasUpdateContentPermissions")
+				).build()
 			).put(
 				"segmentsExperienceId",
 				editorSoyContext.get("segmentsExperienceId")
