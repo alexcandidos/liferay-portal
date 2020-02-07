@@ -62,4 +62,10 @@ definition {
 			locator1 = "TableViewBuilder#VALIDATE_PORTLET_FIELD_TYPE");
 	}
 
+	macro validatePortletTextInput {
+		AssertElementPresent(
+			key_textInput = "${textInput}",
+			locator1 = "TableViewBuilder#VALIDATE_PORTLET_TEXT_INPUT");
+	}
+
 }
