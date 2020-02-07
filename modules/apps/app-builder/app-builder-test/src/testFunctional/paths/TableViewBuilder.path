@@ -23,13 +23,11 @@
 	<td></td>
 </tr>
 
-<<<<<<< HEAD
 <tr>
 	<td>FIELD_LABEL</td>
 	<td>//div[@class='autofit-col']//span[contains(text(),'${key_fieldType}')]</td>
 	<td></td>
 </tr>
-=======
 <!--HOMEPAGE_TABLE_VIEW-->
 
 <tr>
@@ -38,7 +36,12 @@
 	<td></td>
 </tr>
 
->>>>>>> LRQA-54500 Add new path to validate table view portlet field type
+<tr>
+	<td>VALIDATE_PORTLET_TEXT_INPUT</td>
+	<td>//div[contains(.,'${key_textInput}') and contains(.,'Text')]//h2[contains(text(),'Table View')]</td>
+	<td></td>
+</tr>
+
 <!--SIDEBAR-->
 
 <tr>
