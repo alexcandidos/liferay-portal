@@ -34,6 +34,7 @@ definition {
 		Check.checkToggleSwitch(
 			key_deployOption = "${deployOption}",
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+	}
 
 	macro saveApp {
 		Button.click(button = "Save");
