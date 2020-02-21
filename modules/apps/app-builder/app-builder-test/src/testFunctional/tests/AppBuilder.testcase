@@ -577,7 +577,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "${myAppName}");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -612,7 +612,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -668,7 +668,7 @@ definition {
 
 		DetailsView.deleteEntry(itemName = "Alex");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -830,7 +830,7 @@ definition {
 
 		SelectWindow.selectPopUp(locator1 = "null");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -865,7 +865,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -921,7 +921,7 @@ definition {
 
 		DetailsView.deleteEntry(itemName = "Alex");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -1096,7 +1096,7 @@ definition {
 			pageName = "App Builder Test Page",
 			portletName = "My Registration app");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -1200,7 +1200,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Test App");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -1339,7 +1339,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Test App 1");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "Text",
@@ -1353,7 +1353,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Test App 2");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "Numeric",
@@ -1563,7 +1563,7 @@ definition {
 			pageName = "App Builder Page",
 			portletName = "Widget App");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -1615,7 +1615,7 @@ definition {
 			pageName = "App Builder Page",
 			portletName = "Widget App");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -1722,7 +1722,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "${myAppName_1}");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "${myTextFieldName_1}",
@@ -1734,7 +1734,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "${myAppName_2}");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "${myTextFieldName_2}",
@@ -1748,7 +1748,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${myTextFieldName_1}");
 	}
@@ -1821,7 +1821,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_1}");
 		SelectWindow.selectPopUp(locator1 = "null");
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 		FormViewBuilder.editText(
 			fieldName = "${myTextFieldName_1}",
 			fieldValue = "Content from Form 1");
@@ -1833,7 +1833,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_2}");
 		SelectWindow.selectPopUp(locator1 = "null");
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 		FormViewBuilder.editText(
 			fieldName = "${myTextFieldName_2}",
 			fieldValue = "Content from Form 2");
@@ -1846,7 +1846,7 @@ definition {
 		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_3}");
 		SelectWindow.selectPopUp(locator1 = "null");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${myTextFieldName_1}");
 
 		Navigator.closeWindow();
@@ -2267,7 +2267,7 @@ definition {
 					siteName = "App Builder Site Name");
 			}
 
-			AppBuilderAdmin.add();
+			AppBuilderAdmin.addEntry();
 
 			FormViewBuilder.editText(
 				fieldName = "Text",
@@ -2867,7 +2867,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "${myAppName}");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -2882,7 +2882,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Test");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Tester");
 
-		AppBuilderAdmin.add();
+		AppBuilderAdmin.addEntry();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
