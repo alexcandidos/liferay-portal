@@ -1924,6 +1924,8 @@ definition {
 
 		FormViewBuilder.addFromObjectField(fieldName = "Hobbies");
 
+		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies edited");
+
 		FormViewBuilder.validateFormMultipleSelectionField(
 			fieldLabel = "Multiple 1",
 			fieldName = "Hobbies");
