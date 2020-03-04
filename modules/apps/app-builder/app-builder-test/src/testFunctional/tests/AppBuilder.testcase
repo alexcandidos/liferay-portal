@@ -1928,7 +1928,7 @@ definition {
 
 		FormViewBuilder.validateFormMultipleSelectionField(
 			fieldLabel = "Multiple 1",
-			fieldName = "Hobbies");
+			fieldName = "Hobbies edited");
 
 		FormViewBuilder.editFieldInObject(
 			fieldLabel = "Testing Changed Name",
@@ -1943,6 +1943,13 @@ definition {
 		FormViewBuilder.validateSearchResult(fieldLabel = "Date of birth");
 
 		FormViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "My Form View");
+
+		FormViewBuilder.validateFieldInObject(fieldLabel = "Text");
+
+		FormViewBuilder.validateFieldInObject(fieldLabel = "Select from List");
+
 	}
 
 	@description = "Search for a deployment in the deployment lists"
