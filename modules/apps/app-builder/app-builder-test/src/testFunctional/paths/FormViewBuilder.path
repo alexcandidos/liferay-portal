@@ -42,7 +42,7 @@
 
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//div[@class='ddm-drag']//p[@class='ddm-label'][contains(text(),'${fieldLabel}')]</td>
+	<td>//p[text()='${fieldLabel}']</td>
 	<td></td>
 </tr>
 
