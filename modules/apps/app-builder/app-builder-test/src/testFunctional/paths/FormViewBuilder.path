@@ -42,15 +42,7 @@
 
 <tr>
 	<td>FIELD_LABEL</td>
-<<<<<<< HEAD
-<<<<<<< HEAD
 	<td>//p[text()='${fieldLabel}']</td>
-=======
-	<td>//div[@class='ddm-drag']//p[@class='ddm-label'][contains(text(),'${fieldLabel}')]</td>
->>>>>>> LRQA-53878 Add paths for new AppBuilder Delete Form View Field from Object test
-=======
-	<td>//p[text()='${fieldLabel}']</td>
->>>>>>> LRQA-53878 Update Path FIELD_LABEL to match updated testfix
 	<td></td>
 </tr>
 
