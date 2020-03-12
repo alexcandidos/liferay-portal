@@ -88,6 +88,16 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editFieldLabel {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+
+		Type(
+			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
+			value1 = "${label}");
+	}
+
 	macro editOptionsRow {
 
 		var key_rowNumber = "${rowNumber}";
