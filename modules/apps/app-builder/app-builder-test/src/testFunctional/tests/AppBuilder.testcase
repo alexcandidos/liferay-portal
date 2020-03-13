@@ -569,7 +569,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "${myAppName}");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -604,7 +604,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -660,7 +660,7 @@ definition {
 
 		DetailsView.deleteEntry(itemName = "Alex");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -823,7 +823,7 @@ definition {
 
 		SelectWindow.selectPopUp(locator1 = "null");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -858,7 +858,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -914,7 +914,7 @@ definition {
 
 		DetailsView.deleteEntry(itemName = "Alex");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -1090,7 +1090,7 @@ definition {
 			pageName = "App Builder Test Page",
 			portletName = "My Registration app");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -1156,6 +1156,10 @@ definition {
 			fieldValue = "05/02/2014");
 
 		AppBuilderAdmin.save();
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Pepe");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Guardi");
@@ -1495,7 +1499,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Test App");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Text",
@@ -1755,7 +1759,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Test App 1");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Text",
@@ -1769,7 +1773,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Test App 2");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Numeric",
@@ -2056,6 +2060,7 @@ definition {
 	}
 
 	@description = "No results found screen is shown when the search doesn't retrieve any results"
+	@ignore = "true"
 	@priority = "5"
 	test FormViewSearchNoResultsFound {
 
@@ -2191,7 +2196,7 @@ definition {
 			fieldName = "Nickname",
 			fieldValue = "Tester");
 
-		Click(locator1 = "AppBuilder#SAVE_BUTTON");
+		AppBuilderAdmin.save();
 
 		AppBuilderAdmin.validateSuccessMessage();
 
@@ -2241,7 +2246,7 @@ definition {
 			pageName = "App Builder Test Page",
 			portletName = "Widget App");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Text",
@@ -2297,7 +2302,7 @@ definition {
 			pageName = "App Builder Test Page",
 			portletName = "Widget App");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Text",
@@ -2562,15 +2567,10 @@ definition {
 			fieldType = "${myTextFieldName_2}",
 			tableViewName = "${myTableViewName_2}");
 
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_1}");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_2}");
-
 		AppBuilderAdmin.switchTab(tabName = "Apps");
 		AppBuilderAdmin.add();
 		AppBuilderAdmin.setName(title = "${myAppName_1}");
 		App.selectFormView(formViewName = "${myFormViewName_1}");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_1}");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_2}");
 		App.selectTableView(tableViewName = "${myTableViewName_1}");
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.openProductMenuPlaceItDropdown();
@@ -2602,7 +2602,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "${myAppName_1}");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "${myTextFieldName_1}",
@@ -2610,13 +2610,11 @@ definition {
 
 		AppBuilderAdmin.save();
 
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 1");
-
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",
 			portlet = "${myAppName_2}");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "${myTextFieldName_2}",
@@ -2624,15 +2622,13 @@ definition {
 
 		AppBuilderAdmin.save();
 
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
-
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",
 			portlet = "${myAppName_3}");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${myTextFieldName_1}");
 	}
@@ -2705,7 +2701,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_1}");
 		SelectWindow.selectPopUp(locator1 = "null");
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 		FormViewBuilder.editText(
 			fieldName = "${myTextFieldName_1}",
 			fieldValue = "Content from Form 1");
@@ -2717,7 +2713,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_2}");
 		SelectWindow.selectPopUp(locator1 = "null");
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 		FormViewBuilder.editText(
 			fieldName = "${myTextFieldName_2}",
 			fieldValue = "Content from Form 2");
@@ -2730,7 +2726,7 @@ definition {
 		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_3}");
 		SelectWindow.selectPopUp(locator1 = "null");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${myTextFieldName_1}");
 
 		Navigator.closeWindow();
@@ -3455,7 +3451,7 @@ definition {
 					siteName = "App Builder Site Name");
 			}
 
-			AppBuilderAdmin.addEntry();
+			AppBuilderAdmin.add();
 
 			FormViewBuilder.editText(
 				fieldName = "Text",
@@ -4091,7 +4087,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "${myAppName}");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -4106,7 +4102,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Test");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Tester");
 
-		AppBuilderAdmin.addEntry();
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "Full name",
@@ -4140,5 +4136,103 @@ definition {
 
 		DetailsView.deleteEntry(itemName = "Changed");
 	}
+
+	@description = "LRQA-56514: Make sure predefined values are persisted when creating a Form View"
+	@priority = "5"
+
+    test PredefinedValuesArePersistedInFormView {
+
+        property portal.acceptance = "true";
+		var myFormViewName = "Forms";
+
+        AppBuilderAdmin.addCustomObject(
+			customObjectName = "My new object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.setFieldPredefinedText(fieldValue = "Rebeca");
+        FormViewBuilder.closeSidebar();
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.setFieldPredefinedText(fieldValue = "12345");
+        FormViewBuilder.closeSidebar();
+
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.setFieldPredefinedDate(fieldValue = "03/02/2019");
+        FormViewBuilder.closeSidebar();
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.selectSelectOptionPredefined(selectOption = "Select 2");
+        FormViewBuilder.closeSidebar();
+
+
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Multiple${number}",
+				optionValue = "Multiple ${number}",
+				rowNumber = "${number}");
+		}
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.selectSelectWithMultipleOptionsPredefined(
+            fieldName = "Multiple Selection",
+            selectOptionsList = "Multiple 1,Multiple 2,Multiple 3");
+        FormViewBuilder.closeSidebar();
+        
+        FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+		for (var number: list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Task${number}",
+				optionValue = "Task ${number}",
+				rowNumber = "${number}");
+		}
+        FormViewBuilder.switchToAdvancedTab();
+        FormViewBuilder.selectSelectOptionPredefined(selectOption = "Task 3");
+        FormViewBuilder.closeSidebar();
+
+        FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My Form View");
+
+        AppBuilderAdmin.openItem(itemName = "My Form View");
+
+        FormViewBuilder.validatePredefinedText(
+            fieldName = "Text",
+            fieldValue = "Rebeca");
+        
+        FormViewBuilder.validatePredefinedText(
+            fieldName = "Numeric",
+            fieldValue = "12345");
+
+        FormViewBuilder.validatePredefinedText(
+            fieldName = "Date",
+            fieldValue = "03/02/2019");
+
+        FormViewBuilder.validatePredefinedSelectList(
+            fieldName = "Select from List",
+            fieldValue = "Select 2");
+
+        FormViewBuilder.validatePredefinedMultipleSelection(
+            fieldName = "Multiple Selection",
+            selectOptionsList = "Multiple 1,Multiple 2,Multiple 3");
+
+        FormViewBuilder.validatePredefinedSingleSelection(
+            fieldName = "Single Selection",
+            fieldValue = "Task3");
+    }
 
 }
