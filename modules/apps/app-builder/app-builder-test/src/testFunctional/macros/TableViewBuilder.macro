@@ -22,6 +22,10 @@ definition {
 		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
 	}
 
+	macro clearSearch {
+		Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
+	}
+
 	macro clickOnClearFilters {
 		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
 		Click(locator1 = "TableViewBuilder#FILTER_CLEAR");
@@ -58,6 +62,12 @@ definition {
 		AppBuilderAdmin.save();
 	}
 
+	macro searchByItem {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${itemName}");
+	}
+
 	macro selectFilterDropdownItem {
 		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
 
@@ -89,6 +99,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
 			value1 = "${columnLabel}");
+	}
+
+	macro validateDisabledField {
+		AssertElementPresent(
+			locator1 = "TableViewBuilder#DISABLED_COLUMN",
+			value1 = "${fieldType}");
 	}
 
 	macro validateFilterDropdownList {
