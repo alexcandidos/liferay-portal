@@ -273,7 +273,6 @@ definition {
 		Click(locator1 = "FormViewBuilder#RULES_TAB");
 	}
 
-
 	macro openFormView {
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	}
