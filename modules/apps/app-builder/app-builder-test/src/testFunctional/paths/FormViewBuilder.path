@@ -365,6 +365,44 @@
 	<td></td>
 </tr>
 
+<!--TABS-->
+
+<tr>
+	<td>RULES_TAB</td>
+	<td>//button[@id='rules']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FIELDS_TAB</td>
+	<td>//button[@id='fields']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_NAME_TEXT_FIELD</td>
+	<td>//input[@placeholder='Untitled Rule']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_ADD_BUTTON</td>
+	<td>//button[@class='btn btn-monospaced btn-primary']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_NAME</td>
+	<td>//input[@placeholder='Untitled Rule']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>RULE_BUILDER_SAVE_BUTTON</td>
+	<td>xpath=(//div[contains(@class, 'modal-item-last')]//button[contains(@class,'btn-primary')])[3]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>
