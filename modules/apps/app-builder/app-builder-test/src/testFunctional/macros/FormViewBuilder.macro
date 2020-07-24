@@ -87,6 +87,10 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
+	macro addRule {
+		Click(locator1 = "FormViewBuilder#RULE_ADD_BUTTON");
+	}
+
 	macro cancelButtonInDeleteFromObject {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
 	}
@@ -95,6 +99,12 @@ definition {
 		Check.checkToggleSwitch(
 			key_switcherOption = "${propertyName}",
 			locator1 = "FormViewBuilder#SWITCHER_OPTION");
+	}
+
+	macro clickFieldLabel {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
 	}
 
 	macro closeSidebar() {
@@ -191,6 +201,12 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#OPTIONS_OPTION_NAME_FIELD");
 	}
 
+	macro editRuleName {
+		Type(
+			locator1 = "FormViewBuilder#RULE_BUILDER_NAME",
+			value1 = "${ruleName}");
+	}
+
 	macro editText {
 		Type(
 			key_fieldName = "${fieldName}",
@@ -249,12 +265,26 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
+	macro gotoFields {
+		Click(locator1 = "FormViewBuilder#FIELDS_TAB");
+	}
+
+	macro gotoRules {
+		Click(locator1 = "FormViewBuilder#RULES_TAB");
+	}
+
 	macro openFormView {
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	}
 
 	macro openSidebar() {
 		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR");
+	}
+
+	macro ruleSave {
+		AssertClick(
+			locator1 = "FormViewBuilder#RULE_BUILDER_SAVE_BUTTON",
+			value1 = "Save");
 	}
 
 	macro save {

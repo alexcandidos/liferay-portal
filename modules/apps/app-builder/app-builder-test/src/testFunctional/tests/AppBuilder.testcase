@@ -3114,4 +3114,172 @@ definition {
 		DetailsView.deleteEntry(itemName = "Changed");
 	}
 
+	@description = "Saved form view rules run during new entry submissions"
+	@priority = "5"
+	test ViewFormViewRules {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+
+		FormViewBuilder.clickFieldLabel(fieldLabel = "Multiple Selection");
+
+		FormViewBuilder.gotoRules();
+
+		FormViewBuilder.addRule();
+
+		FormViewBuilder.editRuleName(ruleName = "Multiple Selection Rule");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Multiple Selection",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Upload");
+
+		FormViewBuilder.ruleSave();
+
+		FormViewBuilder.clickFieldLabel(fieldLabel = "Numeric");
+
+		FormViewBuilder.gotoRules();
+
+		FormViewBuilder.addRule();
+
+		FormViewBuilder.editRuleName(ruleName = "Numeric Rule 1");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric",
+			conditionFieldValue = "0",
+			conditionOperator = "Is greater than",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Enable",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormViewBuilder.ruleSave();
+
+		FormViewBuilder.clickFieldLabel(fieldLabel = "Numeric");
+
+		FormViewBuilder.gotoRules();
+
+		FormViewBuilder.addRule();
+
+		FormViewBuilder.editRuleName(ruleName = "Numeric Rule 2");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric",
+			conditionFieldValue = "0",
+			conditionOperator = "Is less than or equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Calculate",
+			actionRowNumber = "1",
+			actionTarget = "Numeric");
+
+		FormViewBuilder.ruleSave();
+
+		FormViewBuilder.clickFieldLabel(fieldLabel = "Select from List");
+
+		FormViewBuilder.gotoRules();
+
+		FormViewBuilder.addRule();
+
+		FormViewBuilder.editRuleName(ruleName = "Select from List");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Select from List",
+			conditionOperator = "Is not equal to",
+			conditionRowNumber = "1",
+			conditionValueField = "Select 1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Enable",
+			actionRowNumber = "1",
+			actionTarget = "Single Selection");
+
+		FormViewBuilder.ruleSave();
+
+		FormViewBuilder.clickFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.gotoRules();
+
+		FormViewBuilder.addRule();
+
+		FormViewBuilder.editRuleName(ruleName = "Text Field Rule");
+
+		FormRules.addCondition();
+
+		FormRules.selectRuleCondition(condition = "AND");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "0",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Select from List",
+			conditionOperator = "Is not equal to",
+			conditionRowNumber = "2",
+			conditionValueField = "Select 1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Single Selection");
+
+		FormViewBuilder.ruleSave();
+
+		FormViewBuilder.clickFieldLabel(fieldLabel = "Numeric");
+
+		FormViewBuilder.gotoRules();
+
+		FormViewBuilder.addRule();
+
+		FormViewBuilder.editRuleName(ruleName = "User Numeric Rule");
+
+		FormRules.configureConditionOptions(
+			conditionField = "User",
+			conditionOperator = "Belongs to",
+			conditionRowNumber = "1",
+			conditionValueType = "Portal Content Reviewer");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Numeric");
+
+		FormViewBuilder.ruleSave();
+	}
+
 }
