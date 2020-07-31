@@ -90,10 +90,19 @@ public class DataListViewResourceImpl
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
 			ActionKeys.DELETE);
 
-		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
-			_getClassNameId(), dataListViewId);
+		_deleteDataListView(dataListViewId);
+	}
 
-		_deDataListViewLocalService.deleteDEDataListView(dataListViewId);
+	@Override
+	public void deleteDataListViewsDataDefinition(Long dataDefinitionId)
+		throws Exception {
+
+		for (DEDataListView deDataListView :
+				_deDataListViewLocalService.getDEDataListViews(
+					dataDefinitionId)) {
+
+			_deleteDataListView(deDataListView.getDeDataListViewId());
+		}
 	}
 
 	@Override
@@ -221,10 +230,6 @@ public class DataListViewResourceImpl
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
 			ActionKeys.UPDATE);
 
-		if (ArrayUtil.isEmpty(dataListView.getFieldNames())) {
-			throw new ValidationException("View is empty");
-		}
-
 		dataListView = _toDataListView(
 			_deDataListViewLocalService.updateDEDataListView(
 				dataListViewId, _toJSON(dataListView.getAppliedFilters()),
@@ -312,6 +317,13 @@ public class DataListViewResourceImpl
 						ddmFormField.getName());
 			}
 		}
+	}
+
+	private void _deleteDataListView(long dataListViewId) throws Exception {
+		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
+			_getClassNameId(), dataListViewId);
+
+		_deDataListViewLocalService.deleteDEDataListView(dataListViewId);
 	}
 
 	private long _getClassNameId() {
