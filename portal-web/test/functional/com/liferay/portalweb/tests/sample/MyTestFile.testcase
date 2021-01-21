@@ -1,0 +1,48 @@
+@component-name = "app-builder"
+definition {
+    property testray.main.component.name = "App Builder";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Navigator.openURL();
+        
+    }
+
+    tearDown {
+        User.logoutAndLoginPG(
+            userLoginEmailAddress = "test@liferay.com",
+            userLoginFullName = "Test Test");
+    }
+
+    @description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+    @priority = "5"
+    test ValidateConfigurationStringAtControlPanel {
+        property portal.acceptance = "true";
+
+
+        ApplicationsMenuHelper.openApplicationsMenu();
+        ApplicationsMenu.gotoPanel(panel = "Control Panel");
+        AppBuilderAdmin.validateCustomObjectNameOnHeader(value1 = "CONFIGURATION" )
+
+
+
+
+        //AppBuilderAdmin.validateItemNameOnTable(value1 = "CONFIGURATION" );
+
+        // AssertTextEquals
+
+		// AppBuilderAdmin.switchTab(tabName = "Control Pane");
+    }
+
+    @description = "Set Screen size to custom and validate values"
+    @priority = "5"
+    test SetScreenSizeAndValidateValues {
+        
+        Click(locator1 = "ControlMenu#SIMULATION");
+
+
+    }
+}
