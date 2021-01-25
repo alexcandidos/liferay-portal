@@ -11,11 +11,11 @@ definition {
         
     }
 
-    tearDown {
-        User.logoutAndLoginPG(
-            userLoginEmailAddress = "test@liferay.com",
-            userLoginFullName = "Test Test");
-    }
+    // tearDown {
+    //     User.logoutAndLoginPG(
+    //         userLoginEmailAddress = "test@liferay.com",
+    //         userLoginFullName = "Test Test");
+    // }
 
     @description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
     @priority = "5"
@@ -101,35 +101,127 @@ definition {
         WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 
-        WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
-        PortletEntry.save();
 
-        WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+        Search.searchCP(searchTerm = "WC Structure Name");
 
-        AssertTextEquals(
-            locator1 = "//*[@id="_com_liferay_journal_web_portlet_JournalPortlet_dataLayoutBuildercontainer"]/div[1]/div/span/div/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div[2]/div/div",
-            value1 = "Text"
-        );
-
-		WebContent.addWithStructureCP(webContentText = "Edited Text Field");
-
-        PortletEntry.save();
-
-        WebContentStructures.deleteCP(structureName = "WC Structure Name");
+        NavItem.gotoStructures();
 
         NavItem.gotoTemplates();
 
         NavItem.gotoStructures();
 
-	
+        WebContentNavigator.gotoEditStructure(
+            structureName = "WC Structure Name"
+        );
 
 
+        DataEngine.viewField(
+            fieldFieldLabel = "Text",
+            fieldName = "Text"); 
+
+        PortletEntry.save();
+
+
+        WebContentStructures.deleteCP(structureName = "WC Structure Name");
+
+
+        AssertTextNotPresent(
+
+            value1 = "WC Structure Name"
+        );
+
+    
+        
+        
+
+
+
+
+
+    }
+
+
+
+
+
+    @priority = "5"
+    test StructureWebValidate{
+        var label = "Teste label";
+
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+		 	portlet = "Web Content");
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+
+        DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+        // DataEngine.editFieldTip(
+        //     fieldFieldLabel = "Text",
+        //     fieldHelp = "Test Help");
+
+
+        // DataEngine.addFields(fieldNameList = "Single Selection,Date,Multiple Selection");
+
+        // var index = "1";
+
+        // for (var optionValue : list "value 1,value 2,value 3") {
+        //     DataEngine.addFieldOption(
+        //         fieldFieldLabel = "Single Selection",
+        //         index = "${index}",
+        //         optionValue = "${optionValue}");
+        //     var index = ${index} + 1;
+        // }
+
+
+        // var index = "1";
+
+        // for (var optionValue : list "value 1,value 2,value 3") {
+        //     DataEngine.addFieldOption(
+        //         fieldFieldLabel = "Multiple Selection",
+        //         index = "${index}",
+        //         optionValue = "${optionValue}");
+        //     var index = ${index} + 1;
+        // }
+
+
+        PortletEntry.changeLocale(locale = "pt-BR");
+
+
+
+    
+
+
+
+        // Translations.changeTargetLocale(
+		// 	currentTargetLocale = "en-US",
+		// 	newTargetLocale = "pt-BR");
+
+
+
+            // Click( 
+            //     key_symbolName = "pt-BR",
+			//     locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
+
+
+        Click(
+			key_symbolName = "pt-BR",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
 
         
 
+    
         
-        
+
+       
 
 
 
