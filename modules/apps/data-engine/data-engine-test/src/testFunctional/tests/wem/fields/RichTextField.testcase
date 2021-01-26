@@ -138,7 +138,26 @@ definition {
 	test RepeatRichTextOnWebContent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 RepeatRichTextOnWebContent pending implementation
+		DataEngine.addField(
+			fieldFieldLabel = "Test",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Test");
+
+		WebContentStructures.saveCP(structureName = "Nova");
+
+		Navigator.gotoNavTab(navTab = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Nova");
+
+		WebContent.addWithStructureCP(
+			structureName = "Nova",
+			webContentTitle = "WC WebContent Title");
+
+		DataEngine.addRepeatableField(fieldName = "Test");
+
+		WebContent.assertFieldRepeated(fieldName = "RichText");
+
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
