@@ -65,12 +65,11 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
-        property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-		    portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
@@ -79,45 +78,44 @@ definition {
 		AssertVisible(locator1 = "Sidebar#FORM_BUILDER");
 
 		DataEngine.addField(
-            fieldFieldLabel = "Lbltest",
-            fieldName = "Text");
+			fieldFieldLabel = "Lbltest",
+			fieldName = "Text");
 
 		DataEngine.editFieldTip(
-            fieldFieldLabel = "Lbltest",
-            fieldHelp = "Help Text test"
-        );	
+			fieldFieldLabel = "Lbltest",
+			fieldHelp = "Help Text test");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldTip(
-            fieldFieldLabel = "Lbltest",
-            fieldHelp = "Texto de ajuda"
-        );	
+			fieldFieldLabel = "Lbltest",
+			fieldHelp = "Texto de ajuda");
 
-		FormViewBuilder.editFieldLabel(fieldLabel="Lbltest", label="Lbltest pt");
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Lbltest",
+			label = "Lbltest pt");
 
-		WebContentStructures.addName(structureName="Titulo teste");
+		WebContentStructures.addName(structureName = "Titulo teste");
 
 		PortletEntry.changeLocale(locale = "en-US");
 
-		WebContentStructures.addName(structureName="Structure1");
+		WebContentStructures.addName(structureName = "Structure1");
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.viewCP(
-            structureName = "Structure1");
+		WebContentStructures.viewCP(structureName = "Structure1");
 
-        LexiconEntry.gotoEntry(rowEntry = "Structure1");
+		LexiconEntry.gotoEntry(rowEntry = "Structure1");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
-            locator1 = "TextInput#NAME",
-            value1 = "Titulo teste");
+			locator1 = "TextInput#NAME",
+			value1 = "Titulo teste");
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.deleteCP(structureName="Structure1");
+		WebContentStructures.deleteCP(structureName = "Structure1");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
