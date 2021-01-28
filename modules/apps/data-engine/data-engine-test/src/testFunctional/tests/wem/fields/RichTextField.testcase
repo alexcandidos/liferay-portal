@@ -11,6 +11,18 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		var structureName = "Test LPS-98076";
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "LPS-98076 Description",
+			structureName = "New Structure");
 	}
 
 	tearDown {
@@ -166,7 +178,19 @@ definition {
 	test VerifyRichTextIsSetAsRequired {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 VerifyRichTextIsSetAsRequired pending implementation
+		DataEngine.addField(
+			fieldFieldLabel = "Test Required",
+			fieldName = "Rich Text"
+		);
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Test Required");
+
+		WebContentStructures.saveCP(structureName = "New Structure");
+
+		WebContentNavigator.gotoEditStructure(structureName = "New Structure");
+
+		FormFields.viewRequiredAsterisk();
+
 	}
 
 }
