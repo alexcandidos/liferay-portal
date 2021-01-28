@@ -1,0 +1,65 @@
+definition {
+	macro assertField {
+		Click(
+				key_fieldFieldLabel = "${fieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER"
+		);
+
+		AssertTextEquals.assertValue(
+				key_text = "Label",
+				locator1 = "Sidebar#DDM_ANY",
+				value1 = "${fieldLabel}"
+		);
+
+		AssertTextEquals.assertValue(
+				key_text = "Help",
+				locator1 = "Sidebar#DDM_ANY",
+				value1 = "${fieldHelp}"
+		);
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
+	macro goBack {
+		Click(locator1 = "Icon#BACK");
+	}
+
+	macro assertDeleted {
+		AssertElementNotPresent(
+				key_ddlDataDefinitionName = "${fieldName}",
+				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME"
+		);
+	}
+
+	macro editFieldLabel {
+		Click(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			value1 = "${fieldFieldLabel}"
+		);
+		Click(
+			locator1 = "Sidebar#DDM_ANY",
+			key_text = "Label"
+		);
+		Type(
+			locator1 = "Sidebar#DDM_ANY",
+			key_text = "Label",
+			value1 = "${newFieldFieldLabel}"
+		);
+		Click(locator1 = "Sidebar#BACK");
+	}
+
+	macro editFieldOption {
+		Click(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			value1 = "${fieldFieldLabel}"
+		);
+		Type(
+			index = "${index}",
+			locator1 = "Sidebar#OPTION_INPUT_WITHOUT_LABEL",
+			value1 = "${optionValue}"
+		);
+		Click(locator1 = "Sidebar#BACK");
+	}
+}

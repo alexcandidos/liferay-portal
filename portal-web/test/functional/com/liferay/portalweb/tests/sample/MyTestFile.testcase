@@ -1,0 +1,172 @@
+@component-name = "app-builder"
+definition {
+    property testray.main.component.name = "App Builder";
+    setUp {
+        TestCase.setUpPortalInstance();
+        User.firstLoginPG();
+        Navigator.openURL();
+    }
+    tearDown {
+        User.logoutAndLoginPG(
+            userLoginEmailAddress = "test@liferay.com",
+            userLoginFullName = "Test Test");
+    }
+    @description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+    @priority = "5"
+    test ValidateConfigurationStringAtControlPanel {
+        ApplicationsMenuHelper.openApplicationsMenu();
+        ApplicationsMenu.gotoPanel(panel = "Control Panel");
+        AssertElementPresent(
+                locator1 = "ApplicationsMenu#CATEGORY",
+                key_category = "Configuration"
+        );
+    }
+    @description = "Set Screen size to custom and validate values"
+    @priority = "5"
+    test SetScreenSizeAndValidateValues {
+        MobileDevice.previewPG(
+                deviceType = "custom",
+                height = "1920",
+                width = "1080"
+        );
+        SelectFrame.selectFrameTop();
+        Simulation.toggleSimulation();
+        Simulation.toggleSimulation();
+        Simulation.assertScreenSize(
+                height = "1920",
+                width = "1080"
+        );
+    }
+    @description = "Validate CRUD of a web content Structure"
+    @priority = "5"
+    test CRUDStructure {
+        ProductMenu.gotoPortlet(
+                category = "Content & Data",
+                panel = "Site Administration",
+                portlet = "Web Content"
+        );
+        NavItem.gotoStructures();
+        WebContentStructures.addCP(
+                structureDescription = "TestDescription",
+                structureName = "TestName"
+        );
+        DataEngine.addField(
+                fieldFieldLabel = "TestName",
+                fieldName = "Text"
+        );
+        DataEngine.editFieldTip(
+                fieldFieldLabel = "TestName",
+                fieldHelp = "TestHelp"
+        );
+        WebContentStructures.saveCP(structureName = "TestName");
+        WebContentStructures.viewTableEntryCP(
+                structureDescription = "TestDescription",
+                structureName = "TestName"
+        );
+        WebContentNavigator.gotoEditStructure(
+                structureName = "TestName"
+        );
+        Structure.assertField(
+                fieldLabel = "TestName",
+                fieldHelp = "TestHelp"
+        );
+        Structure.goBack();
+        WebContentStructures.deleteCP(structureName = "TestName");
+        Structure.assertDeleted(fieldName = "TestName");
+    }
+    @description = "Validate field options translations of a Structure and Web Content"
+    @priority = "5"
+    test CRUDStructureAndWebContent {
+        ProductMenu.gotoPortlet(
+                category = "Content & Data",
+                panel = "Site Administration",
+                portlet = "Web Content"
+        );
+        NavItem.gotoStructures();
+        WebContentStructures.addCP(
+                structureDescription = "TestDescription",
+                structureName = "TestName"
+        );
+        DataEngine.addField(
+                fieldFieldLabel = "TestName",
+                fieldName = "Text"
+        );
+        DataEngine.editFieldTip(
+                fieldFieldLabel = "TestName",
+                fieldHelp = "TestHelp"
+        );
+        DataEngine.addField(
+                fieldFieldLabel = "TestSingle",
+                fieldName = "Single Selection"
+        );
+
+        for (var numberOption : list "1,2") {
+                DataEngine.addFieldOption(
+                        fieldFieldLabel = "TestSingle",
+                        optionValue = "Option ${numberOption}",
+                        index = "${numberOption}"
+                );
+        }
+        DataEngine.addField(
+                fieldFieldLabel = "TestMultiple",
+                fieldName = "Multiple Selection"
+        );
+        for (var numberOption : list "1,2,3") {
+                DataEngine.addFieldOption(
+                        fieldFieldLabel = "TestMultiple",
+                        optionValue = "Option ${numberOption}",
+                        index = "${numberOption}"
+                );
+        }
+        DataEngine.editFieldRepeatable(fieldFieldLabel = "TestMultiple");
+
+        DataEngine.addField(
+                fieldFieldLabel = "TestDate",
+                fieldName = "Date"
+        );
+        DataEngine.editFieldRequired(fieldFieldLabel = "TestDate");
+
+        WebContentStructures.addName(structureName = "NewTestName");
+
+        WebContentStructures.addLocalization(
+            locale = "pt-BR",
+            localization1Name = "Novo nome do teste"
+        );
+        Structure.editFieldLabel(
+                fieldFieldLabel = "TestName",
+                newFieldFieldLabel = "Teste de nome"
+        );
+        DataEngine.editFieldTip(
+                fieldFieldLabel = "Teste de nome",
+                fieldHelp = "Teste do campo de ajuda"
+        );
+        Structure.editFieldLabel(
+                fieldFieldLabel = "TestSingle",
+                newFieldFieldLabel = "Teste de única seleção"
+        );
+        Structure.editFieldLabel(
+                fieldFieldLabel = "TestMultiple",
+                newFieldFieldLabel = "Teste de múltipla seleção"
+        );
+        Structure.editFieldLabel(
+                fieldFieldLabel = "TestDate",
+                newFieldFieldLabel = "Teste de data"
+        );
+        for (var numberOption : list "1,2") {
+                Structure.editFieldOption(
+                        fieldFieldLabel = "Teste de única seleção",
+                        index = "${numberOption}",
+                        optionValue = "Opção ${numberOption}"
+                );
+        }
+        for (var numberOption : list "1,2,3") {
+                Structure.editFieldOption(
+                        fieldFieldLabel = "Teste de múltipla seleção",
+                        index = "${numberOption}",
+                        optionValue = "Opção ${numberOption}"
+                );
+        }
+
+        WebContentStructures.saveCP(structureName = "NewTestName");
+    }
+}
