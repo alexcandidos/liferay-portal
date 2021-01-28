@@ -11,6 +11,18 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		var structureName = "Test LPS-98076";
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "LPS-98076 Description",
+			structureName = "New Structure");
 	}
 
 	tearDown {
@@ -70,13 +82,32 @@ definition {
 		// TODO LPS-98081 RepeatRichTextOnWebContent pending implementation
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+ 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "4"
 	test SetFieldReferenceOfRichText {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98076 SetFieldReferenceOfRichText pending implementation
+        DataEngine.addField(
+			fieldFieldLabel = "First Label",
+			fieldName = "Rich Text");
+
+        WebContentStructures.saveCP();
+
+        WebContentNavigator.gotoEditStructure(structureName = "New Structure");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "First Label",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "First Label");
+
+        Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertTextEquals.assertValue(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "FirstLabel");	
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
