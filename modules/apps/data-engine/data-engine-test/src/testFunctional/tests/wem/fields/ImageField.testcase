@@ -137,16 +137,15 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "Description Text",
-			structureName ="${structureTitle}");
+			structureName = "${structureTitle}");
 
 		DataEngine.addField(
 			fieldFieldLabel = "${fieldLabel}",
 			fieldName = "Image",
-			fieldReference = "${fieldReferenceTemp}"
-		);
-			
+			fieldReference = "${fieldReferenceTemp}");
+
 		Button.clickSave();
-			
+
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
 		Click(
@@ -157,8 +156,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Form#FIELD_REFERENCE",
-			value1 = "${fieldReferenceTemp}"
-		);
+			value1 = "${fieldReferenceTemp}");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"

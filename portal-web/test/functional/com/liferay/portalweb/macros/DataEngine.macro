@@ -65,7 +65,7 @@ definition {
 
 		if (!(isSet(fieldReference))) {
 			var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
-    	}	
+		}
 
 		Type(
 			key_fieldLabel = "Field Reference",
