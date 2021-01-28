@@ -11,7 +11,6 @@ definition {
 
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_fieldName = "${fieldName}";
-		var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
 
 		if (isSet(fieldLocation)) {
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -63,6 +62,10 @@ definition {
 		}
 
 		Navigator.gotoNavTab(navTab = "Advanced");
+
+		if (!(isSet(fieldReference))) {
+			var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
+    	}	
 
 		Type(
 			key_fieldLabel = "Field Reference",
