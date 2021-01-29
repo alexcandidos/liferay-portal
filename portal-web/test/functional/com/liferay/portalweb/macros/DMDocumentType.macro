@@ -1,6 +1,12 @@
 definition {
 
 	macro add {
+		DMDocumentType.addWithoutSave();
+
+		DDLDataDefinition.save();
+	}
+
+	macro addWithoutSave {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = "${dmDocumentTypeName}");
@@ -48,8 +54,6 @@ definition {
 
 			DMDocumentType.selectPGMetadataSet(key_metadataSetName = "${metadataSetName}");
 		}
-
-		DDLDataDefinition.save();
 	}
 
 	macro deleteFields {
