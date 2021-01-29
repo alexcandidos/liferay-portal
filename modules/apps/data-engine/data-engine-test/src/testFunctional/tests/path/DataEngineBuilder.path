@@ -34,6 +34,12 @@
 </tr>
 
 <tr>
+	<td>EDITING_FORM_FIELDS_GROUP_LABEL</td>
+	<td>//label[(@class='text-uppercase')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>NESTED_DUPLICATED_FORM_FIELDS_GROUP</td>
 	<td>//div[@class='ddm-field-types-fieldset__nested']//label[text()='Copy of Fields Group']</td>
 	<td></td>
