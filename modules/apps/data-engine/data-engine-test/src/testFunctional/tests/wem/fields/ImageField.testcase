@@ -171,7 +171,7 @@ definition {
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "${newLabel}");
 
-		DataEngine.validateDuplicateButton(key_fieldName = "${newLabel}");
+		DataEngine.validateDuplicatedButton(key_fieldName = "${newLabel}");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
