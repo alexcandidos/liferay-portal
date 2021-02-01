@@ -1,8 +1,12 @@
 definition {
 
 	macro add {
-		DMDocumentType.addWithoutSave();
-
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeName = "${dmDocumentTypeName}",
+			dmDocumentTypeFieldNames = "${dmDocumentTypeFieldNames}",
+			dmDocumentTypeDescription = "${dmDocumentTypeDescription}",
+			metadataSetName = "${metadataSetName}");
+			
 		DDLDataDefinition.save();
 	}
 
