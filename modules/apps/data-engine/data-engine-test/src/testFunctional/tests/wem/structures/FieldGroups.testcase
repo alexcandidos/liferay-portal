@@ -38,46 +38,45 @@ definition {
 	@priority = "3"
 	test CheckIfFieldGroupDataPersists {
 		property portal.acceptance = "false";
-        var structureName = "WC Structure Name";
-        
+
+		var structureName = "WC Structure Name";
+
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content");
-        
+			category = "Content & Data",
+			portlet = "Web Content");
+
 		NavItem.gotoStructures();
-        
+
 		WebContentStructures.addCP(
-            structureDescription = "WC Structure Description",
-            structureName = "WC Structure Name");
-        
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
 		DataEngine.addField(
-            fieldFieldLabel = "Text",
-            fieldName = "Text");
-        
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
 		DataEngine.addFieldNested(
-            fieldFieldLabel = "Numeric",
-            fieldName = "Numeric",
-            targetFieldLabel = "Text");
-        
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
 		WebContentStructures.saveCP(structureName = "${structureName}");
-        
+
 		Navigator.gotoNavTab(navTab = "Web Content");
-        
+
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-        
+
 		WebContent.addWithStructureCP(
-            structureName = "WC Structure Name",
-            webContentTitle = "WC Web Content Title");
+			structureName = "WC Structure Name",
+			webContentTitle = "WC Web Content Title");
 
 		Type(
 			locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD",
-			value1 = "Test Editing"
-		);
+			value1 = "Test Editing");
 
 		Type(
 			locator1 = "DataEngineBuilder#WEB_CONTENT_NUMERIC_FIELD",
-			value1 = "12345"
-		);
+			value1 = "12345");
 
 		Button.clickPublish();
 
@@ -85,14 +84,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD",
-			value1 = "Test Editing"
-		);
+			value1 = "Test Editing");
 
 		AssertTextEquals(
 			locator1 = "DataEngineBuilder#WEB_CONTENT_NUMERIC_FIELD",
-			value1 = "12345"
-		);
-
+			value1 = "12345");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
