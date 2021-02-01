@@ -122,7 +122,6 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-<<<<<<< HEAD
 			category = "Content & Data",
 			portlet = "Documents and Media");
 
@@ -132,18 +131,6 @@ definition {
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Color",
 			dmDocumentTypeName = "DM Document Type Name");
-=======
-            category = "Content & Data",
-            portlet = "Documents and Media"
-        );
-
-        DMNavigator.gotoDocumentType();
-
-        DMDocumentType.add(
-            dmDocumentTypeDescription = "DM Document Type Description",
-            dmDocumentTypeFieldNames = "Color",
-            dmDocumentTypeName = "DM Document Type Name");
->>>>>>> 1d8217e (LPS-126908 Fix conflict)
 
 		DMDocumentType.edit(
 			dmDocumentTypeName = "DM Document Type Name",
@@ -152,13 +139,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Documents and Media");
 
-<<<<<<< HEAD
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
-=======
         DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
 		Pause(locator1 = "2000");
->>>>>>> 1d8217e (LPS-126908 Fix conflict)
 
 		AssertElementPresent(
 			key_fieldFieldLabel = "Color Test Name",
