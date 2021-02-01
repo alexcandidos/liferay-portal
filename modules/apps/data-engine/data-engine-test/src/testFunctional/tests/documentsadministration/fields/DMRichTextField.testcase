@@ -177,21 +177,20 @@ definition {
 		var dmDocumentTypeName = "WC Structure Name";
 		var fieldHelp = "Help Text On Upload";
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Documents and Media");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeFieldNames = "Upload"
-		);
+			dmDocumentTypeFieldNames = "Upload",
+			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldTip(
-            fieldFieldLabel = "Upload",
-            fieldHelp = "${fieldHelp}");
+			fieldFieldLabel = "Upload",
+			fieldHelp = "${fieldHelp}");
 
 		DDLDataDefinition.save();
 
@@ -205,4 +204,5 @@ definition {
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
 			value1 = "${fieldHelp}");
 	}
+
 }
