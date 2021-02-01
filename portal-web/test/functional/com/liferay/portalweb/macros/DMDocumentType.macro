@@ -1,10 +1,13 @@
 definition {
 
 	macro add {
-		DMDocumentType.addWithoutSave();
-
-		DDLDataDefinition.save();
-	}
+        DMDocumentType.addWithoutSave(
+            dmDocumentTypeName = "${dmDocumentTypeName}",
+            dmDocumentTypeFieldNames = "${dmDocumentTypeFieldNames}",
+            dmDocumentTypeDescription = "${dmDocumentTypeDescription}",
+            metadataSetName = "${metadataSetName}");
+        DDLDataDefinition.save();
+    }
 
 	macro addWithoutSave {
 		LexiconEntry.gotoAdd();
