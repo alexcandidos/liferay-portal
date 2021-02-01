@@ -170,21 +170,20 @@ definition {
 		var fieldHelp = "Help Text On Upload";
 		var key_fieldFieldLabel = "Help Text";
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Documents and Media");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeFieldNames = "Upload"
-		);
+			dmDocumentTypeFieldNames = "Upload",
+			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldTip(
-            fieldFieldLabel = "Upload",
-            fieldHelp = "${fieldHelp}");
+			fieldFieldLabel = "Upload",
+			fieldHelp = "${fieldHelp}");
 
 		DDLDataDefinition.save();
 
