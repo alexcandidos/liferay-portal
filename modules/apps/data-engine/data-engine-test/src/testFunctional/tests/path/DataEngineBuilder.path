@@ -58,6 +58,16 @@
 	<td>//button[(@class='dropdown-toggle btn btn-monospaced btn-unstyled')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLLAPSIBLE_OPEN</td>
+	<td>//button[@class ='collapse-icon collapse-icon-middle panel-header panel-header-link btn btn-unstyled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLAPSIBLE_CLOSED</td>
+	<td>//button[@class='collapse-icon collapse-icon-middle panel-header panel-header-link collapsed btn btn-unstyled']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

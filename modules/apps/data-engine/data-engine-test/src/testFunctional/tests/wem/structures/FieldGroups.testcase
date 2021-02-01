@@ -118,41 +118,7 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "5"
 	test DuplicateANestedFieldGroup {
-		property portal.acceptance = "false";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Date",
-			fieldName = "Date",
-			targetFieldLabel = "Numeric");
-
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP");
-
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Duplicate");
-
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
-			value1 = "Copy of Fields Group");
-
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+		
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
@@ -236,12 +202,61 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
-	@ignore = "true"
 	@priority = "4"
 	test SetFieldGroupAsCollapsibleAndExecuteOnAWebContent {
-		property portal.acceptance = "false";
 
-		// TODO LPS-98077 SetFieldGroupAsCollapsibleAndExecuteOnAWebContent pending implementation
+		var structureName = "WC Structure Name";
+
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content");
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureDescription = "WC Structure Description",
+            structureName = "WC Structure Name");
+
+        DataEngine.addField(
+            fieldFieldLabel = "Text",
+            fieldName = "Text");
+        
+		DataEngine.addFieldNested(
+            fieldFieldLabel = "Numeric",
+            fieldName = "Numeric",
+            targetFieldLabel = "Text");
+        if (!(isSet(fieldsGroupLabel))) {
+            var fieldsGroupLabel = "Fields Group";
+        }
+        
+		AssertClick.assertPartialTextClickAt(
+            key_fieldFieldLabel = "${fieldsGroupLabel}",
+            locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+            value1 = "${fieldsGroupLabel}");
+        if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
+            Navigator.gotoNavTab(navTab = "Basic");
+        }
+        
+		Check.checkToggleSwitch(
+            checkboxName = "Collapsible",
+            locator1 = "Checkbox#ANY_CHECKBOX");
+        
+		Click(locator1 = "Sidebar#BACK");
+        
+		WebContentStructures.saveCP(structureName = "${structureName}");
+        
+		Navigator.gotoNavTab(navTab = "Web Content");
+        
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+        
+		WebContent.addWithStructureCP(
+            structureName = "WC Structure Name",
+            webContentTitle = "WC WebContent Title");
+        
+		Click(locator1 = "DataEngineBuilder#COLLAPSIBLE_OPEN");
+        
+		AssertElementPresent(locator1 = "DataEngineBuilder#COLLAPSIBLE_CLOSED");
+
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
