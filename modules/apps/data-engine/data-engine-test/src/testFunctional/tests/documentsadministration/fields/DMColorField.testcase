@@ -25,7 +25,7 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		
+
 			User.logoutPG();
 		}
 	}
@@ -117,7 +117,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Documents and Media");
 
-        DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
 		AssertElementPresent(
 			key_fieldFieldLabel = "Color Test Name",
