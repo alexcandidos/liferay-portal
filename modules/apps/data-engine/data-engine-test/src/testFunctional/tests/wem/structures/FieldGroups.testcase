@@ -118,7 +118,6 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "5"
 	test DuplicateANestedFieldGroup {
-		
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
@@ -204,59 +203,57 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "4"
 	test SetFieldGroupAsCollapsibleAndExecuteOnAWebContent {
-
 		var structureName = "WC Structure Name";
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-            structureDescription = "WC Structure Description",
-            structureName = "WC Structure Name");
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
 
-        DataEngine.addField(
-            fieldFieldLabel = "Text",
-            fieldName = "Text");
-        
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
 		DataEngine.addFieldNested(
-            fieldFieldLabel = "Numeric",
-            fieldName = "Numeric",
-            targetFieldLabel = "Text");
-        if (!(isSet(fieldsGroupLabel))) {
-            var fieldsGroupLabel = "Fields Group";
-        }
-        
-		AssertClick.assertPartialTextClickAt(
-            key_fieldFieldLabel = "${fieldsGroupLabel}",
-            locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-            value1 = "${fieldsGroupLabel}");
-        if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
-            Navigator.gotoNavTab(navTab = "Basic");
-        }
-        
-		Check.checkToggleSwitch(
-            checkboxName = "Collapsible",
-            locator1 = "Checkbox#ANY_CHECKBOX");
-        
-		Click(locator1 = "Sidebar#BACK");
-        
-		WebContentStructures.saveCP(structureName = "${structureName}");
-        
-		Navigator.gotoNavTab(navTab = "Web Content");
-        
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-        
-		WebContent.addWithStructureCP(
-            structureName = "WC Structure Name",
-            webContentTitle = "WC WebContent Title");
-        
-		Click(locator1 = "DataEngineBuilder#COLLAPSIBLE_OPEN");
-        
-		AssertElementPresent(locator1 = "DataEngineBuilder#COLLAPSIBLE_CLOSED");
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+		if (!(isSet(fieldsGroupLabel))) {
+			var fieldsGroupLabel = "Fields Group";
+		}
 
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldsGroupLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldsGroupLabel}");
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
+			Navigator.gotoNavTab(navTab = "Basic");
+		}
+
+		Check.checkToggleSwitch(
+			checkboxName = "Collapsible",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
+
+		WebContentStructures.saveCP(structureName = "${structureName}");
+
+		Navigator.gotoNavTab(navTab = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			webContentTitle = "WC WebContent Title");
+
+		Click(locator1 = "DataEngineBuilder#COLLAPSIBLE_OPEN");
+
+		AssertElementPresent(locator1 = "DataEngineBuilder#COLLAPSIBLE_CLOSED");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
