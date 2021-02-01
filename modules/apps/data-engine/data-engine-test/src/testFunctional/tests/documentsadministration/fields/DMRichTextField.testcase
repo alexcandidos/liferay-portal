@@ -168,7 +168,7 @@ definition {
 
 		var dmDocumentTypeName = "WC Structure Name";
 		var fieldHelp = "Help Text On Upload";
-
+		var key_fieldFieldLabel = "Help Text";
 
         ProductMenu.gotoPortlet(
             category = "Content & Data",
@@ -188,19 +188,13 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentCP(
-			dmDocumentTitle = "DM Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		DMDocumentType.gotoEditField(
-			fieldName = "Upload"
-		);
-
-		var key_fieldFieldLabel = "Help Text";
+		DMDocumentType.gotoEditField(fieldName = "Upload");
 
 		AssertTextEquals(
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
 			value1 = "${fieldHelp}");
-		
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
