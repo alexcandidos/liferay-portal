@@ -18,6 +18,11 @@
 	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h6[2]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NAME_STRUCTURE</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
