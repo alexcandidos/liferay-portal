@@ -27,7 +27,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "5"
 	test CheckDefaultWebContentTitleOnWebContentList {
-
 		var structureTitle = "My Structure";
 		var newLabel = "Image";
 		var webTitle = "WC Title";
@@ -64,6 +63,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-123539 CheckFieldsetSummaryLocalization pending implementation
+
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
