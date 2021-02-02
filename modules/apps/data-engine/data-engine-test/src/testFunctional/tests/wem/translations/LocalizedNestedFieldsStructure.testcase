@@ -45,8 +45,8 @@ definition {
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		AssertElementPresent(
-			locator1 = "WebContentSearchResults#NAME_STRUCTURE",
-			key_webContentTitle = "WC Structure Name");
+			key_webContentTitle = "WC Structure Name",
+			locator1 = "WebContentSearchResults#NAME_STRUCTURE");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
@@ -56,6 +56,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-123536 CheckLanguageSelector pending implementation
+
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
