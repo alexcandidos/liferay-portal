@@ -594,12 +594,6 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
-	macro validateDuplicateButton {
-		AssertElementPresent(
-			locator1 = "DDMField#FIELD_DUPLICATE",
-			value1 = "${key_fieldName}");	
-	}
-
 	macro editFieldTip {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
@@ -711,6 +705,12 @@ definition {
 		Click(
 			key_fieldsetName = "${fieldsetName}",
 			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
+	}
+
+	macro validateDuplicateButton {
+		AssertElementPresent(
+			locator1 = "DDMField#FIELD_DUPLICATE",
+			value1 = "${key_fieldName}");
 	}
 
 	macro viewField {
