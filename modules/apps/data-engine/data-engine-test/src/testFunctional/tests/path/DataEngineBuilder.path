@@ -23,6 +23,21 @@
 	<td>//input[(@class='form-control ddm-field-text') and (@placeholder='Enter a field label.')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'collapsable-panel')]//button[contains(@class,'collapse-icon') and not (contains(@class,'collapsed'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'collapsable-panel')]//button[contains(@class,'collapse-icon') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_COLLAPSE_BUTTON</td>
+	<td>//div[contains(@class,'collapsable-panel')]//button[contains(@class,'collapse-icon')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
