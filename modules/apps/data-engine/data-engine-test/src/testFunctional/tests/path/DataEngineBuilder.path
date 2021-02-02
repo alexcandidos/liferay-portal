@@ -58,6 +58,11 @@
 	<td>//button[(@class='dropdown-toggle btn btn-monospaced btn-unstyled')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FORM_FIELDS</td>
+	<td>//label[@class='ddm-label' and contains(text(),'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
