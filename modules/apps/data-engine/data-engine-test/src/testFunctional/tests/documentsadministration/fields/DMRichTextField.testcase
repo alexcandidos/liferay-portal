@@ -200,4 +200,5 @@ definition {
 	@priority = "4"
 	test VerifyRichTextIsSetAsRequiredOnUploading {
 	}
+
 }
