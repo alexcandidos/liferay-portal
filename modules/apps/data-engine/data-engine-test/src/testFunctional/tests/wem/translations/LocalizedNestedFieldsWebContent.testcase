@@ -181,7 +181,7 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(webContentTitle = "Título da Estrutura WC");
-		
+
 		CKEditor.addContentInWebContent(
 			content = "Olá",
 			fieldLabel = "Test one");
@@ -201,12 +201,12 @@ definition {
 			value1 = "Título da Estrutura WC");
 
 		CKEditor.assertContentIframe(
-			fieldLabel = "Test one",
-			content = "Olá");
+			content = "Olá",
+			fieldLabel = "Test one");
 
 		CKEditor.assertContentIframe(
-			fieldLabel = "Test two",
-			content = "Oi");
+			content = "Oi",
+			fieldLabel = "Test two");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
