@@ -27,6 +27,8 @@ definition {
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "4"
 	test CheckDefaultStructureTitleDisplayedOnStructureList {
+		property portal.acceptance = "false";
+		
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -42,7 +44,19 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+        PortletEntry.changeLocale(locale = "pt-BR");
+
+        WebContentStructures.addName(structureName = "Nome da Estrutura WC");
+
+        DataEngine.editFieldLabel(
+            fieldFieldLabel = "Text",
+            fieldFieldLabelEdit = "Texto");
+
+        DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numerico");
+
+		WebContentStructures.saveCP();
 
 		AssertElementPresent(
 			key_webContentTitle = "WC Structure Name",
