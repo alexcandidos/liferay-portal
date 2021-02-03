@@ -56,7 +56,6 @@ definition {
 	@priority = "5"
 	test DeleteFieldGroupOnStructure {
 		property portal.acceptance = "false";
-		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
