@@ -55,9 +55,8 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
-		
 		property portal.acceptance = "false";
-		
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -73,7 +72,7 @@ definition {
 			fieldNameList = "Text",
 			fieldsetLabel = "FIELDSET NAME",
 			fieldsetName = "Address Fieldset");
-		
+
 		Button.clickSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
@@ -83,11 +82,10 @@ definition {
 		AssertElementPresent(
 			key_fieldsetLabel = "FIELDSET NAME",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
-		
+
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "Structure Name Test");
-		
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
