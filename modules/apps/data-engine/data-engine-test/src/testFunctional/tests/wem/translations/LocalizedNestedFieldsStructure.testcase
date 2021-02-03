@@ -28,7 +28,7 @@ definition {
 	@priority = "4"
 	test CheckDefaultStructureTitleDisplayedOnStructureList {
 		property portal.acceptance = "false";
-		
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -44,15 +44,15 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-        PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-        WebContentStructures.addName(structureName = "Nome da Estrutura WC");
+		WebContentStructures.addName(structureName = "Nome da Estrutura WC");
 
-        DataEngine.editFieldLabel(
-            fieldFieldLabel = "Text",
-            fieldFieldLabelEdit = "Texto");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
 
-        DataEngine.editFieldLabel(
+		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Numeric",
 			fieldFieldLabelEdit = "Numerico");
 
