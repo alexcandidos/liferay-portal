@@ -103,9 +103,9 @@ definition {
 		property portal.acceptance = "false";
 
 		var structureName = "WC Structure Name";
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
@@ -122,11 +122,11 @@ definition {
 			fieldName = "Rich Text",
 			targetFieldLabel = "Text");
 
-        DataEngine.addFieldNested(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Rich Text2",
 			fieldName = "Rich Text",
 			targetFieldLabel = "Rich Text1");
-		
+
 		WebContentStructures.saveCP(structureName = "${structureName}");
 
 		Navigator.gotoNavTab(navTab = "Web Content");
@@ -140,45 +140,44 @@ definition {
 			value1 = "Testing One");
 
 		CKEditor.addContentInWebContent(
-            content = "Hello",
-            fieldLabel = "Rich Text1");
+			content = "Hello",
+			fieldLabel = "Rich Text1");
 
 		CKEditor.addContentInWebContent(
-            content = "Hi Liferay",
-            fieldLabel = "Rich Text2");
+			content = "Hi Liferay",
+			fieldLabel = "Rich Text2");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
-	
+
 		Type(
 			locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD",
 			value1 = "Testando Um");
 
 		CKEditor.addContentInWebContent(
-            content = "Ola",
-            fieldLabel = "Rich Text1");
+			content = "Ola",
+			fieldLabel = "Rich Text1");
 
 		CKEditor.addContentInWebContent(
-            content = "Oi Liferay",
-            fieldLabel = "Rich Text2");
+			content = "Oi Liferay",
+			fieldLabel = "Rich Text2");
 
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-		
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD",
-			value1 = "Testando Um"
-		);
+			value1 = "Testando Um");
 
 		CKEditor.assertContentIframe(
-            fieldLabel = "Rich Text1",
-            content = "Ola");
+			content = "Ola",
+			fieldLabel = "Rich Text1");
 
 		CKEditor.assertContentIframe(
-            fieldLabel = "Rich Text2",
-            content = "Oi Liferay");
+			content = "Oi Liferay",
+			fieldLabel = "Rich Text2");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
