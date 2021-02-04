@@ -124,33 +124,6 @@ definition {
 		// TODO LPS-123538 TranslateFieldsetWithTwoLevelNestedFields pending implementation
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
-	@priority = "5"
-	test VerifyDefaultLanguageIsFirstShown {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123538 VerifyDefaultLanguageIsFirstShown pending implementation
-	}
-
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test VerifyNestedFieldsetEditionOnStructure {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123538 VerifyNestedFieldsetEditionOnStructure pending implementation
-	}
-
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
-	@priority = "5"
-	test VerifyPropagationMessageUponFieldsetEdition {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123538 VerifyPropagationMessageUponFieldsetEdition pending implementation
-	}
-
 	@description = "This is a test for LPS-123538. Create a structure with a fieldset and no-nested fields with N translations"
 	@priority = "5"
 	test TranslateStructureWithFielsetAndNoNested {
@@ -176,11 +149,11 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
-		
+
 		DataEngine.addField(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric");
-		
+
 		DataEngine.addField(
 			fieldFieldLabel = "Date",
 			fieldName = "Date");
@@ -192,7 +165,7 @@ definition {
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "Texto");
-		
+
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Numeric",
 			fieldFieldLabelEdit = "Numerico");
@@ -208,7 +181,7 @@ definition {
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "Texto");
-		
+
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Numeric",
 			fieldFieldLabelEdit = "Numerico");
@@ -216,7 +189,7 @@ definition {
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Date",
 			fieldFieldLabelEdit = "Fecha");
-		
+
 		WebContentStructures.addLocalization(
 			locale = "fr_FR",
 			localization1Name = "${structureFieldSetFR}");
@@ -224,7 +197,7 @@ definition {
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "Texte");
-		
+
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Numeric",
 			fieldFieldLabelEdit = "Numerique");
@@ -240,17 +213,17 @@ definition {
 			structureName = "${structureTitle}");
 
 		DataEngine.addFieldsets(
-			fieldsetName = "${structureFieldSet}",
-			fieldsetLabel = "Field Set Title");
+			fieldsetLabel = "Field Set Title",
+			fieldsetName = "${structureFieldSet}");
 
 		WebContentStructures.addLocalization(
 			locale = "pt_BR",
 			localization1Name = "${structureTitlePT}");
-		
+
 		WebContentStructures.addLocalization(
 			locale = "es_ES",
 			localization1Name = "${structureTitleES}");
-		
+
 		WebContentStructures.addLocalization(
 			locale = "fr_FR",
 			localization1Name = "${structureTitleFR}");
@@ -258,13 +231,13 @@ definition {
 		Button.clickSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
-		
+
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitlePT}");	
-		
+			value1 = "${structureTitlePT}");
+
 		AssertVisible(
 			key_fieldsetLabel = "Estrutura de Field Set",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
@@ -285,8 +258,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitleES}");	
-		
+			value1 = "${structureTitleES}");
+
 		AssertVisible(
 			key_fieldsetLabel = "${structureFieldSetES}",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
@@ -302,13 +275,13 @@ definition {
 		AssertVisible(
 			key_fieldFieldLabel = "Fecha",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		
+
 		PortletEntry.changeLocale(locale = "fr_FR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitleFR}");	
-		
+			value1 = "${structureTitleFR}");
+
 		AssertVisible(
 			key_fieldsetLabel = "${structureFieldSetFR}",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
@@ -324,6 +297,33 @@ definition {
 		AssertVisible(
 			key_fieldFieldLabel = "Date",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test VerifyDefaultLanguageIsFirstShown {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 VerifyDefaultLanguageIsFirstShown pending implementation
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyNestedFieldsetEditionOnStructure {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 VerifyNestedFieldsetEditionOnStructure pending implementation
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test VerifyPropagationMessageUponFieldsetEdition {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 VerifyPropagationMessageUponFieldsetEdition pending implementation
 	}
 
 }
