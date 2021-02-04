@@ -138,31 +138,31 @@ definition {
 	test VerifyNestedFieldsetEditionOnStructure {
 		property portal.acceptance = "false";
 
-        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-    	DataEngine.addFields(fieldNameList = "Upload");
+		DataEngine.addFields(fieldNameList = "Upload");
 
-        DataEngine.addFieldNested(
-            fieldFieldLabel = "Image",
-            fieldName = "Image",
-            targetFieldLabel = "Upload");
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Image",
+			fieldName = "Image",
+			targetFieldLabel = "Upload");
 
-        DataEngine.createFieldset(
+		DataEngine.createFieldset(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset");
 
-        Navigator.gotoNavTab(navTab = "Fieldsets");
+		Navigator.gotoNavTab(navTab = "Fieldsets");
 
-    	DragAndDrop.javaScriptDragAndDropToUp(
-            key_fieldName = "New Fieldset",
+		DragAndDrop.javaScriptDragAndDropToUp(
 			fieldLabel = "Upload",
-            locator1 = "Sidebar#ADD_FIELD_NAME",
-            locator2 = "FormViewBuilder#FIELD_LABEL");
+			key_fieldName = "New Fieldset",
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "FormViewBuilder#FIELD_LABEL");
 
 		Click(
 			key_fieldsetLabel = "New Fieldset",
