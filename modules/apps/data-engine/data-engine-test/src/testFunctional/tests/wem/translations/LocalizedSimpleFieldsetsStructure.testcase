@@ -130,7 +130,7 @@ definition {
 		var structureFieldSetFR = "Titre du Field Set";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-		
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
@@ -170,19 +170,19 @@ definition {
 			fieldFieldLabelEdit = "Texte");
 
 		Button.clickSave();
-		
+
 		WebContentStructures.addCP(
 			structureDescription = "I'm a structure test",
 			structureName = "${structureTitle}");
-		
+
 		DataEngine.addFieldsets(
-			fieldsetName = "${structureFieldSet}",
-			fieldsetLabel = "Field Set Title");
+			fieldsetLabel = "Field Set Title",
+			fieldsetName = "${structureFieldSet}");
 
 		Button.clickSave();
-	
+
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
-	
+
 		WebContentStructures.addLocalization(
 			locale = "pt_BR",
 			localization1Name = "${structureTitlePT}");
