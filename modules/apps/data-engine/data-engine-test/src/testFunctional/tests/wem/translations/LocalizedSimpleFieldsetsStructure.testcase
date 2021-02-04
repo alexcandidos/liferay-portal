@@ -116,12 +116,130 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
 	@priority = "5"
 	test TranslateFieldsetWithTwoLevelNestedFields {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123538 TranslateFieldsetWithTwoLevelNestedFields pending implementation
+		var structureTitle = "Structure Title";
+		var structureTitlePT = "Titulo da Estrutura";
+		var structureTitleES = "Título de la estructura";
+		var structureTitleFR = "Titre de la structure";
+		var structureFieldSet = "Field Set Structure";
+		var structureFieldSetPT = "Título de Field Set";
+		var structureFieldSetES = "Título del Field Set";
+		var structureFieldSetFR = "Titre du Field Set";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "I'll be a field set",
+			structureName = "${structureFieldSet}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureFieldSet}");
+
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureFieldSetPT}");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
+
+		WebContentStructures.addLocalization(
+			locale = "es_ES",
+			localization1Name = "${structureFieldSetES}");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "El Texto");
+
+		WebContentStructures.addLocalization(
+			locale = "fr_FR",
+			localization1Name = "${structureFieldSetFR}");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texte");
+
+		Button.clickSave();
+		
+		WebContentStructures.addCP(
+			structureDescription = "I'm a structure test",
+			structureName = "${structureTitle}");
+		
+		DataEngine.addFieldsets(
+			fieldsetName = "${structureFieldSet}",
+			fieldsetLabel = "Field Set Title");
+
+		Button.clickSave();
+	
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+	
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureTitlePT}");
+
+		WebContentStructures.addLocalization(
+			locale = "es_ES",
+			localization1Name = "${structureTitleES}");
+
+		WebContentStructures.addLocalization(
+			locale = "fr_FR",
+			localization1Name = "${structureTitleFR}");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureTitlePT}");
+
+		AssertVisible(
+			key_fieldsetLabel = "${structureFieldSetPT}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "es_ES");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureTitleES}");
+
+		AssertVisible(
+			key_fieldsetLabel = "${structureFieldSetES}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "El Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "fr_FR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureTitleFR}");
+
+		AssertVisible(
+			key_fieldsetLabel = "${structureFieldSetFR}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Texte",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
