@@ -94,6 +94,11 @@
 	<td>//div[contains(@class,'menu-open')]//a[@data-value='${key_locale}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LOCALIZATION_NAME_MODAL</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//span[contains(@class,'autofit-section') and contains(text(),'${key_locale}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
