@@ -843,6 +843,11 @@
 	<td>//button[contains(@class,'ytp-large-play-button')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LOCALIZATION_MODAL</td>
+	<td>//div[contains(@class,'fieldset-modal show')]//div[contains(@class,'localizable-dropdown')]//button</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
