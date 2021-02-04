@@ -107,12 +107,70 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
 	@priority = "5"
 	test TranslateFieldsetWithoutNestedFields {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123538 TranslateFieldsetWithoutNestedFields pending implementation
+		var structureTitle = "Structure Title";
+		var structureTitlePT = "Titulo da Estrutura";
+		var structureFieldSet = "Field Set Structure";
+		var structureFieldSetPT = "Estrutura de Field Set";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "I'll be a field set",
+			structureName = "${structureFieldSet}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureFieldSet}");
+
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureFieldSetPT}");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
+
+		Button.clickSave();
+		
+		WebContentStructures.addCP(
+			structureDescription = "I'm a structure test",
+			structureName = "${structureTitle}");
+		
+		DataEngine.addFieldsets(
+			fieldsetName = "${structureFieldSet}",
+			fieldsetLabel = "Field Set Title");
+	
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureTitlePT}");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureTitlePT}");
+
+		AssertVisible(
+			key_fieldsetLabel = "${structureFieldSetPT}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
