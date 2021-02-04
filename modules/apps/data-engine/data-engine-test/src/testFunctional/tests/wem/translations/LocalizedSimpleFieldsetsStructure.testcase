@@ -151,4 +151,179 @@ definition {
 		// TODO LPS-123538 VerifyPropagationMessageUponFieldsetEdition pending implementation
 	}
 
+	@description = "This is a test for LPS-123538. Create a structure with a fieldset and no-nested fields with N translations"
+	@priority = "5"
+	test TranslateStructureWithFielsetAndNoNested {
+		property portal.acceptance = "false";
+
+		var structureTitle = "Structure Title";
+		var structureFieldSet = "Field Set Structure";
+		var structureTitlePT = "Titulo da Estrutura";
+		var structureFieldSetPT = "Estrutura de Field Set";
+		var structureTitleES = "Titulo de la estructura";
+		var structureFieldSetES = "Estructura del conjunto de campos";
+		var structureTitleFR = "Titre de la structure";
+		var structureFieldSetFR = "Structure de l ensemble de champs";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "I'll be a field set",
+			structureName = "${structureFieldSet}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+		
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+		
+		DataEngine.addField(
+			fieldFieldLabel = "Date",
+			fieldName = "Date");
+
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureFieldSetPT}");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
+		
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numerico");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Data");
+
+		WebContentStructures.addLocalization(
+			locale = "es_ES",
+			localization1Name = "${structureFieldSetES}");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
+		
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numerico");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Fecha");
+		
+		WebContentStructures.addLocalization(
+			locale = "fr_FR",
+			localization1Name = "${structureFieldSetFR}");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texte");
+		
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numerique");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Date");
+
+		Button.clickSave();
+
+		WebContentStructures.addCP(
+			structureDescription = "I'm a structure test",
+			structureName = "${structureTitle}");
+
+		DataEngine.addFieldsets(
+			fieldsetName = "${structureFieldSet}",
+			fieldsetLabel = "Field Set Title");
+
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureTitlePT}");
+		
+		WebContentStructures.addLocalization(
+			locale = "es_ES",
+			localization1Name = "${structureTitleES}");
+		
+		WebContentStructures.addLocalization(
+			locale = "fr_FR",
+			localization1Name = "${structureTitleFR}");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureTitlePT}");	
+		
+		AssertVisible(
+			key_fieldsetLabel = "Estrutura de Field Set",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Numerico",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Data",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "es_ES");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureTitleES}");	
+		
+		AssertVisible(
+			key_fieldsetLabel = "${structureFieldSetES}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Numerico",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Fecha",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		
+		PortletEntry.changeLocale(locale = "fr_FR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureTitleFR}");	
+		
+		AssertVisible(
+			key_fieldsetLabel = "${structureFieldSetFR}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Texte",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Numerique",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Date",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+	}
+
 }
