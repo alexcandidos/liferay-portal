@@ -115,6 +115,17 @@
 	<td>//a[contains(.,'${key_locale}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH</td>
+    <td>//div[contains(@class, 'input-localized-palette')]//li//span[contains(@id,'qfkd')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_MODAL_TRANSLATION_SPAN_LANGUAGE_ENGLISH</td>
+    <td>//div[contains(@class,'fieldset-modal show')]//button[contains(@class,'dropdown-item')]//span[contains(text(),'en-US')]</td>
+    <td></td>
+</tr>
+
 </tbody>
 </table>
 </body>
