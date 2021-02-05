@@ -399,6 +399,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALIZATION_GENERIC_MODAL</td>
+	<td>//div[contains(@class,'localizable-dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZATION_OPEN_GRAPH</td>
 	<td>//div[contains(@id,'${key_fieldName}')]//button[contains(@class,'localized')]</td>
 	<td></td>

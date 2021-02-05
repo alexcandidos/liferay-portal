@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELDSET</td>
+	<td>//div[contains(@class,'input-group-item')]//input[contains(@class,'form-control-inline') and (@aria-label='Untitled Fieldset')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//div[contains(@class, 'modal-footer')]//button[contains(@class,'btn-primary')][contains(text(),'Save')]</td>
 	<td></td>
