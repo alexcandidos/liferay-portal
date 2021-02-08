@@ -33,6 +33,13 @@ definition {
 		}
 	}
 
+	macro changeLocaleInModal {
+		Click(locator1 = "Button#LOCALIZATION_MODAL");
+		Click(
+			key_locale = "${locale}",
+			locator1 = "Translation#LOCALIZATION_NAME_MODAL");
+	}
+	
 	macro clickEditFromEllipsis {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 

@@ -599,6 +599,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALIZATION_MODAL</td>
+	<td>//div[contains(@class,'fieldset-modal show')]//div[contains(@class,'localizable-dropdown')]//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE</td>
 	<td>//button[contains(.,'Save')] | //div[contains(@class,'button-holder ')]/button[contains(.,'Save')]</td>
 	<td></td>
