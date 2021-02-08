@@ -263,56 +263,55 @@ definition {
 	test VerifyDefaultLanguageIsFirstShown {
 		property portal.acceptance = "false";
 
-        var fieldsetLabel = "New Fieldset";
+		var fieldsetLabel = "New Fieldset";
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
 
-        AppBuilderAdmin.switchTab(tabName = "Structures");
+		AppBuilderAdmin.switchTab(tabName = "Structures");
 
-        WebContentStructures.addCP(structureName = "WC structure name");
+		WebContentStructures.addCP(structureName = "WC structure name");
 
-        DataEngine.addFieldsets(
-            createNewFieldset = "true",
-            fieldNameList = "Text",
-            fieldsetLabel = "${fieldsetLabel}",
-            fieldsetName = "${fieldsetLabel}"
-        );
+		DataEngine.addFieldsets(
+			createNewFieldset = "true",
+			fieldNameList = "Text",
+			fieldsetLabel = "${fieldsetLabel}",
+			fieldsetName = "${fieldsetLabel}");
 
-        DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
 
-        MenuItem.click(menuItem = "Edit");
+		MenuItem.click(menuItem = "Edit");
 
-        PortletEntry.changeLocaleInModal(locale = "pt-BR");
+		PortletEntry.changeLocaleInModal(locale = "pt-BR");
 
-        Type(
-                locator1 = "FormViewBuilder#FIELD_SET_NAME",
-                value1 = "Nome da Estrutura WC");
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Nome da Estrutura WC");
 
-        DataEngine.editFieldLabel(
-            fieldFieldLabel = "Text",
-            fieldFieldLabelEdit = "Texto",
-            fieldsetModal = "true");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto",
+			fieldsetModal = "true");
 
-        Click(locator1 = "Modal#SAVE_BUTTON");
+		Click(locator1 = "Modal#SAVE_BUTTON");
 
-        Click(locator1 = "Modal#PROPAGATE_BUTTON");
+		Click(locator1 = "Modal#PROPAGATE_BUTTON");
 
-        WebContentStructures.addLocalization(
-            locale = "pt-BR",
-            localization1Name = "Nome da Estrutura WC");
+		WebContentStructures.addLocalization(
+			locale = "pt-BR",
+			localization1Name = "Nome da Estrutura WC");
 
-        WebContentStructures.saveCP();
+		WebContentStructures.saveCP();
 
-        AssertClick(
-            key_ddlDataDefinitionName = "WC structure name",
-            locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-            value1 = "WC structure name");
+		AssertClick(
+			key_ddlDataDefinitionName = "WC structure name",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+			value1 = "WC structure name");
 
 		AssertElementPresent(
-				key_locale = "en-US",
-				locator1 = "Translation#CURRENT_LOCALE_TITLE");
+			key_locale = "en-US",
+			locator1 = "Translation#CURRENT_LOCALE_TITLE");
 
 		AssertVisible(
 			key_fieldFieldLabel = "Text",
