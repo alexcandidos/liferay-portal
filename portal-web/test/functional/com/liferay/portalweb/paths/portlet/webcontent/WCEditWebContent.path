@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ANY_INPUT_LABEL</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_TEXT_INPUT</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::input[not(contains(@type,'hidden'))])[${index}]</td>
 	<td></td>
@@ -69,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GRID_OPTION_1</td>
+	<td>//legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//tbody/tr/td//input[contains(@aria-label,'Row: 行 1, Column: 列 1')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMAGE_PICKER_PREVIEW</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'image-picker-preview')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>
@@ -104,6 +114,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_BUTTON_1</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form-group')]//div[contains(@class,'input-group')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_BUTTON_2</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//div[contains(@class,'input-group')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_BUTTON_3</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form-group')]//input[contains(@type,'text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FEATURED_IMAGE_TYPE</td>
 	<td>//div[contains(@class,'input-select-wrapper')]/select[contains(@id,'smallImageSource')]</td>
 	<td></td>
@@ -111,6 +136,11 @@
 <tr>
 	<td>SELECT_FIELD_TRIGGER</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'select-field')]//div[contains(@class,'select-field-trigger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FIELD_VALUE</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'select-field')]//div[contains(@class,'select-field-trigger')]/div[contains(text(),'${key_field}')]</td>
 	<td></td>
 </tr>
 <tr>
