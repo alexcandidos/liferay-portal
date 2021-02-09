@@ -353,6 +353,270 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addTranslateWithStructureCP {
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+		if (isSet(webContentTitle)) {
+			PortletEntry.inputTitle(title = "${webContentTitle}");
+		}
+
+		if (isSet(webContentColor)) {
+			if (!(isSet(webContentColorFieldLabel))) {
+				var webContentColorFieldLabel = "颜色";
+			}
+
+			Click(
+				key_fieldFieldLabel = "${webContentColorFieldLabel}",
+				locator1 = "WCEditWebContent#COLOR_PICKER");
+
+			Click(
+				key_colorSwatchItem = "${webContentColor}",
+				locator1 = "Button#COLOR_SWATCH_ITEM");
+		}
+
+		if (isSet(webContentDate)) {
+			if (!(isSet(webContentDateFieldLabel))) {
+				var webContentDateFieldLabel = "日期";
+			}
+
+			Type(
+				key_fieldFieldLabel = "${webContentDateFieldLabel}",
+				locator1 = "WCEditWebContent#DATE_INPUT",
+				value1 = "${webContentDate}");
+		}
+
+		if (isSet(webContentGrid)) {
+			if (!(isSet(webContentGridFieldLabel))) {
+				var webContentGridFieldLabel = "网格";
+			}
+
+			var column = ${column} + 1;
+
+			Check.checkNotVisible(
+				key_column = "${column}",
+				key_fieldFieldLabel = "网格",
+				key_row = "${row}",
+				locator1 = "WCEditWebContent#GRID_OPTION");
+		}
+
+		if (isSet(webContentImage)) {
+			if (!(isSet(webContentImageFieldLabel))) {
+				var webContentImageFieldLabel = "图片";
+			}
+
+			AssertClick(
+				key_fieldFieldLabel = "${webContentImageFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
+
+			if ("${navTab}" == "Documents and Media") {
+				if (isSet(depotName)) {
+					ItemSelector.selectRepositoryImage(
+						depotName = "${depotName}",
+						folderName = "${folderName}",
+						imageFileName = "${webContentImage}",
+						navTab = "${navTab}");
+				}
+				else if (isSet(imageFileName)) {
+					ItemSelector.selectDMImage(
+						imageFileName = "${webContentImage}",
+						navTab = "${navTab}");
+				}
+				else {
+					ItemSelector.uploadFile(
+						navTab = "${navTab}",
+						uploadFileName = "${webContentImage}");
+				}
+			}
+			else if ("${navTab}" == "Web Content Images") {
+				ItemSelector.uploadFile(
+					navTab = "${navTab}",
+					uploadFileName = "${webContentImage}");
+			}
+
+			if (isSet(webContentImageDescription)) {
+				Type(
+					key_fieldFieldLabel = "${webContentImageFieldLabel}",
+					locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+					value1 = "${webContentImageDescription}");
+			}
+		}
+
+		if (isSet(webContentLinkToPage)) {
+			if (!(isSet(webContentLinkToPageFieldLabel))) {
+				var webContentLinkToPageFieldLabel = "网页链接";
+			}
+
+			AssertClick(
+				key_fieldFieldLabel = "${webContentLinkToPageFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Portlet.expandTree();
+
+			AssertClick.assertPartialTextClickAt(
+				key_nodeName = "${webContentLinkToPage}",
+				locator1 = "Treeview#NODE_UNSELECTED",
+				value1 = "${webContentLinkToPage}");
+
+			SelectFrameTop();
+		}
+
+		if (isSet(webContentMultipleSelection)) {
+			if (!(isSet(webContentMultipleSelectionFieldLabel))) {
+				var webContentMultipleSelectionFieldLabel = "复选列表框";
+			}
+
+			Check.checkNotVisible(
+				key_fieldFieldLabel = "${webContentMultipleSelectionFieldLabel}",
+				key_optionValue = "${webContentMultipleSelection}",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
+		}
+
+		if (isSet(webContentNumeric)) {
+			if (!(isSet(webContentNumericFieldLabel))) {
+				var webContentNumericFieldLabel = "数字";
+			}
+
+			if ("${numericType}" == "Decimal") {
+				Type(
+					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentNumeric}");
+			}
+			else {
+				Type(
+					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentNumeric}");
+			}
+		}
+
+		if (isSet(webContentRichText)) {
+			if (!(isSet(webContentRichTextFieldLabel))) {
+				var webContentRichTextFieldLabel = "多格式文本框";
+			}
+
+			if (isSet(source)) {
+				Click(
+					key_fieldFieldLabel = "${webContentRichTextFieldLabel}",
+					locator1 = "WCEditWebContent#SOURCE_BUTTON");
+
+				Type.typeCodeMirrorEditorNoError(
+					locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+					value1 = "${webContentRichText}");
+			}
+			else {
+				CKEditor.addContentInWebContent(
+					content = "${webContentRichText}",
+					fieldLabel = "${webContentRichTextFieldLabel}");
+			}
+		}
+
+		if (isSet(webContentSelectFromList)) {
+			if (!(isSet(webContentSelectFromListFieldLabel))) {
+				var webContentSelectFromListFieldLabel = "下拉列表";
+			}
+
+			Click(
+				key_fieldFieldLabel = "${webContentSelectFromListFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_FIELD_TRIGGER");
+
+			DropdownMenuItem.click(menuItem = "${webContentSelectFromList}");
+		}
+
+		if (isSet(webContentSingleSelection)) {
+			if (!(isSet(webContentSingleSelectionFieldLabel))) {
+				var webContentSingleSelectionFieldLabel = "单选列表框";
+			}
+
+			Check.checkNotVisible(
+				key_fieldFieldLabel = "${webContentSingleSelectionFieldLabel}",
+				key_optionValue = "${webContentSingleSelection}",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
+		}
+
+		if (isSet(webContentText)) {
+			if (!(isSet(webContentTextFieldLabel))) {
+				var webContentTextFieldLabel = "文本框";
+			}
+
+			if ("${fieldType}" == "Multiple Lines") {
+				Type(
+					key_fieldFieldLabel = "${webContentTextFieldLabel}",
+					locator1 = "DDMField#MULTIPLE_LINES",
+					value1 = "${webContentText}");
+			}
+			else {
+				Type(
+					key_fieldFieldLabel = "${webContentTextFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentText}");
+			}
+		}
+
+		if (isSet(webContentUpload)) {
+			if (!(isSet(webContentUploadFieldLabel))) {
+				var webContentUploadFieldLabel = "文件";
+			}
+
+			AssertClick(
+				key_fieldFieldLabel = "${webContentUploadFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
+
+			if (isSet(depotName)) {
+				ItemSelector.selectRepositoryImage(
+					available = "${available}",
+					depotName = "${depotName}",
+					folderName = "${folderName}",
+					imageFileName = "${webContentUpload}");
+			}
+			else if (isSet(dmDocumentTitle)) {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				AssertClick(
+					key_dmDocumentTitle = "${webContentUpload}",
+					locator1 = "WC#ICON_DOCUMENT_TITLE",
+					value1 = "${dmDocumentTitle}");
+			}
+			else {
+				ItemSelector.uploadFile(uploadFileName = "${webContentUpload}");
+			}
+		}
+
+		if (isSet(webContentWebContent)) {
+			if (!(isSet(webContentWebContentFieldLabel))) {
+				var webContentWebContentFieldLabel = "网页";
+			}
+
+			AssertClick(
+				key_fieldFieldLabel = "${webContentWebContentFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
+
+			if (isSet(depotName)) {
+				WebContent.selectRepositoryWC(
+					available = "${available}",
+					contentName = "${webContentWebContent}",
+					depotName = "${depotName}",
+					folderName = "${folderName}");
+			}
+			else {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				AssertClick.assertPartialTextClickAt(
+					key_listEntry = "${webContentWebContent}",
+					locator1 = "LexiconList#LIST_ENTRY",
+					value1 = "${webContentWebContent}");
+
+				SelectFrame(value1 = "relative=top");
+			}
+		}
+	}
+
 	macro addViaCKEditor {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
