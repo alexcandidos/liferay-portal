@@ -34,7 +34,7 @@ definition {
 	@description = "Assert an Individual's Segments"
 	@priority = "5"
 	test CanAssertIndividualSegment {
-		JSONUser.addUser(
+		ACDXPSettings.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -46,7 +46,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		User.logoutAndLoginPG(
+		ACDXPSettings.userLogin(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 

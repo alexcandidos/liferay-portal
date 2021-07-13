@@ -32,7 +32,7 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanSearchForSegment {
-		JSONUser.addUser(
+		ACDXPSettings.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -44,7 +44,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		User.logoutAndLoginPG(
+		ACDXPSettings.userLogin(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -86,7 +86,7 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanShowSegmentList {
-		JSONUser.addUser(
+		ACDXPSettings.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -98,7 +98,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		User.logoutAndLoginPG(
+		ACDXPSettings.userLogin(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 

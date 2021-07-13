@@ -124,13 +124,13 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		JSONUser.addUser(
+		ACDXPSettings.addUser(
 			userEmailAddress = "ac@liferay.com",
 			userFirstName = "ac",
 			userLastName = "ac",
 			userScreenName = "ac");
 
-		User.logoutAndLoginPG(
+		ACDXPSettings.userLogin(
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
@@ -175,7 +175,7 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
-		JSONUser.addUser(
+		ACDXPSettings.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -187,7 +187,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		User.logoutAndLoginPG(
+		ACDXPSettings.userLogin(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
