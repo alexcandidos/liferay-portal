@@ -37,14 +37,13 @@ definition {
 	@description = "Automation ID: LRAC-8122 | Test Summary: Show Attributes in AC"
 	@priority = "5"
 	test AttributesShownInAC {
-		
 		var attributesList = '''
 			articleId,assetId,category,className,classPK,commentId,depth,
 			elementId,entryId,fieldName,fileEntryId,fileEntryUUID,focusDuration,
 			formId,groupId,href,numberOfWords,page,pageLoadTime,preview,
 			ratingType,score,sessionId,src,tagName,text,title,type,version,viewDuration
 		''';
-		
+
 		var list = ListUtil.newListFromString("${attributesList}");
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
@@ -62,7 +61,6 @@ definition {
 		ACUtils.showEntries(dropdownOption = "30");
 
 		ACUtils.assertItemsName(itemList = "${list}");
-
 	}
 
 	@description = "Automation ID: LRAC-8123 | Test Summary: Show Custom Events in AC"
