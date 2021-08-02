@@ -162,6 +162,12 @@ definition {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "definitions");
 	}
 
+	macro goToDefinitionsAttributesTabs {
+		var key_tabName = "${tabName}";
+
+		Click(locator1 = "ACNavigation#DEFINITIONS_ATRIBUTES_TABS");
+	}
+	
 	macro goToProperties {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}
