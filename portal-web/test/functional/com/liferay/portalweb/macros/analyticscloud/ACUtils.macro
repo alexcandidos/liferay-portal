@@ -240,6 +240,16 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro showEntries {
+		var key_dropdownOption = "${dropdownOption}";
+
+		Click(
+			buttonType = "secondary",
+			locator1 = "ACNavigation#GENERIC_AC_BUTTON");
+
+		Click(locator1 = "ACNavigation#ENTRIES_LIST_DROPDOWN_OPTION");
+	}
+
 	macro tearDownAC {
 		ACUtils.launchAC();
 
