@@ -33,6 +33,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRIES_LIST_DROPDOWN_OPTION</td>
+	<td>//div[contains(@class, 'dropdown-menu') and contains (@class,'show')]//a[text()='${key_dropdownOption}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERIC_AC_BUTTON</td>
 	<td>//button[contains(@class,'btn-${buttonType}')]</td>
 	<td></td>
