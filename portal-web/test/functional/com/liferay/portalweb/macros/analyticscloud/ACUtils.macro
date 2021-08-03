@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Asserts a list of items by the name"
-	macro assertItemsName {
+	macro assertItemsList {
 		for (var key_itemName : list "${itemList}") {
 			AssertElementPresent(
 				itemName = "${key_itemName}",
