@@ -112,7 +112,7 @@ definition {
 
 		ACSettings.goToProperties();
 
-		ACUtils.assertItemsName(itemList = "${propertyName},New property 1,New property 2,New property 3");
+		ACUtils.assertItemsList(itemList = "${propertyName},New property 1,New property 2,New property 3");
 	}
 
 }
