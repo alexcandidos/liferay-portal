@@ -57,7 +57,7 @@ definition {
 
 		ACNavigation.goToSettings();
 
-		ACUtils.assertItemsName(itemList = "${dataSource},Beryl Commerce");
+		ACUtils.assertItemsList(itemList = "${dataSource},Beryl Commerce");
 	}
 
 	@description = "Sync Liferay Data Source Contacts"

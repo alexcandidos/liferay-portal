@@ -60,7 +60,7 @@ definition {
 
 		ACUtils.showEntries(dropdownOption = "30");
 
-		ACUtils.assertItemsName(itemList = "${list}");
+		ACUtils.assertItemsList(itemList = "${list}");
 	}
 
 	@description = "Automation ID: LRAC-8123 | Test Summary: Show Custom Events in AC"
