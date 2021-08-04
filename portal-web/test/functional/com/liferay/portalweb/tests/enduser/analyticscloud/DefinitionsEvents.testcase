@@ -64,12 +64,22 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8123 | Test Summary: Show Custom Events in AC"
-	@ignore = "true"
 	@priority = "5"
 	test CustomEventShownInAC {
+		
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8123 CustomEventShownInAC
+		ACUtils.launchAC();
 
+		ACNavigation.goToSettings();
+
+		ACSettings.goToDefinitions();
+
+		ACDefinitions.goToDefinitionType(definitionType = "Events");
+
+		ACSettings.goToDefinitionsAttributesTabs(key_tabName = "Custom Events");
+
+		ACUtils.assertItemsList(itemList = "tabBlurred");
 	}
 
 }
