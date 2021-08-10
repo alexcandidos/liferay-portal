@@ -265,12 +265,10 @@ definition {
 	}
 
 	macro waitForItemPresent {
-		while(IsElementNotPresent(itemName = "${key_itemName}", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "10")){
+		while (IsElementNotPresent(itemName = "${key_itemName}", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "10")) {
 			Pause(locator1 = "10000");
 			Refresh();
-
 		}
-
 	}
 
 }
