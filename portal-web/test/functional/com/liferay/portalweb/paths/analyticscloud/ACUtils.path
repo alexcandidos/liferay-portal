@@ -29,6 +29,18 @@
 	<td>//*[text()='${key_parentName}']/parent::div/following-sibling::div[contains(@class, 'card-body')]//*[contains(@class, 'recharts-surface')]</td>
 	<td></td>
 </tr>
+
+<!-- ENTRIES_DROPDOWN_BUTTON -->
+<tr>
+	<td>ENTRIES_LIST_DROPDOWN_OPTION</td>
+	<td>//div[contains(@class, 'dropdown-menu') and contains (@class,'show')]//a[text()='${key_dropdownOption}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERIC_AC_BUTTON</td>
+	<td>//button[contains(@class,'btn-${buttonType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
