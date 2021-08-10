@@ -78,6 +78,8 @@ definition {
 
 		ACNavigation.switchTab(key_tabName = "Custom Events");
 
+		ACUtils.waitForItemPresent(key_itemName = "tabBlurred");
+
 		ACUtils.assertItemsList(itemList = "tabBlurred");
 	}
 
