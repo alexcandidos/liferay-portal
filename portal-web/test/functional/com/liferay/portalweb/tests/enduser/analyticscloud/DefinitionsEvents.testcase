@@ -56,7 +56,7 @@ definition {
 
 		ACDefinitions.goToDefinitionType(definitionType = "Event Attributes");
 
-		ACSettings.goToDefinitionsAttributesTabs(key_tabName = "Attributes");
+		ACNavigation.switchTab(key_tabName = "Attributes");
 
 		ACUtils.showEntries(dropdownOption = "30");
 
@@ -76,7 +76,7 @@ definition {
 
 		ACDefinitions.goToDefinitionType(definitionType = "Events");
 
-		ACSettings.goToDefinitionsAttributesTabs(key_tabName = "Custom Events");
+		ACNavigation.switchTab(key_tabName = "Custom Events");
 
 		ACUtils.assertItemsList(itemList = "tabBlurred");
 	}
