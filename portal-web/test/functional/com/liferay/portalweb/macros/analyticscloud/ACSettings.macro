@@ -162,17 +162,6 @@ definition {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "definitions");
 	}
 
-	<<<<<<< HEAD
-	=======
-
-	macro goToDefinitionsAttributesTabs {
-		var key_tabName = "${tabName}";
-
-		Click(locator1 = "ACNavigation#DEFINITIONS_ATRIBUTES_TABS");
-	}
-
-	>>>>>>> 5962f47 (LRAC-8122 SF)
-
 	macro goToProperties {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
 	}
