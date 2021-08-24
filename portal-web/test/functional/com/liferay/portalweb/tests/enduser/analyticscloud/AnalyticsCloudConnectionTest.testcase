@@ -187,4 +187,85 @@ definition {
 
 	}
 
+	@description = "Automation ID: LRAC-8830 | Test Summary: Add DXP data source and configure only an Organization's users"
+	@ignore = "true"
+	@priority = "3"
+	test AddDataSourceForOrganizationUsers {
+
+		// TODO LRAC-8830 AddDataSourceForOrganizationUsers
+
+	}
+
+	@description = "Automation ID: LRAC-8831 | Test Summary: Add DXP data source and configure only an User Group's users"
+	@ignore = "true"
+	@priority = "3"
+	test AddDataSourceForUsersGroups {
+
+		// TODO LRAC-8831 AddDataSourceForUsersGroups
+
+	}
+
+	@description = "Automation ID: LRAC-8832 | Test Summary: Add DXP data source and configure only one site"
+	@ignore = "true"
+	@priority = "3"
+	test AddDataSourceForOneSite {
+
+		// TODO LRAC-8832 AddDataSourceForOneSite
+
+	}
+
+	@description = "Automation ID: LRAC-8833 | Test Summary: Preview number of contacts to be added when configuring contacts"
+	@ignore = "true"
+	@priority = "5"
+	test PreviewNumberOfContactsToAddedWhenSyncContacts {
+
+		// TODO LRAC-8833 PreviewNumberOfContactsToAddedWhenSyncContacts
+
+	}
+
+	@description = "Automation ID: LRAC-8834 | Test Summary: Assert the Liferay DXP Data Source Status"
+	@ignore = "true"
+	@priority = "3"
+	test AssertLiferayDataSourceStatus {
+
+		// TODO LRAC-8834 AssertLiferayDataSourceStatus
+
+	}
+
+	@description = "Automation ID: LRAC-8835 | Test Summary: Assert Liferay Data Source Contact Count Preview"
+	@ignore = "true"
+	@priority = "4"
+	test AssertLiferayDataSourceContactCountPreview {
+
+		// TODO LRAC-8835 AssertLiferayDataSourceContactCountPreview
+
+	}
+
+	@description = "Automation ID: LRAC-8836 | Test Summary: Cancel Creating a DXP Data Source"
+	@ignore = "true"
+	@priority = "3"
+	test CancelCreatingDxpDataSource {
+
+		// TODO LRAC-8836 CancelCreatingDxpDataSource
+
+	}
+
+	@description = "Automation ID: LRAC-8837 | Test Summary: Invalid OAuth Credentials"
+	@ignore = "true"
+	@priority = "2"
+	test InvalidOAuthKey {
+
+		// TODO LRAC-8837 InvalidOAuthKey
+
+	}
+
+	@description = "Automation ID: LRAC-8838 | Test Summary: Invalid OAuth2 Secret"
+	@ignore = "true"
+	@priority = "2"
+	test InvalidOAuthSecret {
+
+		// TODO LRAC-8838 InvalidOAuthSecret
+
+	}
+
 }
