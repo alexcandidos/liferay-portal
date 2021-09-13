@@ -942,6 +942,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8142 | Test Summary: Users list can be searched"
 	@priority = "5"
 	test UsersListCanBeSearched {
+		property portal.upstream = "vini";
+
 		ACNavigation.goToSettings();
 
 		ACSettings.goToUserManagement();
