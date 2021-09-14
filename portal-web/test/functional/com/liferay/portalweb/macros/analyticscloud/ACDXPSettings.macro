@@ -33,9 +33,6 @@ definition {
 	}
 
 	macro connectDXPtoAnalyticsCloud {
-		if (!(isSet(siteName))) {
-			siteName = "Liferay DXP";
-		}
 
 		ACDXPSettings.goToInstanceSettingsAC();
 
