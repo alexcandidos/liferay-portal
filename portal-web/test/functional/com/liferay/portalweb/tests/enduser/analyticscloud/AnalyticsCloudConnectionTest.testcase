@@ -313,6 +313,8 @@ definition {
 	@description = "Automation ID: LRAC-8821 | Test Summary: Data Source list is searchable"
 	@priority = "5"
 	test DataSourceListIsSearchable {
+		property portal.upstream = "nilo";
+
 		task ("Create data sources") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 

@@ -33,7 +33,6 @@ definition {
 	}
 
 	macro connectDXPtoAnalyticsCloud {
-
 		ACDXPSettings.goToInstanceSettingsAC();
 
 		ACDXPSettings.connectAnalyticsCloud();

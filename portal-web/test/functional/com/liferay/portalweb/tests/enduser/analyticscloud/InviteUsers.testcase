@@ -15,7 +15,7 @@ definition {
 
 		ACUtils.launchDXP();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
 	}
@@ -102,6 +102,8 @@ definition {
 	@description = "Automation ID: LRAC-9069 | Test Summary: Invite a single user"
 	@priority = "5"
 	test CanInviteSingleUser {
+		property portal.upstream = "nilo";
+
 		task ("go to user management and add user") {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 
