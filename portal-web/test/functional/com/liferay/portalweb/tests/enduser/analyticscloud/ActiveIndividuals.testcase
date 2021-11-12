@@ -44,6 +44,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8913 | Test Summary: Assert Individual Activities Chart popover follows format"
 	@priority = "3"
 	test AssertIndividualActivitiesChartPopover {
+		property portal.upstream = "alex";
+
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
 		}
@@ -120,6 +122,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8916 | Test Summary: Selected individual activity point can clear date selection"
 	@priority = "3"
 	test AssertIndividualActivitiesOverviewClearDate {
+		property portal.upstream = "alex";
+
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
 		}
@@ -293,6 +297,8 @@ definition {
 	@description = "Assert an Individual's Segments"
 	@priority = "5"
 	test CanAssertIndividualSegment {
+		property portal.upstream = "alex";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		JSONUser.addUser(
