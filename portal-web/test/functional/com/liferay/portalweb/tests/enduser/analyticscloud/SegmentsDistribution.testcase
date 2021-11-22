@@ -277,6 +277,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
 	@priority = "3"
 	test CanSearchTheSegmentProfileDistribution {
+		property portal.upstream = "alex";
+
 		var userList = "ac,dxp";
 
 		var emailList = "ac@liferay.com,dxp@liferay.com,userea@liferay.com";
@@ -363,6 +365,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8624 | Test Summary: Order the Segment Profile Distribution"
 	@priority = "3"
 	test OrderSegmentProfileDistribution {
+		property portal.upstream = "alex";
+
 		var userList = "ac,liferay";
 
 		var emailList = "ac@liferay.com,liferay@liferay.com";
