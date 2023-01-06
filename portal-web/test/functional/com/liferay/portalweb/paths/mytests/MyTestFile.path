@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>MyTestFile</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyTestFile</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>APPLICATIONS_MENU</td>
+	<td>//div[contains(@class, 'user-control-group')]//ul//li//button[contains(@data-qa-id, 'applicationsMenu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATIONS_MENU_OPTION</td>
+	<td>//ul[contains(@class, 'nav-underline')]//li[contains(@id, 'MenuPortlet_')]//button//span[contains(text(), '${key_applicationsMenuOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_SIMULATION</td>
+	<td>//button[contains(@class, 'btn btn-monospaced btn-unstyled close sidenav-close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_DATA_BUTTON</td>
+	<td>//a[contains(@class, 'collapse-icon') and contains(text(), 'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_TITLE</td>
+	<td>//*[contains(@class, 'applications-menu-nav-columns')]//h2[contains(text(), 'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_HEIGHT_SIMULATION</td>
+	<td>//input[contains(@id, '_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_WIDHT_SIMULATION</td>
+	<td>//input[contains(@id, '_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ENTRY_EITHER</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_languageOption}')]]//ancestor::*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//td[contains(.,'${key_rowAny}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_BUTTON</td>
+	<td>//a[contains(@class, 'nav-link') and contains(@id, '_com_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet_portlet_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME_BUTTON</td>
+	<td>//button[contains(@data-open-class, 'open product-menu-open')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTION_SIMULATION</td>
+	<td>//button[@data-device='${key_deviceTypeSimulation}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIMULATION_BUTTON</td>
+	<td>//li[contains(@class, 'control-menu-nav-item')]//button[contains(@aria-label, 'Simulation')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
