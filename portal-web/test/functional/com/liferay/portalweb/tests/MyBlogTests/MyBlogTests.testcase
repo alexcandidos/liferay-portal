@@ -128,6 +128,36 @@ definition {
 	@description = "Can Search Blogs"
 	@priority = "5"
 	test CanSearchBlogs {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "AAA",
+			entryTitle = "AAA");
+
+		Blogs.addEntry(
+			entryContent = "BBB",
+			entryTitle = "BBB");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsEntry.searchCP(
+			entryContent = "AAA",
+			entrySearchTerm = "AAA",
+			entryTitle = "AAA");
+
+		Blogs.viewEntryTitle(entryTitle = "AAA");
+
+		Blogs.viewEntryNotPresent(entryTitle = "BBB");
 	}
 
 }
