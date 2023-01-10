@@ -1,0 +1,277 @@
+@component-name = "portal-lima"
+definition {
+    property testray.main.component.name = "Blogs";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Navigator.openURL();
+    }
+
+     tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+     }
+
+    @description = "Can Create a Blog"
+    @priority = "5"
+    test CanCreateBlog {
+
+        task ("Create Blogs and publish him in a public layout") {
+
+      JSONLayout.addPublicLayout(
+      groupName = "Guest",
+      layoutName = "Blogs Page");
+
+
+      BlogsNavigator.openToAddEntry(
+          layoutName = "Blogs Page",
+          siteURLKey = "guest");
+
+
+      BlogsEntry.addEntryContent(
+          entryContent = "Blogs Content",
+          entryTitle = "Blogs Content test");
+
+
+      PortletEntry.publish();
+
+
+      Alert.viewSuccessMessage();
+
+
+      JSONLayout.addWidgetToPublicLayout(
+      column = "1",
+      groupName = "Guest",
+      layoutName = "Blogs Page",
+      widgetName = "Blogs");
+ 
+       }
+ 
+      
+      task ("Assert that elements is equal to cod"){
+ 
+       MyBlogTests.viewBlogsEntry(
+         entryContent = "Blogs Content",
+         entryTitle = "Blogs Content test");
+
+ 
+       MyBlogTests.AssertBlogEntryTitleAndContent(
+           titleValue = "Blogs Content test",
+           contentValue = "Blogs Content");
+        
+ 
+      }
+
+
+    }
+
+    @description = "Can Create a Blog"
+    @priority = "5"
+    test CanEditBlog {
+
+    task ("Blogs is added a page"){
+    JSONLayout.addPublicLayout(
+       groupName = "Guest",
+       layoutName = "Blogs Page");
+ 
+       BlogsNavigator.openToAddEntry(
+           layoutName = "Blogs Page",
+           siteURLKey = "guest");
+ 
+       BlogsEntry.addEntryContent(
+           entryContent = "Blogs Content",
+           entryTitle = "Blogs Content test");
+ 
+       PortletEntry.publish();
+ 
+       Alert.viewSuccessMessage();
+ 
+       JSONLayout.addWidgetToPublicLayout(
+       column = "1",
+       groupName = "Guest",
+       layoutName = "Blogs Page",
+       widgetName = "Blogs");
+      
+       Navigator.gotoPage(pageName = "Blogs Page");
+
+
+       task ("Edit Blogs Entry"){
+
+
+       Blogs.editEntryPG(
+        entryContent = "Blogs Content",
+        entryContentEdit = "Blogs Entry Content Edit",
+        entryTitle = "Blogs Content test",
+        entryTitleEdit = "Blogs Entry Title Edit");
+
+       Alert.viewSuccessMessage();
+
+       }
+
+       task ("Confirming that haved sucess") {
+
+         MyBlogTests.viewBlogsEntry(
+            entryContent = "Blogs Entry Content Edit",
+            entryTitle = "Blogs Entry Title Edit");
+ 
+        MyBlogTests.assertBlogEntryTitleAndContent(
+            titleValue = "Blogs Entry Title Edit",
+            contentValue = "Blogs Entry Content Edit");
+
+       }
+ 
+   }
+
+
+
+    }
+    @description = "Can Delete a Blog"
+    @priority = "5"
+    test CanDeleteBlog {
+
+     task ("Blogs is added a page"){
+       JSONLayout.addPublicLayout(
+        groupName = "Guest",
+        layoutName = "Blogs Page");
+
+       BlogsNavigator.openToAddEntry(
+        layoutName = "Blogs Page",
+        siteURLKey = "guest");
+  
+       BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+		entryContent = "Blogs Content1",
+		entryTitle = "Blogs Content test1");
+        
+       Alert.viewSuccessMessage();
+
+       Blogs.addEntry(
+        entryContent = "Blogs Content 2",
+        entryTitle = "Blogs Content test 2");
+ 
+       Alert.viewSuccessMessage();
+
+       }
+
+       task ("Widget is in BlogsPage"){
+        JSONLayout.addWidgetToPublicLayout(
+        column = "1",
+        groupName = "Guest",
+        layoutName = "Blogs Page",
+        widgetName = "Blogs");
+       }
+ 
+        task ("Assert blogs are corrects") {
+
+        MyBlogTests.viewBlogsEntry(
+         entryContent = "Blogs Content1",
+         entryTitle = "Blogs Content test1");
+ 
+        MyBlogTests.assertBlogEntryTitleAndContent(
+         contentValue = "Blogs Content1",
+         titleValue = "Blogs Content test1");
+ 
+        MyBlogTests.viewBlogsEntry(
+         entryContent = "Blogs Content 2",
+         entryTitle = "Blogs Content test 2");
+  
+        MyBlogTests.assertBlogEntryTitleAndContent(
+        titleValue = "Blogs Content test 2",
+        contentValue = "Blogs Content 2");
+
+        }
+
+      task ("Excluding the first blog created") {
+
+        Navigator.gotoPage(pageName = "Home");
+
+        BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+        BlogsEntry.moveToRecycleBinCP(
+            assetType = "Blogs Entry",
+            entryTitle = "Blogs Content test1");
+
+        Alert.viewSuccessMessage();
+        
+      }
+
+      task ("Confirm that Blog 01 are exclused and Blog 02 exists."){
+
+        Navigator.gotoPage(pageName = "Blogs Page");
+        
+        MyBlogTests.assertBlogElementNotPresent(
+          titleValue = "Blogs Entry Title Edit",
+          contentValue = "Blogs Entry Content Edit");
+
+        Navigator.gotoPage(pageName = "Blogs Page");
+ 
+        MyBlogTests.viewBlogsEntry(
+         entryContent = "Blogs Content 2",
+         entryTitle = "Blogs Content test 2");
+
+        MyBlogTests.assertBlogEntryTitleAndContent(
+          titleValue = "Blogs Content test 2",
+          contentValue = "Blogs Content 2");
+      }
+
+
+    }
+    @description = "Can Search Blogs"
+    @priority = "5"
+    test CanSearchBlogs {
+ 
+      task ("Creating a Layout and a 2 Blogs"){
+        JSONLayout.addPublicLayout(
+		 	groupName = "Guest",
+			layoutName = "Search Page");
+
+        
+        JSONLayout.addWidgetToPublicLayout(
+        column = "1",
+        groupName = "Guest",
+        layoutName = "Search Page",
+        widgetName = "Blogs");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+		entryContent = "Blogs Content1",
+		entryTitle = "Blogs Title test1");
+        
+       Alert.viewSuccessMessage();
+
+       Blogs.addEntry(
+		entryContent = "Murder is found in river",
+		entryTitle = "News");
+        
+       Alert.viewSuccessMessage();
+
+       }
+
+       task ("Checking if the search are correct and appears others results"){
+		Navigator.gotoPage(pageName = "Search Page");
+        var searchTerm = "Blogs Title test1";
+        
+		SearchPortlets.searchEmbedded(searchTerm = "Blogs Title test1");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Blogs Title test1",
+			searchAssetType = "Blogs Entry",
+			searchTerm = "Blogs Title test1");
+
+        MyBlogTests.assertThatOnlyOneBlogsAppears(
+            searchAssetTitle =  "Blogs Title test1",
+            searchAssetType = "Blogs Entry",
+            searchTerm = "Blogs Title test1");
+       }
+
+}
+
+}
