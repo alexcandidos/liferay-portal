@@ -137,6 +137,35 @@ definition {
 	@description = "Can Edit a Documents and Media"
 	@priority = "5"
 	test CanEditDM {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Commerce_Black.jpg",
+			dmDocumentFileNameEdit = "Commerce_Black.jpg",
+			dmDocumentTitle = "DM Document JPG",
+			dmDocumentTitleEdit = "DM Document JPG Edited");
+
+		Refresh();
+
+		DMDocument.viewEditCP(dmDocumentTitleEdit = "DM Document JPG Edited");
 	}
 
 }
