@@ -99,6 +99,39 @@ definition {
 	@description = "Can Download a Documents and Media"
 	@priority = "5"
 	test CanDownloadDM {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document1 Description",
+			dmDocumentTitle = "DM Document1 Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document2 Description",
+			dmDocumentTitle = "DM Document2 Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_2.txt");
+
+		Refresh();
+
+		DMDocument.downloadPG(dmDocumentTitle = "DM Document1 Title");
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.txt");
+
+		DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_2.txt");
 	}
 
 	@description = "Can Edit a Documents and Media"
