@@ -12,15 +12,14 @@ definition {
 	}
 
 	tearDown {
-
 		Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Forms");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
 
-			FormsAdmin.teardownForms();
-			
+		FormsAdmin.teardownForms();
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
