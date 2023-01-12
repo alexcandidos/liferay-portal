@@ -1,7 +1,6 @@
 definition {
 
 	macro goToSimulator {
-
 		Click(locator1 = "MyTestFile#CLICK_IN_CONTROLPANEL");
 
 		Click(locator1 = "MyTestFile#ELEMENT_CUSTOM_VIEW");
@@ -10,7 +9,6 @@ definition {
 	}
 
 	macro typeAndAssertThatFieldsAreCompleted {
-
 		Type(
 			locator1 = "MyTestFile#TYPE_VALUE_HEIGHT",
 			value1 = "1920");
