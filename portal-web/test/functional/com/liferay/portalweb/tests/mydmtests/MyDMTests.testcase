@@ -1,0 +1,144 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		Site.deleteAllCP();
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Document Description",
+			dmDocumentFile = "Commerce_Black.jpg",
+			dmDocumentTitle = "DM Document JPG Node1");
+
+		ProductMenu.gotoHomePage();
+
+		IsElementPresent(
+			key_rowEntry = "DM Document JPG Node1",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		Alert.viewSuccessMessage();
+	}
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		task ("adding 1 file to have more than 2 in the test and so use the delete function") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "New Description",
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "New Document");
+		}
+
+		task ("Delete the first document") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMDocument.deleteCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document JPG");
+
+			ProductMenu.gotoHomePage();
+
+			if (IsElementNotPresent(key_rowEntry = "New Document", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+				ProductMenu.gotoHomePage();
+
+				Alert.viewSuccessMessage();
+			}
+		}
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Description for this file",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Second Document");
+
+		task ("Download the first document") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMDocument.downloadCP(
+				dmDocumentSize = "21 KB",
+				dmDocumentTitle = "DM Document JPG");
+
+			ProductMenu.gotoHomePage();
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		task ("Edit the document") {
+			DMDocument.editCP(
+				dmDocumentFile = "Commerce_Black.jpg",
+				dmDocumentFileEdit = "Document_5.jpg",
+				dmDocumentFileName = "Commerce_Black.jpg",
+				dmDocumentFileNameEdit = "Document_5.jpg",
+				dmDocumentTitle = "DM Document JPG Node1",
+				dmDocumentTitleEdit = "This Title was edited");
+
+			PortletEntry.publish();
+
+			ProductMenu.gotoHomePage();
+
+			IsElementPresent(
+				key_rowEntry = "This Title was edited",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+}
