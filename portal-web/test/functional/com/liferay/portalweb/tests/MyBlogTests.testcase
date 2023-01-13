@@ -168,4 +168,57 @@ definition {
 				titleValue = "Blogs Entry Title Edit");
 		}
 	}
+
+	@description = "Can Search Blogs"
+	@priority = "5"
+	test CanSearchBlogs {
+		task ("Creating a Layout and a 2 Blogs") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = "Blogs");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			Blogs.addEntry(
+				entryContent = "Blogs Content1",
+				entryTitle = "Blogs Title test1");
+
+			Alert.viewSuccessMessage();
+
+			Blogs.addEntry(
+				entryContent = "Murder is found in river",
+				entryTitle = "News");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Checking if the search are correct and appears others results") {
+			Navigator.gotoPage(pageName = "Search Page");
+
+			var searchTerm = "Blogs Title test1";
+
+			SearchPortlets.searchEmbedded(searchTerm = "Blogs Title test1");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Blogs Title test1",
+				searchAssetType = "Blogs Entry",
+				searchTerm = "Blogs Title test1");
+
+			MyBlogTests.assertThatOnlyOneBlogsAppears(
+				searchAssetTitle = "Blogs Title test1",
+				searchAssetType = "Blogs Entry",
+				searchTerm = "Blogs Title test1");
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Search Page");
+		}
+	}
+
 }
