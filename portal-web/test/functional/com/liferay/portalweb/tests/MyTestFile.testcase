@@ -1,1 +1,9 @@
 
+
+	@description = "Set Screen size to custom and validate values"
+	@priority = "5"
+	test CanSetScreenSizeAndValidateValues {
+		MyTestFile.goToSimulator();
+
+		MyTestFile.typeAndAssertThatFieldsAreCompleted();
+	}
