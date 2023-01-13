@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>MyBlogTests</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyBlogTests</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ENTRY_CONTENT_BLOGS</td>
+	<td>//div[@class='col-md-8 mx-auto widget-mode-detail-text' and contains(.,'${key_entryContentBlog}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TITLE_BLOGS</td>
+	<td>//div[@class="autofit-col autofit-col-expand"] //a[contains(text(),'${key_entryTitleBlog}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_ENTRY_TITLE_BLOGS</td>
+	<td>//div[@class="autofit-col autofit-col-expand"]//h3[contains(text(),'${key_viewEntryTitleBlog}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
