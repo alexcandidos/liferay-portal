@@ -7,3 +7,12 @@
 
 		MyTestFile.typeAndAssertThatFieldsAreCompleted();
 	}
+
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+	@priority = "5"
+	test CanValidateConfigurationStringAtControlPanel {
+
+		MyTestFile.waitElementAppearAndClick();
+
+		Click(locator1 = "MyTestFile#CLICK_IN_CONTROLPANEL");
+	}
