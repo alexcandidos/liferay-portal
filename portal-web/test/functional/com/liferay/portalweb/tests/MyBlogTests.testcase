@@ -72,6 +72,72 @@ definition {
 		}
 	}
 
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+		task ("Blogs is added a page") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Content1",
+				entryTitle = "Blogs Content test1");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Content 2",
+				entryTitle = "Blogs Content test 2");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+		}
+
+		task ("Assert blogs are corrects") {
+			MyBlogTests.viewBlogsEntry(
+				entryContent = "Blogs Content1",
+				entryTitle = "Blogs Content test1");
+
+			MyBlogTests.assertViewBlogEntryTitleAndContent(
+				contentValue = "Blogs Content1",
+				viewEntryTitleBlog = "Blogs Content test1");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			MyBlogTests.viewBlogsEntry(
+				entryContent = "Blogs Content 2",
+				entryTitle = "Blogs Content test 2");
+
+			MyBlogTests.assertViewBlogEntryTitleAndContent(
+				contentValue = "Blogs Content 2",
+				viewEntryTitleBlog = "Blogs Content test 2");
+		}
+
+		task ("Excluding the first blog created") {
+			Navigator.gotoPage(pageName = "Home");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			BlogsEntry.moveToRecycleBinCP(
+				assetType = "Blogs Entry",
+				entryTitle = "Blogs Content test1");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Confirm that Blog 01 are exclused and Blog 02 exists.") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			MyBlogTests.assertBlogElementNotPresent(
+				contentValue = "Blogs Entry Content Edit",
+				titleValue = "Blogs Entry Title Edit");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			MyBlogTests.viewBlogsEntry(
+				entryContent = "Blogs Content 2",
+				entryTitle = "Blogs Content test 2");
+
+			MyBlogTests.assertBlogEntryTitleAndContent(
+				contentValue = "Blogs Content 2",
+				titleValue = "Blogs Content test 2");
+		}
+	}
+
 	@description = "Can Create a Blog"
 	@priority = "5"
 	test CanEditBlog {
