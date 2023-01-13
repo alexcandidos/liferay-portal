@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>MyTestFile</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyTestFile</td></tr>
+</thead>
+
+<tbody>
+
+<tr>
+	<td>VALIDATE_STRING</td>
+	<td>//button[@class='dropdown-toggle lfr-portal-tooltip btn btn-monospaced btn-sm btn-unstyled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLICK_IN_CONTROLPANEL</td>
+	<td>//button[@class='nav-link btn btn-unstyled'] //span[contains(text(),'Control Panel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELEMENT_CONFIGURATION_VIEW</td>
+	<td>//h2[contains(text(),'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELEMENT_SIMULATION_VIEW</td>
+	<td>//a[contains(@class,'control-menu-icon lfr-portal-tooltip overflow-hidden product-menu-toggle sidenav-toggler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELEMENT_CUSTOM_VIEW_SIMULATOR</td>
+	<td>//button[@class='control-menu-icon lfr-portal-tooltip overflow-hidden product-menu-toggle sidenav-toggler']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELEMENT_CUSTOM_VIEW</td>
+	<td>//span[contains(text(),'Custom')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_VALUE_HEIGHT</td>
+	<td>//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_VALUE_WIDTH</td>
+	<td>//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOUND_CORRECT_ROW</td>
+	<td>//tr[@data-qa-id='row'] //td[@class=' lfr-language-column']//*[contains(@class,'h4 lexicon-icon lexicon-icon-${key_language} reference-mark')]/ancestor::tr[@data-qa-id='row']//td[@class=' table-cell-expand lfr-age-column'] //span[contains(text(),'${key_age}')]/ancestor::tr[@data-qa-id='row']//td[@class=' table-cell-expand lfr-full-name-column'] //span[contains(text(), '${key_fullName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
