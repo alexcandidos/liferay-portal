@@ -20,3 +20,33 @@
 		BlogsEntry.tearDownCP();
 	}
 
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		task ("Create Blog") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry Content 1",
+				entryTitle = "Blogs Entry Title 1");
+		}
+
+		task ("Add Widget Blogs") {
+			Navigator.gotoPage(pageName = "Home");
+
+			MyBlogTest.clickToControlMenu();
+
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Collaboration",
+				widgetName = "Blogs");
+
+			PortletEntry.publish();
+		}
+
+		task ("Check Create Method Blogs") {
+			MyBlogTest.viewEntryCP(
+				entryContent = "Blogs Entry Content 1",
+				entryTitle = "Blogs Entry Title 1");
+		}
+	}
+
