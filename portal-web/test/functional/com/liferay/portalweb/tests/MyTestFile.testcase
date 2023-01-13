@@ -1,0 +1,123 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "MyTestFile";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdmin.teardownForms();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
+	@description = "Writting a new forms"
+	@priority = "5"
+	test CanAddFormAndChangeLanguage {
+		Navigator.openURL();
+
+		FormsAdmin.addForm();
+
+		Form.editName(formTitle = "My Form");
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Age");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.editFieldLabelMetal(fieldValue = "Full Name");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Full Name",
+			label = "Nome Completo");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Age",
+			label = "Idade");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewTextField(
+			fieldLabel = "Age",
+			fieldName = "Age");
+
+		FormFields.viewTextField(
+			fieldLabel = "Full Name",
+			fieldName = "Full Name");
+
+		FormFields.editText(
+			fieldName = "Age",
+			fieldValue = "22");
+
+		FormFields.editText(
+			fieldName = "Full Name",
+			fieldValue = "Jerry Adriano");
+
+		FormPortlet.clickSubmit();
+
+		Alert.viewSuccessMessage();
+
+		Form.submitAgain();
+
+		FormPortletConfiguration.changeLanguage(
+			currentLanguage = "en-US",
+			newLanguage = "português-Brasil");
+
+		FormFields.viewTextField(
+			fieldLabel = "Idade",
+			fieldName = "Idade");
+
+		FormFields.viewTextField(
+			fieldLabel = "Nome Completo",
+			fieldName = "Nome Completo");
+
+		FormFields.editText(
+			fieldName = "Idade",
+			fieldValue = "22");
+
+		FormFields.editText(
+			fieldName = "Nome Completo",
+			fieldValue = "Jerry Adriano");
+
+		FormPortlet.clickSubmit();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		MyTestFile.viewEntryContent(
+			age = "22",
+			language = "pt-br",
+			name = "Jerry Adriano");
+	}
+
+}
