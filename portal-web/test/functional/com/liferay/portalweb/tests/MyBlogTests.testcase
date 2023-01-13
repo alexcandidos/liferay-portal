@@ -72,4 +72,34 @@ definition {
 		}
 	}
 
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanEditBlog {
+		task ("Editing Blogs Entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Content",
+				entryTitle = "Blogs Content test",
+				groupName = "Blogs Page");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			Blogs.editEntryPG(
+				entryContent = "Blogs Content",
+				entryContentEdit = "Blogs Entry Content Edit",
+				entryTitle = "Blogs Content test",
+				entryTitleEdit = "Blogs Entry Title Edit");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Confirming that haved sucess") {
+			MyBlogTests.viewBlogsEntry(
+				entryContent = "Blogs Entry Content Edit",
+				entryTitle = "Blogs Entry Title Edit");
+
+			MyBlogTests.assertBlogEntryTitleAndContent(
+				contentValue = "Blogs Entry Content Edit",
+				titleValue = "Blogs Entry Title Edit");
+		}
+	}
 }
