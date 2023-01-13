@@ -140,5 +140,4 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 	}
-
 }
