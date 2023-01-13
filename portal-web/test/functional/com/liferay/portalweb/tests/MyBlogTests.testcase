@@ -1,0 +1,75 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		BlogsEntry.tearDownCP();
+
+		JSONLayout.deletePublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		task ("Create Blogs and publish him in a public layout") {
+			BlogsNavigator.openToAddEntry(
+				layoutName = "Blogs Page",
+				siteURLKey = "guest");
+
+			BlogsEntry.addEntryContent(
+				entryContent = "Blogs Content",
+				entryTitle = "Blogs Content test");
+
+			PortletEntry.publish();
+
+			Alert.viewSuccessMessage();
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
+		}
+
+		task ("Assert that elements is equal to cod") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			MyBlogTests.viewBlogsEntry(
+				entryContent = "Blogs Content",
+				entryTitle = "Blogs Content test");
+
+			MyBlogTests.assertBlogEntryTitleAndContent(
+				contentValue = "Blogs Content",
+				titleValue = "Blogs Content test");
+		}
+	}
+
+}
