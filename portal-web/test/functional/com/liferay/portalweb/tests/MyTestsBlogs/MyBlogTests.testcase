@@ -82,5 +82,27 @@
 		}
 	}
 
+	@description = "Can Search Blogs"
+	@priority = "5"
+	test CanSearchBlogs {
+		task ("Search for first added blog") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			MyBlogTest.searchEmbedded(searchTerm = "\"\"Blogs Entry Title 1\"\"");
+		}
+
+		task ("Check first added blog") {
+			MyBlogTest.checkElementNotPresentSearch(title = "Blogs Entry Title 1");
+		}
+
+		task ("Search for second added blog") {
+			MyBlogTest.searchEmbedded(searchTerm = "\"\"Blogs Entry Title 2\"\"");
+		}
+
+		task ("Check second added blog") {
+			MyBlogTest.checkElementPresent(title = "Blogs Entry Title 2");
+		}
+	}
+
 	}
 
