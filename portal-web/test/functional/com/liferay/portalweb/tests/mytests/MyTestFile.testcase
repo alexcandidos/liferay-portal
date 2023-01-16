@@ -156,4 +156,25 @@ definition {
 		}
 	}
 
+	@description = "Set Screen size to custom and validate values"
+	@priority = "5"
+	test SetScreenSizeAndValidateValues {
+		MyTestFile.goToSimulationOptions(deviceTypeSimulation = "custom");
+
+		MyTestFile.setPageHeightAndWidth(
+			heightValue = "1920",
+			widhtValue = "1080");
+
+		MyTestFile.clickAtSimulation();
+
+		MyTestFile.goToSimulationOptions(deviceTypeSimulation = "custom");
+
+		AssertElementPresent(
+			locator1 = "MyTestFile#CUSTOM_HEIGHT_SIMULATION",
+			value1 = "1920");
+
+		AssertElementPresent(
+			locator1 = "MyTestFile#CUSTOM_WIDHT_SIMULATION",
+			value1 = "1080");
+	}
 }
