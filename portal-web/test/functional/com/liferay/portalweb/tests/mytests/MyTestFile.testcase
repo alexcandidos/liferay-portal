@@ -177,4 +177,13 @@ definition {
 			locator1 = "MyTestFile#CUSTOM_WIDHT_SIMULATION",
 			value1 = "1080");
 	}
+
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+	@priority = "5"
+	test ValidateConfigurationStringAtControlPanel {
+		MyTestFile.goToApplicationsMenu(applicationsMenuOption = "Control Panel");
+
+		AssertElementPresent(locator1 = "MyTestFile#CONFIGURATION_TITLE");
+	}
+
 }
