@@ -62,5 +62,25 @@
 
 			MyBlogTest.checkElementPresent(entryTitle = "Blogs Entry Content 2");
 		}
+
+	@description = "Can Edit a Blog"
+	@priority = "5"
+	test CanEditBlog {
+		task ("Edit Method blogs") {
+			BlogsEntry.editContentViaCardViewPG(
+				entryContent = "Blogs Entry Content 1",
+				entryContentEdit = "Blogs Entry Content Edited",
+				entryTitle = "Blogs Entry Title 1");
+
+			PortletEntry.publish();
+		}
+
+		task ("Check Edit Method blogs") {
+			MyBlogTest.viewEntryCP(
+				entryContent = "Blogs Entry Content Edited",
+				entryTitle = "Blogs Entry Title 1");
+		}
+	}
+
 	}
 
