@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>MyBlogTest</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyBlogTest</td></tr>
+</thead>
+
+<tbody>
+
+<tr>
+	<td>BUTTON_EDIT_PAGE</td>
+	<td>//div[@class='control-menu-nav-category user-control-group']//span[@class=' lfr-portal-tooltip']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_BLOG</td>
+	<td>//a[@class='title-link'][contains(text(),'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_BLOG</td>
+	<td>//div[@class='widget-content']//p[contains(text(),'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN_OPTIONS_BLOG</td>
+	<td>xpath=(//div[@class='dropdown dropdown-action']//span[@class='inline-item'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_BLOG</td>
+	<td>//button[@data-action='delete']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_BLOG_SEARCH</td>
+	<td>//span[@class='text-truncate-inline']/a[contains(text(),'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FOR</td>
+	<td>//input[contains(@name,'BlogsAdminPortlet_keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LUPA_SEARCH</td>
+	<td>//button[@class='btn btn-monospaced btn-unstyled']</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>
