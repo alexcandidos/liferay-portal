@@ -81,4 +81,22 @@ definition {
 				locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE");
 		}
 	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		task ("Go to Documents and Media and download DM Document1") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.downloadPG(dmDocumentTitle = "DM Document1 Title");
+		}
+
+		task ("Go to Documents and Media and assert if Document1 was downloaded and Document2 was not downloaded ") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.txt");
+
+			DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_2.txt");
+		}
+	}
 }
