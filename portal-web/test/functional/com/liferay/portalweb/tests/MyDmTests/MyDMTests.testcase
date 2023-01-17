@@ -1,0 +1,63 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document1 Title");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_2.txt",
+			dmDocumentTitle = "DM Document2 Title");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+		}
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		task ("Go to Documents and Media and add new document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_3.txt",
+				dmDocumentTitle = "DM Document3 Title");
+		}
+
+		task ("Go to Documents and Mdia and view text document") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			AssertElementPresent(
+				key_dmDocumentTitle = "DM Document3 Title",
+				locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE");
+		}
+	}
+
+}
