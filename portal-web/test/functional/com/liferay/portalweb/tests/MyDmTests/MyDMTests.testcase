@@ -99,4 +99,25 @@ definition {
 			DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_2.txt");
 		}
 	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		task ("Go to Documents and Media and change DM name and the file") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.editCP(
+				dmDocumentFileEdit = "Commerce_Black.jpg",
+				dmDocumentFileNameEdit = "Commerce_Black.jpg",
+				dmDocumentTitle = "DM Document1 Title",
+				dmDocumentTitleEdit = "DM Document JPG Edited");
+		}
+
+		task ("Go to Documents and Media and assert edited document") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMDocument.viewEditCP(dmDocumentTitleEdit = "DM Document JPG Edited");
+		}
+	}
+
 }
