@@ -1,42 +1,42 @@
 @component-name = "portal-web-forms-and-data-lists"
 definition {
-    property testray.main.component.name = "Forms";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	property testray.main.component.name = "Forms";
 
-        User.firstLoginPG();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        Navigator.openURL();
-    }
+		User.firstLoginPG();
 
-    tearDown {
-        User.logoutAndLoginPG(
-            userLoginEmailAddress = "test@liferay.com",
-            userLoginFullName = "Test Test");
-    }   
+		Navigator.openURL();
+	}
 
-    @description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
-    @priority = "5"
-    test ValidateConfigurationStringAtControlPanel{
-        MyTestFile.openMenu();
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
 
-        MyTestFile.control_Panel();
+	@description = "Set Screen size to custom and validate values"
+	@priority = "5"
+	test SetScreenSizeAndValidateValues {
+		MyTestFile.openSimulation();
 
-        MyTestFile.open_System_Settings();
+		MyTestFile.openCustom();
 
-    }
+		MyTestFile.changeHeigthAndWidth();
 
-    @description = "Set Screen size to custom and validate values"
-    @priority = "5"
-    test SetScreenSizeAndValidateValues {
-        MyTestFile.openSimulation();
+		MyTestFile.validatHigthAndWidth();
+	}
 
-        MyTestFile.openCustom();
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+	@priority = "5"
+	test ValidateConfigurationStringAtControlPanel {
+		MyTestFile.openMenu();
 
-        MyTestFile.changeHeigthAndWidth();
-           
-        MyTestFile.validatHigthAndWidth();
-    }
+		MyTestFile.control_Panel();
+
+		MyTestFile.open_System_Settings();
+	}
 
 }
