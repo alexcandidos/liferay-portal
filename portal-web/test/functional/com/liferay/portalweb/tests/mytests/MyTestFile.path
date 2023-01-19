@@ -15,42 +15,36 @@
 	<td>//button[@class="dropdown-toggle lfr-portal-tooltip btn btn-monospaced btn-sm btn-unstyled"]</td>
 	<td></td>
 </tr>
-
 <tr>
 <td>OPEN_CONTROL_PANEL</td>
-    <td>//span[@class="c-inner"] [contains(text(),'Control Panel')]</td>
+	<td>//span[@class="c-inner"] [contains(text(),'Control Panel')]</td>
 	<td></td>
 </tr>
-
 <tr>
 <td>OPEN_SYSTEM_SETTINGS</td>
 	<td>//span[@class='c-inner'] [contains(text(),'System Settings')]</td>
 	<td></td>
 </tr>
-
 <tr>
 <td>OPEN_SIMULATION</td>
-    <td>//button[@class='control-menu-icon lfr-portal-tooltip overflow-hidden product-menu-toggle sidenav-toggler']</td>
-    <td></td>
+	<td>//button[@class='control-menu-icon lfr-portal-tooltip overflow-hidden product-menu-toggle sidenav-toggler']</td>
+	<td></td>
 </tr>
-
 <tr>
 <td>OPEN_CUSTOM</td>
-   <td>//span[@class="d-block mb-3 mt-1"][contains(text(),'Custom')]</td>
-   <td></td>
-</tr>   
-
+<td>//span[@class="d-block mb-3 mt-1"][contains(text(),'Custom')]</td>
+<td></td>
+</tr>
 <tr>
 <td>CHANGE_HEIGTH</td>
-   <td>//input[@id="_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height"]</td>
-   <td></td>
-</tr>  
-
+<td>//input[@id="_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height"]</td>
+<td></td>
+</tr>
 <tr>
 <td>CHANGE_WIDTH</td>
-   <td>//input[@id="_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width"]</td>
-   <td></td>
-</tr>  
+<td>//input[@id="_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width"]</td>
+<td></td>
+</tr>
 
 </tbody>
 </table>

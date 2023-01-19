@@ -1,37 +1,43 @@
 definition {
-    macro openMenu {
-        Click(locator1 = "MyTestFile#OPEN_MENU");
-    }
 
-    macro control_Panel {
-        Click(locator1 = "MyTestFile#OPEN_CONTROL_PANEL");
-    }
+	macro changeHeigthAndWidth {
+		Type(
+			locator1 = "MyTestFile#CHANGE_HEIGTH",
+			value1 = "1920");
 
-    macro open_System_Settings {
-        Click(locator1 = "MyTestFile#OPEN_SYSTEM_SETTINGS");
-    }
+		Type(
+			locator1 = "MyTestFile#CHANGE_WIDTH",
+			value1 = "1080");
+	}
 
-    macro openSimulation {
-        Click(locator1 = "MyTestFile#OPEN_SIMULATION");
-    }
+	macro control_Panel {
+		Click(locator1 = "MyTestFile#OPEN_CONTROL_PANEL");
+	}
 
-    macro openCustom {
-        Click(locator1 = "MyTestFile#OPEN_CUSTOM");
-    }
+	macro open_System_Settings {
+		Click(locator1 = "MyTestFile#OPEN_SYSTEM_SETTINGS");
+	}
 
-    macro changeHeigthAndWidth {
-        Type(locator1 = "MyTestFile#CHANGE_HEIGTH",
-        value1 = "1920");
+	macro openCustom {
+		Click(locator1 = "MyTestFile#OPEN_CUSTOM");
+	}
 
-        Type(locator1 = "MyTestFile#CHANGE_WIDTH",
-        value1 = "1080");
-    }
+	macro openMenu {
+		Click(locator1 = "MyTestFile#OPEN_MENU");
+	}
 
-    macro validatHigthAndWidth {
-        AssertTextEquals(locator1 = "MyTestFile#CHANGE_HEIGTH",
-        value1 = "1920");
+	macro openSimulation {
+		Click(locator1 = "MyTestFile#OPEN_SIMULATION");
+	}
 
-        AssertTextEquals(locator1 = "MyTestFile#CHANGE_WIDTH",
-        value1 = "1080");
-    }
+	macro validatHigthAndWidth {
+		AssertTextEquals(
+			locator1 = "MyTestFile#CHANGE_HEIGTH",
+			value1 = "1920");
+
+		AssertTextEquals(
+			locator1 = "MyTestFile#CHANGE_WIDTH",
+			value1 = "1080");
+	}
+
 }
