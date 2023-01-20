@@ -1,0 +1,57 @@
+definition {
+
+    macro appMenu {
+
+        Click(
+		    locator1 = "Exercise5a#APPLICATIONS_MENU_BUTTON");
+    }
+
+
+macro tab2 {
+
+
+        Click(
+		    locator1 = "Exercise5a#PRODUCT_NAV_APP_MENU_PORTLET_TAB2");
+        
+    }
+
+macro store {
+        
+        Click(
+		    locator1 = "Exercise5a#STORE");
+
+    }
+
+   macro simulation {
+
+        Click(
+		    locator1 = "Exercise5a#SIMULATION");
+    }
+
+
+macro custom {
+
+
+        Click(
+		    locator1 = "Exercise5a#CUSTOM");
+        
+    }
+
+macro height {
+        
+        Type(
+		    locator1 = "Exercise5a#HEIGHT",
+            value1 = "800");
+
+    }
+
+macro width {
+        
+        Type(
+		    locator1 = "Exercise5a#WIDTH",
+            value1 = "500");
+
+    }
+
+
+}
