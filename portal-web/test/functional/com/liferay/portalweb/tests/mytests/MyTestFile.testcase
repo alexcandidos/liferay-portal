@@ -1,50 +1,50 @@
 @component-name = "portal-web-forms-and-data-lists"
 definition {
-    property testray.main.component.name = "Forms";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	property testray.main.component.name = "Forms";
 
-        User.firstLoginPG();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        Navigator.openURL();
-    }
+		User.firstLoginPG();
 
-    tearDown {
-        User.logoutAndLoginPG(
-            userLoginEmailAddress = "test@liferay.com",
-            userLoginFullName = "Test Test");
-    }
+		Navigator.openURL();
+	}
 
-    @description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
-    @priority = "5"
-    test ValidateConfigurationStringAtControlPanel {
-        
-        MyTestFile.applicationMenuClick();
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
 
-        MyTestFile.controlPanelClick();
+	@description = "Set Screen size to custom and validate values"
+	@priority = "5"
+	test SetScreenSizeAndValidateValues {
+		MyTestFile.simulationClick();
 
-        MyTestFile.configurationAssert();
-    }
+		MyTestFile.customClick();
 
-    @description = "Set Screen size to custom and validate values"
-    @priority = "5"
-    test SetScreenSizeAndValidateValues {
-        
-        MyTestFile.simulationClick();
+		MyTestFile.heightModification();
 
-        MyTestFile.customClick();
+		MyTestFile.widthModification();
 
-        MyTestFile.heightModification();
+		MyTestFile.closeButtonClick();
 
-        MyTestFile.widthModification();
+		MyTestFile.simulationClick();
 
-        MyTestFile.closeButtonClick();
-        
-        MyTestFile.simulationClick();        
+		MyTestFile.customClick();
 
-        MyTestFile.customClick();
+		MyTestFile.widthModification();
+	}
 
-        MyTestFile.widthModification();
-    }
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+	@priority = "5"
+	test ValidateConfigurationStringAtControlPanel {
+		MyTestFile.applicationMenuClick();
+
+		MyTestFile.controlPanelClick();
+
+		MyTestFile.configurationAssert();
+	}
+
 }

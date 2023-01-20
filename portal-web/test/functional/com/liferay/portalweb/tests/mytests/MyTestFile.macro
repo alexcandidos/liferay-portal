@@ -1,40 +1,39 @@
 definition {
 
-    macro applicationsMenuClick {
-        Click(locator1 = "MyTestFile#APPLICATIONS_MENU");
-    }
+	macro applicationsMenuClick {
+		Click(locator1 = "MyTestFile#APPLICATIONS_MENU");
+	}
 
-    macro controlPanelClick {
-        Click(locator1 = "MyTestFile#CONTROL_PANEL");
-    }
+	macro closeButtonClick {
+		Click(locator1 = "MyTestFile#CLOSE_BUTTON");
+	}
 
-    macro configurationAssert {
-        AssertElementPresent(locator1 = "MyTestFile#CONFIGURATION");
+	macro configurationAssert {
+		AssertElementPresent(locator1 = "MyTestFile#CONFIGURATION");
+	}
 
-    }
+	macro controlPanelClick {
+		Click(locator1 = "MyTestFile#CONTROL_PANEL");
+	}
 
-    macro simulationClick {
-        Click(locator1 = "MyTestFile#SIMULATION");
+	macro customClick {
+		Click(locator1 = "MyTestFile#CUSTOM");
+	}
 
-    }
+	macro heightModification {
+		Type(
+			locator1 = "MyTestFile#HEIGHT",
+			value1 = "1920");
+	}
 
-    macro customClick {
-        Click(locator1 = "MyTestFile#CUSTOM");
+	macro simulationClick {
+		Click(locator1 = "MyTestFile#SIMULATION");
+	}
 
-    }
+	macro widthModification {
+		Type(
+			locator1 = "MyTestFile#WIDTH",
+			value1 = "1080");
+	}
 
-    macro heightModification {
-        Type(locator1 = "MyTestFile#HEIGHT", value1 = "1920");
-        
-
-    }
-
-    macro widthModification {
-        Type(locator1 = "MyTestFile#WIDTH", value1 = "1080");
-        
-    }
-
-    macro closeButtonClick {
-        Click(locator1 = "MyTestFile#CLOSE_BUTTON");
-    }
 }
