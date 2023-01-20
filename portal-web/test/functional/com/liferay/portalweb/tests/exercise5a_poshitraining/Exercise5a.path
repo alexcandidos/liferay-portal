@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>Exercise5a</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Exercise5a</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>APPLICATIONS_MENU_BUTTON</td>
+	<td>//button[@data-qa-id='applicationsMenu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_NAV_APP_MENU_PORTLET_TAB2</td>
+	<td>//li[@id='_com_liferay_product_navigation_applications_menu_web_internal_portlet_ProductNavigationApplicationsMenuPortlet_tab_2']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STORE</td>
+	<td>//span[contains(text(),'Store')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIMULATION</td>
+	<td>//button[@data-qa-id='simulation']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM</td>
+	<td>//span[contains(text(),'Custom')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEIGHT</td>
+	<td>//*[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>WIDTH</td>
+	<td>//*[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width']</td>
+	<td></td>
+</tr>
+
+</tbody>
+
+</table>
+</body>
+</html>
