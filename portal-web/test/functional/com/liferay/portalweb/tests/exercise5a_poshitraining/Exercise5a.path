@@ -25,7 +25,6 @@
 	<td>//span[contains(text(),'Store')]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>SIMULATION</td>
 	<td>//button[@data-qa-id='simulation']</td>
@@ -41,7 +40,6 @@
 	<td>//*[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height']</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>WIDTH</td>
 	<td>//*[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width']</td>

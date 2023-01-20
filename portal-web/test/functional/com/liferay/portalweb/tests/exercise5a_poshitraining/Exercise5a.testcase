@@ -1,42 +1,39 @@
 definition {
-    property testray.main.component.name = "Forms";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	property testray.main.component.name = "Forms";
 
-        User.firstLoginPG();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        Navigator.openURL();
-    }
+		User.firstLoginPG();
 
-    tearDown {
-        User.logoutAndLoginPG(
-            userLoginEmailAddress = "test@liferay.com",
-            userLoginFullName = "Test Test");
-    } 
+		Navigator.openURL();
+	}
 
-    @description = "Access Portal Global Menu and validate STORE string at Control Panel"
-        test ValidateStoreStringAtControlPanel {
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
 
-                Exercise5a.appMenu();
+	@description = "Set Screen size to custom and validate values"
+	test SetScreenSizeAndValidateValues {
+		Exercise5a.simulation();
 
-                Exercise5a.tab2();
+		Exercise5a.custom();
 
-                Exercise5a.store();
+		Exercise5a.height();
 
-            } 
+		Exercise5a.width();
+	}
 
-            @description = "Set Screen size to custom and validate values"
-        test SetScreenSizeAndValidateValues {
+	@description = "Access Portal Global Menu and validate STORE string at Control Panel"
+	test ValidateStoreStringAtControlPanel {
+		Exercise5a.appMenu();
 
-                Exercise5a.simulation();
+		Exercise5a.tab2();
 
-                Exercise5a.custom();
+		Exercise5a.store();
+	}
 
-                Exercise5a.height();
-
-                Exercise5a.width();
-
-            } 
-
-  }
+}
