@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>MyTestFile</title>
+</head>
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyTestFile</td></tr>
+</thead>
+
+<tbody>
+<tr>
+<td>APPLICATIONS_MENU</td>
+<td>//li[@class='control-menu-nav-item control-menu-nav-item-separator lfr-tooltip-scope']//button[@data-qa-id='applicationsMenu']</td>
+<td></td>
+</tr>
+<tr>
+<td>CONTROL_PANEL</td>
+<td>//li[contains(@id,'tab_2')]//button[@class='nav-link btn btn-unstyled']</td>
+<td></td>
+</tr>
+<tr>
+<td>CONFIGURATION</td>
+<td>//div[contains(@class,'tab-pane active show')]//*[@class='applications-menu-nav-header'])[4]</td>
+<td></td>
+</tr>
+<tr>
+<td>SIMULATION</td>
+<td>//li[@class='control-menu-nav-item d-none d-sm-inline-flex simulation-icon']//button</td>
+<td></td>
+</tr>
+<tr>
+<td>CUSTOM</td>
+<td>//div[@class='row default-devices mb-2']//button[5]</td>
+<td></td>
+</tr>
+<tr>
+<td>HEIGHT</td>
+<td>xpath=(//div[@class='form-group form-group-inline flex-grow-1 mr-3 input-text-wrapper']//*)[2]</td>
+<td></td>
+</tr>
+<tr>
+<td>WIDTH</td>
+<td>//div[@class='form-group form-group-inline flex-grow-1 input-text-wrapper']//input</td>
+<td></td>
+</tr>
+<tr>
+<td>CLOSE_BUTTON</td>
+<td>//button[@class='btn btn-monospaced btn-unstyled close sidenav-close']</td>
+<td></td>
+</tr>
+<tr>
+<td>ASSERT_HEIGHT</td>
+<td>//div[@class='form-group form-group-inline flex-grow-1 mr-3 input-text-wrapper']//*[2]</td>
+<td></td>
+</tr>
+<tr>
+<td>ASSERT_WIDTH</td>
+<td>//div[@class='form-group form-group-inline flex-grow-1 input-text-wrapper']//input</td>
+<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>
