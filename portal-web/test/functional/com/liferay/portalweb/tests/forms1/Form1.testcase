@@ -1,0 +1,120 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
+	@description = "Create a Form with a Text field (Text) and a Numeric field (Numeric)"
+	@priority = "5"
+	test CreateNewForms {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Forms");
+
+		Form.editPageTitle(
+			formPageName = "Forms",
+			formTitleNumber = "1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.editFieldLabelMetal(fieldValue = "Full Name");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Age");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Full Name",
+			label = "Nome Completo");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Age",
+			label = "Idade");
+
+		Form.editSuccessPage(
+			successPageDescription = " Suas informações foram recebidas com sucesso. Obrigado por preencher o formulário.",
+			successPageTitle = "Obrigado.");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Full Name",
+			fieldValue = "Alex");
+
+		FormFields.editText(
+			fieldName = "Age",
+			fieldValue = "18");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormPortlet.submit();
+
+		Form.submitAgain();
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.editText(
+			fieldName = "Nome Completo",
+			fieldValue = "Alexandre");
+
+		FormFields.editText(
+			fieldName = "Idade",
+			fieldValue = "20");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Suas informações foram recebidas com sucesso. Obrigado por preencher o formulário.",
+			successPageTitle = "Obrigado.");
+
+		Form.submitAgain();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Alex",
+			fieldValue = "18");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Alexandre",
+			fieldValue = "20");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdmin.deleteForm(formName = "Forms");
+	}
+
+}
