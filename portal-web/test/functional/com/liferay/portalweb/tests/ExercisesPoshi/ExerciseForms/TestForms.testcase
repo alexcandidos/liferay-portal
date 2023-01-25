@@ -1,0 +1,106 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
+
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at
+Control Panel"
+	@priority = "5"
+	
+    test AddFormandTranslate{
+    
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.editDescription();
+	
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		var fieldNameNumericField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Age");
+
+		Form.closeSidebar();
+		
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Full Name");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Age",
+			label = "Idade");
+	
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Full Name",
+			label = "Nome Completo");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertElementPresent(
+			changeAppLanguageTo = "en-US",
+			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
+
+		FormFields.editText(
+			fieldName = "Full Name",
+			fieldValue = "Andre Luis");
+
+		FormFields.editText(
+			fieldName = "Age",
+			fieldValue = "21");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+		Form.submitAgain();
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.editText(
+			fieldName = "Nome Completo",
+			fieldValue = "Pedro Amaral");
+
+		FormFields.editText(
+			fieldName = "Idade",
+			fieldValue = "24");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Andre Luis",
+			fieldValue = "21");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Pedro Amaral",
+			fieldValue = "24");
+	}
+
+}
