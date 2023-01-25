@@ -133,4 +133,41 @@ definition {
 
 
     }
+    @description = "Can Search Blogs"
+    @priority = "5"
+    test CanSearchBlogs {
+
+         JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+            JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+            BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+            Blogs.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+
+            JSONBlog.addEntry(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+
+            Navigator.gotoPage(pageName = "a page");
+
+            SearchPortlets.searchEmbedded(searchTerm = "Blogs Entry1 Title");
+
+
+            SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Blogs Entry1 Title",
+				searchAssetType = "Blogs Entry",
+				searchTerm = "Blogs Entry1 Title");
+      
+
+
+    }
 }
