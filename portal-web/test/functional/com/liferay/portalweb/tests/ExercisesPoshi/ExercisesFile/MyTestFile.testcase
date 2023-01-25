@@ -1,0 +1,40 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
+	test CustomSimulation {
+		MyTestFile.clickSimulation();
+
+		MyTestFile.clickCustom();
+
+		MyTestFile.editHeightAndwidth();
+
+		MyTestFile.validate();
+	}
+
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at
+Control Panel"
+	@priority = "5"
+	test ValidateConfigurationStringAtControlPanel {
+		MyTestFile.clickMenuAplications();
+
+		MyTestFile.clickControlPanel();
+
+	}
+
+}
