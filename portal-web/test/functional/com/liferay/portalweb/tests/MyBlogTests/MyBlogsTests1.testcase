@@ -10,7 +10,7 @@ definition {
 
 		Navigator.openURL();
 
-        JSONLayout.addPublicLayout(
+		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Alex Blogs");
 	}
@@ -21,14 +21,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			BlogsEntry.tearDownCP();
 
-        else{
-             BlogsEntry.tearDownCP();
-
-             JSONLayout.deletePublicLayout(
+			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "Alex Blogs");
-        }
+		}
 	}
 
 	@description = "Can Create a Blog"
@@ -40,45 +39,81 @@ definition {
 
 		Portlet.addPG(
 			pageName = "Alex Blogs",
-			portletName = "Blogs");  
+			portletName = "Blogs");
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "New Blogs",
-			siteURLKey = "guest");   
+			siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "New Blogs Title");
-		
-        BlogsEntry.addContent(entryContent = "New Blogs Content");
 
-    	PortletEntry.publish();
+		BlogsEntry.addContent(entryContent = "New Blogs Content");
+
+		PortletEntry.publish();
 
 		Navigator.gotoPage(pageName = "Alex Blogs");
-		
-		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
 
+		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
+	}
+
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+		Navigator.gotoPage(pageName = "Alex Blogs");
+
+		Portlet.addPG(
+			pageName = "Alex Blogs",
+			portletName = "Blogs");
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "New Blogs",
+			siteURLKey = "guest");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs");
+
+		BlogsEntry.addContent(entryContent = "Blogs Content");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "New Blogs",
+			siteURLKey = "guest");
+
+		BlogsEntry.addTitle(entryTitle = "New Blogs Title");
+
+		BlogsEntry.addContent(entryContent = "New Blogs Content");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.moveToRecycleBinCP(
+			assetType = "Blogs Entry",
+			entryTitle = "Blogs");
+
+		Navigator.gotoPage(pageName = "Alex Blogs");
+
+		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
 	}
 
 	@description = "Can Create a Blog"
 	@priority = "5"
 	test CanEditBlog {
-        
-        Navigator.gotoPage(pageName = "Alex Blogs");
+		Navigator.gotoPage(pageName = "Alex Blogs");
 
 		Portlet.addPG(
 			pageName = "Alex Blogs",
-			portletName = "Blogs");  
+			portletName = "Blogs");
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "New Blogs",
-			siteURLKey = "guest"); 
+			siteURLKey = "guest");
 
-        BlogsEntry.addTitle(entryTitle = "New Blogs Title");
-		
-        BlogsEntry.addContent(entryContent = "New Blogs Content");
+		BlogsEntry.addTitle(entryTitle = "New Blogs Title");
 
-    	PortletEntry.publish();    
+		BlogsEntry.addContent(entryContent = "New Blogs Content");
 
-        Navigator.gotoPage(pageName = "Alex Blogs");
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Alex Blogs");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "New Blogs Title");
 
@@ -88,49 +123,9 @@ definition {
 
 		BlogsEntry.editContent(
 			entryContent = "New Blogs Content",
-			entryContentEdit = "Blogs Martins");       
+			entryContentEdit = "Blogs Martins");
 
-       	PortletEntry.publish();
-
-		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
-                                
-	}    
-
-
-	@description = "Can Delete a Blog"
-	@priority = "5"
-	test CanDeleteBlog {
-        Navigator.gotoPage(pageName = "Alex Blogs");
-
-		Portlet.addPG(
-			pageName = "Alex Blogs",
-			portletName = "Blogs");  
-
-		BlogsNavigator.openToAddEntry(
-			layoutName = "New Blogs",
-			siteURLKey = "guest"); 
-
-		BlogsEntry.addTitle(entryTitle = "Blogs");
-
-		BlogsEntry.addContent(entryContent = "Blogs Content");	
-		
-		PortletEntry.publish();   
-
-		BlogsNavigator.openToAddEntry(
-			layoutName = "New Blogs",
-			siteURLKey = "guest"); 
-
-        BlogsEntry.addTitle(entryTitle = "New Blogs Title");
-		
-        BlogsEntry.addContent(entryContent = "New Blogs Content");
-
-    	PortletEntry.publish();   
-
-		BlogsNavigator.moveToRecycleBinCP(
-				assetType = "Blogs Entry",
-				entryTitle = "Blogs");
-		
-		Navigator.gotoPage(pageName = "Alex Blogs");
+		PortletEntry.publish();
 
 		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
 	}
@@ -138,32 +133,32 @@ definition {
 	@description = "Can Search Blogs"
 	@priority = "5"
 	test CanSearchBlogs {
-        Navigator.gotoPage(pageName = "Alex Blogs");
+		Navigator.gotoPage(pageName = "Alex Blogs");
 
 		Portlet.addPG(
 			pageName = "Alex Blogs",
-			portletName = "Blogs");  
+			portletName = "Blogs");
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "New Blogs",
-			siteURLKey = "guest"); 
+			siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs");
 
-		BlogsEntry.addContent(entryContent = "Blogs Content");	
-		
-		PortletEntry.publish();   
+		BlogsEntry.addContent(entryContent = "Blogs Content");
+
+		PortletEntry.publish();
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "New Blogs",
-			siteURLKey = "guest"); 
+			siteURLKey = "guest");
 
-        BlogsEntry.addTitle(entryTitle = "New  Title");
-		
-        BlogsEntry.addContent(entryContent = "New Content");
+		BlogsEntry.addTitle(entryTitle = "New  Title");
 
-    	PortletEntry.publish(); 
-		
+		BlogsEntry.addContent(entryContent = "New Content");
+
+		PortletEntry.publish();
+
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Content",
 			entrySearchTerm = "Blogs",
