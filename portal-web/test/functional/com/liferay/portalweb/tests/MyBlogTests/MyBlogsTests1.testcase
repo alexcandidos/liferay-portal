@@ -1,0 +1,61 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+        JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Alex Blogs");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+        else{
+             BlogsEntry.tearDownCP();
+
+             JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Alex Blogs");
+        }
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Alex Blogs");
+
+		Portlet.addPG(
+			pageName = "Alex Blogs",
+			portletName = "Blogs");  
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "New Blogs",
+			siteURLKey = "guest");   
+
+		BlogsEntry.addTitle(entryTitle = "New Blogs Title");
+		
+        BlogsEntry.addContent(entryContent = "New Blogs Content");
+
+    	PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Alex Blogs");
+		
+		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
+
+	}
+
+}
