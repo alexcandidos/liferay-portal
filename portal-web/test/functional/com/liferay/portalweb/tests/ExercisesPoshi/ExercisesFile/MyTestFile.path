@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>MyTestFile</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyTestFile</td></tr>
+</thead>
+
+<tbody>
+
+<tr>
+	<td>CLICK_MENU_APLICATIONS</td>
+	<td>//button[@class='dropdown-toggle lfr-portal-tooltip btn btn-monospaced btn-sm btn-unstyled']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CLICK_CONTROL_PANEL</td>
+	<td>//span[@class="c-inner"][contains(text(),"Control Panel")]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>ASSERT_CONFIGURATION</td>
+	<td>//*[@id="senna_surface1"]/div[10]/div[2]/div/div/div[2]/div/div[2]/div/div/div[1]/div/div[3]/div/div[4]/ul/li[1]/h2</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CLICK_SIMULATION</td>
+	<td>//*[@class="lexicon-icon lexicon-icon-simulation-menu-closed"]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CLICK_CUSTOM</td>
+	<td>//*[@class="lexicon-icon lexicon-icon-custom-size"]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>EDIT_HEIGHT</td>
+	<td>//input[@id="_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height"]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>EDIT_WIDTH</td>
+	<td>//input[@id="_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width"]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>
