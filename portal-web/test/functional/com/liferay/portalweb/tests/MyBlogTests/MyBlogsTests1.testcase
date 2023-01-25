@@ -58,4 +58,42 @@ definition {
 
 	}
 
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanEditBlog {
+        
+        Navigator.gotoPage(pageName = "Alex Blogs");
+
+		Portlet.addPG(
+			pageName = "Alex Blogs",
+			portletName = "Blogs");  
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "New Blogs",
+			siteURLKey = "guest"); 
+
+        BlogsEntry.addTitle(entryTitle = "New Blogs Title");
+		
+        BlogsEntry.addContent(entryContent = "New Blogs Content");
+
+    	PortletEntry.publish();    
+
+        Navigator.gotoPage(pageName = "Alex Blogs");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "New Blogs Title");
+
+		BlogsEntry.editTitle(
+			entryTitle = "New Blogs Title",
+			entryTitleEdit = "Blogs Alex");
+
+		BlogsEntry.editContent(
+			entryContent = "New Blogs Content",
+			entryContentEdit = "Blogs Martins");       
+
+       	PortletEntry.publish();
+
+		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
+                                
+	}    
+	
 }
