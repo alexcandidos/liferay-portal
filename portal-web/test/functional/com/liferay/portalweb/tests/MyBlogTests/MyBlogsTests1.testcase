@@ -95,5 +95,44 @@ definition {
 		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
                                 
 	}    
+
+
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+        Navigator.gotoPage(pageName = "Alex Blogs");
+
+		Portlet.addPG(
+			pageName = "Alex Blogs",
+			portletName = "Blogs");  
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "New Blogs",
+			siteURLKey = "guest"); 
+
+		BlogsEntry.addTitle(entryTitle = "Blogs");
+
+		BlogsEntry.addContent(entryContent = "Blogs Content");	
+		
+		PortletEntry.publish();   
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "New Blogs",
+			siteURLKey = "guest"); 
+
+        BlogsEntry.addTitle(entryTitle = "New Blogs Title");
+		
+        BlogsEntry.addContent(entryContent = "New Blogs Content");
+
+    	PortletEntry.publish();   
+
+		BlogsNavigator.moveToRecycleBinCP(
+				assetType = "Blogs Entry",
+				entryTitle = "Blogs");
+		
+		Navigator.gotoPage(pageName = "Alex Blogs");
+
+		PagesAdmin.viewPageItemPresent(pageName = "Alex Blogs");
+	}
 	
 }
