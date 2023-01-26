@@ -1,0 +1,113 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Documents");
+
+		Navigator.gotoPage(pageName = "Page Documents");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Page Documents");
+		}
+	}
+
+	@description = "Can Create a .Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		Portlet.addPG(
+			pageName = "Page Documents",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "My Document Description",
+			dmDocumentFile = "Commerce_Black.jpg",
+			dmDocumentTitle = "My Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "My Document Description",
+			dmDocumentTitle = "My Document Title");
+	}
+
+	@description = "Can Delete a .Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		Portlet.addPG(
+			pageName = "Page Documents",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "My Document Description",
+			dmDocumentFile = "Commerce_Black.jpg",
+			dmDocumentTitle = "My Document Title");
+
+		DMDocument.deleteCP(dmDocumentTitle = "My Document Title");
+	}
+
+	@description = "Can Download a .Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		Portlet.addPG(
+			pageName = "Page Documents",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "My Document Description",
+			dmDocumentFile = "Commerce_Black.jpg",
+			dmDocumentTitle = "My Document Title");
+
+		DMDocument.downloadCP(
+			dmDocumentSize = "16 KB",
+			dmDocumentTitle = "My Document Title");
+	}
+
+	@priority = "5"
+	test CanEditDM {
+		Portlet.addPG(
+			pageName = "Page Documents",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "My Document Description",
+			dmDocumentFile = "Commerce_Black.jpg",
+			dmDocumentTitle = "My Document Title");
+
+		DMDocument.editCP(
+			dmDocumentDescriptionEdit = "My Document Description Edit",
+			dmDocumentFileEdit = "Commerce_Black.jpg",
+			dmDocumentFileNameEdit = "Commerce_Black.jpg Edited",
+			dmDocumentTitle = "My Document Title",
+			dmDocumentTitleEdit = "My Document Title Edit");
+	}
+
+}
