@@ -1,28 +1,28 @@
 @component-name = "portal-document-management"
 definition {
-    property testray.main.component.name = "Document Management";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	property testray.main.component.name = "Document Management";
 
-        User.firstLoginPG();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        Navigator.openURL();
-    }
+		User.firstLoginPG();
 
-     tearDown {
+		Navigator.openURL();
+	}
+
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-     }
+	}
 
-    @description = "Can Create a Documents and Media"
-    @priority = "5"
-    test CanCreateDM {
-
-        JSONLayout.addPublicLayout(
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "DM Page");
 
@@ -32,22 +32,18 @@ definition {
 			layoutName = "DM Page",
 			widgetName = "Documents and Media");
 
-            DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
-    
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+	}
 
-
-    }
-
-    @description = "Can Edit a Documents and Media"
-    @priority = "5"
-    test CanEditDM {
-
-        JSONLayout.addPublicLayout(
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "DM Page");
 
@@ -57,26 +53,20 @@ definition {
 			layoutName = "DM Page",
 			widgetName = "Documents and Media");
 
-            DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
 
-                DMDocument.editPG(
-				dmDocumentFileEdit = "Document_1.pdf",
-				dmDocumentTitle = "DM Document Title",
-				dmDocumentTitleEdit = "DM Ducument Title 2");
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+	}
 
-
-    }
-    @description = "Can Delete a Documents and Media"
-    @priority = "5"
-    test CanDeleteDM {
-
-
-        JSONLayout.addPublicLayout(
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "DM Page");
 
@@ -86,23 +76,27 @@ definition {
 			layoutName = "DM Page",
 			widgetName = "Documents and Media");
 
-            DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
 
-            DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description2",
+			dmDocumentFile = "Document_2.txt",
+			dmDocumentTitle = "DM Document Title2");
 
+		DMDocument.downloadCP(
+			dmDocumentSize = "519 B",
+			dmDocumentTitle = "DM Document Title");
+	}
 
-    }
-    @description = "Can Download a Documents and Media"
-    @priority = "5"
-    test CanDownloadDM {
-
-
-        JSONLayout.addPublicLayout(
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "DM Page");
 
@@ -112,22 +106,17 @@ definition {
 			layoutName = "DM Page",
 			widgetName = "Documents and Media");
 
-            DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.txt",
-				dmDocumentTitle = "DM Document Title");
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
 
-                DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description2",
-				dmDocumentFile = "Document_2.txt",
-				dmDocumentTitle = "DM Document Title2");
+		DMDocument.editPG(
+			dmDocumentFileEdit = "Document_1.pdf",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Ducument Title 2");
+	}
 
-                DMDocument.downloadCP(
-					dmDocumentSize = "519 B",
-					dmDocumentTitle = "DM Document Title");
-
-
-    }
 }
