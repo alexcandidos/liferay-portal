@@ -1,0 +1,135 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+		}
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		task ("Go to Blogs page, add blog entry and assert succes message") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to Blogs Page and assert blog entry") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+	}
+
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+		task ("Go to Blogs Page and delete blog entry 1") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.moveToRecycleBinPG(
+				assetType = "Blogs Entry",
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title");
+		}
+
+		task ("Go to Blogs Page and assert blog entry") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title");
+		}
+	}
+
+	@description = "Can Edit a Blog"
+	@priority = "5"
+	test CanEditBlog {
+		task ("Go to Blogs Page and edit blog entry") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			Blogs.editEntryPG(
+				entryContent = "Blogs Entry1 Content",
+				entryContentEdit = "Blogs Entry1 Content Edit",
+				entryTitle = "Blogs Entry1 Title",
+				entryTitleEdit = "Blogs Entry1 Title Edit");
+		}
+
+		task ("Go to Blogs Page and validate edit") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry1 Content Edit",
+				entryTitle = "Blogs Entry1 Title Edit");
+		}
+	}
+
+	@description = "Can Search Blogs"
+	@priority = "5"
+	test CanSearchBlog {
+		task ("Go to Blogs Page and perform the search and validate the only item found") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			BlogsEntry.searchCP(
+				entryContent = "Blogs Entry1 Content",
+				entrySearchTerm = "Entry1",
+				entryTitle = "Blogs Entry1 Title");
+
+			Blogs.viewEntryTitle(entryTitle = "Blogs Entry1 Title");
+		}
+
+		task ("Validate that the second entry was not displayed ") {
+			Blogs.viewEntryNotPresent(entryTitle = "Blogs Entry2 Title");
+		}
+	}
+
+}
