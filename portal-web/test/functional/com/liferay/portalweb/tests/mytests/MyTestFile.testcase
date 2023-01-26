@@ -1,0 +1,189 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+		}
+	}
+
+	@description = "Create a form with text field and numeric field, submit form, validate translations and validate entries"
+	@priority = "5"
+	test CanCreateFormSubmitFormValidateLanguage {
+		task ("Add a numeric field and change its title") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.gotoAddField(fieldType = "Numeric");
+
+			Form.editFieldLabelMetal(fieldValue = "Age");
+
+			Form.closeSidebar();
+		}
+
+		task ("Add a text field and change its title") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.gotoAddField(fieldType = "Numeric");
+
+			Form.editFieldLabelMetal(fieldValue = "Age");
+
+			Form.closeSidebar();
+
+			Form.gotoAddField(fieldType = "Text");
+
+			Form.editFieldLabelMetal(fieldValue = "Full name");
+		}
+
+		task ("Translate field titles to Portuguese") {
+			Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+			FormViewBuilder.editFieldLabel(
+				fieldLabel = "Age",
+				label = "Idade");
+
+			FormViewBuilder.editFieldLabel(
+				fieldLabel = "Full name",
+				label = "Nome completo");
+
+			Form.save();
+
+			Form.publishForm();
+		}
+
+		task ("Submit the form twice in each language") {
+			FormsAdminNavigator.gotoPublishedForm();
+
+			FormFields.editText(
+				fieldLabel = "Text",
+				fieldName = "Full name",
+				fieldValue = "Henrique Lima");
+
+			FormFields.viewTextLabel(fieldLabel = "Full name");
+
+			FormFields.editText(
+				fieldLabel = "Numeric",
+				fieldName = "Age",
+				fieldValue = "24");
+
+			FormFields.viewTextLabel(fieldLabel = "Age");
+
+			FormPortlet.submitSuccessfully();
+
+			Alert.viewSuccessMessage();
+
+			Form.submitAgain();
+
+			Portlet.waitForForm();
+
+			Click.clickNoMouseOver(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+			Click(
+				key_locale = "português-Brasil",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			FormFields.editText(
+				fieldLabel = "Text",
+				fieldName = "Nome completo",
+				fieldValue = "Davi Santos");
+
+			FormFields.viewTextLabel(fieldLabel = "Nome completo");
+
+			FormFields.editText(
+				fieldLabel = "Numeric",
+				fieldName = "Idade",
+				fieldValue = "21");
+
+			FormFields.viewTextLabel(fieldLabel = "Idade");
+
+			FormPortlet.submitSuccessfully();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("See related resources on Forms") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			LexiconEntry.viewEntryName(
+				rowAny = "1",
+				rowEntry = "Henrique Lima");
+
+			MyTestFile.viewEntryContents(
+				languageOption = "en-us",
+				rowAny = "Henrique Lima",
+				rowEntry = "24");
+
+			LexiconEntry.viewEntryName(
+				rowAny = "2",
+				rowEntry = "Davi Santos");
+
+			MyTestFile.viewEntryContents(
+				languageOption = "pt-br",
+				rowAny = "Davi Santos",
+				rowEntry = "21");
+		}
+	}
+
+	@description = "Set Screen size to custom and validate values"
+	@priority = "5"
+	test SetScreenSizeAndValidateValues {
+		MyTestFile.goToSimulationOptions(deviceTypeSimulation = "custom");
+
+		MyTestFile.setPageHeightAndWidth(
+			heightValue = "1920",
+			widhtValue = "1080");
+
+		MyTestFile.clickAtSimulation();
+
+		MyTestFile.goToSimulationOptions(deviceTypeSimulation = "custom");
+
+		AssertElementPresent(
+			locator1 = "MyTestFile#CUSTOM_HEIGHT_SIMULATION",
+			value1 = "1920");
+
+		AssertElementPresent(
+			locator1 = "MyTestFile#CUSTOM_WIDHT_SIMULATION",
+			value1 = "1080");
+	}
+
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+	@priority = "5"
+	test ValidateConfigurationStringAtControlPanel {
+		MyTestFile.goToApplicationsMenu(applicationsMenuOption = "Control Panel");
+
+		AssertElementPresent(locator1 = "MyTestFile#CONFIGURATION_TITLE");
+	}
+
+}
