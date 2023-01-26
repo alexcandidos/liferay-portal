@@ -1,40 +1,40 @@
 @component-name = "portal-document-management"
 definition {
-    property testray.main.component.name = "Document Management";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	property testray.main.component.name = "Document Management";
 
-        User.firstLoginPG();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        Navigator.openURL();
-    }
+		User.firstLoginPG();
 
-     tearDown {
+		Navigator.openURL();
+	}
+
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-     }
+	}
 
-    @description = "Can Create a Documents and Media"
-    @priority = "5"
-    test CanCreateDM {
-
-    ProductMenu.gotoPortlet(
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-	PagesAdmin.addPage(pageName = "DM");
+		PagesAdmin.addPage(pageName = "DM");
 
-	Navigator.gotoPage(pageName = "DM");
+		Navigator.gotoPage(pageName = "DM");
 
-    ProductMenu.gotoPortlet(
+		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Documents and Media");
-    
- task ("Creating a DM and doing upload file") {
+
+		task ("Creating a DM and doing upload file") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addCP(
@@ -42,46 +42,42 @@ definition {
 				dmDocumentFile = "Document_1.txt",
 				dmDocumentTitle = "DM Document Title");
 		}
+	}
 
-    }
-
-    @description = "Can Edit a Documents and Media"
-    @priority = "5"
-    test CanEditDM {
-
-     ProductMenu.gotoPortlet(
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Documents and Media");
 
-    DMDocument.editCP(
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title Edit");
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMDocument.downloadCP(
+			dmDocumentSize = "259 B",
+			dmDocumentTitle = "DM Document Title Edit");
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMDocument.editCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTitleEdit = "DM Document Title Edit");
-
-
-    }
-    @description = "Can Delete a Documents and Media"
-    @priority = "5"
-    test CanDeleteDM {
-
-    ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-        DMDocument.deleteCP(dmDocumentTitle = "DM Document Title Edit");
-    }
-    @description = "Can Download a Documents and Media"
-    @priority = "5"
-    test CanDownloadDM {
-
-        ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-        DMDocument.downloadCP(
-			dmDocumentSize = "259 B",
-			dmDocumentTitle = "DM Document Title Edit");
-    }
+	}
 
 }
