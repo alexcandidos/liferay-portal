@@ -43,4 +43,32 @@ definition {
 
     }
 
+    @description = "Can Edit a Documents and Media"
+    @priority = "5"
+    test CanEditDM {
+
+        JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "DM Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "DM Page",
+			widgetName = "Documents and Media");
+
+            DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document Title");
+
+                DMDocument.editPG(
+				dmDocumentFileEdit = "Document_1.pdf",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTitleEdit = "DM Ducument Title 2");
+
+
+    }
 }
