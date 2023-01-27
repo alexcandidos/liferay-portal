@@ -30,7 +30,7 @@ definition {
 		}
 	}
 
-		@description = "Can Create a Documents and Media"
+	@description = "Can Create a Documents and Media"
 	@priority = "5"
 	test CanCreateDM {
 		Navigator.gotoPage(pageName = "Alex DM");
@@ -46,8 +46,46 @@ definition {
 			dmDocumentTitle = "New Document");
 
 		DMDocument.viewPG(dmDocumentTitle = "New Document");
-	
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+	}
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+
+		DMDocument.deleteCP(dmDocumentTitle = "New Document");
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+
+		DMDocument.downloadCP(
+			dmDocumentSize = "88 KB",
+			dmDocumentTitle = "New Document");
 	}
 
 	@description = "Can Edit a Documents and Media"
@@ -77,43 +115,6 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document Edit");
-	}
-
-	@description = "Can Delete a Documents and Media"
-	@priority = "5"
-	test CanDeleteDM {
-		Navigator.gotoPage(pageName = "Alex DM");
-
-		Portlet.addPG(
-			pageName = "Alex DM",
-			portletName = "Documents and Media");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Commerce_Blue.jpg",
-			dmDocumentTitle = "New Document");
-
-		DMDocument.deleteCP(dmDocumentTitle = "New Document");
-	}
-	
-    @description = "Can Download a Documents and Media"
-	@priority = "5"
-	test CanDownloadDM {
-		Navigator.gotoPage(pageName = "Alex DM");
-
-		Portlet.addPG(
-			pageName = "Alex DM",
-			portletName = "Documents and Media");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Commerce_Blue.jpg",
-			dmDocumentTitle = "New Document");
-		DMDocument.downloadCP(
-			dmDocumentSize = "88 KB",
-			dmDocumentTitle = "New Document");
 	}
 
 }
