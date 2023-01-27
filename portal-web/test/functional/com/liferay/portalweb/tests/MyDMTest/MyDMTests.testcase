@@ -79,5 +79,23 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "Document Edit");
 	}
 
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+
+		DMDocument.deleteCP(dmDocumentTitle = "New Document");
+	}
+	
 
 }
