@@ -50,5 +50,34 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 	}
 
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Commerce_Black.jpg",
+			dmDocumentTitle = "New Document",
+			dmDocumentTitleEdit = "Document Edit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document Edit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document Edit");
+	}
+
 
 }
