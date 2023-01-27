@@ -97,5 +97,23 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "New Document");
 	}
 	
+    @description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+		DMDocument.downloadCP(
+			dmDocumentSize = "88 KB",
+			dmDocumentTitle = "New Document");
+	}
 
 }
