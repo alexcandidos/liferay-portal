@@ -45,7 +45,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8462 | Test Summary: Inform the User when there are no disabled Segments"
 	@priority = "3"
-	test AssertUserIsInformedWhenThereAreNoDisabledSegments {
+	test AssertUserIsInWhenThereAreNoDisabledSegments {
 		property test.name.skip.portal.instance = "SegmentsList#AssertUserIsInformedWhenThereAreNoDisabledSegments";
 
 		task ("Switch to new property in AC") {
