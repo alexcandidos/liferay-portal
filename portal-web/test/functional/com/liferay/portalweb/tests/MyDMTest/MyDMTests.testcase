@@ -1,0 +1,120 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Alex DM");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Alex DM");
+
+			DMDocument.deleteCP(dmDocumentTitle = "New Document");
+		}
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+
+		DMDocument.viewPG(dmDocumentTitle = "New Document");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+	}
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+
+		DMDocument.deleteCP(dmDocumentTitle = "New Document");
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+
+		DMDocument.downloadCP(
+			dmDocumentSize = "88 KB",
+			dmDocumentTitle = "New Document");
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		Navigator.gotoPage(pageName = "Alex DM");
+
+		Portlet.addPG(
+			pageName = "Alex DM",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "New Document");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Commerce_Black.jpg",
+			dmDocumentTitle = "New Document",
+			dmDocumentTitleEdit = "Document Edit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document Edit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document Edit");
+	}
+
+}
