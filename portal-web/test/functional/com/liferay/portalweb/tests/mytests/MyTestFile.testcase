@@ -1,0 +1,54 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
+	@description = "Set Screen size to custom and validate values"
+	@priority = "5"
+	test SetScreenSizeAndValidateValues {
+		task ("When user sets custom screen size") {
+			MyTestFile.goCustomButton();
+
+			MyTestFile.clickAtTypeHeightWidth(
+				newHeight = "1920",
+				newWidth = "1080");
+
+			MyTestFile.closeSimulationMenu();
+		}
+
+		task ("Then the edited screen size should be shown") {
+			MyTestFile.goCustomButton();
+
+			MyTestFile.assertTextEqualsHeightWidth(
+				height = "1920",
+				width = "1080");
+		}
+	}
+
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+	@priority = "5"
+	test ValidateConfigurationStringAtControlPanel {
+		task ("When the user open Control Painel") {
+			MyTestFile.openControlPainel();
+		}
+
+		task ("Then the configuration string must be present") {
+			MyTestFile.assertConfigurationIsPresent();
+		}
+	}
+
+}

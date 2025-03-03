@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>MyTestFile</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyTestFile</td></tr>
+</thead>
+
+<tbody>
+
+<tr>
+	<td>APPLICATIONS_MENU_BUTTON</td>
+	<td>//button[@data-qa-id='applicationsMenu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_CONTROL_PAINEL</td>
+	<td>//li[@id='_com_liferay_product_navigation_applications_menu_web_internal_portlet_ProductNavigationApplicationsMenuPortlet_tab_2']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_MENU</td>
+	<td>//h2[contains(text(),'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_SIMULATION_BUTTON</td>
+	<td>//div[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_simulationPanelId']//button[@class='btn btn-monospaced btn-unstyled close sidenav-close']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_BUTTON</td>
+	<td>//button[@data-device='custom']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIMULATION_BUTTON</td>
+	<td>//button[@data-qa-id='simulation']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEIGHT_CONFIGURATION</td>
+	<td>//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIDTH_CONFIGURATION</td>
+	<td>//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width']</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

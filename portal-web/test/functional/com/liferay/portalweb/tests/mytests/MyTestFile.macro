@@ -1,0 +1,49 @@
+definition {
+
+	macro assertConfigurationIsPresent {
+		AssertElementPresent(locator1 = "MyTestFile#CONFIGURATION_MENU");
+	}
+
+	macro assertTextEqualsHeightWidth {
+		var height = "${height}";
+		var width = "${width}";
+
+		AssertTextEquals(
+			locator1 = "MyTestFile#HEIGHT_CONFIGURATION",
+			value1 = "${height}");
+
+		AssertTextEquals(
+			locator1 = "MyTestFile#WIDTH_CONFIGURATION",
+			value1 = "${width}");
+	}
+
+	macro clickAtTypeHeightWidth {
+		var newHeight = "${newHeight}";
+		var newWidth = "${newWidt}";
+
+		Type.clickAtType(
+			locator1 = "MyTestFile#HEIGHT_CONFIGURATION",
+			value1 = "${newHeight}");
+
+		Type.clickAtType(
+			locator1 = "MyTestFile#WIDTH_CONFIGURATION",
+			value1 = "${newWidth}");
+	}
+
+	macro closeSimulationMenu {
+		Click(locator1 = "MyTestFile#CLOSE_SIMULATION_BUTTON");
+	}
+
+	macro goCustomButton {
+		Click(locator1 = "MyTestFile#SIMULATION_BUTTON");
+
+		Click(locator1 = "MyTestFile#CUSTOM_BUTTON");
+	}
+
+	macro openControlPainel {
+		Click(locator1 = "MyTestFile#APPLICATIONS_MENU_BUTTON");
+
+		Click(locator1 = "MyTestFile#NAVIGATION_CONTROL_PAINEL");
+	}
+
+}
