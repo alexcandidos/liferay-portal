@@ -1,0 +1,39 @@
+definition {
+
+	macro clickControlPanel {
+		Click(locator1 = "MyTestFile#CLICK_CONTROL_PANEL");
+	}
+
+	macro clickCustom {
+		Click(locator1 = "MyTestFile#CLICK_CUSTOM");
+	}
+
+	macro clickMenuAplications {
+		Click(locator1 = "MyTestFile#CLICK_MENU_APLICATIONS");
+	}
+
+	macro clickSimulation {
+		Click(locator1 = "MyTestFile#CLICK_SIMULATION");
+	}
+
+	macro editHeightAndwidth {
+		Type(
+			locator1 = "MyTestFile#EDIT_HEIGHT",
+			value1 = "1920");
+
+		Type(
+			locator1 = "MyTestFile#EDIT_WIDTH",
+			value1 = "1080");
+	}
+
+	macro validate {
+		AssertTextEquals(
+			locator1 = "MyTestFile#EDIT_HEIGHT",
+			value1 = "1920");
+
+		AssertTextEquals(
+			locator1 = "MyTestFile#EDIT_WIDTH",
+			value1 = "1080");
+	}
+
+}
