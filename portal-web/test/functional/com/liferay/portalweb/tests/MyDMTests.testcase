@@ -1,0 +1,204 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+
+			DMDocument.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		task ("Creating a DM and doing upload file") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("Verifing if DM and File appears") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			IsElementPresent(
+				key_rowEntry = "Document_1.doc",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+	}
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		task ("Creating a DM and doing upload file") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Title 01",
+				groupName = "Guest",
+				mimeType = "image/png",
+				sourceFileName = "Document_1.png");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "test 02",
+				dmDocumentTitle = "Test 2",
+				groupName = "Guest",
+				mimeType = "image/png",
+				sourceFileName = "Document_2.png");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		task ("Deleting DM and verifing if haved success") {
+			DMDocument.deleteCP(dmDocumentTitle = "Title 01");
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMDocument.viewPG(
+				dmDocumentDescription = "test 02",
+				dmDocumentTitle = "Test 2");
+
+			AssertElementNotPresent(
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+				value1 = "Title 01");
+		}
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		task ("Creating a DM and doing upload file") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Title 01",
+				groupName = "Guest",
+				mimeType = "image/png",
+				sourceFileName = "Document_1.png");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "test 02",
+				dmDocumentTitle = "Test 2",
+				groupName = "Guest",
+				mimeType = "image/png",
+				sourceFileName = "Document_2.png");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.downloadCP(
+				dmDocumentSize = "43 KB",
+				dmDocumentTitle = "Title 01");
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.png");
+
+			DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_2.png");
+		}
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		task ("Creating a DM and doing upload file") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Title 01",
+				groupName = "Guest",
+				mimeType = "image/png",
+				sourceFileName = "Document_1.png");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		task ("Editing the Title and Archive uploeaded") {
+			DMDocument.editPG(
+				dmDocumentFileEdit = "Document_1.pdf",
+				dmDocumentTitle = "Title 01",
+				dmDocumentTitleEdit = "LiferayCA Title edited");
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMDocument.viewPG(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "LiferayCA Title edited");
+		}
+	}
+
+}
