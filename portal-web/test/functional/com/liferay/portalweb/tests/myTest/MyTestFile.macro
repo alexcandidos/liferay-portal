@@ -1,0 +1,46 @@
+definition {
+
+	macro heightWidth {
+		Type(
+			locator1 = "MyTestFile#VALIDATE_HEIGHT",
+			value1 = "${key_selectHeight}");
+
+		Type(
+			locator1 = "MyTestFile#VALIDATE_WIDTH",
+			value1 = "${key_selectWidth}");
+	}
+
+	macro validateConfiguration {
+		AssertElementPresent(locator1 = "MyTestFile#TEST_CONFIGURATION");
+	}
+
+	macro validateControlPanel {
+		Click(locator1 = "MyTestFile#TEST_CONTROL_PANEL");
+	}
+
+	macro validateCustom {
+		Click(locator1 = "MyTestFile#TEST_CUSTOM");
+	}
+
+	macro validateHeightWidth {
+		var key_selectHeight = "${height}";
+		var key_selectWidth = "${width}";
+
+		AssertTextEquals(
+			locator1 = "MyTestFile#VALIDATE_HEIGHT",
+			value1 = "${height}");
+
+		AssertTextEquals(
+			locator1 = "MyTestFile#VALIDATE_WIDTH",
+			value1 = "${width}");
+	}
+
+	macro validateMenu {
+		Click(locator1 = "MyTestFile#TEST_OPEN_MENU");
+	}
+
+	macro validateSimulation {
+		Click(locator1 = "MyTestFile#TEST_SIMULATION");
+	}
+
+}

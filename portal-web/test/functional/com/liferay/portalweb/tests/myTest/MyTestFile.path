@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>MyTestFile</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyTestFile</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>TEST_OPEN_MENU</td>
+	<td>//button[@data-qa-id='applicationsMenu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_CONTROL_PANEL</td>
+	<td>//span[@class='c-inner'][contains(text(),'Control Panel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_CONFIGURATION</td>
+	<td>//h2[@class='applications-menu-nav-header'][contains(text(), 'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_SIMULATION</td>
+	<td>//button[@aria-label='Simulation']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_CUSTOM</td>
+	<td>//span[@class='d-block mb-3 mt-1'][contains(text(), 'Custom')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATE_HEIGHT</td>
+	<td>//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height' and contains(@value,'')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATE_WIDTH</td>
+	<td>//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width' and contains(@value,'')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

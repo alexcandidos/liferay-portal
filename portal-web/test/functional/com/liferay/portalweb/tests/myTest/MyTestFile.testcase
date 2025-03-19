@@ -1,0 +1,134 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
+	@description = "Writing new form tests reusing existing macros and form paths"
+	@priority = "5"
+	test CreatingandTranslatingForms {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Exec 06 poshi");
+
+		Form.editDescription(formDescription = "Descripton exec06");
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(
+			fieldName = "Numeric",
+			fieldValue = "AGE");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.editFieldLabelMetal(
+			fieldName = "Text",
+			fieldValue = "FULL NAME");
+
+		Form.editPageTitle(
+			formPageName = "FORM1",
+			formTitleNumber = "1");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "FULL NAME",
+			label = "NOME COMPLETO");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "AGE",
+			label = "IDADE");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "FULL NAME",
+			fieldValue = "MARCOS ALMEIDA");
+
+		FormFields.editText(
+			fieldName = "AGE",
+			fieldValue = "49");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormPortlet.submit();
+
+		Form.submitAgain();
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.editText(
+			fieldName = "NOME COMPLETO",
+			fieldValue = "MARCOS VICTOR");
+
+		FormFields.editText(
+			fieldName = "IDADE",
+			fieldValue = "20");
+
+		FormPortlet.submit();
+
+		Form.submitAgain();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "MARCOS ALMEIDA",
+			fieldValue = "49");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "MARCOS VICTOR",
+			fieldValue = "20");
+	}
+
+	@description = "Set Screen size to custom and validate values"
+	@priority = "5"
+	test SetScreenSizeAndValidateValues {
+		MyTestFile.validateSimulation();
+
+		MyTestFile.validateCustom();
+
+		MyTestFile.heightWidth(
+			key_selectHeight = "1920",
+			key_selectWidth = "1080");
+
+		MyTestFile.validateHeightWidth(
+			height = "1920",
+			width = "1080");
+	}
+
+	@description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+	@priority = "5"
+	test ValidateConfigurationStringAtControlPanel {
+		MyTestFile.validateMenu();
+
+		MyTestFile.validateControlPanel();
+
+		MyTestFile.validateConfiguration();
+	}
+
+}
