@@ -1,0 +1,119 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media SDG");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.deletePage(pageName = "Documents and Media SDG");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		Navigator.gotoPage(pageName = "Documents and Media SDG");
+
+		Portlet.addPG(
+			pageName = "Documents and Media SDG",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DocumentAndMediaSDGtwo",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DocumentAndMediaSDGNewtwo");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DocumentAndMediaSDGNewtwo");
+	}
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		Navigator.gotoPage(pageName = "Documents and Media SDG");
+
+		Portlet.addPG(
+			pageName = "Documents and Media SDG",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DocumentAndMediaSDGtwo",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DocumentAndMediaSDGNewtwo");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DocumentAndMediaSDGNewtwo");
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		Navigator.gotoPage(pageName = "Documents and Media SDG");
+
+		Portlet.addPG(
+			pageName = "Documents and Media SDG",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DocumentAndMediaSDGtwo",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DocumentAndMediaSDGNewtwo");
+
+		DMDocument.downloadCP(
+			dmDocumentSize = "259 B",
+			dmDocumentTitle = "DocumentAndMediaSDGNewtwo");
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		Navigator.gotoPage(pageName = "Documents and Media SDG");
+
+		Portlet.addPG(
+			pageName = "Documents and Media SDG",
+			portletName = "Documents and Media");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DocumentAndMediaSDGtwo",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DocumentAndMediaSDGNewtwo");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DocumentAndMediaSDGtwo",
+			dmDocumentDescriptionEdit = "Edit DocumentAndMediaSDGtwo",
+			dmDocumentTitle = "DocumentAndMediaSDGNewtwo",
+			dmDocumentTitleEdit = "Edit DocumentAndMediaSDGNewtwo");
+	}
+
+}
