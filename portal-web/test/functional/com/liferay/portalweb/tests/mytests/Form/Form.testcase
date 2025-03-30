@@ -1,0 +1,145 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdmin.viewForm(
+			formDescription = "English Description",
+			formName = "English Form");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
+	@description = "Access Portal and create e validate NEW FORMS"
+	@priority = "5"
+	test ValidateFormsPortal {
+		task ("Given the global variables") {
+			var successPageTitlePortuguese = "Obrigado.";
+			var successPageDescriptionPortuguese = "Suas informações foram recebidas com sucesso. Obrigado por preencher o formulário.";
+		}
+
+		task ("When the user creates a form with a Text field and a Numeric field") {
+			FormsAdmin.addForm();
+
+			Form.editName(formTitle = "English Form");
+
+			Form.editDescription(formDescription = "English Description");
+
+			Form.gotoAddField(fieldType = "Text");
+
+			FormFields.editText(
+				fieldName = "Label",
+				fieldValue = "Full Name");
+
+			Form.closeSidebar();
+
+			Form.gotoAddField(
+				fieldPositionNumber = "1",
+				fieldType = "Numeric");
+
+			FormFields.editText(
+				fieldName = "Label",
+				fieldValue = "Age");
+		}
+
+		task ("When the user adds a translated version to Portuguese of the created form") {
+			Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+			Form.editName(formTitle = "Formulário em Português");
+
+			Form.editDescription(formDescription = "Descrição em Português");
+
+			FormViewBuilder.editFieldLabel(
+				fieldLabel = "Age",
+				label = "Idade");
+
+			FormViewBuilder.editFieldLabel(
+				fieldLabel = "Full Name",
+				label = "Nome Completo");
+
+			Form.editSuccessPage(
+				successPageDescription = "${successPageDescriptionPortuguese}",
+				successPageTitle = "${successPageTitlePortuguese}");
+
+			Form.publishForm();
+		}
+
+		task ("When the user answers the english form") {
+			FormsAdminNavigator.gotoPublishedForm();
+
+			FormFields.editText(
+				fieldName = "Full Name",
+				fieldValue = "Victor Cunha");
+
+			FormFields.editText(
+				fieldName = "Age",
+				fieldValue = "24");
+		}
+
+		task ("Then the confirmation message should appear") {
+			FormPortlet.submitSuccessfullyAndViewSuccessPage();
+		}
+
+		task ("When the user answers the portuguese form") {
+			Form.submitAgain();
+
+			FormPortlet.changeLocale(locale = "português-Brasil");
+
+			FormFields.editText(
+				fieldName = "Nome Completo",
+				fieldValue = "Marcos Victor");
+
+			FormFields.editText(
+				fieldName = "Idade",
+				fieldValue = "20");
+		}
+
+		task ("Then the confirmation message should appear") {
+			FormPortlet.submitSuccessfullyAndViewSuccessPage(
+				successPageDescription = "${successPageDescriptionPortuguese}",
+				successPageTitle = "${successPageTitlePortuguese}");
+		}
+
+		task ("Then the answers to both forms should be available") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries(formName = "English Form");
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Victor Cunha",
+				fieldValue = "24");
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Marcos Victor",
+				fieldValue = "20");
+		}
+	}
+
+}
