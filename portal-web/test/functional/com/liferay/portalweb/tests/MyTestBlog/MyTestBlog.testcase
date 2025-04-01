@@ -1,0 +1,101 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Page SDG");
+
+		Navigator.gotoPage(pageName = "Page SDG");
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blog SDG",
+			siteURLKey = "guest");
+
+		BlogsEntry.addTitle(entryTitle = "Soli Deo Gloria");
+
+		BlogsEntry.addContent(entryContent = "Blog SDG");
+
+		PortletEntry.publish();
+	}
+
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+		Navigator.gotoPage(pageName = "New page");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "New Blogs Entry Content",
+			entryTitle = "New Blogs Entry Title");
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanEditBlog {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "New page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "New page",
+			widgetName = "Blogs");
+
+		Navigator.gotoPage(pageName = "New page");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Blogs.editEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "New Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "New Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "New page");
+
+		BlogsEntry.viewPG(
+			entryContent = "New Blogs Entry Content",
+			entryTitle = "New Blogs Entry Title");
+	}
+
+	@description = "Can Search Blogs"
+	@priority = "5"
+	test CanSearchBlogs {
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "New Blogs Entry Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "New Blogs Entry Content",
+			searchAssetTitle = "New Blogs Entry Title",
+			searchAssetType = "Blogs Entry");
+	}
+
+}
