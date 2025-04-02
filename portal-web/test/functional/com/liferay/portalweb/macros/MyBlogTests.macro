@@ -1,0 +1,63 @@
+definition {
+
+	macro assertBlogElementNotPresent {
+		AssertElementNotPresent(locator1 = "MyBlogTests#ENTRY_TITLE_BLOGS");
+
+		AssertElementNotPresent(locator1 = "MyBlogTests#ENTRY_CONTENT_BLOGS");
+	}
+
+	macro assertBlogEntryTitleAndContent {
+		var key_entryTitleBlog = "${titleValue}";
+		var key_entryContentBlog = "${contentValue}";
+
+		AssertElementPresent(locator1 = "MyBlogTests#ENTRY_TITLE_BLOGS");
+
+		AssertElementPresent(locator1 = "MyBlogTests#ENTRY_CONTENT_BLOGS");
+	}
+
+	macro assertThatOnlyOneBlogsAppears {
+		var key_searchAssetTitle = "${searchAssetTitle}";
+		var key_searchAssetType = "${searchAssetType}";
+
+		if ("${searchTerm}" == "false") {
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC",
+				value1 = "${searchAssetTitle}");
+
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC",
+				value1 = "${searchAssetType}");
+
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY",
+				value1 = "${searchTerm}");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY",
+				value1 = "${searchTerm}");
+		}
+	}
+
+	macro assertViewBlogEntryTitleAndContent {
+		var key_viewEntryTitleBlog = "${viewEntryTitleBlog}";
+		var key_entryContentBlog = "${contentValue}";
+
+		AssertElementPresent(locator1 = "MyBlogTests#VIEW_ENTRY_TITLE_BLOGS");
+
+		AssertElementPresent(locator1 = "MyBlogTests#ENTRY_CONTENT_BLOGS");
+	}
+
+	macro viewBlogsEntry {
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewPG(
+			entryContent = "${entryContent}",
+			entryTitle = "${entryTitle}");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "${entryContent}",
+			entryTitle = "${entryTitle}");
+	}
+
+}
