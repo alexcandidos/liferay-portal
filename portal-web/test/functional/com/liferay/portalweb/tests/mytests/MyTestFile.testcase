@@ -1,0 +1,96 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
+	@description = "Testing if a Form can be created"
+	@priority = "5"
+	test ValidateForms {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Element Set Name");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.editFieldLabelMetal(fieldValue = "Full Name");
+
+		Form.save();
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Age");
+
+		Form.save();
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		Form.editName(formTitle = "Setar Nome do Elemento");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Full Name",
+			label = "Nome Completo");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Age",
+			label = "Idade");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldLabel = "Text",
+			fieldName = "Text",
+			fieldValue = "MyFullNameHere");
+
+		FormFields.editText(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "0");
+
+		FormPortlet.submitSuccessfully();
+
+		Form.submitAgain();
+
+		FormPortletConfiguration.changeLanguage(
+			currentLanguage = "en-US",
+			newLanguage = "português-Brasil");
+
+		FormFields.editText(
+			fieldLabel = "Text",
+			fieldName = "Text",
+			fieldValue = "MeuNomeCompletoAqui");
+
+		FormFields.editText(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "1");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+	}
+
+}
