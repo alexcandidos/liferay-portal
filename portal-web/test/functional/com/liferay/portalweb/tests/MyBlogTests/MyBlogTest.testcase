@@ -1,0 +1,130 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blog One Content",
+			entryTitle = "Blog One");
+
+		JSONBlog.addEntry(
+			entryContent = "Blog Two Content",
+			entryTitle = "Blog Two");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.deletePage(pageName = "Blogs Page");
+		}
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		task ("When the user adds a Blog Entry") {
+			Blogs.addEntry(
+				entryContent = "Content Created",
+				entryTitle = "Blog Created");
+		}
+
+		task ("Then the success message should appear on the screen") {
+			Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+		}
+
+		task ("Then the Blog Entry should display on the page") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewEntryPG(entryTitle = "Blog Created");
+		}
+	}
+
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+		task ("When the User deletes Blog Entry 1 (Blog One)") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.moveToRecycleBinPG(
+				entryContent = "Blog One Content",
+				entryTitle = "Blog One");
+		}
+
+		task ("Then Blog Entry 1 (Blog One) should not exist and Blog Entry 2 (Blog Two) should exist") {
+			BlogsEntry.viewNoEntryAsGuestPG(
+				entryContent = "Blog One Content",
+				entryTitle = "Blog One");
+
+			BlogsEntry.viewEntryPG(entryTitle = "Blog Two");
+		}
+	}
+
+	@description = "Can Edit a Blog"
+	@priority = "5"
+	test CanEditBlog {
+		task ("When the User edits the blog Entry (Blog One)") {
+			BlogsNavigator.gotoEditCP(entryTitle = "Blog One");
+
+			BlogsEntry.editTitle(
+				entryTitle = "Blog One",
+				entryTitleEdit = "Blog Title Edited");
+
+			BlogsEntry.addContent(entryContent = "Edited Content");
+
+			Button.clickPublish();
+		}
+
+		task ("Then the Blog Entry should be edited") {
+			Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewEntryPG(entryTitle = "Blog Title Edited");
+		}
+	}
+
+	@description = "Can Search Blogs"
+	@priority = "5"
+	test CanSearchBlogs {
+		task ("When the User searches for Blog Entry 1 (Blog One)") {
+			Navigator.openURL();
+
+			Search.searchCP(searchTerm = "One");
+		}
+
+		task ("Then Blog Entry 1 should display and Blog Entry 2 should not display") {
+			Search.viewResultAssetTitle(searchAssetTitle = "Blog One");
+
+			Search.viewNoResultAssetTitle(searchAssetTitle = "Blog Two");
+		}
+	}
+
+}
