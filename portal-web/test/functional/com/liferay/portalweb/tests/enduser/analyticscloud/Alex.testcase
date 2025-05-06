@@ -1,0 +1,38 @@
+@component-name = "portal-analytics-cloud"
+definition {
+    	property testray.main.component.name = "Analytics Cloud";
+
+
+	@description = "fake"
+	@priority = "3"
+	test FakeTest {
+
+        Navigator.openSpecificURL(url = "http://www.uol.com.br");
+
+        // alternartive 1 - even implementing AssertNotLocation.function, maybe the implementation available in BaseWebDriverImpl is not okay
+		AssertNotLocation(value1 = "http://www.globo.com");
+
+
+		// alternative 2
+		var currentURL = selenium.getCurrentUrl();
+		var notExpectedContent = "globo";
+
+		if (contains("${currentURL}", "${notExpectedContent}")) {
+			TestUtils.fail(message = "FAILED: Not expected content: "${notExpectedContent}" is present.");
+		}else{
+			TestUtils.pass(message = "PASSED: Not expected content: "${notExpectedContent}" is not present.");
+		}
+
+		// alternative 3
+		var currentURL = selenium.getCurrentUrl();
+		var notExpectedContent = "globo";
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "${currentURL}",
+			value1 = "${notExpectedContent}"
+		);
+
+    }
+
+
+}
